@@ -1,0 +1,21 @@
+package -packageTable-;
+
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+-javaEntityPackage-
+
+/**
+ * -tableCommentRaw-
+ * -tableNameJava-
+ *
+ * @author -author-
+ */
+@Data
+@SuperBuilder
+@NoArgsConstructor
+public class -tableNameJava-Entity {
+
+	-startField-
+
+}

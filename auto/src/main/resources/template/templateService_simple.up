@@ -1,0 +1,79 @@
+package -packageService-;
+
+import com.playlet.common.common.BaseService;
+import com.playlet.common.common.QueryMap;
+import com.playlet.common.common.paginator.PageBounds;
+import com.playlet.common.common.ReturnData;
+import com.playlet.common.paginator.PageList;
+-importService-
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+-importServiceCollectors-
+
+/**
+ * -tableComment-
+ * -tableNameJava-
+ *
+ * @author -author-
+ */
+@Slf4j
+@Service
+public class -tableNameJava-Service extends BaseService {
+
+    @Autowired
+    private -tableNameJava-Mapper -tableNameJavaParam-Mapper;
+
+    -autowiredService-
+    @Transactional
+    public int createEntity(-tableNameJava-Entity entity) {
+        -tableNameJavaParam-Mapper.createEntity(entity);
+        return entity.id;
+    }
+
+    @Transactional
+    public int deleteById(int id) {
+        return -tableNameJavaParam-Mapper.deleteById(id);
+    }
+
+    @Transactional
+    public int updateEntity(-tableNameJava-Entity entity) {
+        return -tableNameJavaParam-Mapper.updateEntity(entity);
+    }
+
+    // TODO: 以下为查询
+    public -tableNameJava-Data findOne(QueryMap queryMap) {
+        return find(queryMap, null).first();
+    }
+
+    public PageList<-tableNameJava-Data> find(QueryMap queryMap) {
+        return find(queryMap, null);
+    }
+
+    public PageList<-tableNameJava-Data> find(QueryMap queryMap, PageBounds pageBounds) {
+        queryMap = QueryMap.of(queryMap);
+        pageBounds = PageBounds.of(pageBounds, queryMap);
+        PageList<-tableNameJava-Data> page = -tableNameJavaParam-Mapper.find(queryMap, pageBounds);
+        if (isEmpty(page) || queryMap.raw()) {
+            return page;
+        }
+        -findMethod-
+        return page;
+    }
+
+    // TODO: ReturnData - findQuery
+    public ReturnData<Object> findQuery(QueryMap queryMap, PageBounds pageBounds) {
+        queryMap = QueryMap.of(queryMap);
+        if (queryMap.all()) {
+            return ok(this.find(QueryMap.of().rawTrue()));
+        }
+        if (queryMap.justOne()) {
+            return ok(this.findOne(queryMap));
+        }
+        return ok(this.find(queryMap, PageBounds.of(pageBounds, queryMap)));
+    }
+
+}

@@ -1,0 +1,151 @@
+{
+-jsonStart-
+}
+
+
+-javaParamNameUse-
+
+
+-commentUse-
+
+
+-sqlColumnNameUse-
+
+
+-javaColumnNameUse-
+
+tableName : -tableName-
+
+-sqlHelpful-
+
+
+-sqlHelpfulFormat-
+
+
+// api/api.js 中, 需要生成的代码
+
+  -tableNameJavaParam-Find(query) {
+    return this.get('/-tableNameJavaParam-/find', query)
+  }
+
+  -tableNameJavaParam-FindAll(query) {
+    return this.getFindAll('/-tableNameJavaParam-/find', query)
+  }
+
+  -tableNameJavaParam-All() {
+    return this.getAll('/-tableNameJavaParam-/find')
+  }
+
+  -tableNameJavaParam-One(id) {
+    return this.getOne('/-tableNameJavaParam-/find', id)
+  }
+
+  -tableNameJavaParam-AddUpdate(obj, by) {
+    return this.postBy('/-tableNameJavaParam-/addUpdate', obj, by)
+  }
+
+  -tableNameJavaParam-Delete(obj) {
+    return this.post('/-tableNameJavaParam-/delete', obj)
+  }
+
+
+// router/index.js 中, 需要生成的代码
+
+  {
+    path: '/-frontFilePath-/-tableNameJavaParam-',
+    component: () => import('@/views/-frontFilePath-/-tableNameJavaParam-'),
+  },
+
+
+      // 前端代码中详情数据的展示
+      <el-descriptions border :column="2">
+        -elDescriptionsItem-
+      </el-descriptions>
+
+      <el-form label-position="left" inline class="demo-table-expand">
+        -elFormItemDetail-
+      </el-form>
+
+
+-frontSelectConstant-
+
+-commentList-
+
+-columnNameJavaList-
+
+-queryFindParamDoc-
+
+-columnNoteWithLength-
+
+
+    // TODO: controller 通用模板
+    // TODO: controller 通用模板
+    // TODO: controller 通用模板
+    @GetMapping("info")
+    public ReturnData info(
+            -controllerFindParam-
+    ) throws Exception {
+        List<-tableNameJava-Entity> list = -tableNameJavaParam-Service.findByInfo(
+                -serviceFindName-
+        );
+        return ok(list);
+    }
+
+    @GetMapping("infoOne")
+    public ReturnData infoOne(
+            -controllerFindParam-
+    ) throws Exception {
+        -tableNameJava-Entity one = -tableNameJavaParam-Service.findOneByInfo(
+                -serviceFindName-
+        );
+        return ok(one);
+    }
+
+
+    // TODO: service 通用模板
+    // TODO: service 通用模板
+    // TODO: service 通用模板
+    public int updateByInfo(
+            -serviceTypeName-
+    ) {
+        return -tableNameJavaParam-Mapper.updateByInfo(
+                -serviceName-
+        );
+    }
+
+    public List<-tableNameJava-Entity> findByInfo(
+            -serFindTypeName-
+    ) {
+        List<-tableNameJava-Entity> list = -tableNameJavaParam-Mapper.findByInfo(
+                -serviceFindName-
+        );
+        return list;
+    }
+
+    public -tableNameJava-Entity findOneByInfo(
+            -serFindTypeName-
+    ) {
+        -tableNameJava-Entity one = -tableNameJavaParam-Mapper.findOneByInfo(
+                -serviceFindName-
+        );
+        return one;
+    }
+
+
+    // TODO: mapper 通用模板
+    // TODO: mapper 通用模板
+    // TODO: mapper 通用模板
+    @Update(" update -tableName- set" +
+            "-sqlFieldNameValue-" +
+            " where id = #{id}")
+    int updateByInfo(-sqlFieldNameValueParam-);
+
+    @Select("SELECT a.* FROM -tableName- a" +
+            -mapperSelectKeyValue-
+            " order by a.id desc LIMIT 10000")
+    List<-tableNameJava-Entity> findByInfo(-mapperSelectKeyValueParam-);
+
+    @Select("SELECT a.* FROM -tableName- a" +
+            -mapperSelectKeyValue-
+            " order by a.id desc LIMIT 1")
+    -tableNameJava-Entity findOneByInfo(-mapperSelectKeyValueParam-);

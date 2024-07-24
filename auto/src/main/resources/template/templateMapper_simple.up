@@ -1,0 +1,41 @@
+package -packageMapper-;
+
+import com.playlet.common.common.QueryMap;
+import com.playlet.common.common.paginator.PageBounds;
+import com.playlet.common.paginator.PageList;
+import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+/**
+ * -tableComment-
+ * -tableNameJava-
+ *
+ * @author -author-
+ */
+@Mapper
+@Repository
+public interface -tableNameJava-Mapper {
+
+    @Insert(" INSERT INTO -tableName- (" +
+            "-sqlFieldRaw-" +
+            " ) VALUES (" +
+            "-sqlFieldValue-" +
+            " )")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    int createEntity(-tableNameJava-Entity entity);
+
+    @Delete("delete FROM -tableName- WHERE id = #{id}")
+    int deleteById(int id);
+
+    @Update(" update -tableName- set" +
+            "-sqlFieldNameValue-" +
+            " where id = #{id}")
+    int updateEntity(-tableNameJava-Entity entity);
+
+    // TODO: 以下为查询
+    @SelectProvider(type = -tableNameJava-SqlProvider.class, method = "find")
+    PageList<-tableNameJava-Data> find(@Param("queryMap") QueryMap queryMap, PageBounds pageBounds);
+
+}

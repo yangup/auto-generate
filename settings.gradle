@@ -1,0 +1,3 @@
+rootProject.name = 'generate-curd'
+
+include 'auto'
