@@ -1,14 +1,18 @@
 package com.platform.auto;
 
 import com.intellij.openapi.wm.ToolWindow;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 public class AutoGenerateToolWindowContent {
 
+    @Getter
     private final JPanel contentPanel = new JPanel();
     private final JButton saveButton = new JButton("Save");
     private final JButton runButton = new JButton("Run");
@@ -49,7 +53,7 @@ public class AutoGenerateToolWindowContent {
             try {
                 Application.start();
             } catch (Exception ex) {
-                textArea.setText(ex.getMessage());
+                textArea.setText(getExceptionInfo(ex));
             }
         });
         controlsPanel.add(cancelButton);
@@ -57,8 +61,12 @@ public class AutoGenerateToolWindowContent {
         return controlsPanel;
     }
 
-    public JPanel getContentPanel() {
-        return contentPanel;
+    public static String getExceptionInfo(Exception e) {
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        e.printStackTrace(printWriter);
+        printWriter.close();
+        return stringWriter.toString();
     }
 
 }

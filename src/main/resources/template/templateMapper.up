@@ -1,0 +1,51 @@
+package -packageMapper-;
+
+import com.platform.common.common.QueryMap;
+import com.platform.common.paginator.PageBounds;
+import com.platform.common.paginator.PageList;
+import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+/**
+ * -tableComment-
+ * -tableNameJava-
+ *
+ * @author -author-
+ */
+@Mapper
+@Repository
+public interface -tableNameJava-Mapper {
+
+    @Insert(" INSERT INTO -tableName- (" +
+            " id," +
+            "-sqlFieldRaw-" +
+            " ) VALUES (" +
+            " #{id}," +
+            "-sqlFieldValue-" +
+            " )")
+    int createEntity(-tableNameJava-Entity entity);
+
+    @Delete("delete FROM -tableName- WHERE id = #{id}")
+    int deleteById(String id);
+
+    @Update(" update -tableName- set" +
+            "-sqlFieldNameValue-" +
+            " where id = #{id}")
+    int updateEntity(-tableNameJava-Entity entity);
+
+    // TODO: 以下为查询
+    @Select("SELECT a.* FROM -tableName- a order by a.id desc")
+    List<-tableNameJava-Entity> findAll();
+
+    @Select("SELECT a.* FROM -tableName- a WHERE a.id = #{id} order by a.id desc LIMIT 1")
+    -tableNameJava-Entity findById(String id);
+
+    @SelectProvider(type = -tableNameJava-SqlProvider.class, method = "findByIds")
+    List<-tableNameJava-Entity> findByIds(@Param("ids") List<String> ids);
+
+    @SelectProvider(type = -tableNameJava-SqlProvider.class, method = "find")
+    PageList<-tableNameJava-Page> find(@Param("queryMap") QueryMap queryMap, PageBounds pageBounds);
+
+}
