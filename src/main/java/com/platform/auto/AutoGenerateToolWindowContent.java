@@ -1,6 +1,8 @@
 package com.platform.auto;
 
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
+import com.platform.auto.jdbc.Constant;
 import com.platform.auto.sys.log.AutoLogger;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +22,7 @@ public class AutoGenerateToolWindowContent {
     private final JButton cancelButton = new JButton("Cancel");
     private final JTextArea logArea = new JTextArea();
 
-    public AutoGenerateToolWindowContent(ToolWindow toolWindow) {
+    public AutoGenerateToolWindowContent(ToolWindow toolWindow, Project project) {
         contentPanel.setLayout(new BorderLayout(20, 20));
         contentPanel.setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0));
         JPanel content = createCalendarPanel();
@@ -28,6 +30,7 @@ public class AutoGenerateToolWindowContent {
         contentPanel.add(content, BorderLayout.PAGE_START);
         contentPanel.add(createControlsPanel(toolWindow), BorderLayout.CENTER);
         AutoLogger.logArea = logArea;
+        Constant.project = project;
     }
 
     @NotNull

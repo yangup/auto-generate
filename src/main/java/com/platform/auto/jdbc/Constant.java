@@ -1,10 +1,13 @@
 package com.platform.auto.jdbc;
 
+import com.intellij.openapi.project.Project;
 import com.platform.auto.jdbc.model.TypeToJavaData;
 import org.apache.commons.lang3.StringUtils;
 
 public class Constant {
 
+    public static Project project;
+    public static String basePath;
     public static String db_project_name = "";
     public static String constant_project_name = "";
     public static String controller_project_name = "";

@@ -2,16 +2,17 @@ package com.platform.auto;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.intellij.openapi.roots.ProjectRootManager;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.platform.auto.jdbc.ConnectionAuto;
 import com.platform.auto.jdbc.Constant;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import com.platform.auto.util.AutoUtil;
 import com.platform.auto.util.CharUtil;
-import lombok.extern.slf4j.Slf4j;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class Application {
 
@@ -22,7 +23,7 @@ public class Application {
     }
 
     public static void start() throws Exception {
-
+        Constant.basePath = Constant.project.getBasePath();
         JsonNode jsonNode = new ObjectMapper().readTree(String.join(" ", AutoUtil.readTemplate("auto/setting.json")));
 
         /**
@@ -33,7 +34,7 @@ public class Application {
          * */
         Constant.path_base = jsonNode.get("path_base").asText();
 
-        // todo : 常量类的位置, 有些是类型的这种常量, 需要写入到常量类中
+        // todo : 常量类的位置, 有些是类型的这种常量, 需要写入到常量类中f
         Constant.package_constant = jsonNode.get("package_constant").asText();
         // todo : 关于 db 操作的类, 需要写入到 db 包中
         Constant.package_db = jsonNode.get("package_db").asText();
