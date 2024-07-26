@@ -1,6 +1,7 @@
 package com.platform.auto;
 
 import com.intellij.openapi.wm.ToolWindow;
+import com.platform.auto.sys.log.AutoLogger;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,7 +18,7 @@ public class AutoGenerateToolWindowContent {
     private final JButton saveButton = new JButton("Save");
     private final JButton runButton = new JButton("Run");
     private final JButton cancelButton = new JButton("Cancel");
-    private final JTextArea textArea = new JTextArea();
+    private final JTextArea logArea = new JTextArea();
 
     public AutoGenerateToolWindowContent(ToolWindow toolWindow) {
         contentPanel.setLayout(new BorderLayout(20, 20));
@@ -26,20 +27,21 @@ public class AutoGenerateToolWindowContent {
         content.setBorder(BorderFactory.createLineBorder(Color.RED));
         contentPanel.add(content, BorderLayout.PAGE_START);
         contentPanel.add(createControlsPanel(toolWindow), BorderLayout.CENTER);
+        AutoLogger.logArea = logArea;
     }
 
     @NotNull
     private JPanel createCalendarPanel() {
         JPanel calendarPanel = new JPanel();
         // 创建一个 JTextArea 对象
-        textArea.setRows(30);
-        textArea.setColumns(60);
+        logArea.setRows(30);
+        logArea.setColumns(40);
         // 创建一个红色线条边框
         Border border = BorderFactory.createLineBorder(new Color(60, 62, 64));
         // 设置 JTextArea 的边框
-        textArea.setBorder(border);
+        logArea.setBorder(border);
         // 将 JTextArea 放置在 JScrollPane 中，以支持滚动
-        JScrollPane scrollPane = new JScrollPane(textArea);
+        JScrollPane scrollPane = new JScrollPane(logArea);
         calendarPanel.add(scrollPane);
         return calendarPanel;
     }
@@ -53,7 +55,7 @@ public class AutoGenerateToolWindowContent {
             try {
                 Application.start();
             } catch (Exception ex) {
-                textArea.setText(getExceptionInfo(ex));
+                logArea.setText(logArea.getText() + "\n" + getExceptionInfo(ex));
             }
         });
         controlsPanel.add(cancelButton);

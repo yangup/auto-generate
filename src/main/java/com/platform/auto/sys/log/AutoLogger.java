@@ -1,5 +1,6 @@
 package com.platform.auto.sys.log;
 
+import javax.swing.*;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
@@ -9,6 +10,7 @@ import java.util.regex.Pattern;
 
 public class AutoLogger implements Logger {
 
+    public static JTextArea logArea;
     String name;
 
     public AutoLogger(String name) {
@@ -55,7 +57,11 @@ public class AutoLogger implements Logger {
         if (throwable != null) {
             sb.append(" " + getExceptionInfo(loggingEvent.getThrowable()));
         }
-        System.out.println(sb);
+        if (logArea != null) {
+            logArea.setText(logArea.getText() != null ? logArea.getText() + "\n" + sb : sb.toString());
+        } else {
+            System.out.println(sb);
+        }
     }
 
     public String replacePlaceholders(String msg, Object[] args) {
