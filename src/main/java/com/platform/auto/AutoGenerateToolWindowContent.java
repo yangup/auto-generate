@@ -53,6 +53,7 @@ public class AutoGenerateToolWindowContent {
         controlsPanel.add(runButton);
         runButton.addActionListener(e -> {
             try {
+                Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
                 Application.start();
             } catch (Exception ex) {
                 logArea.setText(logArea.getText() + "\n" + getExceptionInfo(ex));

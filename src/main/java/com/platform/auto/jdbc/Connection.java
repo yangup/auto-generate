@@ -1,7 +1,10 @@
 package com.platform.auto.jdbc;
 
+import com.platform.auto.jdbc.base.BaseCreate;
 import com.platform.auto.jdbc.base.TableFactory;
 import com.platform.auto.jdbc.model.Table;
+import com.platform.auto.sys.log.AutoLogger;
+import com.platform.auto.sys.log.Logger;
 import com.platform.auto.util.CharUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,8 +28,9 @@ import java.util.stream.Stream;
  * @author YangPu
  * @createTime 2016年7月19日 上午11:44:13
  */
-@Slf4j
 public class Connection extends CharUtil {
+
+    private static final Logger logger = AutoLogger.getLogger(Connection.class);
 
     public static String clazz;
     public static String url;
@@ -118,7 +122,7 @@ public class Connection extends CharUtil {
      **/
     public static List<Table> getTableRun(String... tableName) throws Exception {
         if (isNotEmpty(tableName)) {
-            log.info("tableName: {}", String.join(",", tableName));
+            logger.info("tableName: {}", String.join(",", tableName));
         }
         Class.forName(clazz);
         if (!url.endsWith("/")) {
@@ -132,18 +136,18 @@ public class Connection extends CharUtil {
         // todo : 获得 sql, 获得查询出表结构的 sql
         String sql = obtainSql(tableName);
         if (isEmpty(sql)) {
-            log.info("no query sql");
+            logger.info("no query sql");
             return null;
         }
-        log.info("get table information from database -start");
-        log.info(sql);
+        logger.info("get table information from database -start");
+        logger.info(sql);
         // todo : 根据 sql 获得表结构的数据
         ResultSet rs = st.executeQuery(sql);
-        log.info("get table information from database -end");
+        logger.info("get table information from database -end");
         // todo : 将返回的数据库的结果处理成 table
         TableFactory tableFactory = new TableFactory();
         List<Table> tables = tableFactory.obtainTable(rs);
-        log.info("analyze table data -end");
+        logger.info("analyze table data -end");
         rs.close();
         st.close();
         conn.close();

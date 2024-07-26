@@ -2,13 +2,17 @@ package com.platform.auto;
 
 import com.platform.auto.jdbc.ConnectionAuto;
 import com.platform.auto.jdbc.Constant;
+import com.platform.auto.sys.log.AutoLogger;
+import com.platform.auto.sys.log.Logger;
+import com.platform.auto.util.AutoUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-@Slf4j
 public class Application {
+
+    private static final Logger logger = AutoLogger.getLogger(Application.class);
 
     //    public static void main(String[] args) throws Exception {
 ////        start();

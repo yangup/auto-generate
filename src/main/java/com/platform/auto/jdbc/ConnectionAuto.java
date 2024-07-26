@@ -1,7 +1,10 @@
 package com.platform.auto.jdbc;
 
+import com.platform.auto.Application;
 import com.platform.auto.jdbc.base.BaseCreate;
 import com.platform.auto.jdbc.model.Table;
+import com.platform.auto.sys.log.AutoLogger;
+import com.platform.auto.sys.log.Logger;
 import com.platform.auto.util.CharUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,8 +22,9 @@ import java.util.List;
  * @author YangPu
  * @createTime 2016年7月19日 上午11:44:13
  */
-@Slf4j
 public class ConnectionAuto extends CharUtil {
+
+    private static final Logger logger = AutoLogger.getLogger(ConnectionAuto.class);
 
     public static void prepare(String clazz, String url, String username, String password, String database) {
         Connection.prepare(clazz, url, username, password, database);
@@ -55,7 +59,7 @@ public class ConnectionAuto extends CharUtil {
             doThing(table);
             needRunClazz.forEach(clazz -> {
                 try {
-                    log.info("table: {}, clazz: {}", nameShow, clazz.getName());
+                    logger.info("table: {}, clazz: {}", nameShow, clazz.getName());
                     Constructor<?> constructor = clazz.getDeclaredConstructor(Table.class);
                     constructor.newInstance(table);
                 } catch (Exception e) {

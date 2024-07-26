@@ -23,7 +23,7 @@ public class Constant {
     public static String base_url = "";
     public static String token = "9UHsisMpaa1GBhwTrJOXsiaSI6IjIwMjAxMjE2MjAxMjQ5MDAwMDAwMTAiLCJqdXN0Rm9yVGVzdCI6InllcyIsImwiOiJ5YW5ncHUiLCJ1IjoiMTExMTExMTExMTExIn0=";
     public static Integer number = null;
-    public static String template = "/template/";
+    public static String template = "template/";
 
     /**
      * 使用 templateMapper_simple
@@ -90,12 +90,8 @@ public class Constant {
     // todo : 生成构造方法
     public static Boolean isConstructor = Boolean.TRUE;
 
-    public static String obtain(String pathName) {
-        return Constant.class.getResource(pathName).getPath();
-    }
-
     public static String obtainTemplate(String templateName) {
-        return obtain(template + templateName);
+        return template + templateName;
     }
 
     public static void init() {

@@ -2,9 +2,10 @@ package com.platform.auto.jdbc.base;
 
 import com.platform.auto.jdbc.Constant;
 import com.platform.auto.jdbc.model.*;
+import com.platform.auto.sys.log.AutoLogger;
+import com.platform.auto.sys.log.Logger;
 import com.platform.auto.sys.order.Order;
 import com.platform.auto.util.AutoUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -20,8 +21,9 @@ import static com.platform.auto.util.CharUtil.*;
 /**
  * 基础的生成类
  **/
-@Slf4j
 public abstract class BaseCreate {
+
+    private static final Logger logger = AutoLogger.getLogger(BaseCreate.class);
 
     public List<String> codeList;
     public Table table;

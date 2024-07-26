@@ -1,5 +1,8 @@
 package com.platform.auto.util;
 
+import com.platform.auto.jdbc.base.TableFactory;
+import com.platform.auto.sys.log.AutoLogger;
+import com.platform.auto.sys.log.Logger;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -11,8 +14,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 public class AutoUtil extends CharUtil {
+
+    private static final Logger logger = AutoLogger.getLogger(AutoUtil.class);
+
     /**
      * 读取文件到 list
      **/
@@ -29,8 +34,8 @@ public class AutoUtil extends CharUtil {
             }
             reader.close();
         } catch (Exception e) {
-            log.info(e.getMessage());
-            log.info("read file error", file.getName());
+            logger.info(e.getMessage());
+            logger.info("read file error", file.getName());
         }
         return data;
     }
@@ -39,7 +44,20 @@ public class AutoUtil extends CharUtil {
      * 读取模板数据
      **/
     public static List<String> readTemplate(String name) {
-        return fileToList(new File(name));
+        List<String> data = new LinkedList<>();
+        InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
+        try {
+            if (inputStream != null) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    data.add(line);
+                }
+            }
+        } catch (Exception e) {
+            logger.info("readTemplate error, name: {}", name);
+        }
+        return data;
     }
 
     public static void listToFile(File file, List<String> data) throws Exception {
@@ -186,7 +204,7 @@ public class AutoUtil extends CharUtil {
             }
             // TODO: 和以前的文件一样, 不需要修改
             if (StringUtils.equals(String.join("", codeList1), String.join("", nowList1))) {
-                log.info("same code", file.getName());
+                logger.info("same code", file.getName());
                 return;
             }
             listToFile(file, codeList);
