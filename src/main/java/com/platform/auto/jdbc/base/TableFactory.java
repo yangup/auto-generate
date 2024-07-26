@@ -2,7 +2,8 @@ package com.platform.auto.jdbc.base;
 
 import com.platform.auto.jdbc.Constant;
 import com.platform.auto.jdbc.model.*;
-import lombok.extern.slf4j.Slf4j;
+import com.platform.auto.sys.log.AutoLogger;
+import com.platform.auto.sys.log.Logger;
 
 import java.lang.reflect.Field;
 import java.math.BigInteger;
@@ -16,8 +17,9 @@ import java.util.stream.Stream;
 
 import static com.platform.auto.util.CharUtil.*;
 
-@Slf4j
 public class TableFactory {
+
+    private static final Logger logger = AutoLogger.getLogger(TableFactory.class);
 
     /**
      * 根据数据库返回的 rs 处理成 table
@@ -26,7 +28,7 @@ public class TableFactory {
         Set<String> keys = ColumnInfo.FieldSet();
         List<Table> tables = new ArrayList<>();
         List<ColumnInfo> list = new ArrayList<>();
-        log.info("analyze table data -start");
+        logger.info("analyze table data -start");
         // todo : 将查出的数据解析到list中
         while (rs.next()) {
             list.add(resultSetToColumn(rs, keys));
@@ -35,9 +37,9 @@ public class TableFactory {
         tableInfoList.forEach((tableName, columnInfoList) -> {
             tables.add(initTable(columnInfoList));
             // for log
-            log.info(tableName);
+            logger.info(tableName);
             for (ColumnInfo info : columnInfoList) {
-                log.info(info.columnName);
+                logger.info(info.columnName);
             }
         });
 
