@@ -1,19 +1,16 @@
 package com.platform.auto.jdbc;
 
-import com.platform.auto.jdbc.base.BaseCreate;
 import com.platform.auto.jdbc.base.TableFactory;
 import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import com.platform.auto.util.CharUtil;
-import lombok.extern.slf4j.Slf4j;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * <p>

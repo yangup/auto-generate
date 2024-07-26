@@ -1,7 +1,6 @@
 package com.platform.auto.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.TypeToJavaData;
 import org.apache.commons.lang3.ObjectUtils;

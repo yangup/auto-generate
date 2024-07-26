@@ -13,9 +13,9 @@ public class Application {
 
     private static final Logger logger = AutoLogger.getLogger(Application.class);
 
-    public static void main(String[] args) throws Exception {
-        start();
-    }
+//    public static void main(String[] args) throws Exception {
+//        start();
+//    }
 
     public static void start() throws Exception {
         Constant.basePath = Constant.project.getBasePath();

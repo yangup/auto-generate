@@ -1,12 +1,10 @@
 package com.platform.auto.jdbc;
 
-import com.platform.auto.Application;
 import com.platform.auto.jdbc.base.BaseCreate;
 import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import com.platform.auto.util.CharUtil;
-import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
@@ -56,7 +54,6 @@ public class ConnectionAuto extends CharUtil {
         );
         tables.forEach(table -> {
             String nameShow = table.tableNameJavaParam;
-            doThing(table);
             needRunClazz.forEach(clazz -> {
                 try {
                     logger.info("table: {}, clazz: {}", nameShow, clazz.getName());
@@ -67,24 +64,6 @@ public class ConnectionAuto extends CharUtil {
                 }
             });
         });
-    }
-
-    public static void doThing(Table table) {
-//        for (ColumnInfo c : table.columnInfos) {
-////            {
-////                title: '监测网点',
-////                        key: 'name',
-////            }
-//            System.out.println(String.format(
-//                            "        {\n" +
-//                            "          title: '%s',\n" +
-//                            "          width: 100,\n" +
-//                            "          key: '%s',\n" +
-//                            "        },", c.columnComment, c.columnNameJava
-//            ));
-//        }
-
-
     }
 
 }
