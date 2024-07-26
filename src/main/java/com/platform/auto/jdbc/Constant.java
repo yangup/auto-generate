@@ -128,8 +128,8 @@ public class Constant {
         dto = obtainTemplate(TEMPLATE_DTO);
         mapper = obtainTemplate(TEMPLATE_MAPPER);
         mapperSimple = obtainTemplate(TEMPLATE_MAPPER_SIMPLE);
-        desc = obtainDocPath(DESC);
-        translate = obtainDocPath(TRANSLATE);
+//        desc = obtainDocPath(DESC);
+//        translate = obtainDocPath(TRANSLATE);
         service = obtainTemplate(TEMPLATE_SERVICE);
         serviceSimple = obtainTemplate(TEMPLATE_SERVICE_SIMPLE);
         docTable = obtainTemplate(TEMPLATE_DOC_TABLE);
@@ -157,14 +157,14 @@ public class Constant {
         return packagePathNew;
     }
 
-    /***
-     * 不在代码中的 path
-     * **/
-    public static String obtainDocPath(String name) {
-        String p = Constant.class.getResource(template).getPath();
-        String base = p.substring(0, p.indexOf("/generate-curd/auto/"));
-        return base + "\\doc\\" + name;
-    }
+//    /***
+//     * 不在代码中的 path
+//     * **/
+//    public static String obtainDocPath(String name) {
+//        String p = Constant.class.getResource(template).getPath();
+//        String base = p.substring(0, p.indexOf("/generate-curd/auto/"));
+//        return base + "\\doc\\" + name;
+//    }
 
 
 }

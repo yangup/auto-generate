@@ -52,7 +52,7 @@ public class AutoLogger implements Logger {
         StringBuilder sb = new StringBuilder();
         sb.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(loggingEvent.getTimeStamp())));
         sb.append(" " + loggingEvent.getLevel());
-        sb.append(" " + loggingEvent.getLoggerName());
+        sb.append(" " + formatLoggerName(loggingEvent.getLoggerName()));
         sb.append(": " + replacePlaceholders(loggingEvent.getMessage(), loggingEvent.getArgumentArray()));
         if (throwable != null) {
             sb.append(" " + getExceptionInfo(loggingEvent.getThrowable()));
@@ -87,6 +87,21 @@ public class AutoLogger implements Logger {
         e.printStackTrace(printWriter);
         printWriter.close();
         return stringWriter.toString();
+    }
+
+
+    public static String formatLoggerName(String loggerName) {
+        if (loggerName.length() > 40) {
+            return loggerName.substring(loggerName.length() - 40);
+        } else {
+            StringBuilder sb = new StringBuilder();
+            int spacesToAdd = 40 - loggerName.length();
+            sb.append(loggerName);
+            for (int i = 0; i < spacesToAdd; i++) {
+                sb.append(' ');
+            }
+            return sb.toString();
+        }
     }
 
 
