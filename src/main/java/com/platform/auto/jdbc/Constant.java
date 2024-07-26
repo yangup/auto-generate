@@ -4,6 +4,7 @@ import com.platform.auto.jdbc.model.TypeToJavaData;
 import org.apache.commons.lang3.StringUtils;
 
 public class Constant {
+
     public static String db_project_name = "";
     public static String constant_project_name = "";
     public static String controller_project_name = "";
@@ -43,8 +44,6 @@ public class Constant {
     public static String TEMPLATE_DTO = "templateDto.up";
     public static String TEMPLATE_MAPPER = "templateMapper.up";
     public static String TEMPLATE_MAPPER_SIMPLE = "templateMapper_simple.up";
-    public static String DESC = "desc.up";
-    public static String TRANSLATE = "translate.up";
     public static String TEMPLATE_SERVICE = "templateService.up";
     public static String TEMPLATE_SERVICE_SIMPLE = "templateService_simple.up";
     public static String TEMPLATE_DOC_TABLE = "templateDocTable.up";
@@ -61,8 +60,6 @@ public class Constant {
     public static String dto = "";
     public static String mapper = "";
     public static String mapperSimple = "";
-    public static String desc = "";
-    public static String translate = "";
     public static String service = "";
     public static String serviceSimple = "";
     public static String docTable = "";
@@ -128,8 +125,6 @@ public class Constant {
         dto = obtainTemplate(TEMPLATE_DTO);
         mapper = obtainTemplate(TEMPLATE_MAPPER);
         mapperSimple = obtainTemplate(TEMPLATE_MAPPER_SIMPLE);
-//        desc = obtainDocPath(DESC);
-//        translate = obtainDocPath(TRANSLATE);
         service = obtainTemplate(TEMPLATE_SERVICE);
         serviceSimple = obtainTemplate(TEMPLATE_SERVICE_SIMPLE);
         docTable = obtainTemplate(TEMPLATE_DOC_TABLE);
@@ -148,23 +143,13 @@ public class Constant {
         if (StringUtils.isEmpty(p)) {
             return "";
         }
-        String indexPath = "src\\main\\java";
-        String packagePathNew = StringUtils.substring(p, StringUtils.indexOf(p, indexPath) + indexPath.length() + 1);
+        String packagePathNew = StringUtils.substring(p, StringUtils.indexOf(p, base_java_path) + base_java_path.length() + 1);
         packagePathNew = StringUtils.replaceChars(packagePathNew, "\\", ".");
         if (StringUtils.endsWith(packagePathNew, ".")) {
             packagePathNew = packagePathNew.substring(0, packagePathNew.length() - 1);
         }
         return packagePathNew;
     }
-
-//    /***
-//     * 不在代码中的 path
-//     * **/
-//    public static String obtainDocPath(String name) {
-//        String p = Constant.class.getResource(template).getPath();
-//        String base = p.substring(0, p.indexOf("/generate-curd/auto/"));
-//        return base + "\\doc\\" + name;
-//    }
 
 
 }

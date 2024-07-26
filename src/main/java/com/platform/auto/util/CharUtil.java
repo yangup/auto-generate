@@ -1,10 +1,13 @@
 package com.platform.auto.util;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.TypeToJavaData;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -309,6 +312,16 @@ public class CharUtil extends ObjectUtils {
             return true;
         }
         return false;
+    }
+
+    public static List<String> convertJsonNodeArrayToStringList(JsonNode jsonNodeArray) {
+        List<String> stringList = new ArrayList<>();
+        if (jsonNodeArray.isArray()) {
+            for (JsonNode jsonNode : jsonNodeArray) {
+                stringList.add(jsonNode.asText());
+            }
+        }
+        return stringList;
     }
 
 }

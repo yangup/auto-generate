@@ -54,7 +54,7 @@ public class Connection extends CharUtil {
         database = database1;
     }
 
-    public static List<Table> getTable(String... tableName) throws Exception {
+    public static List<Table> getTable(List<String> tableName) throws Exception {
         Constant.init();
         List<Table> tables = getTableRun(tableName);
         // TODO: 检查一下 是否需要其他表的数据
@@ -77,7 +77,7 @@ public class Connection extends CharUtil {
                 )
                 .collect(Collectors.joining(","));
         if (isNotEmpty(otherTableNameArray) || isNotEmpty(relateTableName)) {
-            List<Table> otherTables = getTableRun((otherTableNameArray + "," + relateTableName).split(","));
+            List<Table> otherTables = getTableRun(List.of((otherTableNameArray + "," + relateTableName).split(",")));
             if (isNotEmpty(otherTables)) {
                 tables.forEach(t -> {
                     t.columnInfos.forEach(c -> {
@@ -120,7 +120,7 @@ public class Connection extends CharUtil {
     /**
      * 返回每个表应该生成的代码的数据
      **/
-    public static List<Table> getTableRun(String... tableName) throws Exception {
+    public static List<Table> getTableRun(List<String> tableName) throws Exception {
         if (isNotEmpty(tableName)) {
             logger.info("tableName: {}", String.join(",", tableName));
         }
@@ -158,10 +158,10 @@ public class Connection extends CharUtil {
      * 获得sql
      * 目前支持 mysql, pgsql
      **/
-    public static String obtainSql(final String... tableName) {
+    public static String obtainSql(final List<String> tableName) {
         String sql = null, tableSql = null;
         if (isNotEmpty(tableName)) {
-            tableSql = Stream.of(tableName).map(t -> s1 + t + s1).collect(Collectors.joining(","));
+            tableSql = tableName.stream().map(t -> s1 + t + s1).collect(Collectors.joining(","));
         }
         String ts = "";
         if (clazz.contains("mysql")) {

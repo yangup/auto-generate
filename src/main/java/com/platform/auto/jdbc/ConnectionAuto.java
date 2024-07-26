@@ -33,7 +33,7 @@ public class ConnectionAuto extends CharUtil {
     /**
      * 自动生成,
      **/
-    public static void start(String... tableName) throws Exception {
+    public static void start(List<String> tableName) throws Exception {
         generate(Connection.getTable(tableName));
     }
 
