@@ -2,17 +2,12 @@ package com.platform.auto;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.platform.auto.jdbc.ConnectionAuto;
 import com.platform.auto.jdbc.Constant;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import com.platform.auto.util.AutoUtil;
 import com.platform.auto.util.CharUtil;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class Application {
 
