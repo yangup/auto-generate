@@ -1,12 +1,10 @@
 package com.platform.auto;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.platform.auto.jdbc.ConnectionAuto;
 import com.platform.auto.jdbc.Constant;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
-import com.platform.auto.util.AutoUtil;
 import com.platform.auto.util.CharUtil;
 
 public class Application {
@@ -35,12 +33,6 @@ public class Application {
         // 通用代码生成
         ConnectionAuto.start(
                 CharUtil.convertJsonNodeArrayToStringList(Constant.getConfig().get("tableNames"))
-//                "tb_video_episode"
-//                "tb_video_like",
-//                "tb_video_collect",
-//                "tb_video_progress",
-//                "tb_video_episode_progress",
-//                "tb_event_tracking_log"
         );
 
         logger.info("end");
