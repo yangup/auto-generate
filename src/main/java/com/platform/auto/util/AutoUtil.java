@@ -1,9 +1,8 @@
 package com.platform.auto.util;
 
-import com.platform.auto.jdbc.base.TableFactory;
+import com.platform.auto.jdbc.Constant;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -45,7 +44,9 @@ public class AutoUtil extends CharUtil {
      **/
     public static List<String> readFromResources(String name) {
         List<String> data = new LinkedList<>();
-        InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
+//        InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
+        InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(
+                Constant.project_base_path + File.separator + Constant.auto_config_bash_path + File.separator + name);
         try {
             if (inputStream != null) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
