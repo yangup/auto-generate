@@ -52,8 +52,6 @@ public class Connection extends CharUtil {
     }
 
     public static List<Table> getTable(List<String> tableName) throws Exception {
-        Constant.init();
-        Constant.initConfig();
         List<Table> tables = getTableRun(tableName);
         // TODO: 检查一下 是否需要其他表的数据
         // TODO: 如果有外键, 或者其他表的id的话,需要获得其他表的数据
@@ -150,6 +148,28 @@ public class Connection extends CharUtil {
         st.close();
         conn.close();
         return tables;
+    }
+
+    public static List<String> getData(String key, String sql) throws Exception {
+        Class.forName(clazz);
+        if (!url.endsWith("/")) {
+            url = url + "/";
+        }
+        java.sql.Connection conn = DriverManager.getConnection(
+                url + database + "?useSSL=false&serverTimezone=GMT&autoReconnect=true",
+                username,
+                password);
+        Statement st = conn.createStatement();
+        logger.info(sql);
+        // todo : 根据 sql 获得表结构的数据
+        ResultSet rs = st.executeQuery(sql);
+        // todo : 将返回的数据库的结果处理成 table
+        TableFactory tableFactory = new TableFactory();
+        List<String> dataList = tableFactory.obtainData(rs, key);
+        rs.close();
+        st.close();
+        conn.close();
+        return dataList;
     }
 
     /**

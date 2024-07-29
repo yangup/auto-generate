@@ -19,7 +19,7 @@ public class Application {
         Constant.initConfig();
     }
 
-    public static void start() throws Exception {
+    public static void initStart() throws Exception {
         Constant.initStart();
         JsonNode jdbc = Constant.getConfig().get("jdbc");
         ConnectionAuto.prepare(jdbc.get("clazz").asText(),
@@ -27,6 +27,10 @@ public class Application {
                 jdbc.get("username").asText(),
                 jdbc.get("password").asText(),
                 jdbc.get("database").asText());
+    }
+
+    public static void start() throws Exception {
+        initStart();
         // TODO: 通用代码生成
         // TODO: 通用代码生成
         // TODO: 通用代码生成

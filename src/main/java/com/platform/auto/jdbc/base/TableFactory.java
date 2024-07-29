@@ -46,6 +46,14 @@ public class TableFactory {
         return tables;
     }
 
+    public List<String> obtainData(final ResultSet rs, final String key) throws Exception {
+        List<String> dataList = new ArrayList<>();
+        while (rs.next()) {
+            dataList.add(rs.getString(key));
+        }
+        return dataList;
+    }
+
     /**
      * 将数据解析到 ColumnInfo
      **/

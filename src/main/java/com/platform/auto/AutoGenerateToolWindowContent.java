@@ -12,7 +12,9 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class AutoGenerateToolWindowContent {
 
@@ -22,20 +24,33 @@ public class AutoGenerateToolWindowContent {
     private final JPanel contentPanel = new JPanel();
     private final JButton runButton = new JButton("Run");
     private final JButton cancelButton = new JButton("Cancel");
+    private List<String> dbNameList;
+    private List<String> tableNameList;
+    private List<JButton> tableNameButtonList;
 
     public AutoGenerateToolWindowContent(ToolWindow toolWindow, Project project) {
+        initApplication(project);
         contentPanel.setLayout(new BorderLayout(20, 20));
-        contentPanel.setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0));
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         JPanel content = createCalendarPanel();
         content.setBorder(BorderFactory.createLineBorder(Color.RED));
+//        contentPanel.setSize(200, tableNameList.size() * 20);
         contentPanel.add(content, BorderLayout.PAGE_START);
         contentPanel.add(createControlsPanel(toolWindow), BorderLayout.CENTER);
-        initApplication(project);
     }
 
     @NotNull
     private JPanel createCalendarPanel() {
-        JPanel calendarPanel = new JPanel();
+        initTableList();
+        JPanel buttonPanel = new JPanel();
+//        buttonPanel.setLayout(new GridLayout(3, 2)); // 3行2列
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); // 垂直排列
+        tableNameButtonList = new ArrayList<>();
+        tableNameList.forEach(tableName -> {
+            JButton button = new JButton(tableName);
+            tableNameButtonList.add(button);
+            buttonPanel.add(button);
+        });
         // 创建一个 JTextArea 对象
 //        logArea.setRows(30);
 //        logArea.setColumns(40);
@@ -46,7 +61,7 @@ public class AutoGenerateToolWindowContent {
 //        // 将 JTextArea 放置在 JScrollPane 中，以支持滚动
 //        JScrollPane scrollPane = new JScrollPane(logArea);
 //        calendarPanel.add(scrollPane);
-        return calendarPanel;
+        return buttonPanel;
     }
 
     @NotNull
@@ -72,6 +87,26 @@ public class AutoGenerateToolWindowContent {
             Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
             Constant.project = project;
             Application.init();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void initTableList() {
+        try {
+            Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
+            Application.initStart();
+            String sql = "SELECT distinct col.TABLE_SCHEMA\n" +
+                    "FROM `information_schema`.`tables` col\n" +
+                    "WHERE col.table_schema NOT IN ('information_schema', 'performance_schema', 'mysql', 'sys')\n" +
+                    "order by 1 asc";
+            this.dbNameList = Connection.getData("TABLE_SCHEMA", sql);
+            sql = "SELECT distinct col.TABLE_NAME\n" +
+                    "FROM `information_schema`.`tables` col\n" +
+                    "WHERE col.table_schema NOT IN ('information_schema', 'performance_schema', 'mysql', 'sys')\n" +
+                    "and col.table_schema IN ('" + Constant.getConfig().get("jdbc").get("database").asText() + "')\n" +
+                    "order by 1 asc";
+            this.tableNameList = Connection.getData("TABLE_NAME", sql);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
