@@ -18,7 +18,6 @@ public class Application {
      **/
     public static void init() throws Exception {
         Constant.project_base_path = Constant.project.getBasePath();
-        Constant.init();
         Constant.initConfig();
     }
 
