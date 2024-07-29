@@ -1,5 +1,4 @@
 {
-    "path_base": "D:\\ksm\\code\\playlet\\playlet-app-api",
     "package_constant": "com.playlet.common.constant",
     "package_db": "com.playlet.common.db",
     "package_controller": "com.playlet.api.controller",

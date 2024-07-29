@@ -8,6 +8,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -60,19 +62,18 @@ public class AutoUtil extends CharUtil {
     }
 
     public static List<String> readFromLocal(String name) {
+        String path = Constant.project_base_path + "/" + Constant.auto_config_bash_path + "/" + name;
         List<String> data = new LinkedList<>();
-        InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(
-                Constant.project_base_path + File.separator + Constant.auto_config_bash_path + File.separator + name);
         try {
-            if (inputStream != null) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
+                // 逐行读取文件内容并添加到List中
                 String line;
                 while ((line = reader.readLine()) != null) {
                     data.add(line);
                 }
             }
         } catch (Exception e) {
-            logger.info("readFromLocal error, name: {}", name);
+            logger.info("readFromLocal error, name: {}", path);
         }
         return data;
     }

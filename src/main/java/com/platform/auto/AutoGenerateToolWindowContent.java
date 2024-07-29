@@ -11,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AutoGenerateToolWindowContent {
 
@@ -51,6 +53,7 @@ public class AutoGenerateToolWindowContent {
     private JPanel createControlsPanel(ToolWindow toolWindow) {
         JPanel controlsPanel = new JPanel();
         controlsPanel.add(runButton);
+        runButton.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         runButton.addActionListener(e -> {
             try {
                 Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
@@ -70,7 +73,7 @@ public class AutoGenerateToolWindowContent {
             Constant.project = project;
             Application.init();
         } catch (Exception ex) {
-            logger.info(AutoLogger.getExceptionInfo(ex));
+            throw new RuntimeException(ex);
         }
     }
 
