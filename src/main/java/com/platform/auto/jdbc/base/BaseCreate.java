@@ -65,7 +65,7 @@ public abstract class BaseCreate {
         // 表的注释
         String tableComment = table.tableComment;
         // 读取 template
-        List<String> templateList = AutoUtil.readTemplate(this.template);
+        List<String> templateList = AutoUtil.readFromResources(this.template);
         for (String lineTemp : templateList) {
             StringBuilder line = new StringBuilder(lineTemp);
             lineReplaceOrder(line, Order.uuid, UUID.randomUUID());

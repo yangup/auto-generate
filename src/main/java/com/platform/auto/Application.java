@@ -18,8 +18,8 @@ public class Application {
 //    }
 
     public static void start() throws Exception {
-        Constant.basePath = Constant.project.getBasePath();
-        JsonNode jsonNode = new ObjectMapper().readTree(String.join(" ", AutoUtil.readTemplate("auto/setting.json")));
+        Constant.project_base_path = Constant.project.getBasePath();
+        JsonNode jsonNode = new ObjectMapper().readTree(String.join(" ", AutoUtil.readFromResources("config/setting.json")));
 
         /**
          * 目录结构为同级目录
@@ -27,7 +27,8 @@ public class Application {
          * common
          * 详情查看 demo.png
          * */
-        Constant.path_base = jsonNode.get("path_base").asText();
+//        Constant.path_base = jsonNode.get("path_base").asText();
+        Constant.path_base = Constant.project_base_path;
 
         // todo : 常量类的位置, 有些是类型的这种常量, 需要写入到常量类中f
         Constant.package_constant = jsonNode.get("package_constant").asText();

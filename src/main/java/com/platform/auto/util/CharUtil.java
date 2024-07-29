@@ -328,7 +328,7 @@ public class CharUtil extends ObjectUtils {
 //     *
 //     * **/
 //    public static String getKey(String... key) {
-//        JsonNode jsonNode = new ObjectMapper().readTree(String.join(" ", AutoUtil.readTemplate("auto/setting.json")));
+//        JsonNode jsonNode = new ObjectMapper().readTree(String.join(" ", AutoUtil.readFromResources("auto/setting.json")));
 //    }
 
 }

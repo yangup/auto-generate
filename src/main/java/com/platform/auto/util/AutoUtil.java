@@ -43,7 +43,7 @@ public class AutoUtil extends CharUtil {
     /**
      * 读取模板数据
      **/
-    public static List<String> readTemplate(String name) {
+    public static List<String> readFromResources(String name) {
         List<String> data = new LinkedList<>();
         InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
         try {
@@ -55,7 +55,7 @@ public class AutoUtil extends CharUtil {
                 }
             }
         } catch (Exception e) {
-            logger.info("readTemplate error, name: {}", name);
+            logger.info("readFromResources error, name: {}", name);
         }
         return data;
     }
@@ -65,6 +65,18 @@ public class AutoUtil extends CharUtil {
             return;
         }
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
+        for (int i = 0; i < data.size(); i++) {
+            writer.write(data.get(i) + n);
+        }
+        writer.close();
+    }
+
+
+    public static void listToFile(String path, List<String> data) throws Exception {
+        if (ObjectUtils.isEmpty(data)) {
+            return;
+        }
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(path)), StandardCharsets.UTF_8));
         for (int i = 0; i < data.size(); i++) {
             writer.write(data.get(i) + n);
         }

@@ -53,6 +53,7 @@ public class Connection extends CharUtil {
 
     public static List<Table> getTable(List<String> tableName) throws Exception {
         Constant.init();
+        Constant.initConfig();
         List<Table> tables = getTableRun(tableName);
         // TODO: 检查一下 是否需要其他表的数据
         // TODO: 如果有外键, 或者其他表的id的话,需要获得其他表的数据

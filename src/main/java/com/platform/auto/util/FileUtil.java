@@ -43,6 +43,13 @@ public class FileUtil extends StringUtils {
         return createFile(Constant.path_no_java + File.separator + parentName + File.separator + fileName);
     }
 
+    public static void createIfNotExistsByPath(String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+    }
+
     public static File createFileController(String fileName) {
         return createFile(Constant.path_controller + fileName);
     }
