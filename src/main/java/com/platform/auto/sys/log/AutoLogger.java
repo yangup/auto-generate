@@ -4,9 +4,7 @@ import com.platform.auto.jdbc.Constant;
 import com.platform.auto.util.AutoUtil;
 
 import javax.swing.*;
-import java.io.File;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -61,9 +59,11 @@ public class AutoLogger implements Logger {
         if (throwable != null) {
             sb.append(" " + getExceptionInfo(loggingEvent.getThrowable()));
         }
-        try {
-            AutoUtil.listToFile(Constant.log_path, List.of(sb.toString()));
-        } catch (Exception e) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(Constant.log_path, true))) {
+            writer.newLine();  // 换行
+            writer.write(sb.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

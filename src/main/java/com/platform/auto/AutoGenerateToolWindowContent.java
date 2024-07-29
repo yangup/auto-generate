@@ -11,8 +11,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 public class AutoGenerateToolWindowContent {
 
@@ -20,7 +18,6 @@ public class AutoGenerateToolWindowContent {
 
     @Getter
     private final JPanel contentPanel = new JPanel();
-    private final JButton saveButton = new JButton("Save");
     private final JButton runButton = new JButton("Run");
     private final JButton cancelButton = new JButton("Cancel");
 
@@ -31,8 +28,7 @@ public class AutoGenerateToolWindowContent {
         content.setBorder(BorderFactory.createLineBorder(Color.RED));
         contentPanel.add(content, BorderLayout.PAGE_START);
         contentPanel.add(createControlsPanel(toolWindow), BorderLayout.CENTER);
-        Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
-        Constant.project = project;
+        initApplication(project);
     }
 
     @NotNull
@@ -54,15 +50,13 @@ public class AutoGenerateToolWindowContent {
     @NotNull
     private JPanel createControlsPanel(ToolWindow toolWindow) {
         JPanel controlsPanel = new JPanel();
-        controlsPanel.add(saveButton);
         controlsPanel.add(runButton);
         runButton.addActionListener(e -> {
             try {
                 Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
-                Application.init();
                 Application.start();
             } catch (Exception ex) {
-                logger.info(getExceptionInfo(ex));
+                logger.info(AutoLogger.getExceptionInfo(ex));
             }
         });
         controlsPanel.add(cancelButton);
@@ -70,12 +64,15 @@ public class AutoGenerateToolWindowContent {
         return controlsPanel;
     }
 
-    public static String getExceptionInfo(Exception e) {
-        StringWriter stringWriter = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(stringWriter);
-        e.printStackTrace(printWriter);
-        printWriter.close();
-        return stringWriter.toString();
+    public void initApplication(Project project) {
+        try {
+            Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
+            Constant.project = project;
+            Application.init();
+        } catch (Exception ex) {
+            logger.info(AutoLogger.getExceptionInfo(ex));
+        }
     }
+
 
 }

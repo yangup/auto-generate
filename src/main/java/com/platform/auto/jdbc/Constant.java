@@ -1,5 +1,7 @@
 package com.platform.auto.jdbc;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intellij.openapi.project.Project;
 import com.platform.auto.jdbc.model.TypeToJavaData;
 import com.platform.auto.sys.log.AutoLogger;
@@ -106,10 +108,34 @@ public class Constant {
         return template + templateName;
     }
 
+    public static JsonNode getConfig() throws Exception {
+        return new ObjectMapper().readTree(String.join(" ", AutoUtil.readFromResources("config/setting.json")));
+    }
+
     /**
-     * 常量的初始化
+     * 初始化 配置参数
      **/
-    public static void init() {
+    public static void initStart() throws Exception {
+        JsonNode jsonNode = getConfig();
+        /**
+         * 目录结构为同级目录
+         * api
+         * common
+         * 详情查看 demo.png
+         * */
+//        Constant.path_base = jsonNode.get("path_base").asText();
+        Constant.path_base = Constant.project_base_path;
+
+        // todo : 常量类的位置, 有些是类型的这种常量, 需要写入到常量类中f
+        Constant.package_constant = jsonNode.get("package_constant").asText();
+        // todo : 关于 db 操作的类, 需要写入到 db 包中
+        Constant.package_db = jsonNode.get("package_db").asText();
+        // todo : controller 的类, 需要写入到 controller 的包中
+        Constant.package_controller = jsonNode.get("package_controller").asText();
+
+        Constant.db_project_name = jsonNode.get("db_project_name").asText();
+        Constant.controller_project_name = jsonNode.get("controller_project_name").asText();
+
 
         Constant.constant_project_name = StringUtils.isEmpty(Constant.constant_project_name) ? Constant.db_project_name : Constant.constant_project_name;
         Constant.constant = Constant.path_base + File.separator
@@ -135,6 +161,12 @@ public class Constant {
         package_base = obtainPackageJava(path) + ".";
         package_base_controller = obtainPackageJava(path_controller);
         TypeToJavaData.init();
+    }
+
+    /**
+     * 应用的初始化配置参数
+     **/
+    public static void init() {
         // todo : 需要重新赋值一下, 如果有新的, 就要更新一下
         useful = obtainTemplate(TEMPLATE_USEFUL);
         entity = obtainTemplate(TEMPLATE_ENTITY);
@@ -192,6 +224,7 @@ public class Constant {
      * 将 config 信息, 拷贝到 .auto 项目目录下面
      **/
     public static void initConfig() throws Exception {
+        init();
         if (StringUtils.isEmpty(project_base_path)) {
             return;
         }
@@ -219,6 +252,7 @@ public class Constant {
         if (temp.exists()) {
             return;
         }
+        // todo : 拷贝系统的 config 配置
         logger.info("initConfig");
         if (!temp.exists()) {
             temp.createNewFile();
