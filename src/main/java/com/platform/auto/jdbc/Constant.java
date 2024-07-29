@@ -158,8 +158,8 @@ public class Constant {
         // todo : 其他文件的路径
         Constant.path_no_java = Constant.path_base + File.separator + auto_config_bash_path + File.separator + "doc";
 
-        package_base = obtainPackageJava(path) + ".";
-        package_base_controller = obtainPackageJava(path_controller);
+        package_base = package_db + ".";
+        package_base_controller = package_controller;
         TypeToJavaData.init();
     }
 
@@ -203,21 +203,6 @@ public class Constant {
                 sqlProvider,
                 sqlProviderSimple
         );
-    }
-
-    /**
-     * 根据路径,获得包名
-     **/
-    public static String obtainPackageJava(String p) {
-        if (StringUtils.isEmpty(p)) {
-            return "";
-        }
-        String packagePathNew = StringUtils.substring(p, StringUtils.indexOf(p, base_java_path) + base_java_path.length() + 1);
-        packagePathNew = StringUtils.replaceChars(packagePathNew, File.separator, ".");
-        if (StringUtils.endsWith(packagePathNew, ".")) {
-            packagePathNew = packagePathNew.substring(0, packagePathNew.length() - 1);
-        }
-        return packagePathNew;
     }
 
     /**
