@@ -17,6 +17,7 @@ public class Constant {
 
     public static Project project;
     public static String project_base_path;
+    public static String log_path;
     public static String db_project_name = "";
     public static String constant_project_name = "";
     public static String controller_project_name = "";
@@ -197,17 +198,32 @@ public class Constant {
         FileUtil.createIfNotExistsByPath(project_base_path + File.separator + auto_config_bash_path);
         FileUtil.createIfNotExistsByPath(project_base_path + File.separator + auto_config_bash_path + File.separator + "config");
         FileUtil.createIfNotExistsByPath(project_base_path + File.separator + auto_config_bash_path + File.separator + "config" + File.separator + "template");
+
+        // for log
+        String logTxt = project_base_path +
+                File.separator + auto_config_bash_path +
+                File.separator + "config" +
+                File.separator + "log.txt";
+        Constant.log_path = logTxt;
+        File temp = new File(logTxt);
+        if (!temp.exists()) {
+            temp.createNewFile();
+        }
+
+        // 当 config 存在的时候,就不需要
         String configJson = project_base_path +
                 File.separator + auto_config_bash_path +
                 File.separator + "config" +
                 File.separator + "setting.json";
+        temp = new File(configJson);
+        if (temp.exists()) {
+            return;
+        }
         logger.info("initConfig");
-        File temp = new File(configJson);
         if (!temp.exists()) {
             temp.createNewFile();
             logger.info("initConfig " + configJson);
-            logger.info("initConfig_data " + String.join("--", AutoUtil.readFromResources("config" + File.separator + "setting.json")));
-            AutoUtil.listToFile(configJson, AutoUtil.readFromResources("config" + File.separator + "setting.json"));
+            AutoUtil.listToFile(configJson, AutoUtil.readFromResources("config/setting.json"));
         }
         for (String filePath : TEMPLATE_LLIST) {
             logger.info("filePath " + filePath);

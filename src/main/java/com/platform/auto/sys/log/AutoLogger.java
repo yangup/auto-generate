@@ -1,16 +1,20 @@
 package com.platform.auto.sys.log;
 
+import com.platform.auto.jdbc.Constant;
+import com.platform.auto.util.AutoUtil;
+
 import javax.swing.*;
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AutoLogger implements Logger {
 
-    public static JTextArea logArea;
     String name;
 
     public AutoLogger(String name) {
@@ -57,10 +61,9 @@ public class AutoLogger implements Logger {
         if (throwable != null) {
             sb.append(" " + getExceptionInfo(loggingEvent.getThrowable()));
         }
-        if (logArea != null) {
-            logArea.setText(logArea.getText() != null ? logArea.getText() + "\n" + sb : sb.toString());
-        } else {
-            System.out.println(sb);
+        try {
+            AutoUtil.listToFile(Constant.log_path, List.of(sb.toString()));
+        } catch (Exception e) {
         }
     }
 
