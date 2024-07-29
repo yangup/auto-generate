@@ -44,7 +44,23 @@ public class AutoUtil extends CharUtil {
      **/
     public static List<String> readFromResources(String name) {
         List<String> data = new LinkedList<>();
-//        InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
+        InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
+        try {
+            if (inputStream != null) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    data.add(line);
+                }
+            }
+        } catch (Exception e) {
+            logger.info("readFromResources error, name: {}", name);
+        }
+        return data;
+    }
+
+    public static List<String> readFromLocal(String name) {
+        List<String> data = new LinkedList<>();
         InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(
                 Constant.project_base_path + File.separator + Constant.auto_config_bash_path + File.separator + name);
         try {
@@ -56,7 +72,7 @@ public class AutoUtil extends CharUtil {
                 }
             }
         } catch (Exception e) {
-            logger.info("readFromResources error, name: {}", name);
+            logger.info("readFromLocal error, name: {}", name);
         }
         return data;
     }

@@ -109,7 +109,7 @@ public class Constant {
     }
 
     public static JsonNode getConfig() throws Exception {
-        return new ObjectMapper().readTree(String.join(" ", AutoUtil.readFromResources("config/setting.json")));
+        return new ObjectMapper().readTree(String.join(" ", AutoUtil.readFromLocal("config/setting.json")));
     }
 
     /**
