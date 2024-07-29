@@ -31,6 +31,7 @@ public class AutoGenerateToolWindowContent {
         content.setBorder(BorderFactory.createLineBorder(Color.RED));
         contentPanel.add(content, BorderLayout.PAGE_START);
         contentPanel.add(createControlsPanel(toolWindow), BorderLayout.CENTER);
+        Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
         Constant.project = project;
     }
 
@@ -58,6 +59,7 @@ public class AutoGenerateToolWindowContent {
         runButton.addActionListener(e -> {
             try {
                 Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
+                Application.init();
                 Application.start();
             } catch (Exception ex) {
                 logger.info(getExceptionInfo(ex));

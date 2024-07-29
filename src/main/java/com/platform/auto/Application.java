@@ -13,14 +13,12 @@ public class Application {
 
     private static final Logger logger = AutoLogger.getLogger(Application.class);
 
-//    public static void main(String[] args) throws Exception {
-//        start();
-//    }
+    public static void init() throws Exception {
+        Constant.project_base_path = Constant.project.getBasePath();
+    }
 
     public static void start() throws Exception {
-        Constant.project_base_path = Constant.project.getBasePath();
         JsonNode jsonNode = new ObjectMapper().readTree(String.join(" ", AutoUtil.readFromResources("config/setting.json")));
-
         /**
          * 目录结构为同级目录
          * api
