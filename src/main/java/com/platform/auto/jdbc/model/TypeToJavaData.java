@@ -20,6 +20,10 @@ public class TypeToJavaData {
 
     public static List<TypeToJavaData> fieldMapping = new ArrayList<>();
 
+    static {
+        init();
+    }
+
     // todo : 数据库中的数据类型
     // todo : 例如 : {"enum", "binary", "blob", "char", "enum", "fixed", "longblob", "tinyblob", "tinytext", "varbinary", "varchar", "longtext", "mediumblob", "set", "text"}
     public List<String> type;

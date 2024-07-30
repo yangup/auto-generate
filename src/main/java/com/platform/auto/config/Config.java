@@ -10,8 +10,10 @@ import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import com.platform.auto.util.AutoUtil;
 import com.platform.auto.util.FileUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -72,7 +74,8 @@ public class Config {
     public static void setLocal(String key, Object value) throws Exception {
         if (value == null) return;
         if (value instanceof List<?>) {
-            ((ObjectNode) getLocal()).putArray(key).addAll(objectMapper.readValue(objectMapper.writeValueAsString(value), ArrayNode.class));
+            ((ObjectNode) getLocal()).putArray(key)
+                    .addAll((ArrayNode) objectMapper.convertValue(value, JsonNode.class));
         } else {
             ((ObjectNode) getLocal()).put(key, value.toString());
         }
@@ -158,7 +161,10 @@ public class Config {
         FileUtil.createFile(log_path);
         // for local.json
         local_path = project_config_path + "/local.json";
-        FileUtil.createFile(local_path);
+        String localString = String.join(" ", AutoUtil.readFromLocal("config/local.json"));
+        if (StringUtils.isBlank(localString)) {
+            AutoUtil.listToFile(local_path, List.of("{\"_t\":\"" + System.currentTimeMillis() + "\"}"));
+        }
 
         // 当 config 存在的时候,就不需要
         String configJson = project_config_path + "/config.json";
@@ -179,4 +185,6 @@ public class Config {
             AutoUtil.listToFile(templateLocalFilePath, AutoUtil.readFromResources(templateFilePath));
         }
     }
+
+
 }

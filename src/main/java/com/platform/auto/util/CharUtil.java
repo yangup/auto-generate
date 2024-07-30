@@ -1,12 +1,16 @@
 package com.platform.auto.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.TypeToJavaData;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -322,6 +326,19 @@ public class CharUtil extends ObjectUtils {
             }
         }
         return stringList;
+    }
+
+    public static void main(String[] args) throws Exception {
+        String str = "{\"name\":\"zhangsan\",\"age\":18,\"address\":\"北京市海淀区\"}";
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readTree(str);
+
+        List<String> strList = Arrays.asList("it", "is", "a", "wonderful", "day");
+
+        ((ObjectNode)jsonNode).putArray("a").addAll((ArrayNode) mapper.convertValue(strList, JsonNode.class));
+//        System.out.println(strList);
+//        JsonNode jsonNode = mapper.convertValue(strList, JsonNode.class);
+        System.out.println(jsonNode);
     }
 
 }
