@@ -72,7 +72,7 @@ public class Config {
     public static void setLocal(String key, Object value) throws Exception {
         if (value == null) return;
         if (value instanceof List<?>) {
-            ((ObjectNode) getLocal()).putArray(key).addAll((ArrayNode) objectMapper.convertValue(value, JsonNode.class));
+            ((ObjectNode) getLocal()).putArray(key).addAll(objectMapper.readValue(objectMapper.writeValueAsString(value), ArrayNode.class));
         } else {
             ((ObjectNode) getLocal()).put(key, value.toString());
         }
