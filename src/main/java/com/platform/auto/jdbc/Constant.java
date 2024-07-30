@@ -112,6 +112,15 @@ public class Constant {
         return new ObjectMapper().readTree(String.join(" ", AutoUtil.readFromLocal("config/setting.json")));
     }
 
+//    public static void setConfig(String key, String value) throws Exception {
+//        String configJson = project_base_path +
+//                File.separator + auto_config_bash_path +
+//                File.separator + "config" +
+//                File.separator + "setting.json";
+//        JsonNode jsonNode = new ObjectMapper().readTree(String.join(" ", AutoUtil.readFromLocal("config/setting.json")));
+//        AutoUtil.listToFile(configJson, jsonNode);
+//    }
+
     /**
      * 初始化 配置参数
      **/
