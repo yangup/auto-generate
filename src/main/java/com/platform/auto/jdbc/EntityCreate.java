@@ -1,5 +1,6 @@
 package com.platform.auto.jdbc;
 
+import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.base.BaseCreate;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.Table;
@@ -31,7 +32,7 @@ public class EntityCreate extends BaseCreate {
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      */
     public EntityCreate(Table table, boolean isList) throws Exception {
-        super(Constant.entity, table);
+        super(Config.getTemplate("entity"), table);
         List<String> templateList = this.copyCodeListAndClear();
         this.list = this.table.columnInfos;
         for (String line : templateList) {
@@ -73,10 +74,6 @@ public class EntityCreate extends BaseCreate {
 //            }
 //            prefix = "";
 //        }
-
-        if (!Constant.isConstructor) {
-            return;
-        }
         codeList.add(n + "    /**\n" +
                 "     * static method\n" +
                 "     **/");
@@ -85,23 +82,6 @@ public class EntityCreate extends BaseCreate {
         codeList.add(t + t + "return " + table.tableNameJava + "Entity.builder().build();");
         codeList.add(t + "}");
 
-    }
-
-    public static void checkColumn(Table table) throws Exception {
-        File file = FileUtil.getFile(table, "Entity");
-        if (file == null) {
-            return;
-        }
-        EntityCreate create = new EntityCreate(table, true);
-        // TODO: 现在代码中的情况
-        List<String> nowList = AutoUtil.fileToList(file);
-
-//        boolean r = AutoUtil.checkColumn(nowList, create.codeList, "public String id;", null);
-        boolean r = AutoUtil.checkColumn(nowList, create.codeList, "public class", null);
-        if (r) {
-            // TODO: 新的代码, 放入到文件中
-            AutoUtil.listToFile(file, nowList);
-        }
     }
 
 }

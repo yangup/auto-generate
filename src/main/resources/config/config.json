@@ -1,0 +1,31 @@
+{
+  "author": "yangpu",
+  "controller_package": "com.playlet.api.controller",
+  "controller_project_name": "api",
+  "db_package": "com.playlet.common.db",
+  "db_project_name": "common",
+  "constant_package": "com.playlet.common.constant",
+  "constant_project_name": "common",
+  "jdbc": {
+    "clazz": "com.mysql.cj.jdbc.Driver",
+    "url": "jdbc:mysql://dev-db.ksmdev.top:3306",
+    "username": "root",
+    "password": "123456",
+    "database": "yp3"
+  },
+  "tableNames": [
+    "tb_user_facebook"
+  ],
+  "template": {
+    "controller": "config/template/templateController.up",
+    "service": "config/template/templateService.up",
+    "mapper": "config/template/templateMapper.up",
+    "sqlProvider": "config/template/templateSqlProvider.up",
+    "entity": "config/template/templateEntity.up",
+    "data": "config/template/templateData.up",
+    "dto": "config/template/templateDto.up",
+    "useful": "config/template/templateUseful.up",
+    "docTable": "config/template/templateDocTable.up",
+    "docPostMan": "config/template/templatePostManTable.up"
+  }
+}

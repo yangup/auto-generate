@@ -1,5 +1,6 @@
 package com.platform.auto.jdbc;
 
+import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.base.BaseCreate;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.Table;
@@ -34,7 +35,7 @@ public class DocTableCreate extends BaseCreate {
     }
 
     public DocTableCreate(Table table, boolean isList) throws Exception {
-        super(Constant.docTable, table);
+        super(Config.getTemplate("docTable"), table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             if (Order.check(line, Order.tableJson)) {

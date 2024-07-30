@@ -1,6 +1,7 @@
 package com.platform.auto.sys.log;
 
-import com.platform.auto.jdbc.Constant;
+
+import com.platform.auto.config.Config;
 import com.platform.auto.util.AutoUtil;
 
 import javax.swing.*;
@@ -59,7 +60,7 @@ public class AutoLogger implements Logger {
         if (throwable != null) {
             sb.append(" " + getExceptionInfo(loggingEvent.getThrowable()));
         }
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(Constant.log_path, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(Config.log_path, true))) {
             writer.newLine();  // 换行
             writer.write(sb.toString());
         } catch (IOException e) {

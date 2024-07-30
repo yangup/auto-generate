@@ -1,5 +1,6 @@
 package com.platform.auto.jdbc;
 
+import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.base.BaseCreate;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.SelectData;
@@ -32,7 +33,7 @@ public class UsefulCreate extends BaseCreate {
     }
 
     public UsefulCreate(Table table, boolean isList) throws Exception {
-        super(Constant.useful, table);
+        super(Config.getTemplate("useful"), table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             if (Order.check(line, Order.jsonStart)) {

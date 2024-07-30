@@ -1,5 +1,6 @@
 package com.platform.auto.jdbc;
 
+import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.base.BaseCreate;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.Table;
@@ -34,7 +35,7 @@ public class DtoCreate extends BaseCreate {
     }
 
     public DtoCreate(Table table, boolean isList) throws Exception {
-        super(Constant.dto, table);
+        super(Config.getTemplate("dto"), table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             if (line.contains(Order.getOrder(Order.startField))) {
@@ -106,10 +107,6 @@ public class DtoCreate extends BaseCreate {
             codeList.add(CharUtil.t + "public " + columninfo.dataTypeJava + " " + columninfo.columnNameJava + ";\n");
         }
 
-        if (!Constant.isConstructor) {
-            codeList.add(n);
-            return;
-        }
         codeList.add("    /**\n" +
                 "     * static method\n" +
                 "     **/");
@@ -117,22 +114,6 @@ public class DtoCreate extends BaseCreate {
 //        codeList.add(t + t + "return new " + table.tableNameJava + "Dto();");
         codeList.add(t + t + "return " + table.tableNameJava + "Dto.builder().build();");
         codeList.add(t + "}");
-    }
-
-    public static void checkColumn(Table table) throws Exception {
-        File file = FileUtil.getFile(table, "Dto");
-        if (file == null) {
-            return;
-        }
-        DtoCreate create = new DtoCreate(table, true);
-        // TODO: 现在代码中的情况
-        List<String> nowList = AutoUtil.fileToList(file);
-
-        boolean r = AutoUtil.checkColumn(nowList, create.codeList, "public class", null);
-        if (r) {
-            // TODO: 新的代码, 放入到文件中
-            AutoUtil.listToFile(file, nowList);
-        }
     }
 
 }

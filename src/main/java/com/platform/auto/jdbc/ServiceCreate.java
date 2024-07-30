@@ -1,5 +1,6 @@
 package com.platform.auto.jdbc;
 
+import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.base.BaseCreate;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.PageListParam;
@@ -37,7 +38,7 @@ public class ServiceCreate extends BaseCreate {
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      **/
     public ServiceCreate(Table table, boolean isList) throws Exception {
-        super(Constant.simple ? Constant.serviceSimple : Constant.service, table);
+        super(Config.getTemplate("service"), table);
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String line : codeTempList) {
             if (Order.check(line, Order.importService)) {
@@ -68,11 +69,11 @@ public class ServiceCreate extends BaseCreate {
     private void importService() {
         for (Table t : table.otherTable) {
             // import com.platform.db.admin.customer.*;
-            codeList.add(String.format("import %s.*;", (Constant.package_base + t.tableNameJavaParam.toLowerCase())));
+            codeList.add(String.format("import %s.*;", (Config.getByKeyFromLocal("db_package") + "." + t.tableNameJavaParam.toLowerCase())));
         }
         for (PageListParam param : table.relateTable) {
             // import com.platform.db.admin.customer.*;
-            codeList.add(String.format("import %s.*;", (Constant.package_base + param.otherTable.tableNameJavaParam.toLowerCase())));
+            codeList.add(String.format("import %s.*;", (Config.getByKeyFromLocal("db_package") + "." + param.otherTable.tableNameJavaParam.toLowerCase())));
         }
     }
 

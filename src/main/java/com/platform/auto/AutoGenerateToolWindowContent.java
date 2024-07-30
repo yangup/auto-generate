@@ -1,9 +1,10 @@
 package com.platform.auto;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
+import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.Connection;
-import com.platform.auto.jdbc.Constant;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import lombok.Getter;
@@ -24,43 +25,33 @@ public class AutoGenerateToolWindowContent {
     private final JPanel contentPanel = new JPanel();
     private final JButton runButton = new JButton("Run");
     private final JButton cancelButton = new JButton("Cancel");
-    private List<String> dbNameList;
-    private List<String> tableNameList;
     private List<JButton> tableNameButtonList;
 
     public AutoGenerateToolWindowContent(ToolWindow toolWindow, Project project) {
-        initApplication(project);
+        Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
+        init(project);
+        initTableList();
         contentPanel.setLayout(new BorderLayout(20, 20));
         contentPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        JPanel content = createCalendarPanel();
-        content.setBorder(BorderFactory.createLineBorder(Color.RED));
-//        contentPanel.setSize(200, tableNameList.size() * 20);
-        contentPanel.add(content, BorderLayout.PAGE_START);
-        contentPanel.add(createControlsPanel(toolWindow), BorderLayout.CENTER);
+        try {
+            JPanel content = createCalendarPanel();
+            content.setBorder(BorderFactory.createLineBorder(Color.RED));
+            contentPanel.add(content, BorderLayout.PAGE_START);
+            contentPanel.add(createControlsPanel(toolWindow), BorderLayout.CENTER);
+        } catch (Exception e) {
+        }
     }
 
     @NotNull
-    private JPanel createCalendarPanel() {
-        initTableList();
+    private JPanel createCalendarPanel() throws Exception {
         JPanel buttonPanel = new JPanel();
-//        buttonPanel.setLayout(new GridLayout(3, 2)); // 3行2列
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); // 垂直排列
         tableNameButtonList = new ArrayList<>();
-        tableNameList.forEach(tableName -> {
-            JButton button = new JButton(tableName);
+        for (JsonNode tableNameJsonNode : Config.getLocal().get("table")) {
+            JButton button = new JButton(tableNameJsonNode.asText());
             tableNameButtonList.add(button);
             buttonPanel.add(button);
-        });
-        // 创建一个 JTextArea 对象
-//        logArea.setRows(30);
-//        logArea.setColumns(40);
-//        // 创建一个红色线条边框
-//        Border border = BorderFactory.createLineBorder(new Color(60, 62, 64));
-//        // 设置 JTextArea 的边框
-//        logArea.setBorder(border);
-//        // 将 JTextArea 放置在 JScrollPane 中，以支持滚动
-//        JScrollPane scrollPane = new JScrollPane(logArea);
-//        calendarPanel.add(scrollPane);
+        }
         return buttonPanel;
     }
 
@@ -82,11 +73,9 @@ public class AutoGenerateToolWindowContent {
         return controlsPanel;
     }
 
-    public void initApplication(Project project) {
+    public void init(Project project) {
         try {
-            Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
-            Constant.project = project;
-            Application.init();
+            Config.init(project);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -94,19 +83,7 @@ public class AutoGenerateToolWindowContent {
 
     public void initTableList() {
         try {
-            Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
-            Application.initStart();
-            String sql = "SELECT distinct col.TABLE_SCHEMA\n" +
-                    "FROM `information_schema`.`tables` col\n" +
-                    "WHERE col.table_schema NOT IN ('information_schema', 'performance_schema', 'mysql', 'sys')\n" +
-                    "order by 1 asc";
-            this.dbNameList = Connection.getData("TABLE_SCHEMA", sql);
-            sql = "SELECT distinct col.TABLE_NAME\n" +
-                    "FROM `information_schema`.`tables` col\n" +
-                    "WHERE col.table_schema NOT IN ('information_schema', 'performance_schema', 'mysql', 'sys')\n" +
-                    "and col.table_schema IN ('" + Constant.getConfig().get("jdbc").get("database").asText() + "')\n" +
-                    "order by 1 asc";
-            this.tableNameList = Connection.getData("TABLE_NAME", sql);
+            Config.initLocalData();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

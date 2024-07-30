@@ -1,5 +1,6 @@
 package com.platform.auto.jdbc;
 
+import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.base.BaseCreate;
 import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.util.AutoUtil;
@@ -30,9 +31,9 @@ public class ControllerCreate extends BaseCreate {
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      **/
     public ControllerCreate(Table table, boolean isList) throws Exception {
-        super(Constant.controller, table);
+        super(Config.getTemplate("controller"), table);
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFileController(table.tableNameJava + "Controller.java"));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(Config.getControllerFilePath() + table.tableNameJava + "Controller.java"));
         }
     }
 

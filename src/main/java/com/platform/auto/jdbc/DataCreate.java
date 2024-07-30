@@ -1,5 +1,6 @@
 package com.platform.auto.jdbc;
 
+import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.base.BaseCreate;
 import com.platform.auto.jdbc.model.PageListParam;
 import com.platform.auto.jdbc.model.Table;
@@ -31,7 +32,7 @@ public class DataCreate extends BaseCreate {
      * @param table
      */
     public DataCreate(Table table, boolean isList) throws Exception {
-        super(Constant.data, table);
+        super(Config.getTemplate("data"), table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             // TODO: 可以添加其他逻辑
@@ -51,9 +52,6 @@ public class DataCreate extends BaseCreate {
     }
 
     private void createField() {
-        if (!Constant.isConstructor) {
-            return;
-        }
         codeList.add("    // todo : field\n");
         for (Table t : table.otherTable) {
             codeList.add(String.format("    public %sData %s;\n", t.tableNameJava, t.tableNameJavaParam));
@@ -78,11 +76,11 @@ public class DataCreate extends BaseCreate {
     private void importData() {
         for (Table t : table.otherTable) {
             // import com.platform.db.admin.customer.CustomerData;
-            codeList.add(String.format("import %sData;", (Constant.package_base + t.tableNameJavaParam.toLowerCase() + "." + t.tableNameJava)));
+            codeList.add(String.format("import %sData;", (Config.getByKeyFromLocal("db_package") + "." + t.tableNameJavaParam.toLowerCase() + "." + t.tableNameJava)));
         }
         for (PageListParam p : table.relateTable) {
             // import com.platform.db.admin.customer.CustomerData;
-            codeList.add(String.format("import %sData;", (Constant.package_base + p.otherTable.tableNameJavaParam.toLowerCase() + "." + p.otherTable.tableNameJava)));
+            codeList.add(String.format("import %sData;", (Config.getByKeyFromLocal("db_package") + "." + p.otherTable.tableNameJavaParam.toLowerCase() + "." + p.otherTable.tableNameJava)));
         }
     }
 

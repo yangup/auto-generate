@@ -1,6 +1,6 @@
 package com.platform.auto.util;
 
-import com.platform.auto.jdbc.Constant;
+import com.platform.auto.config.Config;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import org.apache.commons.lang3.ObjectUtils;
@@ -62,7 +62,7 @@ public class AutoUtil extends CharUtil {
     }
 
     public static List<String> readFromLocal(String name) {
-        String path = Constant.project_base_path + "/" + Constant.auto_config_bash_path + "/" + name;
+        String path = Config.project_auto_path + "/" + name;
         List<String> data = new LinkedList<>();
         try {
             try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {

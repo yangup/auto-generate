@@ -1,8 +1,8 @@
 package -packageSqlProvider-;
 
-import com.platform.common.common.BaseSqlProvider;
-import com.platform.common.common.QueryMap;
-import com.platform.common.util.sql.StringSql;
+import com.playlet.common.common.BaseSqlProvider;
+import com.playlet.common.common.QueryMap;
+import com.playlet.common.util.common.StringSql;
 
 import java.util.List;
 import java.util.Map;
@@ -24,23 +24,8 @@ public class -tableNameJava-SqlProvider extends BaseSqlProvider {
         sql.whereIsNotNULL("a.id", inComma(queryMap.id()));
         sql.whereIsNotNULL("a.id", inComma(queryMap.ids()));
         -queryMapParam-
-        sql.whereIsNotNULL("a.create_time >=", str(queryMap.createTimeFrom()));
-        sql.whereIsNotNULL("a.create_time <", str(queryMap.createTimeTo()));
-        sql.whereIsNotNULL("a.update_time >=", str(queryMap.updateTimeFrom()));
-        sql.whereIsNotNULL("a.update_time <", str(queryMap.updateTimeTo()));
         sql.whereIsNotNULL("a.create_time >=", str(queryMap.startTime()));
         sql.whereIsNotNULL("a.create_time <", str(queryMap.endTime()));
-        sql.append("order by a.create_time desc");
-        return sql.toString();
-    }
-
-    @SuppressWarnings("unchecked")
-    public String findByIds(Map<String, Object> params) {
-        List<String> ids = (List<String>) params.get("ids");
-
-        StringSql sql = StringSql.of("select a.*");
-        sql.append("FROM -tableName- a", true);
-        sql.appendWhere("a.id", ins(ids));
         sql.append("order by a.create_time desc");
         return sql.toString();
     }

@@ -1,6 +1,6 @@
 package com.platform.auto.jdbc.base;
 
-import com.platform.auto.jdbc.Constant;
+
 import com.platform.auto.jdbc.model.*;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
@@ -86,8 +86,7 @@ public class TableFactory {
         table.tableNameJavaParam = firstToLowercase(table.tableNameJava);
         table.tableNameJavaParamHump = humpToLine(table.tableNameJavaParam);
         table.tableNameJavaParamHumpUpper = table.tableNameJavaParamHump.toUpperCase();
-        table.frontFilePath = isNotEmpty(Constant.front_file) ? Constant.front_file : table.tableNameJava.toLowerCase();
-        table.javaFilePath = isNotEmpty(Constant.java_file_path) ? Constant.java_file_path : table.tableNameJava.toLowerCase();
+        table.javaFilePath = table.tableNameJava.toLowerCase();
         table.init();
 
         initColumnList(table);

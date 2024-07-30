@@ -1,5 +1,6 @@
 package com.platform.auto.jdbc;
 
+import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.base.BaseCreate;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.FindData;
@@ -26,7 +27,7 @@ public class PostManTableCreate extends BaseCreate {
     }
 
     public PostManTableCreate(Table table, boolean isList) throws Exception {
-        super(Constant.docPostManTable, table);
+        super(Config.getTemplate("docPostMan"), table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             line = Order.change(line, Order.name, FileUtil.getTableNameJavaLower(table));

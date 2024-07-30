@@ -1,5 +1,6 @@
 package com.platform.auto.jdbc;
 
+import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.base.BaseCreate;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.FindData;
@@ -33,7 +34,7 @@ public class SqlProviderCreate extends BaseCreate {
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      **/
     public SqlProviderCreate(Table table, boolean isList) throws Exception {
-        super(Constant.simple ? Constant.sqlProviderSimple : Constant.sqlProvider, table);
+        super(Config.getTemplate("sqlProvider"), table);
         generateConstant(table);
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String lineTemp : codeTempList) {
@@ -52,7 +53,7 @@ public class SqlProviderCreate extends BaseCreate {
      * 在 Constant.java 中生成需要的常量
      * **/
     private void generateConstant(Table table) throws Exception {
-        List<String> constantList = AutoUtil.fileToList(new File(Constant.constant));
+        List<String> constantList = AutoUtil.fileToList(new File(Config.getConstantFilePath() + "Constant.java"));
         List<String> newCoodeList = new ArrayList<>(constantList.size() * 2);
         List<String> addCoodeList = new ArrayList<>();
 
@@ -94,7 +95,7 @@ public class SqlProviderCreate extends BaseCreate {
         if (StringUtils.equals(String.join("", constantList), String.join("", newCoodeList))) {
             return;
         }
-        AutoUtil.listToFile(new File(Constant.constant), newCoodeList);
+        AutoUtil.listToFile(new File(Config.getConstantFilePath() + "Constant.java"), newCoodeList);
     }
 
     //sql.whereIsNotNULL("a.alarm_site_id", equal(queryMap.get(ALARM_SITE_ID)));

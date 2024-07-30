@@ -45,14 +45,6 @@ public class Table {
     // todo : 第一个, 不是 id 的列, 不是以 _id 结尾的列
     public ColumnInfo firstNoId;
 
-    /**
-     * 指定前端文件的文件夹
-     * 例如 : t_demo4,
-     * 如果 frontFile 为空 , 那就放到 demo4/demo4.vue
-     * 如果 frontFile 不为空 , 那就放到 frontFile/demo4.vue
-     */
-    public String frontFilePath;
-
     public String javaFilePath;
 
     // todo : 其他表的数据

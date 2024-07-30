@@ -1,5 +1,6 @@
 package com.platform.auto.jdbc;
 
+import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.base.BaseCreate;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.Table;
@@ -40,7 +41,7 @@ public class MapperCreate extends BaseCreate {
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      **/
     public MapperCreate(Table table, boolean isList) throws Exception {
-        super(Constant.simple ? Constant.mapperSimple : Constant.mapper, table);
+        super(Config.getTemplate("mapper"), table);
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String line : codeTempList) {
             if (Order.check(line, Order.sqlFieldRaw)) {
@@ -91,27 +92,6 @@ public class MapperCreate extends BaseCreate {
         if (!isList) {
             AutoUtil.newCodeToFile(codeList, FileUtil.createFileDB(table.tableNameJava + "Mapper.java", table.javaFilePath));
         }
-
-    }
-
-    /**
-     *
-     **/
-    public static void checkColumn(Table table) throws Exception {
-        File file = FileUtil.getFile(table, "Mapper");
-        if (file == null) {
-            return;
-        }
-        MapperCreate create = new MapperCreate(table, true);
-        // TODO: 现在代码中的情况
-        List<String> nowList = AutoUtil.fileToList(file);
-
-        AutoUtil.checkColumn(nowList, create.codeList, "@Insert(", "int createEntity(");
-        AutoUtil.checkColumn(nowList, create.codeList, "@Update(", "int updateEntity(");
-        AutoUtil.checkColumn(nowList, create.codeList, "// TODO: a.id,", "// TODO: a.id,");
-
-        // TODO: 新的代码, 放入到文件中
-        AutoUtil.listToFile(file, nowList);
     }
 
 

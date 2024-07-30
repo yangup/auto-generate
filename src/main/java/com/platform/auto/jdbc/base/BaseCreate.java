@@ -1,6 +1,7 @@
 package com.platform.auto.jdbc.base;
 
-import com.platform.auto.jdbc.Constant;
+
+import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.model.*;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
@@ -41,7 +42,10 @@ public abstract class BaseCreate {
         this.template = template;
         this.table = table;
         this.codeList = new ArrayList<>(128);
-        this.init();
+        try {
+            this.init();
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -52,10 +56,13 @@ public abstract class BaseCreate {
         this.template = template;
         this.table = table;
         this.codeList = new ArrayList<>(128);
-        this.init();
+        try {
+            this.init();
+        } catch (Exception e) {
+        }
     }
 
-    public void init() {
+    public void init() throws Exception {
         if (isEmpty(table)) {
             return;
         }
@@ -69,31 +76,20 @@ public abstract class BaseCreate {
         for (String lineTemp : templateList) {
             StringBuilder line = new StringBuilder(lineTemp);
             lineReplaceOrder(line, Order.uuid, UUID.randomUUID());
-            lineReplaceOrder(line, Order.base_url, Constant.base_url);
-            lineReplaceOrder(line, Order.token, Constant.token);
             lineReplaceOrder(line, Order.tableComment, tableComment);
             lineReplaceOrder(line, Order.tableCommentRaw, table.tableCommentRaw);
-            lineReplaceOrder(line, Order.projectName, Constant.projectName);
-            lineReplaceOrder(line, Order.author, Constant.author);
+            lineReplaceOrder(line, Order.author, Config.getByKey("author"));
             lineReplaceOrder(line, Order.tableNameJava, tableNameJava);
             lineReplaceOrder(line, Order.tableNameJavaParam, tableNameJavaParam);
             lineReplaceOrder(line, Order.tableNameJavaLower, tableNameJava.toLowerCase());
             lineReplaceOrder(line, Order.dateYMDHMSS, DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
             lineReplaceOrder(line, Order.dateYMDHM, DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm"));
             lineReplaceOrder(line, Order.dateYMDHMS, DateFormatUtils.format(new Date(), "yyyyMMdd_HHmmss"));
-            String packagePath = Constant.package_base + tableNameJava.toLowerCase();
-            if (isNotEmpty(table.javaFilePath)) {
-                packagePath = Constant.package_base + table.javaFilePath;
-            }
-            // todo : 将ctr中的包名改成 packageController
-            if (StringUtils.isEmpty(Constant.path_controller)) {
-                lineReplaceOrder(line, Order.packageController, packagePath);
-            } else {
-                lineReplaceOrder(line, Order.packageController, Constant.package_base_controller);
-            }
+            String packagePath = Config.getByKey("db_package") + "." + tableNameJava.toLowerCase();
+            lineReplaceOrder(line, Order.packageController, Config.getByKey("controller_package"));
             // todo : 将ser中的包名改成 packageService
             lineReplaceOrder(line, Order.packageService, packagePath);
-            lineReplaceOrder(line, Order.frontFilePath, table.frontFilePath);
+            lineReplaceOrder(line, Order.frontFilePath, table.tableNameJavaParam);
             // todo : 将dao中的包名改成 packageMapper
             lineReplaceOrder(line, Order.packageMapper, packagePath);
             // todo : 将table中的包名改成 packageTable
