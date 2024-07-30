@@ -107,8 +107,12 @@ public class Config {
                 + "/";
     }
 
-    public static String getByKey(String key) throws Exception {
-        return getConfig().get(key).asText();
+    public static String getByKey(String key) {
+        try {
+            return getConfig().get(key).asText();
+        } catch (Exception e) {
+        }
+        return "";
     }
 
     public static String getTemplate(String key) throws Exception {

@@ -69,11 +69,11 @@ public class ServiceCreate extends BaseCreate {
     private void importService() {
         for (Table t : table.otherTable) {
             // import com.platform.db.admin.customer.*;
-            codeList.add(String.format("import %s.*;", (Config.getByKeyFromLocal("db_package") + "." + t.tableNameJavaParam.toLowerCase())));
+            codeList.add(String.format("import %s.*;", (Config.getByKey("db_package") + "." + t.tableNameJavaParam.toLowerCase())));
         }
         for (PageListParam param : table.relateTable) {
             // import com.platform.db.admin.customer.*;
-            codeList.add(String.format("import %s.*;", (Config.getByKeyFromLocal("db_package") + "." + param.otherTable.tableNameJavaParam.toLowerCase())));
+            codeList.add(String.format("import %s.*;", (Config.getByKey("db_package") + "." + param.otherTable.tableNameJavaParam.toLowerCase())));
         }
     }
 

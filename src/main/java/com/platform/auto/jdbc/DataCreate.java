@@ -76,11 +76,11 @@ public class DataCreate extends BaseCreate {
     private void importData() {
         for (Table t : table.otherTable) {
             // import com.platform.db.admin.customer.CustomerData;
-            codeList.add(String.format("import %sData;", (Config.getByKeyFromLocal("db_package") + "." + t.tableNameJavaParam.toLowerCase() + "." + t.tableNameJava)));
+            codeList.add(String.format("import %sData;", (Config.getByKey("db_package") + "." + t.tableNameJavaParam.toLowerCase() + "." + t.tableNameJava)));
         }
         for (PageListParam p : table.relateTable) {
             // import com.platform.db.admin.customer.CustomerData;
-            codeList.add(String.format("import %sData;", (Config.getByKeyFromLocal("db_package") + "." + p.otherTable.tableNameJavaParam.toLowerCase() + "." + p.otherTable.tableNameJava)));
+            codeList.add(String.format("import %sData;", (Config.getByKey("db_package") + "." + p.otherTable.tableNameJavaParam.toLowerCase() + "." + p.otherTable.tableNameJava)));
         }
     }
 
