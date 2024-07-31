@@ -235,6 +235,7 @@ public class Connection extends CharUtil {
                     " and a.attrelid = c.oid and a.atttypid = t.oid" +
                     " ORDER BY a.relname asc, a.attnum";
         }
+        sql = sql.replaceAll(",", ", \n");
         return sql;
     }
 
