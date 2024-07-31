@@ -207,11 +207,11 @@ public class Connection extends CharUtil {
                     " c.extra," +
                     " c.PRIVILEGES," +
                     " c.column_comment," +
-                    " t.table_comment as table_comment" +
-                    " FROM information_schema.COLUMNS c" +
-                    " INNER JOIN information_schema.TABLES t ON c.table_name = t.table_name" +
-                    " WHERE c.table_schema = '%s'" +
-                    " and t.table_schema = '%s'" +
+                    " t.table_comment as table_comment \n" +
+                    " FROM information_schema.COLUMNS c\n" +
+                    " INNER JOIN information_schema.TABLES t ON c.table_name = t.table_name\n" +
+                    " WHERE c.table_schema = '%s'\n" +
+                    " and t.table_schema = '%s'\n" +
                     ts +
                     " order by c.table_name asc, c.ordinal_position asc, c.table_schema asc, c.column_key desc;";
             sql = String.format(sql, database, database);
