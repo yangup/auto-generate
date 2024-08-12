@@ -27,7 +27,7 @@ public class PostManTableCreate extends BaseCreate {
     }
 
     public PostManTableCreate(Table table, boolean isList) throws Exception {
-        super(Config.getTemplate("docPostMan"), table);
+        super(Config.getConfig().template.docPostMan, table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             line = Order.change(line, Order.name, FileUtil.getTableNameJavaLower(table));

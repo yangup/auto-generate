@@ -78,15 +78,15 @@ public abstract class BaseCreate {
             lineReplaceOrder(line, Order.uuid, UUID.randomUUID());
             lineReplaceOrder(line, Order.tableComment, tableComment);
             lineReplaceOrder(line, Order.tableCommentRaw, table.tableCommentRaw);
-            lineReplaceOrder(line, Order.author, Config.getByKey("author"));
+            lineReplaceOrder(line, Order.author, Config.getConfig().author);
             lineReplaceOrder(line, Order.tableNameJava, tableNameJava);
             lineReplaceOrder(line, Order.tableNameJavaParam, tableNameJavaParam);
             lineReplaceOrder(line, Order.tableNameJavaLower, tableNameJava.toLowerCase());
             lineReplaceOrder(line, Order.dateYMDHMSS, DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
             lineReplaceOrder(line, Order.dateYMDHM, DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm"));
             lineReplaceOrder(line, Order.dateYMDHMS, DateFormatUtils.format(new Date(), "yyyyMMdd_HHmmss"));
-            String packagePath = Config.getByKey("db_package") + "." + tableNameJava.toLowerCase();
-            lineReplaceOrder(line, Order.packageController, Config.getByKey("controller_package"));
+            String packagePath = Config.getConfig().dbPackage + "." + tableNameJava.toLowerCase();
+            lineReplaceOrder(line, Order.packageController, Config.getConfig().controllerPackage);
             // todo : 将ser中的包名改成 packageService
             lineReplaceOrder(line, Order.packageService, packagePath);
             lineReplaceOrder(line, Order.frontFilePath, table.tableNameJavaParam);

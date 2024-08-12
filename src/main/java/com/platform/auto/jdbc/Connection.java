@@ -1,5 +1,6 @@
 package com.platform.auto.jdbc;
 
+import com.platform.auto.config.LocalEntity;
 import com.platform.auto.jdbc.base.TableFactory;
 import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.sys.log.AutoLogger;
@@ -150,7 +151,7 @@ public class Connection extends CharUtil {
         return tables;
     }
 
-    public static List<String> getData(String key, String sql) throws Exception {
+    public static List<LocalEntity.TableEntity> getAllTableInfo() throws Exception {
         Class.forName(clazz);
         if (!url.endsWith("/")) {
             url = url + "/";
@@ -159,13 +160,17 @@ public class Connection extends CharUtil {
                 url + database + "?useSSL=false&serverTimezone=GMT&autoReconnect=true",
                 username,
                 password);
+        String sql = "SELECT table_schema, table_name\n" +
+                "FROM `information_schema`.`tables`\n" +
+                "WHERE table_schema NOT IN ('information_schema', 'performance_schema', 'mysql', 'sys')\n" +
+                "order by 1 asc, 2 asc;";
         Statement st = conn.createStatement();
         logger.info(sql);
         // todo : 根据 sql 获得表结构的数据
         ResultSet rs = st.executeQuery(sql);
         // todo : 将返回的数据库的结果处理成 table
         TableFactory tableFactory = new TableFactory();
-        List<String> dataList = tableFactory.obtainData(rs, key);
+        List<LocalEntity.TableEntity> dataList = tableFactory.obtainAllTable(rs);
         rs.close();
         st.close();
         conn.close();

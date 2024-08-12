@@ -41,7 +41,7 @@ public class MapperCreate extends BaseCreate {
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      **/
     public MapperCreate(Table table, boolean isList) throws Exception {
-        super(Config.getTemplate("mapper"), table);
+        super(Config.getConfig().template.mapper, table);
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String line : codeTempList) {
             if (Order.check(line, Order.sqlFieldRaw)) {

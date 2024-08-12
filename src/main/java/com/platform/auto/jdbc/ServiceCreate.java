@@ -38,7 +38,7 @@ public class ServiceCreate extends BaseCreate {
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      **/
     public ServiceCreate(Table table, boolean isList) throws Exception {
-        super(Config.getTemplate("service"), table);
+        super(Config.getConfig().template.service, table);
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String line : codeTempList) {
             if (Order.check(line, Order.importService)) {
@@ -69,11 +69,11 @@ public class ServiceCreate extends BaseCreate {
     private void importService() {
         for (Table t : table.otherTable) {
             // import com.platform.db.admin.customer.*;
-            codeList.add(String.format("import %s.*;", (Config.getByKey("db_package") + "." + t.tableNameJavaParam.toLowerCase())));
+            codeList.add(String.format("import %s.*;", (Config.getConfig().dbPackage + "." + t.tableNameJavaParam.toLowerCase())));
         }
         for (PageListParam param : table.relateTable) {
             // import com.platform.db.admin.customer.*;
-            codeList.add(String.format("import %s.*;", (Config.getByKey("db_package") + "." + param.otherTable.tableNameJavaParam.toLowerCase())));
+            codeList.add(String.format("import %s.*;", (Config.getConfig().dbPackage + "." + param.otherTable.tableNameJavaParam.toLowerCase())));
         }
     }
 

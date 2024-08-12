@@ -32,7 +32,7 @@ public class EntityCreate extends BaseCreate {
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      */
     public EntityCreate(Table table, boolean isList) throws Exception {
-        super(Config.getTemplate("entity"), table);
+        super(Config.getConfig().template.entity, table);
         List<String> templateList = this.copyCodeListAndClear();
         this.list = this.table.columnInfos;
         for (String line : templateList) {

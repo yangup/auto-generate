@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.platform.auto.config.Config;
+import com.platform.auto.config.LocalEntity;
 import com.platform.auto.jdbc.Connection;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
@@ -47,8 +48,8 @@ public class AutoGenerateToolWindowContent {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); // 垂直排列
         tableNameButtonList = new ArrayList<>();
-        for (JsonNode tableNameJsonNode : Config.getLocal().get("table")) {
-            JButton button = new JButton(tableNameJsonNode.asText());
+        for (LocalEntity.TableEntity tableEntity : Config.getLocal().tableList) {
+            JButton button = new JButton(tableEntity.tableSchema);
             tableNameButtonList.add(button);
             buttonPanel.add(button);
         }

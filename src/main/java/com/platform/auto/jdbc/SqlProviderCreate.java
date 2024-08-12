@@ -34,7 +34,7 @@ public class SqlProviderCreate extends BaseCreate {
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      **/
     public SqlProviderCreate(Table table, boolean isList) throws Exception {
-        super(Config.getTemplate("sqlProvider"), table);
+        super(Config.getConfig().template.sqlProvider, table);
         generateConstant(table);
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String lineTemp : codeTempList) {

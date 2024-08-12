@@ -33,7 +33,7 @@ public class UsefulCreate extends BaseCreate {
     }
 
     public UsefulCreate(Table table, boolean isList) throws Exception {
-        super(Config.getTemplate("useful"), table);
+        super(Config.getConfig().template.useful, table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             if (Order.check(line, Order.jsonStart)) {

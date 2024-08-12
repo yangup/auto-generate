@@ -33,6 +33,11 @@ public class AutoLogger implements Logger {
         this.recordEventArgArray(Level.INFO, format, arguments);
     }
 
+    @Override
+    public void info(Throwable e) {
+        this.recordEvent(Level.INFO, null, null, (Throwable) e);
+    }
+
     private void recordEventArgArray(Level level, String msg, Object[] args) {
         Throwable throwableCandidate = MessageFormatter.getThrowableCandidate(args);
         if (throwableCandidate != null) {
@@ -56,7 +61,9 @@ public class AutoLogger implements Logger {
         sb.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(loggingEvent.getTimeStamp())));
         sb.append(" " + loggingEvent.getLevel());
         sb.append(" " + formatLoggerName(loggingEvent.getLoggerName()));
-        sb.append(": " + replacePlaceholders(loggingEvent.getMessage(), loggingEvent.getArgumentArray()));
+        if (loggingEvent.getArgumentArray() != null) {
+            sb.append(": " + replacePlaceholders(loggingEvent.getMessage(), loggingEvent.getArgumentArray()));
+        }
         if (throwable != null) {
             sb.append(" " + getExceptionInfo(loggingEvent.getThrowable()));
         }

@@ -1,9 +1,6 @@
 package com.platform.auto.config;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.intellij.openapi.project.Project;
 import com.platform.auto.jdbc.Connection;
 import com.platform.auto.sys.log.AutoLogger;
@@ -13,8 +10,7 @@ import com.platform.auto.util.FileUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Iterator;
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class Config {
@@ -25,75 +21,78 @@ public class Config {
      * 系统 的常量
      * **/
     public static Project project;
-    public static JsonNode config;
-    public static JsonNode local;
+    public static ConfigEntity config;
+    public static LocalEntity local;
     public static final ObjectMapper objectMapper = new ObjectMapper();
 
     // todo : D:\ksm\code\playlet\playlet-app-api
     public static String project_base_path;
     public static final String auto_name = ".auto";
+    public static final String auto_config_name = ".config";
 
     // todo : D:\ksm\code\playlet\playlet-app-api\.auto
     public static String project_auto_path;
 
-    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\config
+    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\.config
     public static String project_config_path;
 
-    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\config\template
+    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\.config\template
     public static String project_template_path;
 
-    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\config\log.txt
+    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\.config\log.txt
     public static String log_path;
 
-    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\config\local.json
+    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\.config\local.json
     public static String local_path;
     public static String base_java_path = "/src/main/java/";
 
-    public static JsonNode getConfig() throws Exception {
-        config = config == null ? objectMapper.readTree(String.join(" ", AutoUtil.readFromLocal("config/config.json"))) : config;
+    public static ConfigEntity getConfig() {
+        try {
+            config = config == null ? objectMapper.readValue(String.join(" ", AutoUtil.readFromLocal(auto_config_name + "/config.json")), ConfigEntity.class) : config;
+        } catch (Exception e) {
+            logger.info(e);
+        }
         return config;
     }
 
-    public static JsonNode getConfigFromResources() throws Exception {
-        return objectMapper.readTree(String.join(" ", AutoUtil.readFromResources("config/config.json")));
+    public static ConfigEntity getConfigFromResources() {
+        try {
+            return objectMapper.readValue(String.join(" ", AutoUtil.readFromResources("config/config.json")), ConfigEntity.class);
+        } catch (Exception e) {
+            logger.info(e);
+        }
+        return null;
     }
 
-    public static JsonNode getLocal() throws Exception {
-        local = local == null ? objectMapper.readTree(String.join(" ", AutoUtil.readFromLocal("config/local.json"))) : local;
+    public static LocalEntity getLocal() {
+        try {
+            local = local == null ? objectMapper.readValue(String.join(" ", AutoUtil.readFromLocal(auto_config_name + "/local.json")), LocalEntity.class) : local;
+        } catch (Exception e) {
+            logger.info(e);
+        }
         return local;
     }
 
-    public static String getByKeyFromLocal(String key) {
+    public static void refreshLocal() {
         try {
-            return getLocal().get(key) == null ? null : getLocal().get(key).asText();
+            AutoUtil.listToFile(project_config_path + "/local.json", List.of(objectMapper.writeValueAsString(local)));
+            local = null;
+            getLocal();
         } catch (Exception e) {
+            logger.info(e);
         }
-        return "";
-    }
-
-    public static void setLocal(String key, Object value) throws Exception {
-        if (value == null) return;
-        if (value instanceof List<?>) {
-            ((ObjectNode) getLocal()).putArray(key)
-                    .addAll((ArrayNode) objectMapper.convertValue(value, JsonNode.class));
-        } else {
-            ((ObjectNode) getLocal()).put(key, value.toString());
-        }
-        AutoUtil.listToFile(project_config_path + "/local.json", List.of(getLocal().toString()));
-        local = null;
-        getLocal();
     }
 
     public static String getControllerFilePath() throws Exception {
-        return getJavaFilePath("controller_project_name", "controller_package");
+        return getJavaFilePath(getConfig().controllerProjectName, getConfig().controllerPackage);
     }
 
     public static String getDbFilePath() throws Exception {
-        return getJavaFilePath("db_project_name", "db_package");
+        return getJavaFilePath(getConfig().dbProjectName, getConfig().dbPackage);
     }
 
     public static String getConstantFilePath() throws Exception {
-        return getJavaFilePath("constant_project_name", "constant_package");
+        return getJavaFilePath(getConfig().constantProjectName, getConfig().constantPackage);
     }
 
     /**
@@ -101,26 +100,10 @@ public class Config {
      ***/
     public static String getJavaFilePath(String key1, String key2) throws Exception {
         return project_base_path + "/"
-                + getByKey(key1).replace(".", "/")
+                + key1.replace(".", "/")
                 + Config.base_java_path
-                + getByKey(key2).replace(".", "/")
+                + key2.replace(".", "/")
                 + "/";
-    }
-
-    public static String getByKey(String key) {
-        try {
-            return getConfig().get(key).asText();
-        } catch (Exception e) {
-        }
-        return "";
-    }
-
-    public static String getTemplate(String key) throws Exception {
-        return getConfig().get("template").get(key).asText();
-    }
-
-    public static String getJdbc(String key) throws Exception {
-        return getConfig().get("jdbc").get(key).asText();
     }
 
     /**
@@ -128,23 +111,13 @@ public class Config {
      **/
     public static void initLocalData() throws Exception {
         Connection.prepare(
-                Config.getJdbc("clazz"),
-                Config.getJdbc("url"),
-                Config.getJdbc("username"),
-                Config.getJdbc("password"),
-                Config.getJdbc("database")
+                getConfig().jdbc.clazz,
+                getConfig().jdbc.url,
+                getConfig().jdbc.username,
+                getConfig().jdbc.password,
+                getConfig().jdbc.database
         );
-        String sql = "SELECT distinct col.TABLE_SCHEMA\n" +
-                "FROM `information_schema`.`tables` col\n" +
-                "WHERE col.table_schema NOT IN ('information_schema', 'performance_schema', 'mysql', 'sys')\n" +
-                "order by 1 asc";
-        setLocal("db", Connection.getData("TABLE_SCHEMA", sql));
-        sql = "SELECT distinct col.TABLE_NAME\n" +
-                "FROM `information_schema`.`tables` col\n" +
-                "WHERE col.table_schema NOT IN ('information_schema', 'performance_schema', 'mysql', 'sys')\n" +
-                "and col.table_schema IN ('" + Config.getConfig().get("jdbc").get("database").asText() + "')\n" +
-                "order by 1 asc";
-        setLocal("table", Connection.getData("TABLE_NAME", sql));
+        local.setTableList(Connection.getAllTableInfo());
     }
 
     /**
@@ -157,7 +130,7 @@ public class Config {
         project_base_path = project.getBasePath();
 
         project_auto_path = project_base_path + "/" + auto_name;
-        project_config_path = project_auto_path + "/config";
+        project_config_path = project_auto_path + "/" + auto_config_name;
         project_template_path = project_config_path + "/template";
 
         // for log
@@ -165,7 +138,7 @@ public class Config {
         FileUtil.createFile(log_path);
         // for local.json
         local_path = project_config_path + "/local.json";
-        String localString = String.join(" ", AutoUtil.readFromLocal("config/local.json"));
+        String localString = String.join(" ", AutoUtil.readFromLocal(auto_config_name + "/local.json"));
         if (StringUtils.isBlank(localString)) {
             AutoUtil.listToFile(local_path, List.of("{\"_t\":\"" + System.currentTimeMillis() + "\"}"));
         }
@@ -179,11 +152,12 @@ public class Config {
         // todo : 拷贝系统的 config 配置
         logger.info("initConfig: {}", configJson);
         AutoUtil.listToFile(configJson, AutoUtil.readFromResources("config/config.json"));
-        JsonNode templateJsonNode = getConfigFromResources().get("template");
-        Iterator<String> fieldNames = templateJsonNode.fieldNames();
-        while (fieldNames.hasNext()) {
-            String fieldName = fieldNames.next();
-            String templateFilePath = templateJsonNode.get(fieldName).asText();
+        ConfigEntity.Template template = getConfigFromResources().template;
+        Class<?> clazz = template.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            String templateFilePath = field.get(clazz).toString();
             String templateLocalFilePath = project_auto_path + "/" + templateFilePath;
             FileUtil.createFile(templateLocalFilePath);
             AutoUtil.listToFile(templateLocalFilePath, AutoUtil.readFromResources(templateFilePath));

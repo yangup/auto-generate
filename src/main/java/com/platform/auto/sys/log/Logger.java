@@ -9,4 +9,6 @@ public interface Logger {
 
     void info(String var1, Object... var2);
 
+    void info(Throwable e);
+
 }

@@ -31,7 +31,7 @@ public class ControllerCreate extends BaseCreate {
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      **/
     public ControllerCreate(Table table, boolean isList) throws Exception {
-        super(Config.getTemplate("controller"), table);
+        super(Config.getConfig().template.controller, table);
         if (!isList) {
             AutoUtil.newCodeToFile(codeList, FileUtil.createFile(Config.getControllerFilePath() + table.tableNameJava + "Controller.java"));
         }
