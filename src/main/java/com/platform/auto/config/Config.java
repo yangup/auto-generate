@@ -57,7 +57,7 @@ public class Config {
 
     public static ConfigEntity getConfigFromResources() {
         try {
-            return objectMapper.readValue(String.join(" ", AutoUtil.readFromResources("config/config.json")), ConfigEntity.class);
+            return objectMapper.readValue(String.join(" ", AutoUtil.readFromResources(auto_config_name + "/config.json")), ConfigEntity.class);
         } catch (Exception e) {
             logger.info(e);
         }
@@ -151,7 +151,7 @@ public class Config {
         }
         // todo : 拷贝系统的 config 配置
         logger.info("initConfig: {}", configJson);
-        AutoUtil.listToFile(configJson, AutoUtil.readFromResources("config/config.json"));
+        AutoUtil.listToFile(configJson, AutoUtil.readFromResources(auto_config_name + "/config.json"));
         ConfigEntity.Template template = getConfigFromResources().template;
         Class<?> clazz = template.getClass();
         Field[] fields = clazz.getDeclaredFields();
