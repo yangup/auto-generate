@@ -64,6 +64,8 @@ dependencies {
   implementation 'com.alibaba:fastjson:2.0.43'
   implementation 'commons-io:commons-io:2.15.1'
 
+  implementation 'com.jfoenix:jfoenix:9.0.10'
+
   // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
   implementation 'org.apache.commons:commons-lang3:3.14.0'
 
