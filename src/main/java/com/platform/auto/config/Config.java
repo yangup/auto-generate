@@ -57,6 +57,8 @@ public class Config {
 
     public static ConfigEntity getConfigFromResources() {
         try {
+            logger.info(auto_config_name + "/config.json");
+            logger.info(String.join(" ", AutoUtil.readFromResources(auto_config_name + "/config.json")));
             return objectMapper.readValue(String.join(" ", AutoUtil.readFromResources(auto_config_name + "/config.json")), ConfigEntity.class);
         } catch (Exception e) {
             logger.info(e);
@@ -117,7 +119,7 @@ public class Config {
                 getConfig().jdbc.password,
                 getConfig().jdbc.database
         );
-        local.setTableList(Connection.getAllTableInfo());
+        getLocal().setTableList(Connection.getAllTableInfo());
     }
 
     /**
