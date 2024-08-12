@@ -11,6 +11,8 @@ import java.util.List;
 
 @Data
 public class LocalEntity {
+
+    @JsonProperty("_t")
     public Long time;
     public List<TableEntity> tableList;
 
