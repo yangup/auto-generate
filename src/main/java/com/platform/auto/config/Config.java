@@ -119,6 +119,7 @@ public class Config {
                 getConfig().jdbc.database
         );
         getLocal().setTableList(Connection.getAllTableInfo());
+        refreshLocal();
     }
 
     /**
