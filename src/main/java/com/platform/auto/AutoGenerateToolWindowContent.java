@@ -10,32 +10,31 @@ import com.platform.auto.sys.log.Logger;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.*;
 import java.util.List;
 
 public class AutoGenerateToolWindowContent {
 
     private static final Logger logger = AutoLogger.getLogger(Connection.class);
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(AutoGenerateToolWindowContent.class);
 
     @Getter
     private final JPanel contentPanel = new JPanel();
     // 数据刷新框
     private final JButton refreshButton = new JButton("refresh");
     // 数据库 名称输入框
-    private final JTextField dbInput = new JTextField(20);
+    private final JTextField dbFilter = new JTextField(20);
     // 符合数据库名称的 所有数据库列表信息
     private List<JButton> dbButtonList = new ArrayList<>();
     // 表名称输入框
     private final JTextField tableNameInput = new JTextField(20);
     // 符合表名称的 所有表名称信息
     private List<JButton> tableNameButtonList = new ArrayList<>();
+    private Color colorDefault = new JButton().getBackground();
 
     private JPanel allPanel = new JPanel();
     private JPanel dbPanel = new JPanel();
@@ -67,26 +66,13 @@ public class AutoGenerateToolWindowContent {
                 logger.info(AutoLogger.getExceptionInfo(ex));
             }
         });
-
-        dbInput.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                Config.getLocal().setFilterDbNameText(dbInput.getText());
-                refreshDbList();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                Config.getLocal().setFilterDbNameText(dbInput.getText());
-                refreshDbList();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                // 通常不会处理这个事件，除非文档的属性（如字符属性）发生了更改
-            }
+        // 添加 ActionListener 来监听回车键
+        dbFilter.addActionListener(e -> {
+            // 当按下回车键时执行的操作
+            Config.getLocal().setFilterDbNameText(dbFilter.getText());
+            refreshDbList();
         });
-        allPanel.add(dbInput);
+        allPanel.add(dbFilter);
         refreshDbList();
         allPanel.add(dbPanel);
 
@@ -122,23 +108,53 @@ public class AutoGenerateToolWindowContent {
 
 
     private void refreshDbList() {
-        log.info("refreshDbList");
+        logger.info("refreshDbList");
         Set<String> dbNameList = new HashSet<>();
         for (LocalEntity.TableEntity table : Config.getLocal().tableList) {
-            if (StringUtils.containsAnyIgnoreCase(table.tableSchema, dbInput.getText())) {
-                dbNameList.add(table.tableSchema);
-            }
+//            if (StringUtils.isNotEmpty(Config.getLocal().getFilterDbNameText())) {
+//                if (StringUtils.containsAnyIgnoreCase(table.tableSchema, Config.getLocal().getFilterDbNameText())) {
+//                    dbNameList.add(table.tableSchema);
+//                }
+//            } else {
+            dbNameList.add(table.tableSchema);
+//            }
         }
+//        // 查询出来的数据库名称列表
         List<String> data = new ArrayList<>(dbNameList);
         Collections.sort(data);
-        dbButtonList.clear();
-        dbPanel.removeAll();
+//        dbButtonList.clear();
+//        dbPanel.removeAll();
         int count = 0;
         for (String dbName : data) {
             count++;
             JButton button = new JButton(dbName);
+            button.setBackground(Color.RED);
+            if (StringUtils.equals(Config.getLocal().getFilterDbNameText(), button.getText())) {
+                button.setBackground(Color.BLUE);
+            }
+            if (StringUtils.equals(Config.getLocal().getSelectedDbName(), button.getText())) {
+                button.setBackground(Color.LIGHT_GRAY);
+            }
             dbButtonList.add(button);
-            dbPanel.add(button);
+
+
+            // 点击 button ， 背景蓝色
+            button.addActionListener(e -> {
+                Config.getLocal().setSelectedDbName(button.getText());
+                refreshDbList();
+            });
+
+            button.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 2) {
+                        Config.getLocal().setSelectedDbName(button.getText());
+                        Config.getLocal().setFilterDbNameText(button.getText());
+                        refreshDbList();
+                    }
+                }
+            });
+
             if (count > 5) {
                 break;
             }

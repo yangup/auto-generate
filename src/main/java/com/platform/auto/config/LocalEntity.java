@@ -14,10 +14,13 @@ public class LocalEntity {
     public Long time;
 
     public String filterDbNameText;
+    public String selectedDbName;
 
     public String filterTableNameText;
 
     public List<TableEntity> tableList;
+
+    public String selectedTableName;
 
     @Data
     public static class TableEntity {
