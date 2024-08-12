@@ -157,10 +157,13 @@ public class Config {
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
-            String templateFilePath = field.get(clazz).toString();
-            String templateLocalFilePath = project_auto_path + "/" + templateFilePath;
-            FileUtil.createFile(templateLocalFilePath);
-            AutoUtil.listToFile(templateLocalFilePath, AutoUtil.readFromResources(templateFilePath));
+            logger.info("field: {}", field.getName());
+            logger.info("field: {}", field.getType());
+            logger.info("field: {}", field.get(clazz));
+//            String templateFilePath = field.get(clazz).toString();
+//            String templateLocalFilePath = project_auto_path + "/" + templateFilePath;
+//            FileUtil.createFile(templateLocalFilePath);
+//            AutoUtil.listToFile(templateLocalFilePath, AutoUtil.readFromResources(templateFilePath));
         }
     }
 
