@@ -3,6 +3,7 @@ package com.platform.auto;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.platform.auto.config.Config;
+import com.platform.auto.config.DbEntity;
 import com.platform.auto.config.LocalEntity;
 import com.platform.auto.jdbc.Connection;
 import com.platform.auto.sys.log.AutoLogger;
@@ -34,7 +35,8 @@ public class AutoGenerateToolWindowContent {
     private final JTextField tableNameInput = new JTextField(20);
     // 符合表名称的 所有表名称信息
     private List<JButton> tableNameButtonList = new ArrayList<>();
-    private Color colorDefault = new JButton().getBackground();
+    //    private Color colorDefault = new JButton().getBackground();
+    private Color colorDefault = Color.RED;
 
     private JPanel allPanel = new JPanel();
     private JPanel dbPanel = new JPanel();
@@ -109,56 +111,58 @@ public class AutoGenerateToolWindowContent {
 
     private void refreshDbList() {
         logger.info("refreshDbList");
-        Set<String> dbNameList = new HashSet<>();
-        for (LocalEntity.TableEntity table : Config.getLocal().tableList) {
-//            if (StringUtils.isNotEmpty(Config.getLocal().getFilterDbNameText())) {
-//                if (StringUtils.containsAnyIgnoreCase(table.tableSchema, Config.getLocal().getFilterDbNameText())) {
-//                    dbNameList.add(table.tableSchema);
-//                }
-//            } else {
-            dbNameList.add(table.tableSchema);
-//            }
-        }
-//        // 查询出来的数据库名称列表
-        List<String> data = new ArrayList<>(dbNameList);
-        Collections.sort(data);
-//        dbButtonList.clear();
-//        dbPanel.removeAll();
-        int count = 0;
-        for (String dbName : data) {
-            count++;
-            JButton button = new JButton(dbName);
-            button.setBackground(Color.RED);
-            if (StringUtils.equals(Config.getLocal().getFilterDbNameText(), button.getText())) {
-                button.setBackground(Color.BLUE);
-            }
-            if (StringUtils.equals(Config.getLocal().getSelectedDbName(), button.getText())) {
-                button.setBackground(Color.LIGHT_GRAY);
-            }
+
+        for (DbEntity dbEntity : Config.getLocal().dbInfoList) {
+            JButton button = new JButton(dbEntity.dbName);
+            button.setBackground(colorDefault);
+            button.setVisible(false);
             dbButtonList.add(button);
-
-
+            dbPanel.add(button);
             // 点击 button ， 背景蓝色
-            button.addActionListener(e -> {
-                Config.getLocal().setSelectedDbName(button.getText());
-                refreshDbList();
-            });
-
+//            button.addActionListener(e -> {
+//                Config.getLocal().setSelectedDbName(button.getText());
+//                refreshDbList();
+//            });
+            // 双击 button
             button.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if (e.getClickCount() == 2) {
                         Config.getLocal().setSelectedDbName(button.getText());
                         Config.getLocal().setFilterDbNameText(button.getText());
+                        dbFilter.setText(button.getText());
                         refreshDbList();
                     }
                 }
             });
-
-            if (count > 5) {
-                break;
+        }
+        int count = 0;
+        for (JButton button : dbButtonList) {
+            if (StringUtils.equalsAnyIgnoreCase(button.getText(), Config.getLocal().getSelectedDbName())) {
+                button.setBackground(Color.blue);
+                button.setVisible(true);
+                count++;
+            }
+            if (StringUtils.isNotEmpty(Config.getLocal().getFilterDbNameText())) {
+                if (StringUtils.containsAnyIgnoreCase(button.getText(), Config.getLocal().getFilterDbNameText())) {
+                    button.setVisible(true);
+                    count++;
+                }
             }
         }
+        // 最多显示 5 个
+        if (count > 5 || StringUtils.isNotEmpty(Config.getLocal().getFilterDbNameText())) {
+            return;
+        }
+
+        for (JButton button : dbButtonList) {
+            button.setVisible(true);
+            count++;
+            if (count > 5) {
+                return;
+            }
+        }
+
     }
 
     public void init(Project project) {

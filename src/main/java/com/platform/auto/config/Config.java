@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Config {
@@ -119,6 +120,21 @@ public class Config {
                 getConfig().jdbc.database
         );
         getLocal().setTableList(Connection.getAllTableInfo());
+
+        getLocal().dbInfoList = new ArrayList<>();
+        DbEntity dbEntity = new DbEntity();
+        dbEntity.tableNameList = new ArrayList<>();
+        for (LocalEntity.TableEntity table : Config.getLocal().tableList) {
+            dbEntity.dbName = dbEntity.dbName == null ? table.tableSchema : dbEntity.dbName;
+            if (!StringUtils.equals(dbEntity.dbName, table.tableSchema)) {
+                getLocal().dbInfoList.add(dbEntity);
+                dbEntity = new DbEntity();
+                dbEntity.dbName = table.tableSchema;
+                dbEntity.tableNameList = new ArrayList<>();
+            }
+            dbEntity.tableNameList.add(table.tableName);
+        }
+        getLocal().dbInfoList.add(dbEntity);
         refreshLocal();
     }
 
