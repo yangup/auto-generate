@@ -141,7 +141,7 @@ public class Config {
         local_path = project_config_path + "/local.json";
         String localString = String.join(" ", AutoUtil.readFromLocal(auto_config_name + "/local.json"));
         if (StringUtils.isBlank(localString)) {
-            AutoUtil.listToFile(local_path, List.of("{\"_t\":\"" + System.currentTimeMillis() + "\"}"));
+            AutoUtil.listToFile(local_path, List.of("{\"time\":\"" + System.currentTimeMillis() + "\"}"));
         }
 
         // 当 config 存在的时候,就不需要
