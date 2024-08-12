@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 
 public class Config {
@@ -57,8 +58,6 @@ public class Config {
 
     public static ConfigEntity getConfigFromResources() {
         try {
-            logger.info(auto_config_name + "/config.json");
-            logger.info(String.join(" ", AutoUtil.readFromResources(auto_config_name + "/config.json")));
             return objectMapper.readValue(String.join(" ", AutoUtil.readFromResources(auto_config_name + "/config.json")), ConfigEntity.class);
         } catch (Exception e) {
             logger.info(e);
@@ -159,13 +158,12 @@ public class Config {
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
-            logger.info("field: {}", field.getName());
-            logger.info("field: {}", field.getType());
-            logger.info("field: {}", field.get(clazz));
-//            String templateFilePath = field.get(clazz).toString();
-//            String templateLocalFilePath = project_auto_path + "/" + templateFilePath;
-//            FileUtil.createFile(templateLocalFilePath);
-//            AutoUtil.listToFile(templateLocalFilePath, AutoUtil.readFromResources(templateFilePath));
+            String getMethodName = "get" + field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
+            Method method = clazz.getMethod(getMethodName);
+            String templateFilePath = method.invoke(template).toString();
+            String templateLocalFilePath = project_auto_path + "/" + templateFilePath;
+            FileUtil.createFile(templateLocalFilePath);
+            AutoUtil.listToFile(templateLocalFilePath, AutoUtil.readFromResources(templateFilePath));
         }
     }
 
