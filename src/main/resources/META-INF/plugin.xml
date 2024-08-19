@@ -29,6 +29,9 @@
     ]]>
     </change-notes>
 
+    <!-- Text to display as company information on Settings | Plugin page -->
+    <vendor url="https://github.com/yangup">Luck</vendor>
+
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow id="Auto Generate" secondary="true" anchor="right"
                     factoryClass="com.platform.auto.AutoGenerateToolWindowFactory"/>
