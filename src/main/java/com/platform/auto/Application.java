@@ -29,7 +29,7 @@ public class Application {
         List<String> list = tableNameList.stream().filter(StringUtils::isNotBlank).collect(Collectors.toList());
 
         logger.info("start: {}", String.join(",", list));
-        if (ObjectUtils.isNotEmpty(list)) {
+        if (ObjectUtils.isEmpty(list)) {
             return;
         }
         ConnectionAuto.start(list);
