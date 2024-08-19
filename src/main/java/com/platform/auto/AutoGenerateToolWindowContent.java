@@ -175,11 +175,22 @@ public class AutoGenerateToolWindowContent {
             return;
         }
         logger.info("startGenerateAsync: {}", String.join(",", tableNameList));
+        for (JButton button : tableNameButtonList) {
+            if (tableNameList.contains(button.getName())) {
+                button.setBackground(Color.RED);
+            } else {
+                button.setBackground(UIManager.getColor("Button.background"));
+            }
+        }
         new Thread(() -> {
             try {
                 runFalg.set(true);
+//                Thread.sleep(1000 * 5);
                 Application.start(tableNameList);
                 runFalg.set(false);
+                for (JButton button : tableNameButtonList) {
+                    button.setBackground(UIManager.getColor("Button.background"));
+                }
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
