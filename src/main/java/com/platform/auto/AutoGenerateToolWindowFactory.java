@@ -16,7 +16,7 @@ final class AutoGenerateToolWindowFactory implements ToolWindowFactory, DumbAwar
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         AutoGenerateToolWindowContent toolWindowContent = new AutoGenerateToolWindowContent(toolWindow, project);
-        Content content = ContentFactory.getInstance().createContent(toolWindowContent.getContentPanel(), "", false);
+        Content content = ContentFactory.getInstance().createContent(toolWindowContent.getParentPanel(), "", false);
         toolWindow.getContentManager().addContent(content);
     }
 
