@@ -194,13 +194,14 @@ public class AutoGenerateToolWindowContent {
                 runFalg.set(true);
 //                Thread.sleep(1000 * 5);
                 Application.start(tableNameList);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            } finally {
                 runFalg.set(false);
                 for (JButton button : tableNameButtonList) {
                     button.setBackground(UIManager.getColor("Button.background"));
                 }
                 logger.info("startGenerateAsync.end: {}", String.join(",", tableNameList));
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
             }
         }).start();
     }
