@@ -18,10 +18,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AutoGenerateToolWindowContent {
 
     private static final Logger logger = AutoLogger.getLogger(AutoGenerateToolWindowContent.class);
+
+    private AtomicBoolean runFalg = new AtomicBoolean(false);
 
     @Getter
     private final JPanel parentPanel = new JPanel();
@@ -83,7 +86,6 @@ public class AutoGenerateToolWindowContent {
                 }
             }
         });
-
         addComponentToContent(refresh);
         addComponentToContent(dbNameText);
         addComponentToContent(generateAll);
@@ -158,9 +160,16 @@ public class AutoGenerateToolWindowContent {
         if (ObjectUtils.isEmpty(tableNameList)) {
             return;
         }
+        if (runFalg.get()) {
+            logger.info("running");
+            logger.info("can not run: ", String.join(",", tableNameList));
+            return;
+        }
         new Thread(() -> {
             try {
+                runFalg.set(true);
                 Application.start(tableNameList);
+                runFalg.set(false);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
