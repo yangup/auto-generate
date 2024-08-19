@@ -27,6 +27,7 @@ public class AutoGenerateToolWindowContent {
     private final JPanel contentPanel = new JPanel();
 
     // 表名称输入框
+    private final JButton refresh = new JButton();
     private final JTextField tableNameFilter = new JTextField(20);
     // 表名称列表
     private List<JButton> tableNameButtonList = new ArrayList<>();
@@ -47,8 +48,20 @@ public class AutoGenerateToolWindowContent {
     @NotNull
     private void createContentPanel() throws Exception {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS)); // 垂直排列
-        contentPanel.add(tableNameFilter);
+        refresh.setText("REFRESH");
 
+        // 双击事件
+        refresh.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    initStartAsync();
+                }
+            }
+        });
+
+        // 表名称过滤的 输入框
+        contentPanel.add(tableNameFilter);
         tableNameFilter.setText(Config.getLocal().getFilterTableNameText());
         // 添加 ActionListener 来监听回车键
         tableNameFilter.addActionListener(e -> {
@@ -63,6 +76,8 @@ public class AutoGenerateToolWindowContent {
      * 将按钮添加到列表
      **/
     private void addTableName() {
+        tableNameButtonList.clear();
+        contentPanel.removeAll();
         for (DbEntity dbEntity : Config.getLocal().dbInfoList) {
             for (String tableName : dbEntity.tableNameList) {
                 JButton button = new JButton(String.format("%s.%s", dbEntity.dbName, tableName));
