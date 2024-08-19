@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -44,6 +45,7 @@ public class AutoGenerateToolWindowContent {
         initStartAsync();
         parentPanel.setLayout(new BorderLayout(20, 20));
 //        parentPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 20));
+        parentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         try {
             createContentPanel();
 //            parentPanel.add(new JScrollPane(contentPanel), BorderLayout.PAGE_START);
@@ -81,8 +83,8 @@ public class AutoGenerateToolWindowContent {
         });
 
         addComponentToContent(refresh);
-        addComponentToContent(generateAll);
         addComponentToContent(dbNameText);
+        addComponentToContent(generateAll);
         addComponentToContent(tableNameFilter);
 
         tableNameFilter.grabFocus();
@@ -100,6 +102,10 @@ public class AutoGenerateToolWindowContent {
         temp.setLayout(new BorderLayout());
 //        temp.setBorder(BorderFactory.createLineBorder(Color.PINK, 2));
         temp.add(component, BorderLayout.WEST);
+        if (component instanceof JButton) {
+            component.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        }
+        temp.setBorder(new EmptyBorder(3, 3, 3, 3));
         contentPanel.add(temp);
     }
 
@@ -110,7 +116,7 @@ public class AutoGenerateToolWindowContent {
         tableNameButtonList.clear();
 
         for (DbEntity dbEntity : Config.getLocal().dbInfoList) {
-            dbNameText.setText(dbEntity.dbName);
+            dbNameText.setText(String.format("database: %s", dbEntity.dbName));
             for (String tableName : dbEntity.tableNameList) {
                 JButton button = new JButton(tableName);
                 button.setName(tableName);
