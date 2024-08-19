@@ -1,6 +1,7 @@
 package com.platform.auto.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.intellij.openapi.project.Project;
 import com.platform.auto.jdbc.Connection;
 import com.platform.auto.sys.log.AutoLogger;
@@ -77,6 +78,7 @@ public class Config {
 
     public static void refreshLocal() {
         try {
+            objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
             AutoUtil.listToFile(project_config_path + "/local.json", List.of(objectMapper.writeValueAsString(local)));
             local = null;
             getLocal();
@@ -112,6 +114,7 @@ public class Config {
      * 本地数据的初始化
      **/
     public static void initLocalData() throws Exception {
+        config = null;
         Connection.prepare(
                 getConfig().jdbc.clazz,
                 getConfig().jdbc.url,

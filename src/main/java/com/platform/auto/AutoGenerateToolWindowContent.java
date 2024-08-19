@@ -41,6 +41,7 @@ public class AutoGenerateToolWindowContent {
     private final JTextField tableNameFilter = new JTextField(40); // 设置列数限制
     // 表名称列表
     private List<JButton> tableNameButtonList = new ArrayList<>();
+    private List<JPanel> tableNamePanelList = new ArrayList<>();
 
     public AutoGenerateToolWindowContent(ToolWindow toolWindow, Project project) {
         Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
@@ -101,7 +102,7 @@ public class AutoGenerateToolWindowContent {
         logger.info("create content panel");
     }
 
-    private void addComponentToContent(JComponent component) {
+    private JPanel addComponentToContent(JComponent component) {
         // 添加按钮和其他组件
         JPanel temp = new JPanel();
         temp.setLayout(new BorderLayout());
@@ -112,12 +113,14 @@ public class AutoGenerateToolWindowContent {
         }
         temp.setBorder(new EmptyBorder(3, 3, 3, 3));
         contentPanel.add(temp);
+        return temp;
     }
 
     private void addTableName() {
-        for (JButton button : tableNameButtonList) {
+        for (JPanel button : tableNamePanelList) {
             contentPanel.remove(button);
         }
+        tableNamePanelList.clear();
         tableNameButtonList.clear();
 
         for (DbEntity dbEntity : Config.getLocal().dbInfoList) {
@@ -127,7 +130,9 @@ public class AutoGenerateToolWindowContent {
                 button.setName(tableName);
 
                 tableNameButtonList.add(button);
-                addComponentToContent(button);
+                JPanel temp = addComponentToContent(button);
+                temp.setName(tableName);
+                tableNamePanelList.add(temp);
 
                 button.addMouseListener(new MouseAdapter() {
                     @Override
@@ -145,12 +150,14 @@ public class AutoGenerateToolWindowContent {
     }
 
     private void showTableName() {
-        for (JButton button : tableNameButtonList) {
-            if (StringUtils.isBlank(Config.getLocal().getFilterTableNameText())
-                    || StringUtils.containsIgnoreCase(button.getName(), Config.getLocal().getFilterTableNameText())) {
-                button.setVisible(true);
-            } else {
-                button.setVisible(false);
+        for (List<? extends JComponent> panel : List.of(tableNamePanelList, tableNameButtonList)) {
+            for (JComponent button : panel) {
+                if (StringUtils.isBlank(Config.getLocal().getFilterTableNameText())
+                        || StringUtils.containsIgnoreCase(button.getName(), Config.getLocal().getFilterTableNameText())) {
+                    button.setVisible(true);
+                } else {
+                    button.setVisible(false);
+                }
             }
         }
         logger.info("showTableName");
