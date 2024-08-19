@@ -49,11 +49,9 @@ public class AutoGenerateToolWindowContent {
         init(project);
         initStartAsync();
         parentPanel.setLayout(new BorderLayout(20, 20));
-//        parentPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 20));
         parentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         try {
             createContentPanel();
-//            parentPanel.add(new JScrollPane(contentPanel), BorderLayout.PAGE_START);
             parentPanel.add(contentPanel, BorderLayout.PAGE_START);
         } catch (Exception e) {
             // 处理异常
@@ -104,6 +102,9 @@ public class AutoGenerateToolWindowContent {
         logger.info("create content panel");
     }
 
+    /**
+     * 添加组件到 content
+     **/
     private JPanel addComponentToContent(JComponent component) {
         // 添加按钮和其他组件
         JPanel temp = new JPanel();
@@ -118,6 +119,9 @@ public class AutoGenerateToolWindowContent {
         return temp;
     }
 
+    /**
+     * 将 table name 加入到列表中
+     **/
     private void addTableName() {
         for (JPanel button : tableNamePanelList) {
             contentPanel.remove(button);
@@ -165,6 +169,9 @@ public class AutoGenerateToolWindowContent {
         logger.info("showTableName");
     }
 
+    /**
+     * 异步生成 文件
+     **/
     public void startGenerateAsync(List<String> tableNameList) {
         if (ObjectUtils.isEmpty(tableNameList)) {
             return;
@@ -199,7 +206,11 @@ public class AutoGenerateToolWindowContent {
     }
 
     public void initStartAsync() {
-        new Thread(this::initTableList).start();
+        new Thread(() -> {
+            refresh.setBackground(Color.RED);
+            initTableList();
+            refresh.setBackground(UIManager.getColor("Button.background"));
+        }).start();
     }
 
     public void init(Project project) {
