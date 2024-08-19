@@ -49,6 +49,7 @@ public class AutoGenerateToolWindowContent {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS)); // 垂直排列
         contentPanel.add(tableNameFilter);
 
+        tableNameFilter.setText(Config.getLocal().getFilterTableNameText());
         // 添加 ActionListener 来监听回车键
         tableNameFilter.addActionListener(e -> {
             // 当按下回车键时执行的操作
@@ -86,11 +87,9 @@ public class AutoGenerateToolWindowContent {
      * 满足要求的按钮, 显示
      **/
     private void showTableName() {
-        if (StringUtils.isBlank(Config.getLocal().getFilterTableNameText())) {
-            return;
-        }
         for (JButton button : tableNameButtonList) {
-            if (StringUtils.containsIgnoreCase(button.getName(), Config.getLocal().getFilterTableNameText())) {
+            if (StringUtils.isBlank(Config.getLocal().getFilterTableNameText())
+                    || StringUtils.containsIgnoreCase(button.getName(), Config.getLocal().getFilterTableNameText())) {
                 button.setVisible(true);
             } else {
                 button.setVisible(false);
