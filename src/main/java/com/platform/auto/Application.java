@@ -6,6 +6,7 @@ import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Application {
 
@@ -22,6 +23,7 @@ public class Application {
         // TODO: 通用代码生成
         // 通用代码生成
 //        ConnectionAuto.start(Config.getConfig().tableNames);
+        logger.info("start: {}", tableNameList.stream().collect(Collectors.joining(", ")));
         ConnectionAuto.start(tableNameList);
 
         logger.info("end");

@@ -63,6 +63,7 @@ public class AutoGenerateToolWindowContent {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
+                    logger.info("refresh");
                     initStartAsync();
                 }
             }
@@ -77,6 +78,7 @@ public class AutoGenerateToolWindowContent {
                             buttonNameList.add(button.getName());
                         }
                     }
+                    logger.info("generateAll");
                     startGenerateAsync(buttonNameList);
                 }
             }
@@ -94,6 +96,7 @@ public class AutoGenerateToolWindowContent {
             Config.refreshLocal();
             showTableName();
         });
+        logger.info("create content panel");
     }
 
     private void addComponentToContent(JComponent component) {
@@ -128,12 +131,14 @@ public class AutoGenerateToolWindowContent {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         if (e.getClickCount() == 2) {
+                            logger.info("startGenerateAsync: {}", button.getName());
                             startGenerateAsync(List.of(button.getName()));
                         }
                     }
                 });
             }
         }
+        logger.info("addTableName");
         showTableName();
     }
 
@@ -146,6 +151,7 @@ public class AutoGenerateToolWindowContent {
                 button.setVisible(false);
             }
         }
+        logger.info("showTableName");
     }
 
     public void startGenerateAsync(List<String> tableNameList) {
