@@ -26,8 +26,12 @@ public class AutoGenerateToolWindowContent {
     private final JPanel parentPanel = new JPanel();
     private final JPanel contentPanel = new JPanel();
 
-    // 表名称输入框
+    // 刷新框
     private final JButton refresh = new JButton();
+    // 数据库名称显示框
+    private final JLabel dbNameText = new JLabel();
+
+    // 表名称输入框
     private final JTextField tableNameFilter = new JTextField(20);
     // 表名称列表
     private List<JButton> tableNameButtonList = new ArrayList<>();
@@ -59,7 +63,8 @@ public class AutoGenerateToolWindowContent {
                 }
             }
         });
-
+        contentPanel.add(refresh);
+        contentPanel.add(dbNameText);
         // 表名称过滤的 输入框
         contentPanel.add(tableNameFilter);
         tableNameFilter.setText(Config.getLocal().getFilterTableNameText());
@@ -81,8 +86,9 @@ public class AutoGenerateToolWindowContent {
         }
         tableNameButtonList.clear();
         for (DbEntity dbEntity : Config.getLocal().dbInfoList) {
+            dbNameText.setText(dbEntity.dbName);
             for (String tableName : dbEntity.tableNameList) {
-                JButton button = new JButton(String.format("%s.%s", dbEntity.dbName, tableName));
+                JButton button = new JButton(tableName);
                 button.setName(tableName);
                 tableNameButtonList.add(button);
                 contentPanel.add(button);
