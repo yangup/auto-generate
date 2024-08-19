@@ -33,7 +33,7 @@
     <vendor url="https://github.com/yangup">Luck</vendor>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Auto Generate" secondary="true" anchor="right"
+        <toolWindow id="Auto Generate" secondary="true" anchor="right" icon="/toolWindow/auto-generate.svg"
                     factoryClass="com.platform.auto.AutoGenerateToolWindowFactory"/>
     </extensions>
 
