@@ -38,25 +38,15 @@ public class AutoGenerateToolWindowContent {
     // 表名称列表
     private List<JButton> tableNameButtonList = new ArrayList<>();
 
-    private GridBagConstraints gbc = new GridBagConstraints();
-
     public AutoGenerateToolWindowContent(ToolWindow toolWindow, Project project) {
         Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
         init(project);
         initStartAsync();
         parentPanel.setLayout(new BorderLayout(20, 20));
-        parentPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-
-        // 设置 GridBagConstraints 配置
-        gbc.fill = GridBagConstraints.NONE; // 不扩展组件，保持原大小
-        gbc.anchor = GridBagConstraints.WEST; // 左对齐
-        gbc.gridx = 0; // 第一列
-        gbc.gridy = GridBagConstraints.RELATIVE; // 自动递增行号
-        gbc.weightx = 0; // 不让组件扩展占满整个水平空间
-
+//        parentPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 20));
         try {
             createContentPanel();
-            parentPanel.add(contentPanel, BorderLayout.PAGE_START);
+            parentPanel.add(new JScrollPane(contentPanel), BorderLayout.PAGE_START);
         } catch (Exception e) {
             // 处理异常
         }
@@ -64,8 +54,7 @@ public class AutoGenerateToolWindowContent {
 
     @NotNull
     private void createContentPanel() throws Exception {
-        contentPanel.setLayout(new GridBagLayout());
-
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS)); // 垂直排列
         // 添加鼠标事件监听器
         refresh.addMouseListener(new MouseAdapter() {
             @Override
@@ -90,11 +79,10 @@ public class AutoGenerateToolWindowContent {
             }
         });
 
-        // 添加按钮和其他组件
-        contentPanel.add(refresh, gbc);
-        contentPanel.add(generateAll, gbc);
-        contentPanel.add(dbNameText, gbc);
-        contentPanel.add(tableNameFilter, gbc);
+        addComponentToContent(refresh);
+        addComponentToContent(generateAll);
+        addComponentToContent(dbNameText);
+        addComponentToContent(tableNameFilter);
 
         tableNameFilter.grabFocus();
         tableNameFilter.setText(Config.getLocal().getFilterTableNameText());
@@ -103,6 +91,15 @@ public class AutoGenerateToolWindowContent {
             Config.refreshLocal();
             showTableName();
         });
+    }
+
+    private void addComponentToContent(JComponent component) {
+        // 添加按钮和其他组件
+        JPanel temp = new JPanel();
+        temp.setLayout(new BorderLayout());
+//        temp.setBorder(BorderFactory.createLineBorder(Color.PINK, 2));
+        temp.add(component, BorderLayout.WEST);
+        contentPanel.add(temp);
     }
 
     private void addTableName() {
@@ -117,13 +114,8 @@ public class AutoGenerateToolWindowContent {
                 JButton button = new JButton(tableName);
                 button.setName(tableName);
 
-                // 调整按钮大小
-                Dimension preferredSize = button.getPreferredSize();
-                button.setMaximumSize(preferredSize);
-                button.setPreferredSize(preferredSize);
-
                 tableNameButtonList.add(button);
-                contentPanel.add(button, gbc);
+                addComponentToContent(button);
 
                 button.addMouseListener(new MouseAdapter() {
                     @Override
