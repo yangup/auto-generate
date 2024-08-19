@@ -5,11 +5,13 @@ import com.platform.auto.jdbc.ConnectionAuto;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 
+import java.util.List;
+
 public class Application {
 
     private static final Logger logger = AutoLogger.getLogger(Application.class);
 
-    public static void start() throws Exception {
+    public static void start(List<String> tableNameList) throws Exception {
         ConnectionAuto.prepare(Config.getConfig().jdbc.clazz,
                 Config.getConfig().jdbc.url,
                 Config.getConfig().jdbc.username,
@@ -19,7 +21,8 @@ public class Application {
         // TODO: 通用代码生成
         // TODO: 通用代码生成
         // 通用代码生成
-        ConnectionAuto.start(Config.getConfig().tableNames);
+//        ConnectionAuto.start(Config.getConfig().tableNames);
+        ConnectionAuto.start(tableNameList);
 
         logger.info("end");
 

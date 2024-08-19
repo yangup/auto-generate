@@ -4,7 +4,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.platform.auto.config.Config;
 import com.platform.auto.config.DbEntity;
-import com.platform.auto.config.LocalEntity;
 import com.platform.auto.jdbc.Connection;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
@@ -27,20 +26,14 @@ public class AutoGenerateToolWindowContent {
     private final JPanel contentPanel = new JPanel();
     // 数据刷新框
     private final JButton refreshButton = new JButton("refresh");
-    // 数据库 名称输入框
-    private final JTextField dbFilter = new JTextField(20);
-    // 符合数据库名称的 所有数据库列表信息
-    private List<JButton> dbButtonList = new ArrayList<>();
     // 表名称输入框
-    private final JTextField tableNameInput = new JTextField(20);
+    private final JTextField tableNameFilter = new JTextField(20);
     // 符合表名称的 所有表名称信息
-    private List<JButton> tableNameButtonList = new ArrayList<>();
-    //    private Color colorDefault = new JButton().getBackground();
     private Color colorDefault = Color.RED;
 
     private JPanel allPanel = new JPanel();
-    private JPanel dbPanel = new JPanel();
     private JPanel tableNamePanel = new JPanel();
+    private List<JButton> tableNameButtonList = new ArrayList<>();
 
     public AutoGenerateToolWindowContent(ToolWindow toolWindow, Project project) {
         Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
@@ -69,100 +62,43 @@ public class AutoGenerateToolWindowContent {
             }
         });
         // 添加 ActionListener 来监听回车键
-        dbFilter.addActionListener(e -> {
+        tableNameFilter.addActionListener(e -> {
             // 当按下回车键时执行的操作
-            Config.getLocal().setFilterDbNameText(dbFilter.getText());
-            refreshDbList();
+            Config.getLocal().setFilterTableNameText(tableNameFilter.getText());
+            refreshTableNameList();
         });
-        allPanel.add(dbFilter);
-        refreshDbList();
-        allPanel.add(dbPanel);
-
-//        int count = 0;
-//        for (LocalEntity.TableEntity tableEntity : Config.getLocal().tableList) {
-//            count++;
-//            JButton button = new JButton(tableEntity.tableSchema);
-////            JFXButton button = new JFXButton(tableEntity.tableSchema);
-//            tableNameButtonList.add(button);
-//            buttonPanel.add(button);
-//            if (count > 5) {
-//                break;
-//            }
-//        }
-//
-//        count = 0;
-//        tableNameButtonList = new ArrayList<>();
-//        for (LocalEntity.TableEntity tableEntity : Config.getLocal().tableList) {
-//            count++;
-//            JButton button = new JButton(tableEntity.tableSchema);
-////            JFXButton button = new JFXButton(tableEntity.tableSchema);
-//            tableNameButtonList.add(button);
-//            buttonPanel.add(button);
-//            if (count > 5) {
-//                break;
-//            }
-//        }
+        allPanel.add(tableNameFilter);
+        refreshTableNameList();
+        allPanel.add(tableNamePanel);
     }
 
-    private void filterTableName() {
-        Config.getLocal().setFilterTableNameText(tableNameInput.getText());
-    }
-
-
-    private void refreshDbList() {
-        logger.info("refreshDbList");
-
+    private void refreshTableNameList() {
         for (DbEntity dbEntity : Config.getLocal().dbInfoList) {
-            JButton button = new JButton(dbEntity.dbName);
-            button.setBackground(colorDefault);
-            button.setVisible(false);
-            dbButtonList.add(button);
-            dbPanel.add(button);
-            // 点击 button ， 背景蓝色
-//            button.addActionListener(e -> {
-//                Config.getLocal().setSelectedDbName(button.getText());
-//                refreshDbList();
-//            });
-            // 双击 button
-            button.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if (e.getClickCount() == 2) {
-                        Config.getLocal().setSelectedDbName(button.getText());
-                        Config.getLocal().setFilterDbNameText(button.getText());
-                        dbFilter.setText(button.getText());
-                        refreshDbList();
-                    }
-                }
-            });
-        }
-        int count = 0;
-        for (JButton button : dbButtonList) {
-            if (StringUtils.equalsAnyIgnoreCase(button.getText(), Config.getLocal().getSelectedDbName())) {
-                button.setBackground(Color.blue);
-                button.setVisible(true);
-                count++;
-            }
-            if (StringUtils.isNotEmpty(Config.getLocal().getFilterDbNameText())) {
-                if (StringUtils.containsAnyIgnoreCase(button.getText(), Config.getLocal().getFilterDbNameText())) {
+            if (StringUtils.equalsAnyIgnoreCase(Config.getConfig().jdbc.database, dbEntity.dbName)) {
+                for (String tableName : dbEntity.tableNameList) {
+                    JButton button = new JButton(tableName);
+                    button.setBackground(colorDefault);
                     button.setVisible(true);
-                    count++;
+                    tableNamePanel.add(button);
+                    tableNameButtonList.add(button);
+
+                    button.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            if (e.getClickCount() == 2) {
+                                try {
+                                    button.setBackground(Color.blue);
+                                    Application.start(List.of(button.getText()));
+                                    refreshTableNameList();
+                                } catch (Exception ex) {
+                                    logger.info(AutoLogger.getExceptionInfo(ex));
+                                }
+                            }
+                        }
+                    });
                 }
             }
         }
-        // 最多显示 5 个
-        if (count > 5 || StringUtils.isNotEmpty(Config.getLocal().getFilterDbNameText())) {
-            return;
-        }
-
-        for (JButton button : dbButtonList) {
-            button.setVisible(true);
-            count++;
-            if (count > 5) {
-                return;
-            }
-        }
-
     }
 
     public void init(Project project) {
