@@ -39,7 +39,7 @@ public class AutoGenerateToolWindowContent {
     private final JLabel dbNameText = new JLabel();
 
     // 表名称输入框
-    private final JBTextField tableNameFilter = new JBTextField(40); // 设置列数限制
+    private final JBTextField tableNameFilter = new JBTextField(25); // 设置列数限制
     // 表名称列表
     private List<JButton> tableNameButtonList = new ArrayList<>();
     private List<JPanel> tableNamePanelList = new ArrayList<>();
