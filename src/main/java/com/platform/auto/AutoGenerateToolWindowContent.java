@@ -162,9 +162,10 @@ public class AutoGenerateToolWindowContent {
         }
         if (runFalg.get()) {
             logger.info("running");
-            logger.info("can not run: ", String.join(",", tableNameList));
+            logger.info("can not run: {}", String.join(",", tableNameList));
             return;
         }
+        logger.info("startGenerateAsync: {}", String.join(",", tableNameList));
         new Thread(() -> {
             try {
                 runFalg.set(true);
