@@ -4,7 +4,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.platform.auto.config.Config;
 import com.platform.auto.config.DbEntity;
-import com.platform.auto.jdbc.Connection;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import lombok.Getter;
@@ -21,7 +20,7 @@ import java.util.List;
 
 public class AutoGenerateToolWindowContent {
 
-    private static final Logger logger = AutoLogger.getLogger(Connection.class);
+    private static final Logger logger = AutoLogger.getLogger(AutoGenerateToolWindowContent.class);
 
     @Getter
     private final JPanel parentPanel = new JPanel();
@@ -35,9 +34,11 @@ public class AutoGenerateToolWindowContent {
     private final JLabel dbNameText = new JLabel();
 
     // 表名称输入框
-    private final JTextField tableNameFilter = new JTextField();
+    private final JTextField tableNameFilter = new JTextField(40); // 设置列数限制
     // 表名称列表
     private List<JButton> tableNameButtonList = new ArrayList<>();
+
+    private GridBagConstraints gbc = new GridBagConstraints();
 
     public AutoGenerateToolWindowContent(ToolWindow toolWindow, Project project) {
         Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
@@ -45,18 +46,27 @@ public class AutoGenerateToolWindowContent {
         initStartAsync();
         parentPanel.setLayout(new BorderLayout(20, 20));
         parentPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
+        // 设置 GridBagConstraints 配置
+        gbc.fill = GridBagConstraints.NONE; // 不扩展组件，保持原大小
+        gbc.anchor = GridBagConstraints.WEST; // 左对齐
+        gbc.gridx = 0; // 第一列
+        gbc.gridy = GridBagConstraints.RELATIVE; // 自动递增行号
+        gbc.weightx = 0; // 不让组件扩展占满整个水平空间
+
         try {
             createContentPanel();
             parentPanel.add(contentPanel, BorderLayout.PAGE_START);
         } catch (Exception e) {
+            // 处理异常
         }
     }
 
     @NotNull
     private void createContentPanel() throws Exception {
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS)); // 垂直排列
+        contentPanel.setLayout(new GridBagLayout());
 
-        // 双击事件
+        // 添加鼠标事件监听器
         refresh.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -79,39 +89,42 @@ public class AutoGenerateToolWindowContent {
                 }
             }
         });
-        // 刷新按钮
-        contentPanel.add(refresh);
-        // db name 展示按钮
-        contentPanel.add(dbNameText);
-        // 表名称过滤的 输入框
-        contentPanel.add(tableNameFilter);
+
+        // 添加按钮和其他组件
+        contentPanel.add(refresh, gbc);
+        contentPanel.add(generateAll, gbc);
+        contentPanel.add(dbNameText, gbc);
+        contentPanel.add(tableNameFilter, gbc);
+
         tableNameFilter.grabFocus();
         tableNameFilter.setText(Config.getLocal().getFilterTableNameText());
-        // 添加 ActionListener 来监听回车键
         tableNameFilter.addActionListener(e -> {
-            // 当按下回车键时执行的操作
             Config.getLocal().setFilterTableNameText(tableNameFilter.getText());
             Config.refreshLocal();
             showTableName();
         });
     }
 
-    /**
-     * 将按钮添加到列表
-     **/
     private void addTableName() {
         for (JButton button : tableNameButtonList) {
             contentPanel.remove(button);
         }
         tableNameButtonList.clear();
+
         for (DbEntity dbEntity : Config.getLocal().dbInfoList) {
             dbNameText.setText(dbEntity.dbName);
             for (String tableName : dbEntity.tableNameList) {
                 JButton button = new JButton(tableName);
                 button.setName(tableName);
+
+                // 调整按钮大小
+                Dimension preferredSize = button.getPreferredSize();
+                button.setMaximumSize(preferredSize);
+                button.setPreferredSize(preferredSize);
+
                 tableNameButtonList.add(button);
-                contentPanel.add(button);
-                // 双击事件
+                contentPanel.add(button, gbc);
+
                 button.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
@@ -125,9 +138,6 @@ public class AutoGenerateToolWindowContent {
         showTableName();
     }
 
-    /**
-     * 满足要求的按钮, 显示
-     **/
     private void showTableName() {
         for (JButton button : tableNameButtonList) {
             if (StringUtils.isBlank(Config.getLocal().getFilterTableNameText())
@@ -156,7 +166,6 @@ public class AutoGenerateToolWindowContent {
         new Thread(this::initTableList).start();
     }
 
-
     public void init(Project project) {
         try {
             Config.init(project);
@@ -165,9 +174,6 @@ public class AutoGenerateToolWindowContent {
         }
     }
 
-    /**
-     * 网络走异步
-     **/
     public void initTableList() {
         try {
             Config.initLocalData();
@@ -176,6 +182,4 @@ public class AutoGenerateToolWindowContent {
             throw new RuntimeException(ex);
         }
     }
-
-
 }
