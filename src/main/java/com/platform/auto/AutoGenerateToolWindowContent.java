@@ -8,6 +8,7 @@ import com.platform.auto.jdbc.Connection;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import lombok.Getter;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,12 +28,14 @@ public class AutoGenerateToolWindowContent {
     private final JPanel contentPanel = new JPanel();
 
     // 刷新框
-    private final JButton refresh = new JButton();
+    private final JButton refresh = new JButton("REFRESH");
+    // 生成所有的按钮
+    private final JButton generateAll = new JButton("GENERATE-ALL");
     // 数据库名称显示框
     private final JLabel dbNameText = new JLabel();
 
     // 表名称输入框
-    private final JTextField tableNameFilter = new JTextField(20);
+    private final JTextField tableNameFilter = new JTextField();
     // 表名称列表
     private List<JButton> tableNameButtonList = new ArrayList<>();
 
@@ -52,7 +55,6 @@ public class AutoGenerateToolWindowContent {
     @NotNull
     private void createContentPanel() throws Exception {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS)); // 垂直排列
-        refresh.setText("REFRESH");
 
         // 双击事件
         refresh.addMouseListener(new MouseAdapter() {
@@ -63,10 +65,27 @@ public class AutoGenerateToolWindowContent {
                 }
             }
         });
+        generateAll.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    List<String> buttonNameList = new ArrayList<>();
+                    for (JButton button : tableNameButtonList) {
+                        if (button.isVisible()) {
+                            buttonNameList.add(button.getName());
+                        }
+                    }
+                    startGenerateAsync(buttonNameList);
+                }
+            }
+        });
+        // 刷新按钮
         contentPanel.add(refresh);
+        // db name 展示按钮
         contentPanel.add(dbNameText);
         // 表名称过滤的 输入框
         contentPanel.add(tableNameFilter);
+        tableNameFilter.grabFocus();
         tableNameFilter.setText(Config.getLocal().getFilterTableNameText());
         // 添加 ActionListener 来监听回车键
         tableNameFilter.addActionListener(e -> {
@@ -97,7 +116,7 @@ public class AutoGenerateToolWindowContent {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         if (e.getClickCount() == 2) {
-                            startGenerateAsync(button.getName());
+                            startGenerateAsync(List.of(button.getName()));
                         }
                     }
                 });
@@ -120,10 +139,13 @@ public class AutoGenerateToolWindowContent {
         }
     }
 
-    public void startGenerateAsync(String tableName) {
+    public void startGenerateAsync(List<String> tableNameList) {
+        if (ObjectUtils.isEmpty(tableNameList)) {
+            return;
+        }
         new Thread(() -> {
             try {
-                Application.start(List.of(tableName));
+                Application.start(tableNameList);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
