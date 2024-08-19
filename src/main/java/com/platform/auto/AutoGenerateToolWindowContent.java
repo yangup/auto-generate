@@ -46,7 +46,8 @@ public class AutoGenerateToolWindowContent {
 //        parentPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 20));
         try {
             createContentPanel();
-            parentPanel.add(new JScrollPane(contentPanel), BorderLayout.PAGE_START);
+//            parentPanel.add(new JScrollPane(contentPanel), BorderLayout.PAGE_START);
+            parentPanel.add(contentPanel, BorderLayout.PAGE_START);
         } catch (Exception e) {
             // 处理异常
         }
