@@ -76,8 +76,10 @@ public class AutoGenerateToolWindowContent {
      * 将按钮添加到列表
      **/
     private void addTableName() {
+        for (JButton button : tableNameButtonList) {
+            contentPanel.remove(button);
+        }
         tableNameButtonList.clear();
-        contentPanel.removeAll();
         for (DbEntity dbEntity : Config.getLocal().dbInfoList) {
             for (String tableName : dbEntity.tableNameList) {
                 JButton button = new JButton(String.format("%s.%s", dbEntity.dbName, tableName));
