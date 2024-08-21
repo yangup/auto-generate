@@ -172,7 +172,7 @@ public class AutoGenerateToolWindowContent {
                 JPanel temp = addComponentToButton(button);
                 temp.setName(tableName);
                 tableNamePanelList.add(temp);
-
+                logger.info("tableName_create: {}", tableName);
                 button.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
