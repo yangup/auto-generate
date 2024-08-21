@@ -3,6 +3,7 @@ package com.platform.auto;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.ui.components.JBPanel;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.components.JBTextField;
 import com.platform.auto.config.Config;
@@ -31,9 +32,9 @@ public class AutoGenerateToolWindowContent {
     private AtomicBoolean runFalg = new AtomicBoolean(false);
 
     @Getter
-    private final JPanel parentPanel = new JPanel();
-    private final JPanel contentPanel = new JPanel();
-    private final JPanel buttonPanel = new JPanel();
+    private final JBPanel parentPanel = new JBPanel();
+    private final JBPanel contentPanel = new JBPanel();
+    private final JBPanel buttonPanel = new JBPanel();
 
     // 刷新框
     private final JButton refresh = new JButton("REFRESH");
@@ -45,7 +46,7 @@ public class AutoGenerateToolWindowContent {
     // 表名称输入框
     private final JBTextField tableNameFilter = new JBTextField(25); // 设置列数限制
     // 表名称列表
-    private List<JPanel> tableNamePanelList = new ArrayList<>();
+    private List<JBPanel> tableNamePanelList = new ArrayList<>();
 
     public AutoGenerateToolWindowContent(ToolWindow toolWindow, Project project) {
         Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
@@ -66,6 +67,7 @@ public class AutoGenerateToolWindowContent {
     private void createContentPanel() throws Exception {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS)); // 垂直排列
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); // 垂直排列
+        buttonPanel.withMinimumHeight(500);
         // 添加鼠标事件监听器
         refresh.addMouseListener(new MouseAdapter() {
             @Override
@@ -84,7 +86,7 @@ public class AutoGenerateToolWindowContent {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     List<String> buttonNameList = new ArrayList<>();
-                    for (JPanel button : tableNamePanelList) {
+                    for (JBPanel button : tableNamePanelList) {
                         if (button.isVisible()) {
                             buttonNameList.add(button.getName());
                         }
@@ -111,17 +113,17 @@ public class AutoGenerateToolWindowContent {
     /**
      * 添加组件到 content
      **/
-    private JPanel addComponentToContent(JComponent component) {
+    private JBPanel addComponentToContent(JComponent component) {
         return addComponentToPanel(component, contentPanel);
     }
 
-    private JPanel addComponentToButton(JComponent component) {
+    private JBPanel addComponentToButton(JComponent component) {
         return addComponentToPanel(component, buttonPanel);
     }
 
-    private JPanel addComponentToPanel(JComponent component, JPanel panel) {
+    private JBPanel addComponentToPanel(JComponent component, JBPanel panel) {
         // 添加按钮和其他组件
-        JPanel temp = new JPanel();
+        JBPanel temp = new JBPanel();
         temp.setLayout(new BorderLayout());
 //        temp.setBorder(BorderFactory.createLineBorder(Color.PINK, 2));
         temp.add(component, BorderLayout.WEST);
@@ -158,7 +160,7 @@ public class AutoGenerateToolWindowContent {
      **/
     private void addTableName() {
         logger.info("addTableName-start");
-        for (JPanel button : tableNamePanelList) {
+        for (JBPanel button : tableNamePanelList) {
             buttonPanel.remove(button);
         }
         tableNamePanelList.clear();
@@ -169,7 +171,7 @@ public class AutoGenerateToolWindowContent {
             }
             for (String tableName : dbEntity.tableNameList) {
                 JButton button = new JButton(tableName);
-                JPanel temp = addComponentToButton(button);
+                JBPanel temp = addComponentToButton(button);
                 temp.setName(tableName);
                 tableNamePanelList.add(temp);
                 logger.info("tableName_create: {}", tableName);
@@ -213,7 +215,7 @@ public class AutoGenerateToolWindowContent {
             return;
         }
         logger.info("startGenerateAsync: {}", String.join(",", tableNameList));
-        for (JPanel button : tableNamePanelList) {
+        for (JBPanel button : tableNamePanelList) {
             if (tableNameList.contains(button.getName())) {
                 button.setBackground(Color.RED);
             } else {
@@ -229,7 +231,7 @@ public class AutoGenerateToolWindowContent {
                 throw new RuntimeException(ex);
             } finally {
                 runFalg.set(false);
-                for (JPanel button : tableNamePanelList) {
+                for (JBPanel button : tableNamePanelList) {
                     button.setBackground(UIManager.getColor("Button.background"));
                 }
                 logger.info("startGenerateAsync.end: {}", String.join(",", tableNameList));
