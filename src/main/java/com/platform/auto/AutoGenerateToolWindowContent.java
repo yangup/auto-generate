@@ -159,7 +159,7 @@ public class AutoGenerateToolWindowContent {
     private void addTableName() {
         logger.info("addTableName-start");
         for (JPanel button : tableNamePanelList) {
-            contentPanel.remove(button);
+            buttonPanel.remove(button);
         }
         tableNamePanelList.clear();
 
