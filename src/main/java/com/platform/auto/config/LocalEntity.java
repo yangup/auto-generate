@@ -1,5 +1,6 @@
 package com.platform.auto.config;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.util.List;
@@ -15,8 +16,9 @@ public class LocalEntity {
 
     public String filterTableNameText;
 
-    public String selectedTableName;
+    public String selectedDbName;
 
+    @JsonIgnore
     public List<TableEntity> tableList;
 
     // 数据处理好了

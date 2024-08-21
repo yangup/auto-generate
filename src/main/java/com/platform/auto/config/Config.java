@@ -123,22 +123,32 @@ public class Config {
                 getConfig().jdbc.database
         );
         getLocal().setTableList(Connection.getAllTableInfo());
+        logger.info("initLocalData");
 
         getLocal().dbInfoList = new ArrayList<>();
-        DbEntity dbEntity = new DbEntity();
-        dbEntity.tableNameList = new ArrayList<>();
+        DbEntity dbEntity = null; // 初始设置为 null
+
         for (LocalEntity.TableEntity table : Config.getLocal().tableList) {
-            dbEntity.dbName = dbEntity.dbName == null ? table.tableSchema : dbEntity.dbName;
-            if (!StringUtils.equals(dbEntity.dbName, table.tableSchema)) {
-                getLocal().dbInfoList.add(dbEntity);
+            // 当 dbEntity 为空或 tableSchema 改变时，创建一个新的 dbEntity
+            if (dbEntity == null || !StringUtils.equals(dbEntity.dbName, table.tableSchema)) {
+                // 如果不是第一次循环，将前一个 dbEntity 添加到 dbInfoList 中
+                if (dbEntity != null) {
+                    getLocal().dbInfoList.add(dbEntity);
+                }
                 dbEntity = new DbEntity();
                 dbEntity.dbName = table.tableSchema;
                 dbEntity.tableNameList = new ArrayList<>();
             }
             dbEntity.tableNameList.add(table.tableName);
         }
-        getLocal().dbInfoList.add(dbEntity);
+
+        // 循环结束后，将最后一个 dbEntity 添加到 dbInfoList 中
+        if (dbEntity != null) {
+            getLocal().dbInfoList.add(dbEntity);
+        }
+
         refreshLocal();
+        logger.info("refreshLocal");
     }
 
     /**
@@ -161,7 +171,11 @@ public class Config {
         local_path = project_config_path + "/local.json";
         String localString = String.join(" ", AutoUtil.readFromLocal(auto_config_name + "/local.json"));
         if (StringUtils.isBlank(localString)) {
-            AutoUtil.listToFile(local_path, List.of("{\"time\":\"" + System.currentTimeMillis() + "\"}"));
+            LocalEntity localEntity = new LocalEntity();
+            localEntity.time = System.currentTimeMillis();
+            // 默认 config 中的 db name
+            localEntity.selectedDbName = getConfigFromResources().jdbc.database;
+            AutoUtil.listToFile(local_path, List.of(objectMapper.writeValueAsString(localEntity)));
         }
 
         // 当 config 存在的时候,就不需要

@@ -1,6 +1,7 @@
 package com.platform.auto;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.ui.components.JBTextField;
 import com.platform.auto.config.Config;
@@ -19,6 +20,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AutoGenerateToolWindowContent {
@@ -36,7 +38,7 @@ public class AutoGenerateToolWindowContent {
     // 生成所有的按钮
     private final JButton generateAll = new JButton("GENERATE-ALL");
     // 数据库名称显示框
-    private final JLabel dbNameText = new JLabel();
+    private final ComboBox dbNameComboBox = new ComboBox();
 
     // 表名称输入框
     private final JBTextField tableNameFilter = new JBTextField(25); // 设置列数限制
@@ -71,6 +73,9 @@ public class AutoGenerateToolWindowContent {
                 }
             }
         });
+        addComponentToContent(refresh);
+        dbNameComboBox.setEditable(false);
+        addComponentToContent(dbNameComboBox);
         generateAll.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -86,8 +91,6 @@ public class AutoGenerateToolWindowContent {
                 }
             }
         });
-        addComponentToContent(refresh);
-        addComponentToContent(dbNameText);
         addComponentToContent(generateAll);
         addComponentToContent(tableNameFilter);
 
@@ -111,7 +114,7 @@ public class AutoGenerateToolWindowContent {
         temp.setLayout(new BorderLayout());
 //        temp.setBorder(BorderFactory.createLineBorder(Color.PINK, 2));
         temp.add(component, BorderLayout.WEST);
-        if (component instanceof JButton) {
+        if (component instanceof JButton || component instanceof ComboBox) {
             component.setCursor(new Cursor(Cursor.HAND_CURSOR));
         }
         temp.setBorder(new EmptyBorder(3, 3, 3, 3));
@@ -119,10 +122,31 @@ public class AutoGenerateToolWindowContent {
         return temp;
     }
 
+
+    /**
+     * db name
+     **/
+    private void addDbName() {
+        logger.info("addDbName");
+        dbNameComboBox.removeAllItems();
+        dbNameComboBox.setModel(new DefaultComboBoxModel<>(
+                new Vector<>(Config.getLocal().dbInfoList.stream().map(DbEntity::getDbName).toList())
+        ));
+
+        dbNameComboBox.setSelectedItem(Config.getLocal().selectedDbName);
+        dbNameComboBox.addActionListener(e -> {
+            Config.getLocal().selectedDbName = (String) dbNameComboBox.getSelectedItem();
+            logger.info("db name selected: " + dbNameComboBox.getSelectedItem());
+            addTableName();
+        });
+        addTableName();
+    }
+
     /**
      * 将 table name 加入到列表中
      **/
     private void addTableName() {
+        logger.info("addTableName-start");
         for (JPanel button : tableNamePanelList) {
             contentPanel.remove(button);
         }
@@ -130,7 +154,9 @@ public class AutoGenerateToolWindowContent {
         tableNameButtonList.clear();
 
         for (DbEntity dbEntity : Config.getLocal().dbInfoList) {
-            dbNameText.setText(String.format("database: %s", dbEntity.dbName));
+            if (!StringUtils.equalsAnyIgnoreCase(Config.getLocal().selectedDbName, dbEntity.dbName)) {
+                continue;
+            }
             for (String tableName : dbEntity.tableNameList) {
                 JButton button = new JButton(tableName);
                 button.setName(tableName);
@@ -151,7 +177,7 @@ public class AutoGenerateToolWindowContent {
                 });
             }
         }
-        logger.info("addTableName");
+        logger.info("addTableName-end");
         showTableName();
     }
 
@@ -225,7 +251,7 @@ public class AutoGenerateToolWindowContent {
     public void initTableList() {
         try {
             Config.initLocalData();
-            addTableName();
+            addDbName();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

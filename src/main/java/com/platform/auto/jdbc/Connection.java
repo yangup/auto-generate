@@ -163,7 +163,6 @@ public class Connection extends CharUtil {
         String sql = "SELECT table_schema, table_name\n" +
                 "FROM `information_schema`.`tables`\n" +
                 "WHERE table_schema NOT IN ('information_schema', 'performance_schema', 'mysql', 'sys')\n" +
-                "and table_schema IN ('" + database + "')\n" +
                 "order by 1 asc, 2 asc;";
         Statement st = conn.createStatement();
         logger.info(sql);
