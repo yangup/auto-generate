@@ -55,8 +55,7 @@ public class AutoGenerateToolWindowContent {
         parentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         try {
             createContentPanel();
-//            contentPanel.add(new JBScrollPane(buttonPanel));
-            contentPanel.add(buttonPanel);
+            contentPanel.add(new JBScrollPane(buttonPanel));
             parentPanel.add(contentPanel, BorderLayout.PAGE_START);
         } catch (Exception e) {
             // 处理异常
@@ -66,6 +65,7 @@ public class AutoGenerateToolWindowContent {
     @NotNull
     private void createContentPanel() throws Exception {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS)); // 垂直排列
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); // 垂直排列
         // 添加鼠标事件监听器
         refresh.addMouseListener(new MouseAdapter() {
             @Override
