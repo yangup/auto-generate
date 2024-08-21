@@ -3,6 +3,7 @@ package com.platform.auto;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.components.JBTextField;
 import com.platform.auto.config.Config;
 import com.platform.auto.config.DbEntity;
@@ -32,6 +33,7 @@ public class AutoGenerateToolWindowContent {
     @Getter
     private final JPanel parentPanel = new JPanel();
     private final JPanel contentPanel = new JPanel();
+    private final JPanel buttonPanel = new JPanel();
 
     // 刷新框
     private final JButton refresh = new JButton("REFRESH");
@@ -43,7 +45,6 @@ public class AutoGenerateToolWindowContent {
     // 表名称输入框
     private final JBTextField tableNameFilter = new JBTextField(25); // 设置列数限制
     // 表名称列表
-    private List<JButton> tableNameButtonList = new ArrayList<>();
     private List<JPanel> tableNamePanelList = new ArrayList<>();
 
     public AutoGenerateToolWindowContent(ToolWindow toolWindow, Project project) {
@@ -54,6 +55,8 @@ public class AutoGenerateToolWindowContent {
         parentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         try {
             createContentPanel();
+//            contentPanel.add(new JBScrollPane(buttonPanel));
+            contentPanel.add(buttonPanel);
             parentPanel.add(contentPanel, BorderLayout.PAGE_START);
         } catch (Exception e) {
             // 处理异常
@@ -81,7 +84,7 @@ public class AutoGenerateToolWindowContent {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     List<String> buttonNameList = new ArrayList<>();
-                    for (JButton button : tableNameButtonList) {
+                    for (JPanel button : tableNamePanelList) {
                         if (button.isVisible()) {
                             buttonNameList.add(button.getName());
                         }
@@ -109,6 +112,14 @@ public class AutoGenerateToolWindowContent {
      * 添加组件到 content
      **/
     private JPanel addComponentToContent(JComponent component) {
+        return addComponentToPanel(component, contentPanel);
+    }
+
+    private JPanel addComponentToButton(JComponent component) {
+        return addComponentToPanel(component, buttonPanel);
+    }
+
+    private JPanel addComponentToPanel(JComponent component, JPanel panel) {
         // 添加按钮和其他组件
         JPanel temp = new JPanel();
         temp.setLayout(new BorderLayout());
@@ -118,7 +129,7 @@ public class AutoGenerateToolWindowContent {
             component.setCursor(new Cursor(Cursor.HAND_CURSOR));
         }
         temp.setBorder(new EmptyBorder(3, 3, 3, 3));
-        contentPanel.add(temp);
+        panel.add(temp);
         return temp;
     }
 
@@ -151,7 +162,6 @@ public class AutoGenerateToolWindowContent {
             contentPanel.remove(button);
         }
         tableNamePanelList.clear();
-        tableNameButtonList.clear();
 
         for (DbEntity dbEntity : Config.getLocal().dbInfoList) {
             if (!StringUtils.equalsAnyIgnoreCase(Config.getLocal().selectedDbName, dbEntity.dbName)) {
@@ -159,10 +169,7 @@ public class AutoGenerateToolWindowContent {
             }
             for (String tableName : dbEntity.tableNameList) {
                 JButton button = new JButton(tableName);
-                button.setName(tableName);
-
-                tableNameButtonList.add(button);
-                JPanel temp = addComponentToContent(button);
+                JPanel temp = addComponentToButton(button);
                 temp.setName(tableName);
                 tableNamePanelList.add(temp);
 
@@ -182,14 +189,12 @@ public class AutoGenerateToolWindowContent {
     }
 
     private void showTableName() {
-        for (List<? extends JComponent> panel : List.of(tableNamePanelList, tableNameButtonList)) {
-            for (JComponent button : panel) {
-                if (StringUtils.isBlank(Config.getLocal().getFilterTableNameText())
-                        || StringUtils.containsIgnoreCase(button.getName(), Config.getLocal().getFilterTableNameText())) {
-                    button.setVisible(true);
-                } else {
-                    button.setVisible(false);
-                }
+        for (JComponent button : tableNamePanelList) {
+            if (StringUtils.isBlank(Config.getLocal().getFilterTableNameText())
+                    || StringUtils.containsIgnoreCase(button.getName(), Config.getLocal().getFilterTableNameText())) {
+                button.setVisible(true);
+            } else {
+                button.setVisible(false);
             }
         }
         logger.info("showTableName");
@@ -208,7 +213,7 @@ public class AutoGenerateToolWindowContent {
             return;
         }
         logger.info("startGenerateAsync: {}", String.join(",", tableNameList));
-        for (JButton button : tableNameButtonList) {
+        for (JPanel button : tableNamePanelList) {
             if (tableNameList.contains(button.getName())) {
                 button.setBackground(Color.RED);
             } else {
@@ -224,7 +229,7 @@ public class AutoGenerateToolWindowContent {
                 throw new RuntimeException(ex);
             } finally {
                 runFalg.set(false);
-                for (JButton button : tableNameButtonList) {
+                for (JPanel button : tableNamePanelList) {
                     button.setBackground(UIManager.getColor("Button.background"));
                 }
                 logger.info("startGenerateAsync.end: {}", String.join(",", tableNameList));
