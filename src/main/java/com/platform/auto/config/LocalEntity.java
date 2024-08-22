@@ -18,9 +18,6 @@ public class LocalEntity {
 
     public String selectedDbName;
 
-    @JsonIgnore
-    public List<TableEntity> tableList;
-
     // 数据处理好了
     public List<DbEntity> dbInfoList;
 

@@ -1,8 +1,10 @@
 package com.platform.auto;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBPanel;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.components.JBTextField;
@@ -10,6 +12,8 @@ import com.platform.auto.config.Config;
 import com.platform.auto.config.DbEntity;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
+import com.platform.auto.ui.ComboBoxItem;
+import com.platform.auto.ui.ComboBoxRenderer;
 import lombok.Getter;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -41,15 +45,20 @@ public class AutoGenerateToolWindowContent {
     // 生成所有的按钮
     private final JButton generateAll = new JButton("GENERATE-ALL");
     // 数据库名称显示框
-    private final ComboBox dbNameComboBox = new ComboBox();
+    private final ComboBox<ComboBoxItem> dbNameComboBox = new ComboBox<>();
 
     // 表名称输入框
     private final JBTextField tableNameFilter = new JBTextField(25); // 设置列数限制
     // 表名称列表
     private List<JBPanel> tableNamePanelList = new ArrayList<>();
 
+    private Icon loadingIcon = null;
+
     public AutoGenerateToolWindowContent(ToolWindow toolWindow, Project project) {
         Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
+        refresh.setName(refresh.getText());
+        generateAll.setName(generateAll.getText());
+        loadingIcon = new ImageIcon(getClass().getResource("/icons/loading_dark.gif"));
         init(project);
         initStartAsync();
         parentPanel.setLayout(new BorderLayout(20, 20));
@@ -96,6 +105,7 @@ public class AutoGenerateToolWindowContent {
                 }
             }
         });
+        generateAll.setIcon(AllIcons.Actions.Execute);
         addComponentToContent(generateAll);
         addComponentToContent(tableNameFilter);
 
@@ -143,15 +153,21 @@ public class AutoGenerateToolWindowContent {
         logger.info("addDbName");
         dbNameComboBox.removeAllItems();
         dbNameComboBox.setModel(new DefaultComboBoxModel<>(
-                new Vector<>(Config.getLocal().dbInfoList.stream().map(DbEntity::getDbName).toList())
+                new Vector<>(
+                        Config.getLocal().dbInfoList.stream().map(dbEntity -> new ComboBoxItem(dbEntity.dbName, AllIcons.Nodes.DataSchema)).toList()
+                )
         ));
+        dbNameComboBox.setRenderer(new ComboBoxRenderer());
 
         dbNameComboBox.setSelectedItem(Config.getLocal().selectedDbName);
         dbNameComboBox.addActionListener(e -> {
-            Config.getLocal().selectedDbName = (String) dbNameComboBox.getSelectedItem();
+            Config.getLocal().selectedDbName = ((ComboBoxItem) dbNameComboBox.getSelectedItem()).text;
             logger.info("db name selected: " + dbNameComboBox.getSelectedItem());
+            Config.refreshLocal();
             addTableName();
         });
+
+
         addTableName();
     }
 
@@ -165,12 +181,15 @@ public class AutoGenerateToolWindowContent {
         }
         tableNamePanelList.clear();
 
+        logger.info("addTableName-selectedDbName: {}", Config.getLocal().selectedDbName);
+
         for (DbEntity dbEntity : Config.getLocal().dbInfoList) {
             if (!StringUtils.equalsAnyIgnoreCase(Config.getLocal().selectedDbName, dbEntity.dbName)) {
                 continue;
             }
             for (String tableName : dbEntity.tableNameList) {
-                JButton button = new JButton(tableName);
+                JButton button = new JButton(tableName, AllIcons.Nodes.DataTables);
+                button.setBorder(null);
                 JBPanel temp = addComponentToButton(button);
                 temp.setName(tableName);
                 tableNamePanelList.add(temp);
@@ -240,10 +259,17 @@ public class AutoGenerateToolWindowContent {
     }
 
     public void initStartAsync() {
+        refresh.setText("");
+        refresh.setIcon(loadingIcon);
+        refresh.setEnabled(false);
         new Thread(() -> {
-            refresh.setBackground(Color.RED);
+//            refresh.setBackground(Color.RED);
             initTableList();
-            refresh.setBackground(UIManager.getColor("Button.background"));
+//            refresh.setBackground(UIManager.getColor("Button.background"));
+
+            refresh.setIcon(loadingIcon);
+            refresh.setText(refresh.getName());
+            refresh.setEnabled(true);
         }).start();
     }
 

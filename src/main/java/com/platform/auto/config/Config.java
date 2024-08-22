@@ -122,13 +122,13 @@ public class Config {
                 getConfig().jdbc.password,
                 getConfig().jdbc.database
         );
-        getLocal().setTableList(Connection.getAllTableInfo());
+        List<LocalEntity.TableEntity> tableList = Connection.getAllTableInfo();
         logger.info("initLocalData");
 
         getLocal().dbInfoList = new ArrayList<>();
         DbEntity dbEntity = null; // 初始设置为 null
 
-        for (LocalEntity.TableEntity table : Config.getLocal().tableList) {
+        for (LocalEntity.TableEntity table : tableList) {
             // 当 dbEntity 为空或 tableSchema 改变时，创建一个新的 dbEntity
             if (dbEntity == null || !StringUtils.equals(dbEntity.dbName, table.tableSchema)) {
                 // 如果不是第一次循环，将前一个 dbEntity 添加到 dbInfoList 中
@@ -145,6 +145,10 @@ public class Config {
         // 循环结束后，将最后一个 dbEntity 添加到 dbInfoList 中
         if (dbEntity != null) {
             getLocal().dbInfoList.add(dbEntity);
+        }
+
+        if (StringUtils.isEmpty(getLocal().selectedDbName)) {
+            getLocal().selectedDbName = getConfig().jdbc.database;
         }
 
         refreshLocal();
