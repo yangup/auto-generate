@@ -58,11 +58,16 @@ public class AutoGenerateToolWindowContent {
 
     private Icon loadingIcon = null;
 
+    private ToolWindow toolWindow = null;
+    private Project project = null;
+
     public AutoGenerateToolWindowContent(ToolWindow toolWindow, Project project) {
         Thread.currentThread().setContextClassLoader(AutoGenerateToolWindowFactory.class.getClassLoader());
         refresh.setName(refresh.getText());
         generateAll.setName(generateAll.getText());
         loadingIcon = new ImageIcon(getClass().getResource("/icons/loading_dark.gif"));
+        this.toolWindow = toolWindow;
+        this.project = project;
         init(project);
         initStartAsync();
         parentPanel.setLayout(new BorderLayout(20, 20));
@@ -310,6 +315,7 @@ public class AutoGenerateToolWindowContent {
 
     public void initTableList() {
         try {
+            Config.init(project);
             Config.initLocalData();
             addDbName();
         } catch (Exception ex) {
