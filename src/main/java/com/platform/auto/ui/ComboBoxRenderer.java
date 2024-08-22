@@ -1,29 +1,21 @@
 package com.platform.auto.ui;
 
+import com.platform.auto.sys.log.AutoLogger;
+import com.platform.auto.sys.log.Logger;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 
 // 自定义渲染器，用于显示图标和文本
 public class ComboBoxRenderer extends JLabel implements ListCellRenderer<ComboBoxItem> {
 
+    private static final Logger logger = AutoLogger.getLogger(ComboBoxRenderer.class);
+
+    public boolean isListered = false;
+
     public ComboBoxRenderer() {
-        addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                // 设置手型光标
-                setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            }
-        });
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseExited(MouseEvent e) {
-                // 当鼠标移出时恢复默认光标
-                setCursor(Cursor.getDefaultCursor());
-            }
-        });
     }
 
     @Override
@@ -44,6 +36,29 @@ public class ComboBoxRenderer extends JLabel implements ListCellRenderer<ComboBo
         setEnabled(list.isEnabled());
         setFont(list.getFont());
         setOpaque(true);
+
+
+//        logger.info("getListCellRendererComponent");
+        if (!isListered) {
+//            logger.info("getListCellRendererComponent_isListered");
+            // 为 JList 添加鼠标监听器
+            list.addMouseMotionListener(new MouseAdapter() {
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                    list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+//                logger.info("HAND_CURSOR");
+                }
+            });
+            list.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    list.setCursor(Cursor.getDefaultCursor());
+//                logger.info("getDefaultCursor");
+                }
+            });
+        }
+        isListered = true;
+
         return this;
     }
 }

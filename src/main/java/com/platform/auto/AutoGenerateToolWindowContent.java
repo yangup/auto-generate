@@ -161,7 +161,7 @@ public class AutoGenerateToolWindowContent {
         dbNameComboBox.setSelectedItem(new ComboBoxItem(Config.getLocal().selectedDbName));
         dbNameComboBox.addActionListener(e -> {
             Config.getLocal().selectedDbName = ((ComboBoxItem) dbNameComboBox.getSelectedItem()).text;
-            logger.info("db name selected: " + dbNameComboBox.getSelectedItem());
+            logger.info("db name selected: " + Config.getLocal().selectedDbName);
             Config.refreshLocal();
             addTableName();
         });
