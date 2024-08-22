@@ -75,7 +75,7 @@ public class AutoGenerateToolWindowContent {
     private void createContentPanel() throws Exception {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS)); // 垂直排列
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); // 垂直排列
-        buttonPanel.withMinimumHeight(500);
+//        buttonPanel.withMinimumHeight(500);
         // 添加鼠标事件监听器
         refresh.addMouseListener(new MouseAdapter() {
             @Override
@@ -158,7 +158,7 @@ public class AutoGenerateToolWindowContent {
         ));
         dbNameComboBox.setRenderer(new ComboBoxRenderer());
 
-        dbNameComboBox.setSelectedItem(Config.getLocal().selectedDbName);
+        dbNameComboBox.setSelectedItem(new ComboBoxItem(Config.getLocal().selectedDbName));
         dbNameComboBox.addActionListener(e -> {
             Config.getLocal().selectedDbName = ((ComboBoxItem) dbNameComboBox.getSelectedItem()).text;
             logger.info("db name selected: " + dbNameComboBox.getSelectedItem());
