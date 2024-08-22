@@ -35,6 +35,8 @@ public class AutoGenerateToolWindowContent {
 
     private AtomicBoolean runFalg = new AtomicBoolean(false);
 
+    private static final Color SELECTED_COLOR = new Color(46, 67, 110);
+
     @Getter
     private final JBPanel parentPanel = new JBPanel();
     private final JBPanel contentPanel = new JBPanel();
@@ -42,8 +44,10 @@ public class AutoGenerateToolWindowContent {
 
     // 刷新框
     private final JBLabel refresh = new JBLabel("REFRESH", AllIcons.General.InlineRefresh, JLabel.LEFT);
+    private JBPanel refreshParent = null;
     // 生成所有的按钮
     private final JBLabel generateAll = new JBLabel("generate after filter", AllIcons.Actions.Execute, JLabel.LEFT);
+    private JBPanel generateAllParent = null;
     // 数据库名称显示框
     private final ComboBox<ComboBoxItem> dbNameComboBox = new ComboBox<>();
 
@@ -85,13 +89,16 @@ public class AutoGenerateToolWindowContent {
         refresh.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    buttonSelected(refreshParent);
+                }
                 if (e.getClickCount() == 2) {
                     logger.info("refresh");
                     initStartAsync();
                 }
             }
         });
-        addComponentToContent(refresh, true);
+        refreshParent = addComponentToContent(refresh, true);
 
         // table name filter
         JPanel panel = new JPanel(new BorderLayout());
@@ -110,6 +117,9 @@ public class AutoGenerateToolWindowContent {
         generateAll.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    buttonSelected(generateAllParent);
+                }
                 if (e.getClickCount() == 2) {
                     List<String> buttonNameList = new ArrayList<>();
                     for (JBPanel button : tableNamePanelList) {
@@ -118,11 +128,12 @@ public class AutoGenerateToolWindowContent {
                         }
                     }
                     logger.info("generateAll");
+                    generateAll.setIcon(loadingIcon);
                     startGenerateAsync(buttonNameList);
                 }
             }
         });
-        addComponentToContent(generateAll, true);
+        generateAllParent = addComponentToContent(generateAll, true);
 
         logger.info("create content panel");
     }
@@ -151,6 +162,15 @@ public class AutoGenerateToolWindowContent {
         return out;
     }
 
+    private void buttonSelected(JComponent component) {
+        Color defaultColor = UIManager.getColor("Button.background");
+        refreshParent.setBackground(defaultColor);
+        generateAllParent.setBackground(defaultColor);
+        for (JBPanel button : tableNamePanelList) {
+            button.setBackground(defaultColor);
+        }
+        component.setBackground(SELECTED_COLOR);
+    }
 
     /**
      * db name
@@ -203,8 +223,7 @@ public class AutoGenerateToolWindowContent {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         if (e.getClickCount() == 1) {
-                            tableNameLabel.setBackground(Color.RED);
-                            temp.setBackground(Color.RED);
+                            buttonSelected(temp);
                         }
                         if (e.getClickCount() == 2) {
                             logger.info("startGenerateAsync: {}", tableNameLabel.getName());
@@ -245,23 +264,21 @@ public class AutoGenerateToolWindowContent {
         logger.info("startGenerateAsync: {}", String.join(",", tableNameList));
         for (JBPanel button : tableNamePanelList) {
             if (tableNameList.contains(button.getName())) {
-                button.setBackground(Color.RED);
-            } else {
-                button.setBackground(UIManager.getColor("Button.background"));
+                ((JBLabel) button.getComponent(0)).setIcon(loadingIcon);
             }
         }
         new Thread(() -> {
             try {
                 runFalg.set(true);
-//                Thread.sleep(1000 * 5);
                 Application.start(tableNameList);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             } finally {
                 runFalg.set(false);
                 for (JBPanel button : tableNamePanelList) {
-                    button.setBackground(UIManager.getColor("Button.background"));
+                    ((JBLabel) button.getComponent(0)).setIcon(AllIcons.Nodes.DataTables);
                 }
+                generateAll.setIcon(AllIcons.Actions.Execute);
                 logger.info("startGenerateAsync.end: {}", String.join(",", tableNameList));
             }
         }).start();
