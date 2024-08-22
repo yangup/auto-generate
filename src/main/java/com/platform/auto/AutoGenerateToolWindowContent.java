@@ -42,7 +42,7 @@ public class AutoGenerateToolWindowContent {
     // 刷新框
     private final JButton refresh = new JButton("REFRESH");
     // 生成所有的按钮
-    private final JButton generateAll = new JButton("GENERATE-ALL");
+    private final JButton generateAll = new JButton("generate after filter");
     // 数据库名称显示框
     private final ComboBox<ComboBoxItem> dbNameComboBox = new ComboBox<>();
 
@@ -64,7 +64,9 @@ public class AutoGenerateToolWindowContent {
         parentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         try {
             createContentPanel();
-            contentPanel.add(new JBScrollPane(buttonPanel));
+            JBScrollPane jbScrollPane = new JBScrollPane(buttonPanel);
+            jbScrollPane.setBorder(null);
+            contentPanel.add(jbScrollPane);
             parentPanel.add(contentPanel, BorderLayout.PAGE_START);
         } catch (Exception e) {
             // 处理异常
@@ -75,7 +77,13 @@ public class AutoGenerateToolWindowContent {
     private void createContentPanel() throws Exception {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS)); // 垂直排列
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); // 垂直排列
-//        buttonPanel.withMinimumHeight(500);
+        buttonPanel.setBorder(null);
+        // 下拉选择框
+        JPanel panelComboBox = new JPanel(new BorderLayout());
+        panelComboBox.setBorder(BorderFactory.createEmptyBorder(0, 11, 0, 0));
+        dbNameComboBox.setEditable(false);
+        panelComboBox.add(dbNameComboBox);
+        addComponentToContent(panelComboBox);
         // 添加鼠标事件监听器
         refresh.addMouseListener(new MouseAdapter() {
             @Override
@@ -86,9 +94,27 @@ public class AutoGenerateToolWindowContent {
                 }
             }
         });
+        refresh.setIcon(AllIcons.General.InlineRefresh);
+        refresh.setBorder(null);
         addComponentToContent(refresh);
-        dbNameComboBox.setEditable(false);
-        addComponentToContent(dbNameComboBox);
+
+        // table name filter
+        JLabel iconLabel = new JLabel(AllIcons.Actions.Find);
+        iconLabel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 5)); // 图标与文本框之间的间距
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(iconLabel, BorderLayout.WEST); // 图标在左侧
+        panel.add(tableNameFilter, BorderLayout.CENTER); // 文本框在中间
+
+        tableNameFilter.getEmptyText().setText("table name filter");
+        tableNameFilter.grabFocus();
+        tableNameFilter.setText(Config.getLocal().getFilterTableNameText());
+        tableNameFilter.addActionListener(e -> {
+            Config.getLocal().setFilterTableNameText(tableNameFilter.getText());
+            Config.refreshLocal();
+            showTableName();
+        });
+        addComponentToContent(panel);
+
         generateAll.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -105,17 +131,9 @@ public class AutoGenerateToolWindowContent {
             }
         });
         generateAll.setIcon(AllIcons.Actions.Execute);
+        generateAll.setBorder(null);
         addComponentToContent(generateAll);
-        addComponentToContent(tableNameFilter);
 
-        tableNameFilter.getEmptyText().setText("table name filter");
-        tableNameFilter.grabFocus();
-        tableNameFilter.setText(Config.getLocal().getFilterTableNameText());
-        tableNameFilter.addActionListener(e -> {
-            Config.getLocal().setFilterTableNameText(tableNameFilter.getText());
-            Config.refreshLocal();
-            showTableName();
-        });
         logger.info("create content panel");
     }
 
@@ -258,17 +276,10 @@ public class AutoGenerateToolWindowContent {
     }
 
     public void initStartAsync() {
-        refresh.setText("");
         refresh.setIcon(loadingIcon);
-        refresh.setEnabled(false);
         new Thread(() -> {
-//            refresh.setBackground(Color.RED);
             initTableList();
-//            refresh.setBackground(UIManager.getColor("Button.background"));
-
-            refresh.setIcon(loadingIcon);
-            refresh.setText(refresh.getName());
-            refresh.setEnabled(true);
+            refresh.setIcon(AllIcons.General.InlineRefresh);
         }).start();
     }
 
