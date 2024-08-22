@@ -134,6 +134,8 @@ public class AutoGenerateToolWindowContent {
             }
         });
         generateAllParent = addComponentToContent(generateAll, true);
+        // 分割符号
+        contentPanel.add(new JBPanel());
 
         logger.info("create content panel");
     }
