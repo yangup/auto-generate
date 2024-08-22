@@ -15,6 +15,7 @@ import com.platform.auto.sys.log.Logger;
 import com.platform.auto.ui.ComboBoxItem;
 import com.platform.auto.ui.ComboBoxRenderer;
 import lombok.Getter;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -310,7 +311,7 @@ public class AutoGenerateToolWindowContent {
         try {
             Config.init(project);
         } catch (Exception ex) {
-            throw new RuntimeException(ex);
+            logger.info(ExceptionUtils.getStackTrace(ex));
         }
     }
 
@@ -321,7 +322,7 @@ public class AutoGenerateToolWindowContent {
             Config.initLocalData();
             addDbName();
         } catch (Exception ex) {
-            throw new RuntimeException(ex);
+            logger.info(ExceptionUtils.getStackTrace(ex));
         }
     }
 }
