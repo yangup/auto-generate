@@ -215,8 +215,9 @@ public class AutoGenerateToolWindowContent {
             }
             for (String tableName : dbEntity.tableNameList) {
                 JBLabel tableNameLabel = new JBLabel(tableName, AllIcons.Nodes.DataTables, JLabel.LEFT);
-                tableNameLabel.setName(tableName);
                 JBPanel temp = addComponentToButton(tableNameLabel);
+                tableNameLabel.setName(tableName);
+                temp.setName(tableName);
                 tableNamePanelList.add(temp);
                 logger.info("tableName_create: {}", tableName);
                 tableNameLabel.addMouseListener(new MouseAdapter() {
@@ -285,9 +286,14 @@ public class AutoGenerateToolWindowContent {
     }
 
     public void initStartAsync() {
+        if (runFalg.get()) {
+            return;
+        }
+        runFalg.set(true);
         refresh.setIcon(loadingIcon);
         new Thread(() -> {
             initTableList();
+            runFalg.set(false);
             refresh.setIcon(AllIcons.General.InlineRefresh);
         }).start();
     }
