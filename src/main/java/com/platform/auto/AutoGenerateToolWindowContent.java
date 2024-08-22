@@ -4,6 +4,7 @@ import com.intellij.icons.AllIcons;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBPanel;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.components.JBTextField;
@@ -40,9 +41,9 @@ public class AutoGenerateToolWindowContent {
     private final JBPanel buttonPanel = new JBPanel();
 
     // 刷新框
-    private final JButton refresh = new JButton("REFRESH");
+    private final JBLabel refresh = new JBLabel("REFRESH", AllIcons.General.InlineRefresh, JLabel.LEFT);
     // 生成所有的按钮
-    private final JButton generateAll = new JButton("generate after filter");
+    private final JBLabel generateAll = new JBLabel("generate after filter", AllIcons.Actions.Execute, JLabel.LEFT);
     // 数据库名称显示框
     private final ComboBox<ComboBoxItem> dbNameComboBox = new ComboBox<>();
 
@@ -79,11 +80,7 @@ public class AutoGenerateToolWindowContent {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); // 垂直排列
         buttonPanel.setBorder(null);
         // 下拉选择框
-        JPanel panelComboBox = new JPanel(new BorderLayout());
-        panelComboBox.setBorder(BorderFactory.createEmptyBorder(0, 11, 0, 0));
-        dbNameComboBox.setEditable(false);
-        panelComboBox.add(dbNameComboBox);
-        addComponentToContent(panelComboBox);
+        addComponentToContent(dbNameComboBox, true);
         // 添加鼠标事件监听器
         refresh.addMouseListener(new MouseAdapter() {
             @Override
@@ -94,17 +91,12 @@ public class AutoGenerateToolWindowContent {
                 }
             }
         });
-        refresh.setIcon(AllIcons.General.InlineRefresh);
-        refresh.setBorder(null);
-        addComponentToContent(refresh);
+        addComponentToContent(refresh, true);
 
         // table name filter
-        JLabel iconLabel = new JLabel(AllIcons.Actions.Find);
-        iconLabel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 5)); // 图标与文本框之间的间距
         JPanel panel = new JPanel(new BorderLayout());
-        panel.add(iconLabel, BorderLayout.WEST); // 图标在左侧
+        panel.add(new JLabel(AllIcons.Actions.Find), BorderLayout.WEST); // 图标在左侧
         panel.add(tableNameFilter, BorderLayout.CENTER); // 文本框在中间
-
         tableNameFilter.getEmptyText().setText("table name filter");
         tableNameFilter.grabFocus();
         tableNameFilter.setText(Config.getLocal().getFilterTableNameText());
@@ -113,7 +105,7 @@ public class AutoGenerateToolWindowContent {
             Config.refreshLocal();
             showTableName();
         });
-        addComponentToContent(panel);
+        addComponentToContent(panel, false);
 
         generateAll.addMouseListener(new MouseAdapter() {
             @Override
@@ -130,9 +122,7 @@ public class AutoGenerateToolWindowContent {
                 }
             }
         });
-        generateAll.setIcon(AllIcons.Actions.Execute);
-        generateAll.setBorder(null);
-        addComponentToContent(generateAll);
+        addComponentToContent(generateAll, true);
 
         logger.info("create content panel");
     }
@@ -140,26 +130,25 @@ public class AutoGenerateToolWindowContent {
     /**
      * 添加组件到 content
      **/
-    private JBPanel addComponentToContent(JComponent component) {
-        return addComponentToPanel(component, contentPanel);
+    private JBPanel addComponentToContent(JComponent component, boolean needCursor) {
+        return addComponentToPanel(component, contentPanel, needCursor);
     }
 
     private JBPanel addComponentToButton(JComponent component) {
-        return addComponentToPanel(component, buttonPanel);
+        return addComponentToPanel(component, buttonPanel, true);
     }
 
-    private JBPanel addComponentToPanel(JComponent component, JBPanel panel) {
+    private JBPanel addComponentToPanel(JComponent component, JBPanel panel, boolean needCursor) {
         // 添加按钮和其他组件
-        JBPanel temp = new JBPanel();
-        temp.setLayout(new BorderLayout());
-//        temp.setBorder(BorderFactory.createLineBorder(Color.PINK, 2));
-        temp.add(component, BorderLayout.WEST);
-        if (component instanceof JButton || component instanceof ComboBox) {
+        JBPanel out = new JBPanel();
+        out.setLayout(new BorderLayout());
+        out.add(component, BorderLayout.WEST);
+        if (needCursor) {
             component.setCursor(new Cursor(Cursor.HAND_CURSOR));
         }
-        temp.setBorder(new EmptyBorder(3, 3, 3, 3));
-        panel.add(temp);
-        return temp;
+        out.setBorder(BorderFactory.createEmptyBorder(5, 3, 5, 3));
+        panel.add(out);
+        return out;
     }
 
 
@@ -205,18 +194,21 @@ public class AutoGenerateToolWindowContent {
                 continue;
             }
             for (String tableName : dbEntity.tableNameList) {
-                JButton button = new JButton(tableName, AllIcons.Nodes.DataTables);
-                button.setBorder(null);
-                JBPanel temp = addComponentToButton(button);
-                temp.setName(tableName);
+                JBLabel tableNameLabel = new JBLabel(tableName, AllIcons.Nodes.DataTables, JLabel.LEFT);
+                tableNameLabel.setName(tableName);
+                JBPanel temp = addComponentToButton(tableNameLabel);
                 tableNamePanelList.add(temp);
                 logger.info("tableName_create: {}", tableName);
-                button.addMouseListener(new MouseAdapter() {
+                tableNameLabel.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
+                        if (e.getClickCount() == 1) {
+                            tableNameLabel.setBackground(Color.RED);
+                            temp.setBackground(Color.RED);
+                        }
                         if (e.getClickCount() == 2) {
-                            logger.info("startGenerateAsync: {}", button.getName());
-                            startGenerateAsync(List.of(button.getName()));
+                            logger.info("startGenerateAsync: {}", tableNameLabel.getName());
+                            startGenerateAsync(List.of(tableNameLabel.getName()));
                         }
                     }
                 });
