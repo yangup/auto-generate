@@ -180,6 +180,7 @@ public class Config {
             // 默认 config 中的 db name
             localEntity.selectedDbName = getConfigFromResources().jdbc.database;
             AutoUtil.listToFile(local_path, List.of(objectMapper.writeValueAsString(localEntity)));
+            logger.info("init_local.json");
         }
 
         // 当 config 存在的时候,就不需要

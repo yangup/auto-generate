@@ -298,6 +298,7 @@ public class AutoGenerateToolWindowContent {
         }
         runFalg.set(true);
         refresh.setIcon(loadingIcon);
+        logger.info("initStartAsync");
         new Thread(() -> {
             initTableList();
             runFalg.set(false);
@@ -315,6 +316,7 @@ public class AutoGenerateToolWindowContent {
 
     public void initTableList() {
         try {
+            logger.info("initTableList");
             Config.init(project);
             Config.initLocalData();
             addDbName();
