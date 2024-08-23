@@ -200,7 +200,7 @@ public class AutoGenerateToolWindowContent {
             if (dbNameComboBox.getSelectedItem() != null) {
                 dbNameComboBox.setEnabled(false);
                 Config.getLocal().selectedDbName = ((ComboBoxItem) dbNameComboBox.getSelectedItem()).text;
-                logger.info("db name selected: " + Config.getLocal().selectedDbName);
+                logger.info("db_name_selected: " + Config.getLocal().selectedDbName);
                 Config.refreshLocal();
                 addTableName();
             }
@@ -218,7 +218,7 @@ public class AutoGenerateToolWindowContent {
             if (dbNameComboBox.getSelectedItem() != null) {
                 String dbName = ((ComboBoxItem) dbNameComboBox.getSelectedItem()).text;
                 if (dbName.equals(Config.getLocal().selectedDbName)) {
-                    logger.info("repeat db name: {}", dbName);
+                    logger.info("repeat_db_name: {}", dbName);
                     return;
                 }
             }
