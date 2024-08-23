@@ -34,58 +34,19 @@ tasks {
 }
 
 
-
 dependencies {
-
-  // https://mvnrepository.com/artifact/org.jasypt/jasypt
-  implementation 'org.jasypt:jasypt:1.9.3'
-
-  // https://mvnrepository.com/artifact/commons-codec/commons-codec
-  implementation 'commons-codec:commons-codec:1.17.0'
-
-  implementation 'com.google.guava:guava:32.1.2-jre'
-
-  // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-  implementation 'org.apache.commons:commons-lang3:3.14.0'
-
-  implementation 'com.auth0:java-jwt:4.4.0'
-
-  implementation 'com.squareup.okhttp3:okhttp:4.12.0'
-
-  // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
-  implementation 'com.mysql:mysql-connector-j:8.4.0'
-
-  implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
-
-  implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.1'
-
-  // utils
-  implementation 'com.auth0:java-jwt:4.4.0'
-  implementation 'com.alibaba:fastjson:2.0.43'
-  implementation 'commons-io:commons-io:2.15.1'
-
-  implementation 'com.jfoenix:jfoenix:9.0.10'
-
-  // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-  implementation 'org.apache.commons:commons-lang3:3.14.0'
-
-  // https://mvnrepository.com/artifact/commons-net/commons-net
-  implementation 'commons-net:commons-net:3.10.0'
-  // https://mvnrepository.com/artifact/com.googlecode.java-ipv6/java-ipv6
-  implementation 'com.googlecode.java-ipv6:java-ipv6:0.17'
-
-  // https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api
-  compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
-
-  implementation 'org.apache.servicemix.bundles:org.apache.servicemix.bundles.joda-time:2.3_1'
-
-  // lombok
-  compileOnly "org.projectlombok:lombok:1.18.30"
-  annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
-  annotationProcessor "org.projectlombok:lombok:1.18.30"
-  testCompileOnly 'org.projectlombok:lombok:1.18.30'
-  testAnnotationProcessor "org.projectlombok:lombok:1.18.30"
-
-
+    implementation 'commons-codec:commons-codec:1.17.0'
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
+    implementation 'com.mysql:mysql-connector-j:8.4.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
+//    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.1'
+    implementation 'commons-io:commons-io:2.15.1'
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
+    // lombok
+    compileOnly "org.projectlombok:lombok:1.18.30"
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    annotationProcessor "org.projectlombok:lombok:1.18.30"
+    testCompileOnly 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor "org.projectlombok:lombok:1.18.30"
 }
 
