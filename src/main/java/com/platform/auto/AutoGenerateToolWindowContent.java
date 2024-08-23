@@ -128,6 +128,9 @@ public class AutoGenerateToolWindowContent {
                             buttonNameList.add(button.getName());
                         }
                     }
+                    if (ObjectUtils.isEmpty(buttonNameList)) {
+                        return;
+                    }
                     logger.info("generateAll");
                     generateAll.setIcon(loadingIcon);
                     startGenerateAsync(buttonNameList);
