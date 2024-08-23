@@ -15,6 +15,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Config {
@@ -79,7 +80,7 @@ public class Config {
 
     public static void refreshLocal() {
         try {
-            local.time = LocalDateTime.now();
+            local.time = new Date();
             objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
             AutoUtil.listToFile(project_config_path + "/local.json", List.of(objectMapper.writeValueAsString(local)));
             local = null;
@@ -178,7 +179,7 @@ public class Config {
         String localString = String.join(" ", AutoUtil.readFromLocal(auto_config_name + "/local.json"));
         if (StringUtils.isBlank(localString)) {
             LocalEntity localEntity = new LocalEntity();
-            localEntity.time = LocalDateTime.now();
+            localEntity.time = new Date();
             // 默认 config 中的 db name
             localEntity.selectedDbName = getConfigFromResources().jdbc.database;
             AutoUtil.listToFile(local_path, List.of(objectMapper.writeValueAsString(localEntity)));
