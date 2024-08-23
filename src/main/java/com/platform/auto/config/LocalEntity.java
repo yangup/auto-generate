@@ -3,6 +3,7 @@ package com.platform.auto.config;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
 @Data
 public class LocalEntity {
 
-    public Long time;
+    public LocalDateTime time;
 
     public String filterTableNameText;
 
