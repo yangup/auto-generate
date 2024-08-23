@@ -3,6 +3,7 @@ package com.platform.auto.sys.log;
 
 import com.platform.auto.config.Config;
 import com.platform.auto.util.AutoUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import java.io.*;
@@ -66,6 +67,9 @@ public class AutoLogger implements Logger {
         }
         if (throwable != null) {
             sb.append(" " + getExceptionInfo(loggingEvent.getThrowable()));
+        }
+        if (StringUtils.isEmpty(Config.log_path)) {
+            return;
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(Config.log_path, true))) {
             writer.newLine();  // 换行

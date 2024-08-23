@@ -71,8 +71,8 @@ public class AutoGenerateToolWindowContent {
         loadingIcon = new ImageIcon(getClass().getResource("/icons/loading_dark.gif"));
         this.toolWindow = toolWindow;
         this.project = project;
-        init(project);
-        initStartAsync();
+//        init(project);
+//        initStartAsync();
         parentPanel.setLayout(new BorderLayout(20, 20));
         parentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         try {
@@ -326,14 +326,6 @@ public class AutoGenerateToolWindowContent {
             refresh.setIcon(AllIcons.General.InlineRefresh);
             dbNameComboBox.setEnabled(true);
         }).start();
-    }
-
-    public void init(Project project) {
-        try {
-            Config.init(project);
-        } catch (Exception ex) {
-            logger.info(ex);
-        }
     }
 
     public void initTableList() {
