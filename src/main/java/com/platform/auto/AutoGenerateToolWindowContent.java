@@ -195,12 +195,14 @@ public class AutoGenerateToolWindowContent {
 
         dbNameComboBox.setSelectedItem(new ComboBoxItem(Config.getLocal().selectedDbName));
         dbNameComboBox.addActionListener(e -> {
-            Config.getLocal().selectedDbName = ((ComboBoxItem) dbNameComboBox.getSelectedItem()).text;
-            logger.info("db name selected: " + Config.getLocal().selectedDbName);
-            Config.refreshLocal();
-            addTableName();
+            if (dbNameComboBox.getSelectedItem() != null) {
+                dbNameComboBox.setEnabled(false);
+                Config.getLocal().selectedDbName = ((ComboBoxItem) dbNameComboBox.getSelectedItem()).text;
+                logger.info("db name selected: " + Config.getLocal().selectedDbName);
+                Config.refreshLocal();
+                addTableName();
+            }
         });
-
 
         addTableName();
     }
@@ -255,6 +257,7 @@ public class AutoGenerateToolWindowContent {
                 button.setVisible(false);
             }
         }
+        dbNameComboBox.setEnabled(true);
         logger.info("showTableName");
     }
 
@@ -276,6 +279,7 @@ public class AutoGenerateToolWindowContent {
                 ((JBLabel) button.getComponent(0)).setIcon(loadingIcon);
             }
         }
+        dbNameComboBox.setEnabled(false);
         new Thread(() -> {
             try {
                 runFalg.set(true);
@@ -283,6 +287,7 @@ public class AutoGenerateToolWindowContent {
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             } finally {
+                dbNameComboBox.setEnabled(true);
                 runFalg.set(false);
                 for (JBPanel button : tableNamePanelList) {
                     ((JBLabel) button.getComponent(0)).setIcon(AllIcons.Nodes.DataTables);
@@ -299,11 +304,13 @@ public class AutoGenerateToolWindowContent {
         }
         runFalg.set(true);
         refresh.setIcon(loadingIcon);
+        dbNameComboBox.setEnabled(false);
         logger.info("initStartAsync");
         new Thread(() -> {
             initTableList();
             runFalg.set(false);
             refresh.setIcon(AllIcons.General.InlineRefresh);
+            dbNameComboBox.setEnabled(true);
         }).start();
     }
 
