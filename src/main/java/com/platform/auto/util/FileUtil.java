@@ -36,7 +36,7 @@ public class FileUtil extends StringUtils {
      * 生成其他类型的文件
      **/
     public static File createFileOther(String fileName, String parentName) {
-        return createFile(Config.project_auto_path + File.separator + parentName + File.separator + fileName);
+        return createFile(Config.project_auto_path + File.separator + "txt" + File.separator + parentName + File.separator + fileName);
     }
 
     /**
