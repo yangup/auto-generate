@@ -29,12 +29,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class AutoGenerateToolWindowContent {
 
     private static final Logger logger = AutoLogger.getLogger(AutoGenerateToolWindowContent.class);
 
     private AtomicBoolean runFalg = new AtomicBoolean(false);
+    private AtomicLong lastTime = new AtomicLong(0L);
 
     private static final Color SELECTED_COLOR = new Color(46, 67, 110);
 
@@ -211,6 +213,18 @@ public class AutoGenerateToolWindowContent {
      * 将 table name 加入到列表中
      **/
     private void addTableName() {
+        // 1.5 秒以内
+        if (System.currentTimeMillis() - lastTime.get() < 15 * 100L) {
+            if (dbNameComboBox.getSelectedItem() != null) {
+                String dbName = ((ComboBoxItem) dbNameComboBox.getSelectedItem()).text;
+                if (dbName.equals(Config.getLocal().selectedDbName)) {
+                    logger.info("repeat db name: {}", dbName);
+                    return;
+                }
+            }
+        }
+
+        lastTime.set(System.currentTimeMillis());
         logger.info("addTableName-start");
         for (JBPanel button : tableNamePanelList) {
             buttonPanel.remove(button);
