@@ -332,7 +332,7 @@ public class AutoGenerateToolWindowContent {
         try {
             Config.init(project);
         } catch (Exception ex) {
-            logger.info(ExceptionUtils.getStackTrace(ex));
+            logger.info(ex);
         }
     }
 
@@ -343,7 +343,7 @@ public class AutoGenerateToolWindowContent {
             Config.initLocalData();
             addDbName();
         } catch (Exception ex) {
-            logger.info(ExceptionUtils.getStackTrace(ex));
+            logger.info(ex);
         }
     }
 }
