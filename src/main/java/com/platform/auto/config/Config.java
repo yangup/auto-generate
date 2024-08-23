@@ -80,7 +80,7 @@ public class Config {
 
     public static void refreshLocal() {
         try {
-            local.time = new Date();
+            local.time = System.currentTimeMillis();
             objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
             AutoUtil.listToFile(project_config_path + "/local.json", List.of(objectMapper.writeValueAsString(local)));
             local = null;
@@ -179,7 +179,7 @@ public class Config {
         String localString = String.join(" ", AutoUtil.readFromLocal(auto_config_name + "/local.json"));
         if (StringUtils.isBlank(localString)) {
             LocalEntity localEntity = new LocalEntity();
-            localEntity.time = new Date();
+            localEntity.time = System.currentTimeMillis();
             // 默认 config 中的 db name
             localEntity.selectedDbName = getConfigFromResources().jdbc.database;
             AutoUtil.listToFile(local_path, List.of(objectMapper.writeValueAsString(localEntity)));

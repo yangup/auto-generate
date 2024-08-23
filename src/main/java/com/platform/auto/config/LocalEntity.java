@@ -1,10 +1,7 @@
 package com.platform.auto.config;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,7 +11,7 @@ import java.util.List;
 @Data
 public class LocalEntity {
 
-    public Date time;
+    public Long time;
 
     public String filterTableNameText;
 

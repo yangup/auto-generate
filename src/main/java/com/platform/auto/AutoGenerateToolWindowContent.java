@@ -71,23 +71,17 @@ public class AutoGenerateToolWindowContent {
         loadingIcon = new ImageIcon(getClass().getResource("/icons/loading_dark.gif"));
         this.toolWindow = toolWindow;
         this.project = project;
-//        init(project);
-//        initStartAsync();
         parentPanel.setLayout(new BorderLayout(20, 20));
         parentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        try {
-            createContentPanel();
-            JBScrollPane jbScrollPane = new JBScrollPane(buttonPanel);
-            jbScrollPane.setBorder(null);
-            contentPanel.add(jbScrollPane);
-            parentPanel.add(contentPanel, BorderLayout.PAGE_START);
-        } catch (Exception e) {
-            // 处理异常
-        }
+        createContentPanel();
+        JBScrollPane jbScrollPane = new JBScrollPane(buttonPanel);
+        jbScrollPane.setBorder(null);
+        contentPanel.add(jbScrollPane);
+        parentPanel.add(contentPanel, BorderLayout.PAGE_START);
     }
 
     @NotNull
-    private void createContentPanel() throws Exception {
+    private void createContentPanel() {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS)); // 垂直排列
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); // 垂直排列
         buttonPanel.setBorder(null);
@@ -114,7 +108,7 @@ public class AutoGenerateToolWindowContent {
         panel.add(tableNameFilter, BorderLayout.CENTER); // 文本框在中间
         tableNameFilter.getEmptyText().setText("table name filter");
         tableNameFilter.grabFocus();
-        tableNameFilter.setText(Config.getLocal().getFilterTableNameText());
+        tableNameFilter.setText(Config.getLocal() == null ? "" : Config.getLocal().getFilterTableNameText());
         tableNameFilter.addActionListener(e -> {
             Config.getLocal().setFilterTableNameText(tableNameFilter.getText());
             Config.refreshLocal();
@@ -328,12 +322,21 @@ public class AutoGenerateToolWindowContent {
         }).start();
     }
 
+    public void init(Project project) {
+        try {
+            Config.init(project);
+        } catch (Exception ex) {
+            logger.info(ex);
+        }
+    }
+
     public void initTableList() {
         try {
             logger.info("initTableList");
             Config.init(project);
             Config.initLocalData();
             addDbName();
+            tableNameFilter.setText(Config.getLocal() == null ? "" : Config.getLocal().getFilterTableNameText());
         } catch (Exception ex) {
             logger.info(ex);
         }
