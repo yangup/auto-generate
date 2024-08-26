@@ -173,21 +173,21 @@ public class Config {
         logger.info("refreshLocal");
     }
 
-    /**
-     * 将 config 信息, 拷贝到 .auto 项目目录下面
-     **/
-    public static void init(Project projectParam) throws Exception {
-        config = null;
-        local = null;
+    public static void initProject(Project projectParam) {
         project = projectParam;
         project_base_path = project.getBasePath();
-
         project_auto_path = project_base_path + "/" + auto_name;
         project_config_path = project_auto_path + "/" + auto_config_name;
         project_template_path = project_config_path + "/template";
-
-        // for log
         log_path = project_config_path + "/log.txt";
+    }
+
+    /**
+     * 将 config 信息, 拷贝到 .auto 项目目录下面
+     **/
+    public static void initFile() throws Exception {
+        config = null;
+        local = null;
         FileUtil.createFile(log_path);
         // for local.json
         local_path = project_config_path + "/local.json";

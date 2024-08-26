@@ -31,6 +31,7 @@ public class AutoLogger implements Logger {
     }
 
     public void info(String format, Object... arguments) {
+        if (StringUtils.isEmpty(format)) return;
         this.recordEventArgArray(Level.INFO, format, arguments);
     }
 
@@ -69,6 +70,7 @@ public class AutoLogger implements Logger {
             sb.append(" " + getExceptionInfo(loggingEvent.getThrowable()));
         }
         if (StringUtils.isEmpty(Config.log_path)) {
+            System.out.println(sb);
             return;
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(Config.log_path, true))) {
@@ -80,6 +82,9 @@ public class AutoLogger implements Logger {
     }
 
     public String replacePlaceholders(String msg, Object[] args) {
+        if (args == null) {
+            return msg;
+        }
         Pattern pattern = Pattern.compile("\\{\\}");
         Matcher matcher = pattern.matcher(msg);
         StringBuilder result = new StringBuilder();

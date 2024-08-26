@@ -72,6 +72,7 @@ public class AutoGenerateToolWindowContent {
         loadingIcon = new ImageIcon(getClass().getResource("/icons/loading_dark.gif"));
         this.toolWindow = toolWindow;
         this.project = project;
+        Config.initProject(this.project);
         parentPanel.setLayout(new BorderLayout(20, 20));
         parentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         createContentPanel();
@@ -339,7 +340,7 @@ public class AutoGenerateToolWindowContent {
             generateAllParent.setVisible(true);
             tableNameFilterPanel.setVisible(true);
             dbNameComboBoxPanel.setVisible(true);
-            Config.init(project);
+            Config.initFile();
             Config.initLocalData();
             addDbName();
             tableNameFilter.setText(Config.getLocal() == null ? "" : Config.getLocal().getFilterTableNameText());
