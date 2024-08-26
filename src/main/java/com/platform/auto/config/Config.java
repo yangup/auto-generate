@@ -74,7 +74,8 @@ public class Config {
         try {
             local = local == null ? objectMapper.readValue(String.join(" ", AutoUtil.readFromLocal(auto_config_name + "/local.json")), LocalEntity.class) : local;
         } catch (Exception e) {
-            logger.info(e);
+//            logger.info(e);
+            return null;
         }
         return local;
     }

@@ -77,7 +77,8 @@ public class AutoLogger implements Logger {
             writer.newLine();  // 换行
             writer.write(sb.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            System.out.println(sb);
         }
     }
 
