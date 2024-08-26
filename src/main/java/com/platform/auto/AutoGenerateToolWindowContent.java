@@ -148,6 +148,9 @@ public class AutoGenerateToolWindowContent {
         contentPanel.add(new JBPanel());
 
         logger.info("create content panel");
+        if (Config.existLocal()) {
+            initStartAsync();
+        }
     }
 
     /**

@@ -8,6 +8,7 @@ import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import com.platform.auto.util.AutoUtil;
 import com.platform.auto.util.FileUtil;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -76,6 +77,20 @@ public class Config {
             logger.info(e);
         }
         return local;
+    }
+
+    public static boolean existLocal() {
+        try {
+            if (ObjectUtils.isNotEmpty(AutoUtil.readFromLocal(auto_config_name + "/local.json"))) {
+                logger.info("existLocal, true");
+                return true;
+            }
+        } catch (Exception e) {
+            logger.info("existLocal, false");
+            return false;
+        }
+        logger.info("existLocal, false");
+        return false;
     }
 
     public static void refreshLocal() {
