@@ -3,6 +3,7 @@ package com.platform.auto.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectUtil;
 import com.platform.auto.jdbc.Connection;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
@@ -14,9 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Config {
@@ -175,7 +174,7 @@ public class Config {
     }
 
     public static void initProject(Project projectParam) {
-        project = projectParam;
+        project = ProjectUtil.currentOrDefaultProject(projectParam);
         project_base_path = project.getBasePath();
         project_auto_path = project_base_path + "/" + auto_name;
         project_config_path = project_auto_path + "/" + auto_config_name;

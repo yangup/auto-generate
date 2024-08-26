@@ -96,7 +96,6 @@ public class AutoGenerateToolWindowContent {
                     buttonSelected(refreshParent);
                 }
                 if (e.getClickCount() == 2) {
-                    logger.info("refresh");
                     initStartAsync();
                 }
             }
@@ -285,6 +284,7 @@ public class AutoGenerateToolWindowContent {
      * 异步生成 文件
      **/
     public void startGenerateAsync(List<String> tableNameList) {
+        Config.initProject(this.project);
         if (ObjectUtils.isEmpty(tableNameList)) {
             return;
         }
@@ -319,6 +319,8 @@ public class AutoGenerateToolWindowContent {
     }
 
     public void initStartAsync() {
+        Config.initProject(this.project);
+        logger.info("refresh");
         if (runFalg.get()) {
             return;
         }
@@ -337,7 +339,6 @@ public class AutoGenerateToolWindowContent {
     public void initTableList() {
         try {
             logger.info("initTableList");
-            logger.info("project: {}", this.project.getBasePath());
             generateAllParent.setVisible(true);
             tableNameFilterPanel.setVisible(true);
             dbNameComboBoxPanel.setVisible(true);
