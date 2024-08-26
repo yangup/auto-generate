@@ -40,21 +40,23 @@ public class AutoGenerateToolWindowContent {
     private static final Color SELECTED_COLOR = new Color(46, 67, 110);
 
     @Getter
-    private final JBPanel parentPanel = new JBPanel();
-    private final JBPanel contentPanel = new JBPanel();
-    private final JBPanel buttonPanel = new JBPanel();
+    private JBPanel parentPanel = new JBPanel();
+    private JBPanel contentPanel = new JBPanel();
+    private JBPanel buttonPanel = new JBPanel();
 
     // 刷新框
-    private final JBLabel refresh = new JBLabel("REFRESH", AllIcons.General.InlineRefresh, JLabel.LEFT);
+    private JBLabel refresh = new JBLabel("REFRESH", AllIcons.General.InlineRefresh, JLabel.LEFT);
     private JBPanel refreshParent = null;
     // 生成所有的按钮
     private final JBLabel generateAll = new JBLabel("generate after filter", AllIcons.Actions.Execute, JLabel.LEFT);
     private JBPanel generateAllParent = null;
     // 数据库名称显示框
-    private final ComboBox<ComboBoxItem> dbNameComboBox = new ComboBox<>();
+    private ComboBox<ComboBoxItem> dbNameComboBox = new ComboBox<>();
+    private JBPanel dbNameComboBoxPanel = null;
 
     // 表名称输入框
-    private final JBTextField tableNameFilter = new JBTextField(25); // 设置列数限制
+    private JBTextField tableNameFilter = new JBTextField(25); // 设置列数限制
+    private JBPanel tableNameFilterPanel = null;
     // 表名称列表
     private List<JBPanel> tableNamePanelList = new ArrayList<>();
 
@@ -81,11 +83,10 @@ public class AutoGenerateToolWindowContent {
 
     @NotNull
     private void createContentPanel() {
+        // panel
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS)); // 垂直排列
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); // 垂直排列
         buttonPanel.setBorder(null);
-        // 下拉选择框
-        addComponentToContent(dbNameComboBox, true);
         // 添加鼠标事件监听器
         refresh.addMouseListener(new MouseAdapter() {
             @Override
@@ -100,11 +101,14 @@ public class AutoGenerateToolWindowContent {
             }
         });
         refreshParent = addComponentToContent(refresh, true);
+        // 下拉选择框
+        dbNameComboBoxPanel = addComponentToContent(dbNameComboBox, true);
+        dbNameComboBoxPanel.setVisible(false);
 
         // table name filter
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.add(new JLabel(AllIcons.Actions.Find), BorderLayout.WEST); // 图标在左侧
-        panel.add(tableNameFilter, BorderLayout.CENTER); // 文本框在中间
+        tableNameFilterPanel = new JBPanel(new BorderLayout());
+        tableNameFilterPanel.add(new JLabel(AllIcons.Actions.Find), BorderLayout.WEST); // 图标在左侧
+        tableNameFilterPanel.add(tableNameFilter, BorderLayout.CENTER); // 文本框在中间
         tableNameFilter.getEmptyText().setText("table name filter");
         tableNameFilter.grabFocus();
         tableNameFilter.setText(Config.getLocal() == null ? "" : Config.getLocal().getFilterTableNameText());
@@ -113,7 +117,8 @@ public class AutoGenerateToolWindowContent {
             Config.refreshLocal();
             showTableName();
         });
-        addComponentToContent(panel, false);
+        addComponentToContent(tableNameFilterPanel, false);
+        tableNameFilterPanel.setVisible(false);
 
         generateAll.addMouseListener(new MouseAdapter() {
             @Override
@@ -138,6 +143,7 @@ public class AutoGenerateToolWindowContent {
             }
         });
         generateAllParent = addComponentToContent(generateAll, true);
+        generateAllParent.setVisible(false);
         // 分割符号
         contentPanel.add(new JBPanel());
 
@@ -324,17 +330,12 @@ public class AutoGenerateToolWindowContent {
         }).start();
     }
 
-    public void init(Project project) {
-        try {
-            Config.init(project);
-        } catch (Exception ex) {
-            logger.info(ex);
-        }
-    }
-
     public void initTableList() {
         try {
             logger.info("initTableList");
+            generateAllParent.setVisible(true);
+            tableNameFilterPanel.setVisible(true);
+            dbNameComboBoxPanel.setVisible(true);
             Config.init(project);
             Config.initLocalData();
             addDbName();
