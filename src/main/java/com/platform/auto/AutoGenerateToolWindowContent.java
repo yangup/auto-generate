@@ -340,6 +340,7 @@ public class AutoGenerateToolWindowContent {
             generateAllParent.setVisible(true);
             tableNameFilterPanel.setVisible(true);
             dbNameComboBoxPanel.setVisible(true);
+            Config.initProject(this.project);
             Config.initFile();
             Config.initLocalData();
             addDbName();
