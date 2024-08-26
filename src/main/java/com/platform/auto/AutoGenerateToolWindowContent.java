@@ -337,6 +337,7 @@ public class AutoGenerateToolWindowContent {
     public void initTableList() {
         try {
             logger.info("initTableList");
+            logger.info("project: {}", this.project.getBasePath());
             generateAllParent.setVisible(true);
             tableNameFilterPanel.setVisible(true);
             dbNameComboBoxPanel.setVisible(true);
