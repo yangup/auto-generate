@@ -70,7 +70,7 @@ public class AutoLogger implements Logger {
             sb.append(" " + getExceptionInfo(loggingEvent.getThrowable()));
         }
         if (StringUtils.isEmpty(Config.log_path)) {
-            System.out.println(sb);
+//            System.out.println(sb);
             return;
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(Config.log_path, true))) {
@@ -78,7 +78,7 @@ public class AutoLogger implements Logger {
             writer.write(sb.toString());
         } catch (IOException e) {
 //            e.printStackTrace();
-            System.out.println(sb);
+//            System.out.println(sb);
         }
     }
 

@@ -328,17 +328,4 @@ public class CharUtil extends ObjectUtils {
         return stringList;
     }
 
-    public static void main(String[] args) throws Exception {
-        String str = "{\"name\":\"zhangsan\",\"age\":18,\"address\":\"北京市海淀区\"}";
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode jsonNode = mapper.readTree(str);
-
-        List<String> strList = Arrays.asList("it", "is", "a", "wonderful", "day");
-
-        ((ObjectNode)jsonNode).putArray("a").addAll((ArrayNode) mapper.convertValue(strList, JsonNode.class));
-//        System.out.println(strList);
-//        JsonNode jsonNode = mapper.convertValue(strList, JsonNode.class);
-        System.out.println(jsonNode);
-    }
-
 }
