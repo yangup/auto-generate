@@ -32,6 +32,10 @@ public class FileUtil extends StringUtils {
         return null;
     }
 
+    public static boolean exists(String filePath) {
+        return new File(filePath).exists();
+    }
+
     /**
      * 生成其他类型的文件
      **/

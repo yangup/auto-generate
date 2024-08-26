@@ -12,7 +12,6 @@ import com.platform.auto.util.FileUtil;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -203,8 +202,7 @@ public class Config {
 
         // 当 config 存在的时候,就不需要
         String configJson = project_config_path + "/config.json";
-        File temp = new File(configJson);
-        if (temp.exists()) {
+        if (FileUtil.exists(configJson)) {
             return;
         }
         // todo : 拷贝系统的 config 配置
