@@ -77,8 +77,11 @@ public class AutoLogger implements Logger {
             writer.newLine();  // 换行
             writer.write(sb.toString());
         } catch (IOException e) {
-//            e.printStackTrace();
-//            System.out.println(sb);
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("D:\\ksm\\code\\playlet\\a.txt", true))) {
+                writer.newLine();  // 换行
+                writer.write(sb.toString());
+            } catch (IOException ex) {
+            }
         }
     }
 
