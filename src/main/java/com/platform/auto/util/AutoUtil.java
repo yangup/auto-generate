@@ -216,6 +216,9 @@ public class AutoUtil extends CharUtil {
      * @param exclude  : 要排除比较生成的文件的，以这些行开始
      **/
     public static void newCodeToFile(List<String> codeList, File file, int start, int end, String... exclude) throws Exception {
+        if (ObjectUtils.isEmpty(codeList)) {
+            return;
+        }
         List<String> nowList = fileToList(file);
         if (ObjectUtils.isEmpty(nowList)) {
             listToFile(file, codeList);

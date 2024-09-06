@@ -63,7 +63,7 @@ public abstract class BaseCreate {
     }
 
     public void init() throws Exception {
-        if (isEmpty(table)) {
+        if (isEmpty(table) || isEmpty(this.template)) {
             return;
         }
         // 表名称--将下划线+小写转化为大写,首字母大写
