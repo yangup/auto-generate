@@ -32,6 +32,9 @@ public class ConfigEntity {
     @JsonProperty("constant_project_name")
     public String constantProjectName;
 
+    @JsonProperty("store_by_table")
+    public String storeByTable;
+
     public Jdbc jdbc;
 
     @JsonProperty("table_names")

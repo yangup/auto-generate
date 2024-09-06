@@ -1,10 +1,12 @@
 package com.platform.auto.jdbc.base;
 
 
+import com.platform.auto.config.Config;
 import com.platform.auto.config.LocalEntity;
 import com.platform.auto.jdbc.model.*;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
 import java.math.BigInteger;
@@ -90,7 +92,11 @@ public class TableFactory {
         table.tableNameJavaParam = firstToLowercase(table.tableNameJava);
         table.tableNameJavaParamHump = humpToLine(table.tableNameJavaParam);
         table.tableNameJavaParamHumpUpper = table.tableNameJavaParamHump.toUpperCase();
-        table.javaFilePath = table.tableNameJava.toLowerCase();
+        if (StringUtils.equalsAnyIgnoreCase("true", Config.getConfig().getStoreByTable())) {
+            table.javaFilePath = table.tableNameJava.toLowerCase();
+        }else{
+            table.javaFilePath = "";
+        }
         table.init();
 
         initColumnList(table);

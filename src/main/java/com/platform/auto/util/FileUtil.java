@@ -51,7 +51,9 @@ public class FileUtil extends StringUtils {
      **/
     public static File createFileDB(String fileName, String parentFileName) throws Exception {
         // todo : 新的文件创建文件夹, 文件
-        return createFile(Config.getDbFilePath() + parentFileName + File.separator + fileName);
+        return createFile(Config.getDbFilePath() + (
+                StringUtils.isNotEmpty(parentFileName) ? parentFileName + File.separator : ""
+        ) + fileName);
     }
 
     public static String getTableNameJavaLower(final Table table) {

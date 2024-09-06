@@ -6,6 +6,7 @@
   "db_project_name": "common",
   "constant_package": "com.playlet.common.constant",
   "constant_project_name": "common",
+  "store_by_table": "true",
   "jdbc": {
     "clazz": "com.mysql.cj.jdbc.Driver",
     "url": "jdbc:mysql://dev-db.test:3306",
