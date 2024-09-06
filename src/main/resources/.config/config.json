@@ -7,6 +7,8 @@
   "constant_package": "com.playlet.common.constant",
   "constant_project_name": "common",
   "store_by_table": "true",
+  "entity_generate_static_method": "true",
+  "entity_field_is_public": "true",
   "jdbc": {
     "clazz": "com.mysql.cj.jdbc.Driver",
     "url": "jdbc:mysql://dev-db.test:3306",

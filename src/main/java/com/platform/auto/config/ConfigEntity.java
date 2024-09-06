@@ -35,6 +35,12 @@ public class ConfigEntity {
     @JsonProperty("store_by_table")
     public String storeByTable;
 
+    @JsonProperty("entity_generate_static_method")
+    public String entityGenerateStaticMethod;
+
+    @JsonProperty("entity_field_is_public")
+    public String entityFieldIsPublic;
+
     public Jdbc jdbc;
 
     @JsonProperty("table_names")
