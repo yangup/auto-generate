@@ -224,6 +224,7 @@ public class AutoGenerateToolWindowContent {
         if (System.currentTimeMillis() - lastTime.get() < 15 * 100L) {
             if (dbNameComboBox.getSelectedItem() != null && StringUtils.equals(Config.getLocal().selectedDbName, ((ComboBoxItem) dbNameComboBox.getSelectedItem()).text)) {
                 logger.info("repeat_db_name: {}", Config.getLocal().selectedDbName);
+                dbNameComboBox.setEnabled(true);
                 return;
             }
         }
