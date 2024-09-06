@@ -15,6 +15,7 @@ public class Application {
     private static final Logger logger = AutoLogger.getLogger(Application.class);
 
     public static void start(List<String> tableNameList) throws Exception {
+        Config.config = null;
         ConnectionAuto.prepare(Config.getConfig().jdbc.clazz,
                 Config.getConfig().jdbc.url,
                 Config.getConfig().jdbc.username,
