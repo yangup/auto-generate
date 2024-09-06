@@ -36,6 +36,9 @@ public class DtoCreate extends BaseCreate {
 
     public DtoCreate(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.dto, table);
+        if (isEmpty(Config.getConfig().template.dto)) {
+            return;
+        }
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             if (line.contains(Order.getOrder(Order.startField))) {

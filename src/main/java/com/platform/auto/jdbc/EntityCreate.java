@@ -33,6 +33,9 @@ public class EntityCreate extends BaseCreate {
      */
     public EntityCreate(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.entity, table);
+        if (isEmpty(Config.getConfig().template.entity)) {
+            return;
+        }
         List<String> templateList = this.copyCodeListAndClear();
         this.list = this.table.columnInfos;
         for (String line : templateList) {

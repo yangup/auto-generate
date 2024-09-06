@@ -64,6 +64,7 @@ public abstract class BaseCreate {
 
     public void init() throws Exception {
         if (isEmpty(table) || isEmpty(this.template)) {
+            logger.info("table name or template is empty");
             return;
         }
         // 表名称--将下划线+小写转化为大写,首字母大写

@@ -35,6 +35,9 @@ public class SqlProviderCreate extends BaseCreate {
      **/
     public SqlProviderCreate(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.sqlProvider, table);
+        if (isEmpty(Config.getConfig().template.sqlProvider)) {
+            return;
+        }
         generateConstant(table);
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String lineTemp : codeTempList) {

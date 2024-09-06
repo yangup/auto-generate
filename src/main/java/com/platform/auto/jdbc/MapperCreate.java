@@ -13,6 +13,7 @@ import java.util.List;
 
 import static com.platform.auto.util.CharUtil.d;
 import static com.platform.auto.util.CharUtil.w;
+import static org.apache.commons.lang3.ObjectUtils.isEmpty;
 
 /**
  * <p>
@@ -42,6 +43,9 @@ public class MapperCreate extends BaseCreate {
      **/
     public MapperCreate(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.mapper, table);
+        if (isEmpty(Config.getConfig().template.mapper)) {
+            return;
+        }
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String line : codeTempList) {
             if (Order.check(line, Order.sqlFieldRaw)) {

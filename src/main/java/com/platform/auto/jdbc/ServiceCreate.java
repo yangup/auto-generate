@@ -39,6 +39,9 @@ public class ServiceCreate extends BaseCreate {
      **/
     public ServiceCreate(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.service, table);
+        if (isEmpty(Config.getConfig().template.service)) {
+            return;
+        }
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String line : codeTempList) {
             if (Order.check(line, Order.importService)) {

@@ -12,6 +12,7 @@ import java.util.List;
 
 import static com.platform.auto.util.CharUtil.isNotEmpty;
 import static com.platform.auto.util.CharUtil.t;
+import static org.apache.commons.lang3.ObjectUtils.isEmpty;
 
 /**
  * yangpu.jdbc.mysql.ModelCreate.java<br>
@@ -33,6 +34,9 @@ public class DataCreate extends BaseCreate {
      */
     public DataCreate(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.data, table);
+        if (isEmpty(Config.getConfig().template.data)) {
+            return;
+        }
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             // TODO: 可以添加其他逻辑
