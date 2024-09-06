@@ -336,6 +336,9 @@ public class AutoGenerateToolWindowContent {
             runFlag.set(false);
             refresh.setIcon(AllIcons.General.InlineRefresh);
             dbNameComboBox.setEnabled(true);
+            requireNonNull(ProjectFileIndex.getInstance(ProjectUtil.currentOrDefaultProject(project))
+                    .getContentRootForFile(requireNonNull(ProjectUtil.currentOrDefaultProject(project).getProjectFile())))
+                    .refresh(false, true);
         }).start();
     }
 
