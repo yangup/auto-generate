@@ -20,7 +20,7 @@ public class Application {
                 Config.getConfig().jdbc.url,
                 Config.getConfig().jdbc.username,
                 Config.getConfig().jdbc.password,
-                Config.getConfig().jdbc.database);
+                StringUtils.isEmpty(Config.getLocal().selectedDbName) ? Config.getConfig().jdbc.database : Config.getLocal().selectedDbName);
         // TODO: 通用代码生成
         // TODO: 通用代码生成
         // TODO: 通用代码生成
