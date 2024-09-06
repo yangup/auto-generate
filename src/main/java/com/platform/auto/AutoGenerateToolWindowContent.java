@@ -2,6 +2,8 @@ package com.platform.auto;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectUtil;
+import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.ui.components.JBLabel;
@@ -310,6 +312,10 @@ public class AutoGenerateToolWindowContent {
                     ((JBLabel) button.getComponent(0)).setIcon(AllIcons.Nodes.DataTables);
                 }
                 generateAll.setIcon(AllIcons.Actions.Execute);
+                // 刷新文件系统
+                requireNonNull(ProjectFileIndex.getInstance(ProjectUtil.currentOrDefaultProject(project))
+                        .getContentRootForFile(requireNonNull(ProjectUtil.currentOrDefaultProject(project).getProjectFile())))
+                        .refresh(false, true);
                 logger.info("startGenerateAsync.end: {}", String.join(",", tableNameList));
             }
         }).start();
