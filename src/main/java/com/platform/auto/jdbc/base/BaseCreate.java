@@ -86,7 +86,7 @@ public abstract class BaseCreate {
             lineReplaceOrder(line, Order.dateYMDHMSS, DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
             lineReplaceOrder(line, Order.dateYMDHM, DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm"));
             lineReplaceOrder(line, Order.dateYMDHMS, DateFormatUtils.format(new Date(), "yyyyMMdd_HHmmss"));
-            String packagePath = Config.getConfig().dbPackage + "." + tableNameJava.toLowerCase();
+            String packagePath = Config.getConfig().dbPackage + (StringUtils.equalsAnyIgnoreCase("true", Config.getConfig().getStoreByTable()) ? "." + tableNameJava.toLowerCase() : "");
             lineReplaceOrder(line, Order.packageController, Config.getConfig().controllerPackage);
             // todo : 将ser中的包名改成 packageService
             lineReplaceOrder(line, Order.packageService, packagePath);
