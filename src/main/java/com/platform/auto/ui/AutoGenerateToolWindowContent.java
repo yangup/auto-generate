@@ -1,4 +1,4 @@
-package com.platform.auto;
+package com.platform.auto.ui;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.project.Project;
@@ -9,12 +9,12 @@ import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.components.JBTextField;
+import com.platform.auto.Application;
+import com.platform.auto.AutoGenerateToolWindowFactory;
 import com.platform.auto.config.Config;
 import com.platform.auto.config.DbEntity;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
-import com.platform.auto.ui.ComboBoxItem;
-import com.platform.auto.ui.ComboBoxRenderer;
 import lombok.Getter;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
