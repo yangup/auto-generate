@@ -172,7 +172,7 @@ public class AutoGenerateToolWindowContent {
         if (needCursor) {
             component.setCursor(new Cursor(Cursor.HAND_CURSOR));
         }
-        out.setBorder(BorderFactory.createEmptyBorder(5, 3, 5, 3));
+        out.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 3));
         panel.add(out);
         return out;
     }

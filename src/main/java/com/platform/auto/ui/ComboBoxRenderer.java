@@ -13,7 +13,7 @@ public class ComboBoxRenderer extends JLabel implements ListCellRenderer<ComboBo
 
     private static final Logger logger = AutoLogger.getLogger(ComboBoxRenderer.class);
 
-    public boolean isListered = false;
+    public boolean isListened = false;
 
     public ComboBoxRenderer() {
     }
@@ -39,7 +39,7 @@ public class ComboBoxRenderer extends JLabel implements ListCellRenderer<ComboBo
 
 
 //        logger.info("getListCellRendererComponent");
-        if (!isListered) {
+        if (!isListened) {
 //            logger.info("getListCellRendererComponent_isListered");
             // 为 JList 添加鼠标监听器
             list.addMouseMotionListener(new MouseAdapter() {
@@ -57,7 +57,7 @@ public class ComboBoxRenderer extends JLabel implements ListCellRenderer<ComboBo
                 }
             });
         }
-        isListered = true;
+        isListened = true;
 
         return this;
     }
