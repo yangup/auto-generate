@@ -16,6 +16,7 @@ public class Application {
 
     public static void start(List<String> tableNameList) throws Exception {
         Config.config = null;
+        Config.local = null;
         ConnectionAuto.prepare(Config.getConfig().jdbc.clazz,
                 Config.getConfig().jdbc.url,
                 Config.getConfig().jdbc.username,
