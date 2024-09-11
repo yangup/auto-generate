@@ -5,7 +5,6 @@ import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 public class AutoUtil extends CharUtil {
 
     private static final Logger logger = AutoLogger.getLogger(AutoUtil.class);
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(AutoUtil.class);
 
     /**
      * 读取文件到 list

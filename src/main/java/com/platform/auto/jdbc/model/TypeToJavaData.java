@@ -103,7 +103,7 @@ public class TypeToJavaData {
                 "浮点数", "", false, BigDecimal.class.getName()));
 
         fieldMapping.add(TypeToJavaData.of(
-                new String[]{"enum", "binary", "blob", "char", "enum", "fixed", "longblob", "tinyblob", "tinytext", "varbinary", "varchar", "longtext", "mediumblob", "set", "text"},
+                new String[]{"enum", "binary", "blob", "char", "enum", "fixed", "longblob", "tinyblob", "tinytext", "varbinary", "varchar", "longtext", "mediumblob", "set", "text", "json"},
                 String.class.getSimpleName(),
                 "字符串", "", true));
 
