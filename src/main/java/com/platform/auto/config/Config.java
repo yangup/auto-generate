@@ -17,6 +17,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.platform.auto.util.AutoUtil.*;
+
 public class Config {
 
     private static final Logger logger = AutoLogger.getLogger(Config.class);
@@ -52,7 +54,7 @@ public class Config {
 
     public static ConfigEntity getConfig() {
         try {
-            config = config == null ? objectMapper.readValue(String.join(" ", AutoUtil.readFromLocal(auto_config_name + "/config.json")), ConfigEntity.class) : config;
+            config = config == null ? objectMapper.readValue(readFromLocalJson(auto_config_name + "/config.json"), ConfigEntity.class) : config;
         } catch (Exception e) {
             logger.info(e);
         }
@@ -70,7 +72,7 @@ public class Config {
 
     public static LocalEntity getLocal() {
         try {
-            local = local == null ? objectMapper.readValue(String.join(" ", AutoUtil.readFromLocal(auto_config_name + "/local.json")), LocalEntity.class) : local;
+            local = local == null ? objectMapper.readValue(readFromLocalJson(auto_config_name + "/local.json"), LocalEntity.class) : local;
         } catch (Exception e) {
             logger.info(e);
             return new LocalEntity();
@@ -80,7 +82,7 @@ public class Config {
 
     public static boolean existLocal() {
         try {
-            if (ObjectUtils.isNotEmpty(AutoUtil.readFromLocal(auto_config_name + "/local.json"))) {
+            if (isNotBlank(readFromLocalJson(auto_config_name + "/local.json"))) {
                 logger.info("existLocal, true");
                 return true;
             }
@@ -105,25 +107,25 @@ public class Config {
     }
 
     public static String getControllerFilePath() throws Exception {
-        return getJavaFilePath(getConfig().controllerProjectName, getConfig().controllerPackage);
+        return getJavaFilePath(getConfig().generateLocation.controller.projectName, getConfig().generateLocation.controller.packageName);
     }
 
     public static String getDbFilePath() throws Exception {
-        return getJavaFilePath(getConfig().dbProjectName, getConfig().dbPackage);
+        return getJavaFilePath(getConfig().generateLocation.db.projectName, getConfig().generateLocation.db.packageName);
     }
 
     public static String getConstantFilePath() throws Exception {
-        return getJavaFilePath(getConfig().constantProjectName, getConfig().constantPackage);
+        return getJavaFilePath(getConfig().generateLocation.constant.projectName, getConfig().generateLocation.constant.packageName);
     }
 
     /**
      * 从 config.json 中解析出,生成的代码的存放路径
      ***/
-    public static String getJavaFilePath(String key1, String key2) throws Exception {
+    public static String getJavaFilePath(String projectName, String packageName) throws Exception {
         return project_base_path + "/"
-                + key1.replace(".", "/")
+                + projectName.replace(".", "/")
                 + Config.base_java_path
-                + key2.replace(".", "/")
+                + packageName.replace(".", "/")
                 + "/";
     }
 
@@ -190,7 +192,7 @@ public class Config {
         FileUtil.createFile(log_path);
         // for local.json
         local_path = project_config_path + "/local.json";
-        String localString = String.join(" ", AutoUtil.readFromLocal(auto_config_name + "/local.json"));
+        String localString = readFromLocalJson(auto_config_name + "/local.json");
         if (StringUtils.isBlank(localString)) {
             LocalEntity localEntity = new LocalEntity();
             localEntity.time = System.currentTimeMillis();

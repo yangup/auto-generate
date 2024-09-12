@@ -78,6 +78,15 @@ public class AutoUtil extends CharUtil {
         return data;
     }
 
+    /**
+     * 读取 json ， 过滤掉注释
+     ***/
+    public static String readFromLocalJson(String name) {
+        return readFromLocal(name).stream().filter(string ->
+                !string.trim().startsWith("//") && !string.trim().startsWith("#")
+        ).collect(Collectors.joining(" "));
+    }
+
     public static void listToFile(File file, List<String> data) throws Exception {
         if (ObjectUtils.isEmpty(data)) {
             return;

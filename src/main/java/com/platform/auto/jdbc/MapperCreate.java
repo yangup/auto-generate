@@ -8,7 +8,6 @@ import com.platform.auto.sys.order.Order;
 import com.platform.auto.util.AutoUtil;
 import com.platform.auto.util.FileUtil;
 
-import java.io.File;
 import java.util.List;
 
 import static com.platform.auto.util.CharUtil.d;
@@ -43,9 +42,6 @@ public class MapperCreate extends BaseCreate {
      **/
     public MapperCreate(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.mapper, table);
-        if (isEmpty(Config.getConfig().template.mapper)) {
-            return;
-        }
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String line : codeTempList) {
             if (Order.check(line, Order.sqlFieldRaw)) {

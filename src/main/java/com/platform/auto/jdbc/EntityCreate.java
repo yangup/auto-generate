@@ -34,9 +34,6 @@ public class EntityCreate extends BaseCreate {
      */
     public EntityCreate(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.entity, table);
-        if (isEmpty(Config.getConfig().template.entity)) {
-            return;
-        }
         List<String> templateList = this.copyCodeListAndClear();
         this.list = this.table.columnInfos;
         for (String line : templateList) {
@@ -64,12 +61,11 @@ public class EntityCreate extends BaseCreate {
             if (isUpdateTime(field)) {
 //                codeList.add(t + "@JsonIgnore");
             }
-            String publicMethod = StringUtils.equalsAnyIgnoreCase("true", Config.getConfig().getEntityFieldIsPublic()) ? "public" : "private";
+            String publicMethod = isTrue(Config.getConfig().generateLocation.entity.entityFieldIsPublic) ? "public" : "private";
             codeList.add(t + publicMethod + w + type + w + field + ";");
         }
 
-
-        if (StringUtils.equalsAnyIgnoreCase("true", Config.getConfig().getEntityGenerateStaticMethod())) {
+        if (isTrue(Config.getConfig().generateLocation.entity.entityGenerateStaticMethod)) {
             codeList.add(n + "    /**\n" +
                     "     * static method\n" +
                     "     **/");

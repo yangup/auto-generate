@@ -1,14 +1,30 @@
 {
   "author": "yangpu",
-  "controller_package": "com.playlet.api.controller",
-  "controller_project_name": "api",
-  "db_package": "com.playlet.common.db",
-  "db_project_name": "common",
-  "constant_package": "com.playlet.common.constant",
-  "constant_project_name": "common",
   "store_by_table": "true",
-  "entity_generate_static_method": "true",
-  "entity_field_is_public": "true",
+  "generate_location": {
+    "db": {
+      "project_name": "common",
+      "package": "com.playlet.common.db"
+    },
+    "constant": {
+      "project_name": "common",
+      "package": "com.playlet.common.db"
+    },
+    "entity": {
+      "project_name": "common",
+      "entity_generate_static_method": "true",
+      "entity_field_is_public": "true",
+      "package": "com.playlet.common.db"
+    },
+    "mapper": {
+      "project_name": "common",
+      "package": "com.playlet.common.db"
+    },
+    "controller": {
+      "project_name": "api",
+      "package": "com.playlet.api.controller"
+    }
+  },
   "jdbc": {
     "clazz": "com.mysql.cj.jdbc.Driver",
     "url": "jdbc:mysql://dev-db.test:3306",

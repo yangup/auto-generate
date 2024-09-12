@@ -14,32 +14,11 @@ public class ConfigEntity {
 
     public String author;
 
-    @JsonProperty("controller_package")
-    public String controllerPackage;
-
-    @JsonProperty("controller_project_name")
-    public String controllerProjectName;
-
-    @JsonProperty("db_package")
-    public String dbPackage;
-
-    @JsonProperty("db_project_name")
-    public String dbProjectName;
-
-    @JsonProperty("constant_package")
-    public String constantPackage;
-
-    @JsonProperty("constant_project_name")
-    public String constantProjectName;
-
     @JsonProperty("store_by_table")
     public String storeByTable;
 
-    @JsonProperty("entity_generate_static_method")
-    public String entityGenerateStaticMethod;
-
-    @JsonProperty("entity_field_is_public")
-    public String entityFieldIsPublic;
+    @JsonProperty("generate_location")
+    public GenerateLocation generateLocation;
 
     public Jdbc jdbc;
 
@@ -48,6 +27,42 @@ public class ConfigEntity {
 
     public Template template;
 
+
+    @Data
+    public static class ProjectPackage {
+
+        @JsonProperty("projectName")
+        public String projectName;
+
+        @JsonProperty("package")
+        public String packageName;
+
+        @JsonProperty("entity_generate_static_method")
+        public String entityGenerateStaticMethod;
+
+        @JsonProperty("entity_field_is_public")
+        public String entityFieldIsPublic;
+    }
+
+
+    @Data
+    public static class GenerateLocation {
+
+        @JsonProperty("db")
+        public ProjectPackage db;
+
+        @JsonProperty("constant")
+        public ProjectPackage constant;
+
+        @JsonProperty("entity")
+        public ProjectPackage entity;
+
+        @JsonProperty("mapper")
+        public ProjectPackage mapper;
+
+        @JsonProperty("controller")
+        public ProjectPackage controller;
+    }
 
     @Data
     public static class Jdbc {

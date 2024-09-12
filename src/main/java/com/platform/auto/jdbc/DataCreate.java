@@ -34,9 +34,6 @@ public class DataCreate extends BaseCreate {
      */
     public DataCreate(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.data, table);
-        if (isEmpty(Config.getConfig().template.data)) {
-            return;
-        }
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             // TODO: 可以添加其他逻辑
@@ -80,11 +77,11 @@ public class DataCreate extends BaseCreate {
     private void importData() {
         for (Table t : table.otherTable) {
             // import com.platform.db.admin.customer.CustomerData;
-            codeList.add(String.format("import %sData;", (Config.getConfig().dbPackage + "." + t.tableNameJavaParam.toLowerCase() + "." + t.tableNameJava)));
+            codeList.add(String.format("import %sData;", (Config.getConfig().generateLocation.db.packageName + "." + t.tableNameJavaParam.toLowerCase() + "." + t.tableNameJava)));
         }
         for (PageListParam p : table.relateTable) {
             // import com.platform.db.admin.customer.CustomerData;
-            codeList.add(String.format("import %sData;", (Config.getConfig().dbPackage + "." + p.otherTable.tableNameJavaParam.toLowerCase() + "." + p.otherTable.tableNameJava)));
+            codeList.add(String.format("import %sData;", (Config.getConfig().generateLocation.db.packageName + "." + p.otherTable.tableNameJavaParam.toLowerCase() + "." + p.otherTable.tableNameJava)));
         }
     }
 

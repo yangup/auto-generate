@@ -39,9 +39,6 @@ public class ServiceCreate extends BaseCreate {
      **/
     public ServiceCreate(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.service, table);
-        if (isEmpty(Config.getConfig().template.service)) {
-            return;
-        }
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String line : codeTempList) {
             if (Order.check(line, Order.importService)) {
@@ -72,11 +69,11 @@ public class ServiceCreate extends BaseCreate {
     private void importService() {
         for (Table t : table.otherTable) {
             // import com.platform.db.admin.customer.*;
-            codeList.add(String.format("import %s.*;", (Config.getConfig().dbPackage + "." + t.tableNameJavaParam.toLowerCase())));
+            codeList.add(String.format("import %s.*;", (Config.getConfig().generateLocation.db.packageName + "." + t.tableNameJavaParam.toLowerCase())));
         }
         for (PageListParam param : table.relateTable) {
             // import com.platform.db.admin.customer.*;
-            codeList.add(String.format("import %s.*;", (Config.getConfig().dbPackage + "." + param.otherTable.tableNameJavaParam.toLowerCase())));
+            codeList.add(String.format("import %s.*;", (Config.getConfig().generateLocation.db.packageName + "." + param.otherTable.tableNameJavaParam.toLowerCase())));
         }
     }
 

@@ -36,9 +36,6 @@ public class DocTableCreate extends BaseCreate {
 
     public DocTableCreate(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.docTable, table);
-        if (isEmpty(Config.getConfig().template.docTable)) {
-            return;
-        }
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             if (Order.check(line, Order.tableJson)) {

@@ -34,9 +34,6 @@ public class ControllerCreate extends BaseCreate {
      **/
     public ControllerCreate(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.controller, table);
-        if (isEmpty(Config.getConfig().template.controller)) {
-            return;
-        }
         if (!isList) {
             AutoUtil.newCodeToFile(codeList, FileUtil.createFile(Config.getControllerFilePath() + table.tableNameJava + "Controller.java"));
         }
