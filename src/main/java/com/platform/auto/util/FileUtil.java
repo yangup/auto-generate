@@ -69,6 +69,7 @@ public class FileUtil extends StringUtils {
         if (fileName.endsWith("SqlProvider.java")) {
             projectPackage = getConfig().generateLocation.sqlProvider;
         }
+        projectPackage = projectPackage == null ? getConfig().generateLocation.db : projectPackage;
         // todo : 新的文件创建文件夹, 文件
         return createFile(getJavaFilePath(projectPackage) + (
                 StringUtils.isNotEmpty(parentFileName) ? parentFileName + File.separator : ""
