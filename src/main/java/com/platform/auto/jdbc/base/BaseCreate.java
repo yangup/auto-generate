@@ -59,6 +59,7 @@ public abstract class BaseCreate {
         try {
             this.init();
         } catch (Exception e) {
+            logger.info(e);
         }
     }
 
