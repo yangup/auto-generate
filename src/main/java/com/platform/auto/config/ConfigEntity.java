@@ -31,7 +31,7 @@ public class ConfigEntity {
     @Data
     public static class ProjectPackage {
 
-        @JsonProperty("projectName")
+        @JsonProperty("project_name")
         public String projectName;
 
         @JsonProperty("package")
