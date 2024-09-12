@@ -8,6 +8,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.platform.auto.config.Config.*;
+import static com.platform.auto.config.ConfigEntity.*;
+
 public class FileUtil extends StringUtils {
 
     public static File createFile(final String fileName) {
@@ -50,8 +53,24 @@ public class FileUtil extends StringUtils {
      * @param parentFileName : 父文件夹名称
      **/
     public static File createFileDB(String fileName, String parentFileName) throws Exception {
+        ProjectPackage projectPackage = getConfig().generateLocation.db != null ? getConfig().generateLocation.db : null;
+        if (fileName.endsWith("Mapper.java")) {
+            projectPackage = getConfig().generateLocation.mapper;
+        }
+        if (fileName.endsWith("Entity.java")) {
+            projectPackage = getConfig().generateLocation.entity;
+        }
+        if (fileName.endsWith("Service.java")) {
+            projectPackage = getConfig().generateLocation.service;
+        }
+        if (fileName.endsWith("Controller.java")) {
+            projectPackage = getConfig().generateLocation.controller;
+        }
+        if (fileName.endsWith("SqlProvider.java")) {
+            projectPackage = getConfig().generateLocation.sqlProvider;
+        }
         // todo : 新的文件创建文件夹, 文件
-        return createFile(Config.getDbFilePath() + (
+        return createFile(getJavaFilePath(projectPackage) + (
                 StringUtils.isNotEmpty(parentFileName) ? parentFileName + File.separator : ""
         ) + fileName);
     }

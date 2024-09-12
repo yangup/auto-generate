@@ -82,7 +82,7 @@ public class ConnectionAuto extends CharUtil {
                 }
             } catch (Exception e) {
                 logger.info("generate_error,table: {}", table.tableNameJavaParam);
-                logger.info(ExceptionUtils.getMessage(e));
+                logger.info(e);
             }
         });
     }

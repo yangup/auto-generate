@@ -9,7 +9,6 @@ import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import com.platform.auto.util.AutoUtil;
 import com.platform.auto.util.FileUtil;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
@@ -18,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.platform.auto.util.AutoUtil.*;
+import static com.platform.auto.config.ConfigEntity.*;
 
 public class Config {
 
@@ -121,7 +121,11 @@ public class Config {
     /**
      * 从 config.json 中解析出,生成的代码的存放路径
      ***/
-    public static String getJavaFilePath(String projectName, String packageName) throws Exception {
+    public static String getJavaFilePath(ProjectPackage projectPackage) {
+        return getJavaFilePath(projectPackage.projectName, projectPackage.packageName);
+    }
+
+    public static String getJavaFilePath(String projectName, String packageName) {
         return project_base_path + "/"
                 + projectName.replace(".", "/")
                 + Config.base_java_path
