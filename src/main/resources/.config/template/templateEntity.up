@@ -1,4 +1,4 @@
-package -packageTable-;
+package -packageEntity-;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;

@@ -2,6 +2,10 @@
   "author": "yangpu",
   "store_by_table": "true",
   "generate_location": {
+    "service": {
+      "project_name": "common",
+      "package": "com.playlet.common.db"
+    },
     "db": {
       "project_name": "common",
       "package": "com.playlet.common.db"
@@ -21,6 +25,10 @@
       "package": "com.playlet.common.db"
     },
     "controller": {
+      "project_name": "api",
+      "package": "com.playlet.api.controller"
+    },
+    "sqlProvider": {
       "project_name": "api",
       "package": "com.playlet.api.controller"
     }

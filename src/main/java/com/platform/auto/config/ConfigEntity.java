@@ -60,6 +60,12 @@ public class ConfigEntity {
         @JsonProperty("mapper")
         public ProjectPackage mapper;
 
+        @JsonProperty("service")
+        public ProjectPackage service;
+
+        @JsonProperty("sqlProvider")
+        public ProjectPackage sqlProvider;
+
         @JsonProperty("controller")
         public ProjectPackage controller;
     }

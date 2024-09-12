@@ -46,6 +46,7 @@ public enum Order {
     dateYMDHMS,
     // ctr中的包名
     packageController,
+    packageEntity,
     // ser中的包名
     packageService,
     // model中的包名
