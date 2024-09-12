@@ -33,6 +33,7 @@
         <li><b>1.6.0</b> 2024-09-06. add refresh file from disk</li>
         <li><b>1.6.1</b> 2024-09-09. fix bug</li>
         <li><b>1.6.2</b> 2024-09-11. add json type</li>
+        <li><b>1.7.0</b> 2024-09-12. update config.json</li>
       </ul>
     ]]>
     </change-notes>
