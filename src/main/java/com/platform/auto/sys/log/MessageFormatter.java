@@ -123,7 +123,7 @@ public class MessageFormatter {
             String oAsString = o.toString();
             sbuf.append(oAsString);
         } catch (Throwable var3) {
-            Throwable t = var3;
+//            Throwable t = var3;
 //            Util.report("SLF4J: Failed toString() invocation on an object of type [" + o.getClass().getName() + "]", t);
 //            sbuf.append("[FAILED toString()]");
             sbuf.append("SLF4J: Failed toString() invocation on an object of type [" + o.getClass().getName() + "]");
