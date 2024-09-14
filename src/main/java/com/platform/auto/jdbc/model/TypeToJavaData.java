@@ -82,13 +82,6 @@ public class TypeToJavaData {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        init();
-        ObjectMapper objectMapper = new ObjectMapper();
-        System.out.println(objectMapper.writeValueAsString(fieldMapping));
-    }
-
-
     public static boolean isSame(String a, String... b) {
         if (StringUtils.equalsAnyIgnoreCase(a, b)) {
             return true;
