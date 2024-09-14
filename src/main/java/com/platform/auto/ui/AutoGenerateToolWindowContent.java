@@ -210,6 +210,7 @@ public class AutoGenerateToolWindowContent {
                 logger.info("db_name_selected: " + Config.getLocal().selectedDbName);
                 Config.refreshLocal();
                 addTableName();
+                dbNameComboBox.setEnabled(true);
             }
         });
 
@@ -224,7 +225,6 @@ public class AutoGenerateToolWindowContent {
         if (System.currentTimeMillis() - lastTime.get() < 15 * 100L) {
             if (dbNameComboBox.getSelectedItem() != null && StringUtils.equals(Config.getLocal().selectedDbName, ((ComboBoxItem) dbNameComboBox.getSelectedItem()).text)) {
                 logger.info("repeat_db_name: {}", Config.getLocal().selectedDbName);
-                dbNameComboBox.setEnabled(true);
                 return;
             }
         }
@@ -276,7 +276,6 @@ public class AutoGenerateToolWindowContent {
                 button.setVisible(false);
             }
         }
-        dbNameComboBox.setEnabled(true);
         logger.info("showTableName");
     }
 
