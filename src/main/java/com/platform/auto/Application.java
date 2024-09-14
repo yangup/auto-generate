@@ -2,6 +2,7 @@ package com.platform.auto;
 
 import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.ConnectionAuto;
+import com.platform.auto.jdbc.model.TypeToJavaData;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import org.apache.commons.lang3.ObjectUtils;
@@ -17,6 +18,7 @@ public class Application {
     public static void start(List<String> tableNameList) throws Exception {
         Config.config = null;
         Config.local = null;
+        TypeToJavaData.init();
         ConnectionAuto.prepare(Config.getConfig().jdbc.clazz,
                 Config.getConfig().jdbc.url,
                 Config.getConfig().jdbc.username,

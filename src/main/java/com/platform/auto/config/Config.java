@@ -196,14 +196,17 @@ public class Config {
         FileUtil.createFile(log_path);
         // for local.json
         local_path = project_config_path + "/local.json";
-        String localString = readFromLocalJson(auto_config_name + "/local.json");
-        if (StringUtils.isBlank(localString)) {
+        if (StringUtils.isBlank(readFromLocalJson(auto_config_name + "/local.json"))) {
             LocalEntity localEntity = new LocalEntity();
             localEntity.time = System.currentTimeMillis();
             // 默认 config 中的 db name
             localEntity.selectedDbName = getConfigFromResources().jdbc.database;
             AutoUtil.listToFile(local_path, List.of(objectMapper.writeValueAsString(localEntity)));
             logger.info("init_local.json");
+        }
+
+        if (StringUtils.isBlank(readFromLocalJson(auto_config_name + "/typeToJavaData.json"))) {
+            AutoUtil.listToFile(project_config_path + "/typeToJavaData.json", AutoUtil.readFromResources(auto_config_name + "/typeToJavaData.json"));
         }
 
         // 当 config 存在的时候,就不需要

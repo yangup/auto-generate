@@ -1,5 +1,10 @@
 package com.platform.auto.jdbc.model;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.platform.auto.config.Config;
+import com.platform.auto.config.ConfigEntity;
+import com.platform.auto.sys.log.AutoLogger;
+import com.platform.auto.sys.log.Logger;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
@@ -12,6 +17,8 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.platform.auto.util.AutoUtil.readFromLocalJson;
+
 /**
  * 数据库中的类型, 向 java 中的类型转变的处理类
  */
@@ -20,9 +27,9 @@ public class TypeToJavaData {
 
     public static List<TypeToJavaData> fieldMapping = new ArrayList<>();
 
-    static {
-        init();
-    }
+    public static final ObjectMapper objectMapper = new ObjectMapper();
+
+    private static final Logger logger = AutoLogger.getLogger(TypeToJavaData.class);
 
     // todo : 数据库中的数据类型
     // todo : 例如 : {"enum", "binary", "blob", "char", "enum", "fixed", "longblob", "tinyblob", "tinytext", "varbinary", "varchar", "longtext", "mediumblob", "set", "text"}
@@ -63,78 +70,24 @@ public class TypeToJavaData {
         return of(types, typeJava, typeDoc, typeDocNote, jsonNeedColon, null);
     }
 
-    public static void init() {
-        fieldMapping = initFieldMapping();
-    }
-
     /**
      * 初始化映射关系
      **/
-    public static List<TypeToJavaData> initFieldMapping() {
-        List<TypeToJavaData> fieldMapping = new ArrayList<>();
-
-        fieldMapping.add(TypeToJavaData.of(
-                new String[]{"bool", "boolean"},
-                Boolean.class.getSimpleName(),
-                "布尔型数据", "只能填写 true 或 false ", false));
-
-        fieldMapping.add(TypeToJavaData.of(
-                new String[]{"bit", "tinyint", "smallint", "int", "integer", "mediummint", "int4"},
-                Integer.class.getSimpleName(),
-                "整数", "", false));
-        fieldMapping.add(TypeToJavaData.of(
-                new String[]{""},
-                BigInteger.class.getSimpleName(),
-                "整数", "", false, BigInteger.class.getName()));
-
-        fieldMapping.add(TypeToJavaData.of(
-                new String[]{"bigint", "int8"},
-                Long.class.getSimpleName(),
-                "整数", "", false));
-
-        fieldMapping.add(TypeToJavaData.of(
-                new String[]{"float", "real"},
-                BigDecimal.class.getSimpleName(),
-                "浮点数", "", false, BigDecimal.class.getName()));
-
-        fieldMapping.add(TypeToJavaData.of(
-                new String[]{"dec", "decimal", "double", "dec", "decimal", "double", "numeric"},
-                BigDecimal.class.getSimpleName(),
-                "浮点数", "", false, BigDecimal.class.getName()));
-
-        fieldMapping.add(TypeToJavaData.of(
-                new String[]{"enum", "binary", "blob", "char", "enum", "fixed", "longblob", "tinyblob", "tinytext", "varbinary", "varchar", "longtext", "mediumblob", "set", "text", "json"},
-                String.class.getSimpleName(),
-                "字符串", "", true));
-
-        fieldMapping.add(TypeToJavaData.of(
-                new String[]{"timestamp", "timestamptz", "datetime"},
-                LocalDateTime.class.getSimpleName(),
-                "日期时间", "格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14", true, LocalDateTime.class.getName()));
-
-        fieldMapping.add(TypeToJavaData.of(
-                new String[]{"date"},
-                LocalDate.class.getSimpleName(),
-                "日期", "格式 : yyyy-MM-dd </br> 例如 : 2013-05-17", true, LocalDate.class.getName()));
-
-        fieldMapping.add(TypeToJavaData.of(
-                new String[]{"time"},
-                LocalTime.class.getSimpleName(),
-                "时间", "格式 : HH:mm:ss </br> 例如 : 12:13:14", true, LocalTime.class.getName()));
-
-        fieldMapping.add(TypeToJavaData.of(
-                new String[]{"year"},
-                Year.class.getSimpleName(),
-                "年", "格式 : yyyy </br> 例如 : 2013", true, Year.class.getName()));
-
-        fieldMapping.add(TypeToJavaData.of(
-                new String[]{"byte"},
-                Byte.class.getSimpleName(),
-                "字节类型", "只能填写 1 或 0", false, Byte.class.getName()));
-
-        return fieldMapping;
-
+    public static void init() {
+        try {
+            fieldMapping = objectMapper.readValue(readFromLocalJson(Config.project_config_path + "/typeToJavaData.json"),
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, TypeToJavaData.class));
+        } catch (Exception e) {
+            logger.info(e);
+        }
     }
+
+    public static void main(String[] args) throws Exception {
+        init();
+        ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println(objectMapper.writeValueAsString(fieldMapping));
+    }
+
 
     public static boolean isSame(String a, String... b) {
         if (StringUtils.equalsAnyIgnoreCase(a, b)) {
