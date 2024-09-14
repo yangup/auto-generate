@@ -35,14 +35,14 @@ public class MessageFormatter {
 
     public static final FormattingTuple arrayFormat(String messagePattern, Object[] argArray, Throwable throwable) {
         if (messagePattern == null) {
-            return new FormattingTuple((String)null, argArray, throwable);
+            return new FormattingTuple((String) null, argArray, throwable);
         } else if (argArray == null) {
             return new FormattingTuple(messagePattern);
         } else {
             int i = 0;
             StringBuilder sbuf = new StringBuilder(messagePattern.length() + 50);
 
-            for(int L = 0; L < argArray.length; ++L) {
+            for (int L = 0; L < argArray.length; ++L) {
                 int j = messagePattern.indexOf("{}", i);
                 if (j == -1) {
                     if (i == 0) {
@@ -96,23 +96,23 @@ public class MessageFormatter {
             if (!o.getClass().isArray()) {
                 safeObjectAppend(sbuf, o);
             } else if (o instanceof boolean[]) {
-                booleanArrayAppend(sbuf, (boolean[])((boolean[])o));
+                booleanArrayAppend(sbuf, (boolean[]) ((boolean[]) o));
             } else if (o instanceof byte[]) {
-                byteArrayAppend(sbuf, (byte[])((byte[])o));
+                byteArrayAppend(sbuf, (byte[]) ((byte[]) o));
             } else if (o instanceof char[]) {
-                charArrayAppend(sbuf, (char[])((char[])o));
+                charArrayAppend(sbuf, (char[]) ((char[]) o));
             } else if (o instanceof short[]) {
-                shortArrayAppend(sbuf, (short[])((short[])o));
+                shortArrayAppend(sbuf, (short[]) ((short[]) o));
             } else if (o instanceof int[]) {
-                intArrayAppend(sbuf, (int[])((int[])o));
+                intArrayAppend(sbuf, (int[]) ((int[]) o));
             } else if (o instanceof long[]) {
-                longArrayAppend(sbuf, (long[])((long[])o));
+                longArrayAppend(sbuf, (long[]) ((long[]) o));
             } else if (o instanceof float[]) {
-                floatArrayAppend(sbuf, (float[])((float[])o));
+                floatArrayAppend(sbuf, (float[]) ((float[]) o));
             } else if (o instanceof double[]) {
-                doubleArrayAppend(sbuf, (double[])((double[])o));
+                doubleArrayAppend(sbuf, (double[]) ((double[]) o));
             } else {
-                objectArrayAppend(sbuf, (Object[])((Object[])o), seenMap);
+                objectArrayAppend(sbuf, (Object[]) ((Object[]) o), seenMap);
             }
 
         }
@@ -124,8 +124,9 @@ public class MessageFormatter {
             sbuf.append(oAsString);
         } catch (Throwable var3) {
             Throwable t = var3;
-            Util.report("SLF4J: Failed toString() invocation on an object of type [" + o.getClass().getName() + "]", t);
-            sbuf.append("[FAILED toString()]");
+//            Util.report("SLF4J: Failed toString() invocation on an object of type [" + o.getClass().getName() + "]", t);
+//            sbuf.append("[FAILED toString()]");
+            sbuf.append("SLF4J: Failed toString() invocation on an object of type [" + o.getClass().getName() + "]");
         }
 
     }
@@ -133,10 +134,10 @@ public class MessageFormatter {
     private static void objectArrayAppend(StringBuilder sbuf, Object[] a, Map<Object[], Object> seenMap) {
         sbuf.append('[');
         if (!seenMap.containsKey(a)) {
-            seenMap.put(a, (Object)null);
+            seenMap.put(a, (Object) null);
             int len = a.length;
 
-            for(int i = 0; i < len; ++i) {
+            for (int i = 0; i < len; ++i) {
                 deeplyAppendParameter(sbuf, a[i], seenMap);
                 if (i != len - 1) {
                     sbuf.append(", ");
@@ -155,7 +156,7 @@ public class MessageFormatter {
         sbuf.append('[');
         int len = a.length;
 
-        for(int i = 0; i < len; ++i) {
+        for (int i = 0; i < len; ++i) {
             sbuf.append(a[i]);
             if (i != len - 1) {
                 sbuf.append(", ");
@@ -169,7 +170,7 @@ public class MessageFormatter {
         sbuf.append('[');
         int len = a.length;
 
-        for(int i = 0; i < len; ++i) {
+        for (int i = 0; i < len; ++i) {
             sbuf.append(a[i]);
             if (i != len - 1) {
                 sbuf.append(", ");
@@ -183,7 +184,7 @@ public class MessageFormatter {
         sbuf.append('[');
         int len = a.length;
 
-        for(int i = 0; i < len; ++i) {
+        for (int i = 0; i < len; ++i) {
             sbuf.append(a[i]);
             if (i != len - 1) {
                 sbuf.append(", ");
@@ -197,7 +198,7 @@ public class MessageFormatter {
         sbuf.append('[');
         int len = a.length;
 
-        for(int i = 0; i < len; ++i) {
+        for (int i = 0; i < len; ++i) {
             sbuf.append(a[i]);
             if (i != len - 1) {
                 sbuf.append(", ");
@@ -211,7 +212,7 @@ public class MessageFormatter {
         sbuf.append('[');
         int len = a.length;
 
-        for(int i = 0; i < len; ++i) {
+        for (int i = 0; i < len; ++i) {
             sbuf.append(a[i]);
             if (i != len - 1) {
                 sbuf.append(", ");
@@ -225,7 +226,7 @@ public class MessageFormatter {
         sbuf.append('[');
         int len = a.length;
 
-        for(int i = 0; i < len; ++i) {
+        for (int i = 0; i < len; ++i) {
             sbuf.append(a[i]);
             if (i != len - 1) {
                 sbuf.append(", ");
@@ -239,7 +240,7 @@ public class MessageFormatter {
         sbuf.append('[');
         int len = a.length;
 
-        for(int i = 0; i < len; ++i) {
+        for (int i = 0; i < len; ++i) {
             sbuf.append(a[i]);
             if (i != len - 1) {
                 sbuf.append(", ");
@@ -253,7 +254,7 @@ public class MessageFormatter {
         sbuf.append('[');
         int len = a.length;
 
-        for(int i = 0; i < len; ++i) {
+        for (int i = 0; i < len; ++i) {
             sbuf.append(a[i]);
             if (i != len - 1) {
                 sbuf.append(", ");
@@ -266,7 +267,7 @@ public class MessageFormatter {
     public static Throwable getThrowableCandidate(Object[] argArray) {
         if (argArray != null && argArray.length != 0) {
             Object lastEntry = argArray[argArray.length - 1];
-            return lastEntry instanceof Throwable ? (Throwable)lastEntry : null;
+            return lastEntry instanceof Throwable ? (Throwable) lastEntry : null;
         } else {
             return null;
         }
