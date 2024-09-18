@@ -12,7 +12,6 @@ import com.platform.auto.util.AutoUtil;
 import com.platform.auto.util.CharUtil;
 import com.platform.auto.util.FileUtil;
 
-import java.io.File;
 import java.util.List;
 
 import static com.platform.auto.util.CharUtil.*;
@@ -46,7 +45,7 @@ public class DtoCreate extends BaseCreate {
         }
 
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFileDB(table.tableNameJava + "Dto.java", table.javaFilePath));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table.tableNameJava, DTO_JAVA, table.javaFilePath));
         }
 
     }

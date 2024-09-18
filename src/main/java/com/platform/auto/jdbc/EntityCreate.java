@@ -7,9 +7,7 @@ import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.sys.order.Order;
 import com.platform.auto.util.AutoUtil;
 import com.platform.auto.util.FileUtil;
-import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
 import java.util.List;
 
 import static com.platform.auto.util.CharUtil.*;
@@ -44,7 +42,7 @@ public class EntityCreate extends BaseCreate {
             }
         }
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFileDB(table.tableNameJava + "Entity.java", table.javaFilePath));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table.tableNameJava, ENTITY_JAVA, table.javaFilePath));
         }
     }
 
@@ -66,9 +64,7 @@ public class EntityCreate extends BaseCreate {
         }
 
         if (isTrue(Config.getConfig().generateLocation.entity.entityGenerateStaticMethod)) {
-            codeList.add(n + "    /**\n" +
-                    "     * static method\n" +
-                    "     **/");
+            codeList.add(n + "    /**\n" + "     * static method\n" + "     **/");
             codeList.add(t + "public static " + table.tableNameJava + "Entity of() {");
 //        codeList.add(t + t + "return new " + table.tableNameJava + "Entity();");
             codeList.add(t + t + "return " + table.tableNameJava + "Entity.builder().build();");

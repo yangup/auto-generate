@@ -106,14 +106,6 @@ public class Config {
         }
     }
 
-    public static String getControllerFilePath() throws Exception {
-        return getJavaFilePath(getConfig().generateLocation.controller.projectName, getConfig().generateLocation.controller.packageName);
-    }
-
-    public static String getDbFilePath() throws Exception {
-        return getJavaFilePath(getConfig().generateLocation.db.projectName, getConfig().generateLocation.db.packageName);
-    }
-
     public static String getConstantFilePath() throws Exception {
         return getJavaFilePath(getConfig().generateLocation.constant.projectName, getConfig().generateLocation.constant.packageName);
     }

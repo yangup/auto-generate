@@ -92,7 +92,7 @@ public class TableFactory {
         table.tableNameJavaParam = firstToLowercase(table.tableNameJava);
         table.tableNameJavaParamHump = humpToLine(table.tableNameJavaParam);
         table.tableNameJavaParamHumpUpper = table.tableNameJavaParamHump.toUpperCase();
-        table.javaFilePath = StringUtils.equalsAnyIgnoreCase("true", Config.getConfig().getStoreByTable()) ? table.tableNameJava.toLowerCase() : "";
+        table.javaFilePath = isTrue(Config.getConfig().getStoreByTable()) ? table.tableNameJava.toLowerCase() : "";
         table.init();
 
         initColumnList(table);

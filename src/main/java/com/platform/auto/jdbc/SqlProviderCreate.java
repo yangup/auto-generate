@@ -15,8 +15,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.platform.auto.util.CharUtil.isEmpty;
-import static com.platform.auto.util.CharUtil.isIdCreateTimeUpdateTime;
+import static com.platform.auto.util.CharUtil.*;
 
 
 public class SqlProviderCreate extends BaseCreate {
@@ -45,7 +44,7 @@ public class SqlProviderCreate extends BaseCreate {
             codeList.add(line.toString());
         }
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFileDB(table.tableNameJava + "SqlProvider.java", table.javaFilePath));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table.tableNameJava, SQLPROVIDER_JAVA, table.javaFilePath));
         }
     }
 

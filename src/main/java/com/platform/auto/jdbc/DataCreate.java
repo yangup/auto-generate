@@ -10,9 +10,7 @@ import com.platform.auto.util.FileUtil;
 
 import java.util.List;
 
-import static com.platform.auto.util.CharUtil.isNotEmpty;
-import static com.platform.auto.util.CharUtil.t;
-import static org.apache.commons.lang3.ObjectUtils.isEmpty;
+import static com.platform.auto.util.CharUtil.*;
 
 /**
  * yangpu.jdbc.mysql.ModelCreate.java<br>
@@ -48,7 +46,7 @@ public class DataCreate extends BaseCreate {
             }
         }
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFileDB(table.tableNameJava + "Data.java", table.javaFilePath));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table.tableNameJava, DATA_JAVA, table.javaFilePath));
         }
     }
 

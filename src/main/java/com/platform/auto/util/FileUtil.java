@@ -1,5 +1,6 @@
 package com.platform.auto.util;
 
+import com.intellij.ui.mac.MacPathChooserDialog;
 import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.model.Table;
 import org.apache.commons.lang3.StringUtils;
@@ -7,9 +8,11 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.platform.auto.config.Config.*;
 import static com.platform.auto.config.ConfigEntity.*;
+import static com.platform.auto.util.CharUtil.*;
 
 public class FileUtil extends StringUtils {
 
@@ -52,23 +55,14 @@ public class FileUtil extends StringUtils {
      * @param fileName       : 文件名称, 带有后缀的
      * @param parentFileName : 父文件夹名称
      **/
-    public static File createFileDB(String fileName, String parentFileName) throws Exception {
-        ProjectPackage projectPackage = getConfig().generateLocation.db != null ? getConfig().generateLocation.db : null;
-        if (fileName.endsWith("Mapper.java")) {
-            projectPackage = getConfig().generateLocation.mapper;
-        }
-        if (fileName.endsWith("Entity.java")) {
-            projectPackage = getConfig().generateLocation.entity;
-        }
-        if (fileName.endsWith("Service.java")) {
-            projectPackage = getConfig().generateLocation.service;
-        }
-        if (fileName.endsWith("Controller.java")) {
-            projectPackage = getConfig().generateLocation.controller;
-        }
-        if (fileName.endsWith("SqlProvider.java")) {
-            projectPackage = getConfig().generateLocation.sqlProvider;
-        }
+    public static File createFile(String fileName, String suffix, String parentFileName) {
+        ProjectPackage projectPackage = Map.of(
+                MAPPER_JAVA, getConfig().generateLocation.mapper,
+                ENTITY_JAVA, getConfig().generateLocation.entity,
+                SERVICE_JAVA, getConfig().generateLocation.service,
+                CONTROLLER_JAVA, getConfig().generateLocation.controller,
+                SQLPROVIDER_JAVA, getConfig().generateLocation.sqlProvider
+        ).get(suffix);
         projectPackage = projectPackage == null ? getConfig().generateLocation.db : projectPackage;
         // todo : 新的文件创建文件夹, 文件
         return createFile(getJavaFilePath(projectPackage) + (

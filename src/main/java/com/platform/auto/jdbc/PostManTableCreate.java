@@ -41,7 +41,7 @@ public class PostManTableCreate extends BaseCreate {
             codeList.add(line);
         }
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFileOther(FileUtil.getTableNameJavaLower(table) + "_postman.json", table.javaFilePath)
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFileOther(FileUtil.getTableNameJavaLower(table) + _POSTMAN_JSON, table.javaFilePath)
                     , 2, 4);
         }
     }

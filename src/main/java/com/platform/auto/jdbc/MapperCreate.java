@@ -10,9 +10,7 @@ import com.platform.auto.util.FileUtil;
 
 import java.util.List;
 
-import static com.platform.auto.util.CharUtil.d;
-import static com.platform.auto.util.CharUtil.w;
-import static org.apache.commons.lang3.ObjectUtils.isEmpty;
+import static com.platform.auto.util.CharUtil.*;
 
 /**
  * <p>
@@ -90,7 +88,7 @@ public class MapperCreate extends BaseCreate {
         }
 
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFileDB(table.tableNameJava + "Mapper.java", table.javaFilePath));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table.tableNameJava, MAPPER_JAVA, table.javaFilePath));
         }
     }
 

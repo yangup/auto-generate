@@ -55,7 +55,7 @@ public class ServiceCreate extends BaseCreate {
         }
 
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFileDB(table.tableNameJava + "Service.java", table.javaFilePath));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table.tableNameJava, SERVICE_JAVA, table.javaFilePath));
         }
     }
 

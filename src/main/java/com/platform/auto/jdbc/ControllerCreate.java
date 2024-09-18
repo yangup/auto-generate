@@ -6,7 +6,7 @@ import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.util.AutoUtil;
 import com.platform.auto.util.FileUtil;
 
-import static org.apache.commons.lang3.ObjectUtils.isEmpty;
+import static com.platform.auto.util.CharUtil.*;
 
 /**
  * <p>
@@ -35,7 +35,7 @@ public class ControllerCreate extends BaseCreate {
     public ControllerCreate(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.controller, table);
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(Config.getControllerFilePath() + table.tableNameJava + "Controller.java"));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table.tableNameJava, CONTROLLER_JAVA, table.javaFilePath));
         }
     }
 

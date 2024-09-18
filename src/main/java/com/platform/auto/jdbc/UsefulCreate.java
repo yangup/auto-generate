@@ -172,7 +172,7 @@ public class UsefulCreate extends BaseCreate {
         }
 
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFileOther(table.tableNameJavaParam + "_useful.txt", table.javaFilePath));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFileOther(table.tableNameJavaParam + _USEFUL_TXT, table.javaFilePath));
         }
     }
 
