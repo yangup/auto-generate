@@ -68,7 +68,7 @@ public class FileUtil extends StringUtils {
         // todo : 新的文件创建文件夹, 文件
         return createFile(getJavaFilePath(projectPackage) + (
                 StringUtils.isNotEmpty(parentFileName) ? parentFileName + File.separator : ""
-        ) + fileName);
+        ) + fileName + suffix);
     }
 
     public static String getTableNameJavaLower(final Table table) {
