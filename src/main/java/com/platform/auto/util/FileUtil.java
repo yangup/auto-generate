@@ -1,6 +1,5 @@
 package com.platform.auto.util;
 
-import com.intellij.ui.mac.MacPathChooserDialog;
 import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.model.Table;
 import org.apache.commons.lang3.StringUtils;

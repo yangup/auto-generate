@@ -92,22 +92,15 @@ public class AutoUtil extends CharUtil {
             return;
         }
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
-        for (int i = 0; i < data.size(); i++) {
-            writer.write(data.get(i) + n);
+        for (String line : data) {
+            writer.write(line + n);
         }
         writer.close();
     }
 
 
     public static void listToFile(String path, List<String> data) throws Exception {
-        if (ObjectUtils.isEmpty(data)) {
-            return;
-        }
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(path)), StandardCharsets.UTF_8));
-        for (int i = 0; i < data.size(); i++) {
-            writer.write(data.get(i) + n);
-        }
-        writer.close();
+        listToFile(new File(path), data);
     }
 
     /**
