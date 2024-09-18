@@ -35,6 +35,7 @@
         <li><b>1.6.2</b> 2024-09-11. add json type</li>
         <li><b>1.7.0</b> 2024-09-12. update config.json</li>
         <li><b>1.8.0</b> 2024-09-14. upgrade code</li>
+        <li><b>1.8.1</b> 2024-09-18. type to java use config json</li>
       </ul>
     ]]>
     </change-notes>

@@ -145,6 +145,15 @@ public class TypeToJavaData {
         return null;
     }
 
+    public static TypeToJavaData obtainId() {
+        for (TypeToJavaData f : fieldMapping) {
+            if (f.type.size() == 1 && f.type.stream().anyMatch(t -> StringUtils.equalsIgnoreCase(t, "id"))) {
+                return f;
+            }
+        }
+        return null;
+    }
+
     public static TypeToJavaData obtainByJavaType(String type) {
         for (TypeToJavaData f : fieldMapping) {
             if (StringUtils.equalsIgnoreCase(f.typeJava, type)) {

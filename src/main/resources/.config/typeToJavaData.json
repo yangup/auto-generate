@@ -1,6 +1,16 @@
 [
 	{
 		"type": [
+			"id"
+		],
+		"typeJava": "Long",
+		"typeDoc": "整数",
+		"typeDocNote": "",
+		"jsonNeedColon": false,
+		"javaPackage": null
+	},
+	{
+		"type": [
 			"bool",
 			"boolean"
 		],
