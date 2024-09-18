@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,13 +57,13 @@ public class FileUtil extends StringUtils {
      * @param parentFileName : 父文件夹名称
      **/
     public static File createFile(String fileName, String suffix, String parentFileName) {
-        ProjectPackage projectPackage = Map.of(
-                MAPPER_JAVA, getConfig().generateLocation.mapper,
-                ENTITY_JAVA, getConfig().generateLocation.entity,
-                SERVICE_JAVA, getConfig().generateLocation.service,
-                CONTROLLER_JAVA, getConfig().generateLocation.controller,
-                SQLPROVIDER_JAVA, getConfig().generateLocation.sqlProvider
-        ).get(suffix);
+        Map<String, ProjectPackage> projectPackageMap = new HashMap<>();
+        projectPackageMap.put(MAPPER_JAVA, getConfig().generateLocation.mapper);
+        projectPackageMap.put(ENTITY_JAVA, getConfig().generateLocation.entity);
+        projectPackageMap.put(SERVICE_JAVA, getConfig().generateLocation.service);
+        projectPackageMap.put(CONTROLLER_JAVA, getConfig().generateLocation.controller);
+        projectPackageMap.put(SQLPROVIDER_JAVA, getConfig().generateLocation.sqlProvider);
+        ProjectPackage projectPackage = projectPackageMap.get(suffix);
         projectPackage = projectPackage == null ? getConfig().generateLocation.db : projectPackage;
         // todo : 新的文件创建文件夹, 文件
         return createFile(getJavaFilePath(projectPackage) + (
