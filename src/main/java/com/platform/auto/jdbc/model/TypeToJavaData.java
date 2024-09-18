@@ -75,7 +75,7 @@ public class TypeToJavaData {
      **/
     public static void init() {
         try {
-            fieldMapping = objectMapper.readValue(readFromLocalJson(Config.project_config_path + "/typeToJavaData.json"),
+            fieldMapping = objectMapper.readValue(readFromLocalJson(Config.auto_config_name + "/typeToJavaData.json"),
                     objectMapper.getTypeFactory().constructCollectionType(List.class, TypeToJavaData.class));
         } catch (Exception e) {
             logger.info(e);
