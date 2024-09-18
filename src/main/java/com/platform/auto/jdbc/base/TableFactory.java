@@ -171,19 +171,6 @@ public class TableFactory {
             columninfo.isId = columninfo == table.id;
             // TODO: 找到对应的 java 类型
             columninfo.dataTypeJava = isEmpty(columninfo.dataTypeJava) ? columninfo.typeToJavaData.typeJava : columninfo.dataTypeJava;
-            // todo : 如果 int 不够用的时候, 使用 long
-            if (TypeToJavaData.isInt(columninfo.dataTypeJava)) {
-                if (columninfo.numericPrecisionInt > (Integer.MAX_VALUE + "").length()) {
-                    columninfo.dataTypeJava = Long.class.getSimpleName();
-                }
-            }
-            // todo : 如果 long 不够用的时候, 使用 BigInteger
-            if (TypeToJavaData.isLong(columninfo.dataTypeJava)) {
-                if (columninfo.numericPrecisionInt > ((Long.MAX_VALUE + "").length() - 1)) {
-                    columninfo.dataTypeJava = BigInteger.class.getSimpleName();
-                    columninfo.typeToJavaData = TypeToJavaData.obtainByJavaType(columninfo.dataTypeJava);
-                }
-            }
             // todo : 如果 没有, 那就使用 String
             columninfo.dataTypeJava = isEmpty(columninfo.dataTypeJava) ? String.class.getSimpleName() : columninfo.dataTypeJava;
 
