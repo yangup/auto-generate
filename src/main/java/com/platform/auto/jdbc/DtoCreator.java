@@ -1,7 +1,7 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.config.Config;
-import com.platform.auto.jdbc.base.BaseCreate;
+import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.jdbc.model.TypeToJavaData;
@@ -23,17 +23,17 @@ import static com.platform.auto.util.CharUtil.*;
  * @author YangPu
  * @createTime 2016年7月21日 下午3:50:33
  */
-public class DtoCreate extends BaseCreate {
+public class DtoCreator extends BaseCreator {
     /**
      * 加载模板
      *
      * @param table
      */
-    public DtoCreate(Table table) throws Exception {
-        new DtoCreate(table, false);
+    public DtoCreator(Table table) throws Exception {
+        new DtoCreator(table, false);
     }
 
-    public DtoCreate(Table table, boolean isList) throws Exception {
+    public DtoCreator(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.dto, table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {

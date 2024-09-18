@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.TypeToJavaData;
 import org.apache.commons.lang3.ObjectUtils;
@@ -171,9 +172,11 @@ public class CharUtil extends ObjectUtils {
 
     // TODO: 处理掉前民的开头部分
     public static String removePrefix(String tableName) {
-        String[] prefix = new String[]{"DZ_", "ZHGL_", "T_", "X_", "S_", "TB_"};
+        if (isEmpty(Config.getConfig().getRemovePrefix())) {
+            return tableName;
+        }
         String s = tableName.toUpperCase();
-        for (String p : prefix) {
+        for (String p : Config.getConfig().getRemovePrefix()) {
             if (s.startsWith(p)) {
                 return tableName.substring(p.length());
             }

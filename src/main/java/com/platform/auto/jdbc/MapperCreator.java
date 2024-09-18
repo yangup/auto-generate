@@ -1,7 +1,7 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.config.Config;
-import com.platform.auto.jdbc.base.BaseCreate;
+import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.sys.order.Order;
@@ -23,7 +23,7 @@ import static com.platform.auto.util.CharUtil.*;
  * @author YangPu
  * @createTime 2016年7月21日 下午3:50:33
  */
-public class MapperCreate extends BaseCreate {
+public class MapperCreator extends BaseCreator {
 
     // todo : 换行, 每满5个就换行
     public static final int COUNT = 5;
@@ -31,14 +31,14 @@ public class MapperCreate extends BaseCreate {
     /**
      * @param table
      */
-    public MapperCreate(Table table) throws Exception {
-        new MapperCreate(table, false);
+    public MapperCreator(Table table) throws Exception {
+        new MapperCreator(table, false);
     }
 
     /**
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      **/
-    public MapperCreate(Table table, boolean isList) throws Exception {
+    public MapperCreator(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.mapper, table);
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String line : codeTempList) {

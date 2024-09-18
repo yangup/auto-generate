@@ -22,19 +22,19 @@ import static com.platform.auto.util.CharUtil.*;
 /**
  * 基础的生成类
  **/
-public abstract class BaseCreate {
+public abstract class BaseCreator {
 
-    private static final Logger logger = AutoLogger.getLogger(BaseCreate.class);
+    private static final Logger logger = AutoLogger.getLogger(BaseCreator.class);
 
     public List<String> codeList;
     public Table table;
     public String template;
 
-    public BaseCreate() {
+    public BaseCreator() {
 
     }
 
-    public BaseCreate(String template) {
+    public BaseCreator(String template) {
         Table table = new Table();
         table.tableNameJava = "tableNameJava";
         table.tableNameJavaParam = "tableNameJavaParam";
@@ -52,7 +52,7 @@ public abstract class BaseCreate {
      * 根据模板来生成指定的代码
      * 将通用模板下的字段, 替换成 指定 @param table 下的字段
      **/
-    public BaseCreate(String template, Table table) {
+    public BaseCreator(String template, Table table) {
         this.template = template;
         this.table = table;
         this.codeList = new ArrayList<>(128);

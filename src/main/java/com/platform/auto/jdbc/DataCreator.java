@@ -1,7 +1,7 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.config.Config;
-import com.platform.auto.jdbc.base.BaseCreate;
+import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.PageListParam;
 import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.sys.order.Order;
@@ -19,9 +19,9 @@ import static com.platform.auto.util.CharUtil.*;
  * @author YangPu
  * @createTime 2016年7月21日 下午3:50:33
  */
-public class DataCreate extends BaseCreate {
+public class DataCreator extends BaseCreator {
 
-    public DataCreate(Table table) throws Exception {
+    public DataCreator(Table table) throws Exception {
         this(table, false);
     }
 
@@ -30,7 +30,7 @@ public class DataCreate extends BaseCreate {
      *
      * @param table
      */
-    public DataCreate(Table table, boolean isList) throws Exception {
+    public DataCreator(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.data, table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {

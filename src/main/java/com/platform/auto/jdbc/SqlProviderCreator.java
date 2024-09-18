@@ -1,7 +1,7 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.config.Config;
-import com.platform.auto.jdbc.base.BaseCreate;
+import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.FindData;
 import com.platform.auto.jdbc.model.SelectData;
@@ -18,21 +18,21 @@ import java.util.List;
 import static com.platform.auto.util.CharUtil.*;
 
 
-public class SqlProviderCreate extends BaseCreate {
+public class SqlProviderCreator extends BaseCreator {
 
     /**
      * 加载模板
      *
      * @param table
      */
-    public SqlProviderCreate(Table table) throws Exception {
+    public SqlProviderCreator(Table table) throws Exception {
         this(table, false);
     }
 
     /**
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      **/
-    public SqlProviderCreate(Table table, boolean isList) throws Exception {
+    public SqlProviderCreator(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.sqlProvider, table);
         generateConstant(table);
         List<String> codeTempList = this.copyCodeListAndClear();

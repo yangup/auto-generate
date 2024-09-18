@@ -1,7 +1,7 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.config.Config;
-import com.platform.auto.jdbc.base.BaseCreate;
+import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.FindData;
 import com.platform.auto.jdbc.model.QueryMapFindParam;
@@ -17,16 +17,16 @@ import static com.platform.auto.util.CharUtil.*;
 /**
  *
  */
-public class PostManTableCreate extends BaseCreate {
+public class PostManTableCreator extends BaseCreator {
     /**
      * 加载模板
      */
 
-    public PostManTableCreate(Table table) throws Exception {
-        new PostManTableCreate(table, false);
+    public PostManTableCreator(Table table) throws Exception {
+        new PostManTableCreator(table, false);
     }
 
-    public PostManTableCreate(Table table, boolean isList) throws Exception {
+    public PostManTableCreator(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.docPostMan, table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {

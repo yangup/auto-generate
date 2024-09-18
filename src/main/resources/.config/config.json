@@ -1,6 +1,12 @@
 {
   "author": "yangpu",
   "store_by_table": "true",
+  "remove_prefix": [
+    "T_",
+    "X_",
+    "S_",
+    "TB_"
+  ],
   "generate_location": {
     "service": {
       "project_name": "common",

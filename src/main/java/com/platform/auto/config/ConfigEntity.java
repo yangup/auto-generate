@@ -25,6 +25,12 @@ public class ConfigEntity {
     @JsonProperty("table_names")
     public List<String> tableNames;
 
+    /**
+     * 表明称前缀, 需要去掉
+     **/
+    @JsonProperty("remove_prefix")
+    public List<String> removePrefix;
+
     public Template template;
 
 

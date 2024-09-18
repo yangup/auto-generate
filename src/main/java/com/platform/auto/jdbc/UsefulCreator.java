@@ -1,7 +1,7 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.config.Config;
-import com.platform.auto.jdbc.base.BaseCreate;
+import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.SelectData;
 import com.platform.auto.jdbc.model.Table;
@@ -21,18 +21,18 @@ import static com.platform.auto.util.CharUtil.*;
  * @author YangPu
  * @createTime 2016年7月21日 下午3:50:33
  */
-public class UsefulCreate extends BaseCreate {
+public class UsefulCreator extends BaseCreator {
 
     /**
      * 加载模板
      *
      * @param table
      */
-    public UsefulCreate(Table table) throws Exception {
-        new UsefulCreate(table, false);
+    public UsefulCreator(Table table) throws Exception {
+        new UsefulCreator(table, false);
     }
 
-    public UsefulCreate(Table table, boolean isList) throws Exception {
+    public UsefulCreator(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.useful, table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {

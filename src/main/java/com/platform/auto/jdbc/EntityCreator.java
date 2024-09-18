@@ -1,7 +1,7 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.config.Config;
-import com.platform.auto.jdbc.base.BaseCreate;
+import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.sys.order.Order;
@@ -19,18 +19,18 @@ import static com.platform.auto.util.CharUtil.*;
  * @author YangPu
  * @createTime 2016年7月21日 下午3:50:33
  */
-public class EntityCreate extends BaseCreate {
+public class EntityCreator extends BaseCreator {
 
     private List<ColumnInfo> list;
 
-    public EntityCreate(Table table) throws Exception {
-        new EntityCreate(table, false);
+    public EntityCreator(Table table) throws Exception {
+        new EntityCreator(table, false);
     }
 
     /**
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      */
-    public EntityCreate(Table table, boolean isList) throws Exception {
+    public EntityCreator(Table table, boolean isList) throws Exception {
         super(Config.getConfig().template.entity, table);
         List<String> templateList = this.copyCodeListAndClear();
         this.list = this.table.columnInfos;
