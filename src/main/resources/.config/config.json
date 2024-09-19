@@ -1,44 +1,12 @@
 {
   "author": "yangpu",
-  "store_by_table": "true",
+  "store_by_table": true,
   "remove_prefix": [
     "T_",
     "X_",
     "S_",
     "TB_"
   ],
-  "generate_location": {
-    "service": {
-      "project_name": "common",
-      "package": "com.playlet.common.db"
-    },
-    "db": {
-      "project_name": "common",
-      "package": "com.playlet.common.db"
-    },
-    "constant": {
-      "project_name": "common",
-      "package": "com.playlet.common.db"
-    },
-    "entity": {
-      "project_name": "common",
-      "entity_generate_static_method": "true",
-      "entity_field_is_public": "true",
-      "package": "com.playlet.common.db"
-    },
-    "mapper": {
-      "project_name": "common",
-      "package": "com.playlet.common.db"
-    },
-    "controller": {
-      "project_name": "api",
-      "package": "com.playlet.api.controller"
-    },
-    "sqlProvider": {
-      "project_name": "api",
-      "package": "com.playlet.api.controller"
-    }
-  },
   "jdbc": {
     "clazz": "com.mysql.cj.jdbc.Driver",
     "url": "jdbc:mysql://dev-db.test:3306",
@@ -46,19 +14,102 @@
     "password": "123456",
     "database": "yp3"
   },
-  "table_names": [
-    "tb_user_facebook"
-  ],
-  "template": {
-    "controller": "templateController.up",
-    "service": "templateService.up",
-    "mapper": "templateMapper.up",
-    "sqlProvider": "templateSqlProvider.up",
-    "entity": "templateEntity.up",
-    "data": "templateData.up",
-    "dto": "templateDto.up",
-    "useful": "templateUseful.up",
-    "docTable": "templateDocTable.up",
-    "docPostMan": "templatePostManTable.up"
-  }
+  "info": [
+    {
+      "template": "templateController.up",
+      "remark": "generate controller",
+      "path": {
+        "project_name": "api",
+        "package_name": "com.playlet.api.controller"
+      }
+    },
+    {
+      "template": "templateService.up",
+      "remark": "generate service",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.playlet.common.db"
+      }
+    },
+    {
+      "template": "templateMapper.up",
+      "remark": "generate mapper",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.playlet.common.db"
+      }
+    },
+    {
+      "template": "templateSqlProvider.up",
+      "remark": "generate sql provider",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.playlet.common.db"
+      }
+    },
+    {
+      "template": "templateEntity.up",
+      "entity_field_is_public": true,
+      "entity_generate_static_method": true,
+      "remark": "generate entity",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.playlet.common.db"
+      }
+    },
+    {
+      "template": "templateData.up",
+      "remark": "generate data",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.playlet.common.db"
+      }
+    },
+    {
+      "template": "templateDto.up",
+      "remark": "generate dto",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.playlet.common.db"
+      }
+    },
+    {
+      "template": "templateUseful.up",
+      "remark": "generate useful",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.playlet.common.db"
+      }
+    },
+    {
+      "template": "templateDocTable.up",
+      "remark": "generate doc table",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.playlet.common.db"
+      }
+    },
+    {
+      "template": "templatePostManTable.up",
+      "remark": "generate postman table",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.playlet.common.db"
+      }
+    },
+    {
+      "type": "constant",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.playlet.common.db"
+      }
+    },
+    {
+      "type": "db",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.playlet.common.db"
+      }
+    }
+  ]
 }

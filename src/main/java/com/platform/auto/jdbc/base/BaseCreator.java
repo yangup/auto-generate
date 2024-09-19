@@ -63,7 +63,7 @@ public abstract class BaseCreator {
         }
     }
 
-    public void init() throws Exception {
+    public void init() {
         if (isEmpty(table) || isEmpty(this.template)) {
             logger.info("table name or template is empty");
             return;
@@ -87,32 +87,32 @@ public abstract class BaseCreator {
             lineReplaceOrder(line, Order.dateYMDHMSS, DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
             lineReplaceOrder(line, Order.dateYMDHM, DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm"));
             lineReplaceOrder(line, Order.dateYMDHMS, DateFormatUtils.format(new Date(), "yyyyMMdd_HHmmss"));
-            lineReplaceOrder(line, Order.packageController, Config.getConfig().generateLocation.controller != null ? Config.getConfig().generateLocation.controller.packageName : "");
+            lineReplaceOrder(line, Order.packageController, Config.getPath(CONTROLLER_UP) != null ? Config.getPath(CONTROLLER_UP).packageName : "");
             // todo : 将ser中的包名改成 packageService
             lineReplaceOrder(line, Order.packageService,
-                    Config.getConfig().generateLocation.service != null ? Config.getConfig().generateLocation.service.packageName :
-                            (Config.getConfig().generateLocation.db != null ? Config.getConfig().generateLocation.db.packageName : "")
+                    Config.getPath(SERVICE_UP) != null ? Config.getPath(SERVICE_UP).packageName :
+                            (Config.getPathByType(DB) != null ? Config.getPathByType(DB).packageName : "")
                                     + (isTrue(Config.getConfig().getStoreByTable()) ? "." + tableNameJava.toLowerCase() : "")
             );
             lineReplaceOrder(line, Order.packageEntity,
-                    Config.getConfig().generateLocation.entity != null ? Config.getConfig().generateLocation.entity.packageName :
-                            (Config.getConfig().generateLocation.db != null ? Config.getConfig().generateLocation.db.packageName : "")
+                    Config.getPath(ENTITY_UP) != null ? Config.getPath(ENTITY_UP).packageName :
+                            (Config.getPathByType(DB) != null ? Config.getPathByType(DB).packageName : "")
                                     + (isTrue(Config.getConfig().getStoreByTable()) ? "." + tableNameJava.toLowerCase() : "")
             );
             lineReplaceOrder(line, Order.frontFilePath, table.tableNameJavaParam);
             // todo : 将dao中的包名改成 packageMapper
             lineReplaceOrder(line, Order.packageMapper,
-                    Config.getConfig().generateLocation.mapper != null ? Config.getConfig().generateLocation.mapper.packageName :
-                            (Config.getConfig().generateLocation.db != null ? Config.getConfig().generateLocation.db.packageName : "")
+                    Config.getPath(MAPPER_UP) != null ? Config.getPath(MAPPER_UP).packageName :
+                            (Config.getPathByType(DB) != null ? Config.getPathByType(DB).packageName : "")
                                     + (isTrue(Config.getConfig().getStoreByTable()) ? "." + tableNameJava.toLowerCase() : ""));
             // todo : 将table中的包名改成 packageTable
             lineReplaceOrder(line, Order.packageTable,
-                    Config.getConfig().generateLocation.db != null ? Config.getConfig().generateLocation.db.packageName : ""
+                    Config.getPathByType(DB) != null ? Config.getPathByType(DB).packageName : ""
                             + (isTrue(Config.getConfig().getStoreByTable()) ? "." + tableNameJava.toLowerCase() : ""));
             // todo : 将mapper中的包名改成 packageSqlProvider com.platform.db.admin.demo3
             lineReplaceOrder(line, Order.packageSqlProvider,
-                    Config.getConfig().generateLocation.sqlProvider != null ? Config.getConfig().generateLocation.sqlProvider.packageName :
-                            (Config.getConfig().generateLocation.db != null ? Config.getConfig().generateLocation.db.packageName : "")
+                    Config.getPath(SQL_PROVIDER_UP) != null ? Config.getPath(SQL_PROVIDER_UP).packageName :
+                            (Config.getPathByType(DB) != null ? Config.getPathByType(DB).packageName : "")
                                     + (isTrue(Config.getConfig().getStoreByTable()) ? "." + tableNameJava.toLowerCase() : ""));
             lineReplaceOrder(line, Order.tableName, table.tableName);
 

@@ -55,6 +55,19 @@ public class CharUtil extends ObjectUtils {
     public static String _DOC_TXT = "_doc.txt";
     public static String _POSTMAN_JSON = "_postman.json";
 
+    public static String CONTROLLER_UP = "Controller.up";
+    public static String SERVICE_UP = "Service.up";
+    public static String MAPPER_UP = "Mapper.up";
+    public static String SQL_PROVIDER_UP = "SqlProvider.up";
+    public static String ENTITY_UP = "Entity.up";
+    public static String DATA_UP = "Data.up";
+    public static String DTO_UP = "Dto.up";
+    public static String USEFUL_UP = "Useful.up";
+    public static String DOC_TABLE_UP = "DocTable.up";
+    public static String DOC_POSTMAN_UP = "PostManTable.up";
+    public static String CONSTANT = "constant";
+    public static String DB = "db";
+
     // 把一个字符串的第一个字母大写、效率是最高的、
     public static String firstToUppercase(String fieldName) {
         if (Character.isUpperCase(fieldName.charAt(0))) {

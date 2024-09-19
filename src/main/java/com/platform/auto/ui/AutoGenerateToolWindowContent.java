@@ -1,10 +1,13 @@
 package com.platform.auto.ui;
 
 import com.intellij.icons.AllIcons;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectUtil;
 import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.ui.ComboBox;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBScrollPane;
@@ -312,10 +315,13 @@ public class AutoGenerateToolWindowContent {
                     ((JBLabel) button.getComponent(0)).setIcon(AllIcons.Nodes.DataTables);
                 }
                 generateAll.setIcon(AllIcons.Actions.Execute);
-                // 刷新文件系统
-                requireNonNull(ProjectFileIndex.getInstance(ProjectUtil.currentOrDefaultProject(project))
-                        .getContentRootForFile(requireNonNull(ProjectUtil.currentOrDefaultProject(project).getProjectFile())))
-                        .refresh(false, true);
+                // 使用异步刷新机制
+                ApplicationManager.getApplication().invokeLater(() -> {
+                    VirtualFile root = requireNonNull(ProjectFileIndex.getInstance(ProjectUtil.currentOrDefaultProject(project))
+                            .getContentRootForFile(requireNonNull(ProjectUtil.currentOrDefaultProject(project).getProjectFile())));
+                    // 异步刷新
+                    root.refresh(false, true);
+                }, ModalityState.nonModal());
                 logger.info("startGenerateAsync.end: {}", String.join(",", tableNameList));
             }
         }).start();
@@ -336,9 +342,13 @@ public class AutoGenerateToolWindowContent {
             runFlag.set(false);
             refresh.setIcon(AllIcons.General.InlineRefresh);
             dbNameComboBox.setEnabled(true);
-            requireNonNull(ProjectFileIndex.getInstance(ProjectUtil.currentOrDefaultProject(project))
-                    .getContentRootForFile(requireNonNull(ProjectUtil.currentOrDefaultProject(project).getProjectFile())))
-                    .refresh(false, true);
+            // 使用异步刷新机制
+            ApplicationManager.getApplication().invokeLater(() -> {
+                VirtualFile root = requireNonNull(ProjectFileIndex.getInstance(ProjectUtil.currentOrDefaultProject(project))
+                        .getContentRootForFile(requireNonNull(ProjectUtil.currentOrDefaultProject(project).getProjectFile())));
+                // 异步刷新
+                root.refresh(false, true);
+            }, ModalityState.nonModal());
         }).start();
     }
 

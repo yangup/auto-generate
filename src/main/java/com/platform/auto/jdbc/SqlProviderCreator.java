@@ -1,6 +1,7 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.config.Config;
+import com.platform.auto.config.ConfigEntity;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.FindData;
@@ -25,15 +26,15 @@ public class SqlProviderCreator extends BaseCreator {
      *
      * @param table
      */
-    public SqlProviderCreator(Table table) throws Exception {
-        this(table, false);
+    public SqlProviderCreator(Table table, ConfigEntity.Info info) throws Exception {
+        this(table, info, false);
     }
 
     /**
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      **/
-    public SqlProviderCreator(Table table, boolean isList) throws Exception {
-        super(Config.getConfig().template.sqlProvider, table);
+    public SqlProviderCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
+        super(info.template, table);
         generateConstant(table);
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String lineTemp : codeTempList) {
@@ -44,7 +45,7 @@ public class SqlProviderCreator extends BaseCreator {
             codeList.add(line.toString());
         }
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table.tableNameJava, SQLPROVIDER_JAVA, table.javaFilePath));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, SQLPROVIDER_JAVA));
         }
     }
 
@@ -52,7 +53,7 @@ public class SqlProviderCreator extends BaseCreator {
      * 在 Constant.java 中生成需要的常量
      * **/
     private void generateConstant(Table table) throws Exception {
-        List<String> constantList = AutoUtil.fileToList(new File(Config.getConstantFilePath() + "Constant.java"));
+        List<String> constantList = AutoUtil.fileToList(new File(Config.getJavaFilePath(Config.getPathByType(CONSTANT)) + "Constant.java"));
         List<String> newCoodeList = new ArrayList<>(constantList.size() * 2);
         List<String> addCoodeList = new ArrayList<>();
 
@@ -94,7 +95,7 @@ public class SqlProviderCreator extends BaseCreator {
         if (StringUtils.equals(String.join("", constantList), String.join("", newCoodeList))) {
             return;
         }
-        AutoUtil.listToFile(new File(Config.getConstantFilePath() + "Constant.java"), newCoodeList);
+        AutoUtil.listToFile(new File(Config.getJavaFilePath(Config.getPathByType(CONSTANT)) + "Constant.java"), newCoodeList);
     }
 
     //sql.whereIsNotNULL("a.alarm_site_id", equal(queryMap.get(ALARM_SITE_ID)));

@@ -1,6 +1,7 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.config.Config;
+import com.platform.auto.config.ConfigEntity;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.Table;
@@ -31,15 +32,15 @@ public class MapperCreator extends BaseCreator {
     /**
      * @param table
      */
-    public MapperCreator(Table table) throws Exception {
-        new MapperCreator(table, false);
+    public MapperCreator(Table table, ConfigEntity.Info info) throws Exception {
+        new MapperCreator(table, info,false);
     }
 
     /**
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      **/
-    public MapperCreator(Table table, boolean isList) throws Exception {
-        super(Config.getConfig().template.mapper, table);
+    public MapperCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
+        super(info.template, table);
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String line : codeTempList) {
             if (Order.check(line, Order.sqlFieldRaw)) {
@@ -88,7 +89,7 @@ public class MapperCreator extends BaseCreator {
         }
 
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table.tableNameJava, MAPPER_JAVA, table.javaFilePath));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, MAPPER_JAVA));
         }
     }
 

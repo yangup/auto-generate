@@ -28,7 +28,6 @@ public class Application {
         // TODO: 通用代码生成
         // TODO: 通用代码生成
         // 通用代码生成
-//        ConnectionAuto.start(Config.getConfig().tableNames);
         // 处理一下,过滤掉空格
         List<String> list = tableNameList.stream().filter(StringUtils::isNotBlank).collect(Collectors.toList());
 

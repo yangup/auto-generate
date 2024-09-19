@@ -1,6 +1,7 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.config.Config;
+import com.platform.auto.config.ConfigEntity;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.FindData;
@@ -22,12 +23,12 @@ public class PostManTableCreator extends BaseCreator {
      * 加载模板
      */
 
-    public PostManTableCreator(Table table) throws Exception {
-        new PostManTableCreator(table, false);
+    public PostManTableCreator(Table table, ConfigEntity.Info info) throws Exception {
+        new PostManTableCreator(table, info, false);
     }
 
-    public PostManTableCreator(Table table, boolean isList) throws Exception {
-        super(Config.getConfig().template.docPostMan, table);
+    public PostManTableCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
+        super(info.template, table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             line = Order.change(line, Order.name, FileUtil.getTableNameJavaLower(table));

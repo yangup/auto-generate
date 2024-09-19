@@ -1,6 +1,7 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.config.Config;
+import com.platform.auto.config.ConfigEntity;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.Table;
@@ -29,12 +30,12 @@ public class DtoCreator extends BaseCreator {
      *
      * @param table
      */
-    public DtoCreator(Table table) throws Exception {
-        new DtoCreator(table, false);
+    public DtoCreator(Table table, ConfigEntity.Info info) throws Exception {
+        new DtoCreator(table, info, false);
     }
 
-    public DtoCreator(Table table, boolean isList) throws Exception {
-        super(Config.getConfig().template.dto, table);
+    public DtoCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
+        super(info.template, table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             if (line.contains(Order.getOrder(Order.startField))) {
@@ -45,7 +46,7 @@ public class DtoCreator extends BaseCreator {
         }
 
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table.tableNameJava, DTO_JAVA, table.javaFilePath));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, DTO_JAVA));
         }
 
     }

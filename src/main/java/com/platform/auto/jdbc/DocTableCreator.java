@@ -1,6 +1,6 @@
 package com.platform.auto.jdbc;
 
-import com.platform.auto.config.Config;
+import com.platform.auto.config.ConfigEntity;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.Table;
@@ -30,12 +30,12 @@ public class DocTableCreator extends BaseCreator {
      *
      * @param table
      */
-    public DocTableCreator(Table table) throws Exception {
-        this(table, false);
+    public DocTableCreator(Table table, ConfigEntity.Info info) throws Exception {
+        this(table, info, false);
     }
 
-    public DocTableCreator(Table table, boolean isList) throws Exception {
-        super(Config.getConfig().template.docTable, table);
+    public DocTableCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
+        super(info.template, table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             if (Order.check(line, Order.tableJson)) {

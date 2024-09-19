@@ -1,6 +1,7 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.config.Config;
+import com.platform.auto.config.ConfigEntity;
 import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
@@ -37,45 +38,51 @@ public class ConnectionAuto extends CharUtil {
     public static void generate(List<Table> tables) {
         tables.forEach(table -> {
             try {
-                if (isNotBlank(Config.getConfig().template.controller)) {
-                    new ControllerCreator(table);
-                    logger.info("table: {}, template_controller: {}", table.tableNameJavaParam, Config.getConfig().template.controller);
-                }
-                if (isNotBlank(Config.getConfig().template.service)) {
-                    new ServiceCreator(table);
-                    logger.info("table: {}, template_service: {}", table.tableNameJavaParam, Config.getConfig().template.service);
-                }
-                if (isNotBlank(Config.getConfig().template.mapper)) {
-                    new MapperCreator(table);
-                    logger.info("table: {}, template_mapper: {}", table.tableNameJavaParam, Config.getConfig().template.mapper);
-                }
-                if (isNotBlank(Config.getConfig().template.sqlProvider)) {
-                    new SqlProviderCreator(table);
-                    logger.info("table: {}, template_sqlProvider: {}", table.tableNameJavaParam, Config.getConfig().template.sqlProvider);
-                }
-                if (isNotBlank(Config.getConfig().template.entity)) {
-                    new EntityCreator(table);
-                    logger.info("table: {}, template_entity: {}", table.tableNameJavaParam, Config.getConfig().template.entity);
-                }
-                if (isNotBlank(Config.getConfig().template.data)) {
-                    new DataCreator(table);
-                    logger.info("table: {}, template_data: {}", table.tableNameJavaParam, Config.getConfig().template.data);
-                }
-                if (isNotBlank(Config.getConfig().template.dto)) {
-                    new DtoCreator(table);
-                    logger.info("table: {}, template_dto: {}", table.tableNameJavaParam, Config.getConfig().template.dto);
-                }
-                if (isNotBlank(Config.getConfig().template.useful)) {
-                    new UsefulCreator(table);
-                    logger.info("table: {}, template_useful: {}", table.tableNameJavaParam, Config.getConfig().template.useful);
-                }
-                if (isNotBlank(Config.getConfig().template.docTable)) {
-                    new DocTableCreator(table);
-                    logger.info("table: {}, template_docTable: {}", table.tableNameJavaParam, Config.getConfig().template.docTable);
-                }
-                if (isNotBlank(Config.getConfig().template.docPostMan)) {
-                    new PostManTableCreator(table);
-                    logger.info("table: {}, template_docPostMan: {}", table.tableNameJavaParam, Config.getConfig().template.docPostMan);
+                List<ConfigEntity.Info> infoList = Config.getConfig().info;
+                for (ConfigEntity.Info info : infoList) {
+                    if (isBlank(info.template)) {
+                        continue;
+                    }
+                    if (info.template.contains(CONTROLLER_UP)) {
+                        new ControllerCreator(table, info);
+                        logger.info("table: {}, template_controller: {}", table.tableNameJavaParam, info.template);
+                    }
+                    if (info.template.contains(SERVICE_UP)) {
+                        new ServiceCreator(table, info);
+                        logger.info("table: {}, template_service: {}", table.tableNameJavaParam, info.template);
+                    }
+                    if (info.template.contains(MAPPER_UP)) {
+                        new MapperCreator(table, info);
+                        logger.info("table: {}, template_mapper: {}", table.tableNameJavaParam, info.template);
+                    }
+                    if (info.template.contains(SQL_PROVIDER_UP)) {
+                        new SqlProviderCreator(table, info);
+                        logger.info("table: {}, template_sqlProvider: {}", table.tableNameJavaParam, info.template);
+                    }
+                    if (info.template.contains(ENTITY_UP)) {
+                        new EntityCreator(table, info);
+                        logger.info("table: {}, template_entity: {}", table.tableNameJavaParam, info.template);
+                    }
+                    if (info.template.contains(DATA_UP)) {
+                        new DataCreator(table, info);
+                        logger.info("table: {}, template_data: {}", table.tableNameJavaParam, info.template);
+                    }
+                    if (info.template.contains(DTO_UP)) {
+                        new DtoCreator(table, info);
+                        logger.info("table: {}, template_dto: {}", table.tableNameJavaParam, info.template);
+                    }
+                    if (info.template.contains(USEFUL_UP)) {
+                        new UsefulCreator(table, info);
+                        logger.info("table: {}, template_useful: {}", table.tableNameJavaParam, info.template);
+                    }
+                    if (info.template.contains(DOC_TABLE_UP)) {
+                        new DocTableCreator(table, info);
+                        logger.info("table: {}, template_docTable: {}", table.tableNameJavaParam, info.template);
+                    }
+                    if (info.template.contains(DOC_POSTMAN_UP)) {
+                        new PostManTableCreator(table, info);
+                        logger.info("table: {}, template_docPostMan: {}", table.tableNameJavaParam, info.template);
+                    }
                 }
             } catch (Exception e) {
                 logger.info("generate_error,table: {}", table.tableNameJavaParam);

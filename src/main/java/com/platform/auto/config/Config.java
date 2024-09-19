@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.platform.auto.util.AutoUtil.*;
+import static com.platform.auto.util.CharUtil.*;
 import static com.platform.auto.config.ConfigEntity.*;
 
 public class Config {
@@ -107,15 +108,23 @@ public class Config {
         }
     }
 
-    public static String getConstantFilePath() throws Exception {
-        return getJavaFilePath(getConfig().generateLocation.constant.projectName, getConfig().generateLocation.constant.packageName);
+    public static Path getPathByType(String type) {
+        return getConfig().info.stream().filter(
+                info -> equalsAnyIgnoreCase(info.type, type)
+        ).findFirst().orElse(new Info()).getPath();
+    }
+
+    public static Path getPath(final String template) {
+        return getConfig().info.stream().filter(
+                info -> isNotBlank(info.template) && info.template.contains(template)
+        ).findFirst().orElse(new Info()).getPath();
     }
 
     /**
      * 从 config.json 中解析出,生成的代码的存放路径
      ***/
-    public static String getJavaFilePath(ProjectPackage projectPackage) {
-        return getJavaFilePath(projectPackage.projectName, projectPackage.packageName);
+    public static String getJavaFilePath(Path path) {
+        return getJavaFilePath(path.projectName, path.packageName);
     }
 
     public static String getJavaFilePath(String projectName, String packageName) {
@@ -214,15 +223,13 @@ public class Config {
         // todo : 拷贝系统的 config 配置
         logger.info("initConfig: {}", configJson);
         AutoUtil.listToFile(configJson, AutoUtil.readFromResources(auto_config_name + "/config.json"));
-        ConfigEntity.Template template = getConfigFromResources().template;
-        Class<?> clazz = template.getClass();
-        Field[] fields = clazz.getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            String getMethodName = "get" + field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
-            Method method = clazz.getMethod(getMethodName);
-            String templateFilePath = getTemplatePath(method.invoke(template).toString());
-            String templateLocalFilePath = project_auto_path + "/" + getTemplatePath(templateFilePath);
+        List<Info> infoList = getConfigFromResources().info;
+        for (Info info : infoList) {
+            if (isBlank(info.template)) {
+                continue;
+            }
+            String templateFilePath = getTemplatePath(info.template);
+            String templateLocalFilePath = project_auto_path + "/" + templateFilePath;
             FileUtil.createFile(templateLocalFilePath);
             AutoUtil.listToFile(templateLocalFilePath, AutoUtil.readFromResources(templateFilePath));
         }

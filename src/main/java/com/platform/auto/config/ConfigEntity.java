@@ -8,22 +8,16 @@ import java.util.List;
 /**
  *
  */
-
 @Data
 public class ConfigEntity {
 
     public String author;
 
+    /**
+     * 是否按照 table 存储
+     **/
     @JsonProperty("store_by_table")
     public String storeByTable;
-
-    @JsonProperty("generate_location")
-    public GenerateLocation generateLocation;
-
-    public Jdbc jdbc;
-
-    @JsonProperty("table_names")
-    public List<String> tableNames;
 
     /**
      * 表明称前缀, 需要去掉
@@ -31,49 +25,38 @@ public class ConfigEntity {
     @JsonProperty("remove_prefix")
     public List<String> removePrefix;
 
-    public Template template;
+    public Jdbc jdbc;
+
+    public List<Info> info;
 
 
     @Data
-    public static class ProjectPackage {
+    public static class Info {
 
-        @JsonProperty("project_name")
-        public String projectName;
+        public String template;
 
-        @JsonProperty("package")
-        public String packageName;
+        public String remark;
+
+        public String type;
+
+        @JsonProperty("entity_field_is_public")
+        public String entityFieldIsPublic;
 
         @JsonProperty("entity_generate_static_method")
         public String entityGenerateStaticMethod;
 
-        @JsonProperty("entity_field_is_public")
-        public String entityFieldIsPublic;
+        public Path path;
+
     }
 
-
     @Data
-    public static class GenerateLocation {
+    public static class Path {
 
-        @JsonProperty("db")
-        public ProjectPackage db;
+        @JsonProperty("project_name")
+        public String projectName;
 
-        @JsonProperty("constant")
-        public ProjectPackage constant;
-
-        @JsonProperty("entity")
-        public ProjectPackage entity;
-
-        @JsonProperty("mapper")
-        public ProjectPackage mapper;
-
-        @JsonProperty("service")
-        public ProjectPackage service;
-
-        @JsonProperty("sqlProvider")
-        public ProjectPackage sqlProvider;
-
-        @JsonProperty("controller")
-        public ProjectPackage controller;
+        @JsonProperty("package_name")
+        public String packageName;
     }
 
     @Data
@@ -84,21 +67,6 @@ public class ConfigEntity {
         public String username;
         public String password;
         public String database;
-    }
-
-    @Data
-    public static class Template {
-
-        public String controller;
-        public String service;
-        public String mapper;
-        public String sqlProvider;
-        public String entity;
-        public String data;
-        public String dto;
-        public String useful;
-        public String docTable;
-        public String docPostMan;
     }
 
 

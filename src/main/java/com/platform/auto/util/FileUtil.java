@@ -1,6 +1,7 @@
 package com.platform.auto.util;
 
 import com.platform.auto.config.Config;
+import com.platform.auto.config.ConfigEntity;
 import com.platform.auto.jdbc.model.Table;
 import org.apache.commons.lang3.StringUtils;
 
@@ -51,23 +52,12 @@ public class FileUtil extends StringUtils {
 
     /**
      * 生成文件 , 统一生成 在 db 文件夹下面的文件
-     *
-     * @param fileName       : 文件名称, 带有后缀的
-     * @param parentFileName : 父文件夹名称
      **/
-    public static File createFile(String fileName, String suffix, String parentFileName) {
-        Map<String, ProjectPackage> projectPackageMap = new HashMap<>();
-        projectPackageMap.put(MAPPER_JAVA, getConfig().generateLocation.mapper);
-        projectPackageMap.put(ENTITY_JAVA, getConfig().generateLocation.entity);
-        projectPackageMap.put(SERVICE_JAVA, getConfig().generateLocation.service);
-        projectPackageMap.put(CONTROLLER_JAVA, getConfig().generateLocation.controller);
-        projectPackageMap.put(SQLPROVIDER_JAVA, getConfig().generateLocation.sqlProvider);
-        ProjectPackage projectPackage = projectPackageMap.get(suffix);
-        projectPackage = projectPackage == null ? getConfig().generateLocation.db : projectPackage;
+    public static File createFile(Table table, ConfigEntity.Info info, String suffix) {
         // todo : 新的文件创建文件夹, 文件
-        return createFile(getJavaFilePath(projectPackage) + (
-                StringUtils.isNotEmpty(parentFileName) ? parentFileName + File.separator : ""
-        ) + fileName + suffix);
+        return createFile(getJavaFilePath(info.path) + (
+                StringUtils.isNotEmpty(table.javaFilePath) ? table.javaFilePath + File.separator : ""
+        ) + table.tableNameJava + suffix);
     }
 
     public static String getTableNameJavaLower(final Table table) {

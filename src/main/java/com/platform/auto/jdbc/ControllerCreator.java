@@ -1,6 +1,7 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.config.Config;
+import com.platform.auto.config.ConfigEntity;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.util.AutoUtil;
@@ -25,17 +26,17 @@ public class ControllerCreator extends BaseCreator {
      *
      * @param table
      */
-    public ControllerCreator(Table table) throws Exception {
-        new ControllerCreator(table, false);
+    public ControllerCreator(Table table, ConfigEntity.Info info) throws Exception {
+        new ControllerCreator(table, info, false);
     }
 
     /**
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      **/
-    public ControllerCreator(Table table, boolean isList) throws Exception {
-        super(Config.getConfig().template.controller, table);
+    public ControllerCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
+        super(info.template, table);
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table.tableNameJava, CONTROLLER_JAVA, table.javaFilePath));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, CONTROLLER_JAVA));
         }
     }
 

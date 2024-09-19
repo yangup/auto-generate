@@ -1,6 +1,7 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.config.Config;
+import com.platform.auto.config.ConfigEntity;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.PageListParam;
 import com.platform.auto.jdbc.model.Table;
@@ -21,8 +22,8 @@ import static com.platform.auto.util.CharUtil.*;
  */
 public class DataCreator extends BaseCreator {
 
-    public DataCreator(Table table) throws Exception {
-        this(table, false);
+    public DataCreator(Table table, ConfigEntity.Info info) throws Exception {
+        this(table, info, false);
     }
 
     /**
@@ -30,8 +31,8 @@ public class DataCreator extends BaseCreator {
      *
      * @param table
      */
-    public DataCreator(Table table, boolean isList) throws Exception {
-        super(Config.getConfig().template.data, table);
+    public DataCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
+        super(info.template, table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             // TODO: 可以添加其他逻辑
@@ -46,7 +47,7 @@ public class DataCreator extends BaseCreator {
             }
         }
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table.tableNameJava, DATA_JAVA, table.javaFilePath));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, DATA_JAVA));
         }
     }
 
@@ -75,11 +76,11 @@ public class DataCreator extends BaseCreator {
     private void importData() {
         for (Table t : table.otherTable) {
             // import com.platform.db.admin.customer.CustomerData;
-            codeList.add(String.format("import %sData;", (Config.getConfig().generateLocation.db.packageName + "." + t.tableNameJavaParam.toLowerCase() + "." + t.tableNameJava)));
+            codeList.add(String.format("import %sData;", (Config.getPathByType(DB).packageName + "." + t.tableNameJavaParam.toLowerCase() + "." + t.tableNameJava)));
         }
         for (PageListParam p : table.relateTable) {
             // import com.platform.db.admin.customer.CustomerData;
-            codeList.add(String.format("import %sData;", (Config.getConfig().generateLocation.db.packageName + "." + p.otherTable.tableNameJavaParam.toLowerCase() + "." + p.otherTable.tableNameJava)));
+            codeList.add(String.format("import %sData;", (Config.getPathByType(DB).packageName + "." + p.otherTable.tableNameJavaParam.toLowerCase() + "." + p.otherTable.tableNameJava)));
         }
     }
 
