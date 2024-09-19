@@ -19,6 +19,7 @@
       "template": "templateController.up",
       "store_by_table": false,
       "remark": "generate controller",
+      "file_name_suffix": "Controller.java",
       "path": {
         "project_name": "api",
         "package_name": "com.playlet.api.controller"
@@ -27,6 +28,7 @@
     {
       "template": "templateService.up",
       "remark": "generate service",
+      "file_name_suffix": "Service.java",
       "path": {
         "project_name": "common",
         "package_name": "com.playlet.common.db"
@@ -35,6 +37,7 @@
     {
       "template": "templateMapper.up",
       "remark": "generate mapper",
+      "file_name_suffix": "Mapper.java",
       "path": {
         "project_name": "common",
         "package_name": "com.playlet.common.db"
@@ -43,6 +46,7 @@
     {
       "template": "templateSqlProvider.up",
       "remark": "generate sql provider",
+      "file_name_suffix": "SqlProvider.java",
       "path": {
         "project_name": "common",
         "package_name": "com.playlet.common.db"
@@ -52,6 +56,7 @@
       "template": "templateEntity.up",
       "entity_field_is_public": true,
       "entity_generate_static_method": true,
+      "file_name_suffix": "Entity.java",
       "remark": "generate entity",
       "path": {
         "project_name": "common",
@@ -61,6 +66,7 @@
     {
       "template": "templateData.up",
       "remark": "generate data",
+      "file_name_suffix": "Data.java",
       "path": {
         "project_name": "common",
         "package_name": "com.playlet.common.db"
@@ -69,6 +75,7 @@
     {
       "template": "templateDto.up",
       "remark": "generate dto",
+      "file_name_suffix": "Dto.java",
       "path": {
         "project_name": "common",
         "package_name": "com.playlet.common.db"
@@ -77,25 +84,28 @@
     {
       "template": "templateUseful.up",
       "remark": "generate useful",
+      "file_name_suffix": "_useful.txt",
+      "store_by_table": true,
       "path": {
-        "project_name": "common",
-        "package_name": "com.playlet.common.db"
+        "local": true
       }
     },
     {
       "template": "templateDocTable.up",
       "remark": "generate doc table",
+      "file_name_suffix": "_doc.txt",
+      "store_by_table": true,
       "path": {
-        "project_name": "common",
-        "package_name": "com.playlet.common.db"
+        "local": true
       }
     },
     {
       "template": "templatePostManTable.up",
       "remark": "generate postman table",
+      "file_name_suffix": "_postman.json",
+      "store_by_table": true,
       "path": {
-        "project_name": "common",
-        "package_name": "com.playlet.common.db"
+        "local": true
       }
     },
     {

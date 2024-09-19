@@ -44,13 +44,6 @@ public class FileUtil extends StringUtils {
     }
 
     /**
-     * 生成其他类型的文件
-     **/
-    public static File createFileOther(String fileName, String parentName) {
-        return createFile(Config.project_auto_path + File.separator + "txt" + File.separator + parentName + File.separator + fileName);
-    }
-
-    /**
      * 生成文件 , 统一生成 在 db 文件夹下面的文件
      **/
     public static File createFile(Table table, ConfigEntity.Info info, String suffix) {
@@ -62,8 +55,14 @@ public class FileUtil extends StringUtils {
                 path = "";
             }
         }
-        // todo : 新的文件创建文件夹, 文件
-        return createFile(getJavaFilePath(info.path) + path + table.tableNameJava + suffix);
+        // 文件放在 .auto 下面
+        if (isTrue(info.path.local)) {
+            return createFile(Config.project_auto_path + File.separator + "txt" +
+                    File.separator + path + table.tableNameJava + suffix);
+        } else {
+            // todo : 新的文件创建文件夹, 文件
+            return createFile(getJavaFilePath(info.path) + path + table.tableNameJava + suffix);
+        }
     }
 
     public static String getTableNameJavaLower(final Table table) {

@@ -42,8 +42,7 @@ public class PostManTableCreator extends BaseCreator {
             codeList.add(line);
         }
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFileOther(FileUtil.getTableNameJavaLower(table) + _POSTMAN_JSON, table.javaFilePath)
-                    , 2, 4);
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, info.fileNameSuffix), 2, 4);
         }
     }
 

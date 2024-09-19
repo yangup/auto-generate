@@ -39,12 +39,27 @@ public class ConfigEntity {
 
         public String type;
 
+        /**
+         * 实体类是否使用 public 修饰
+         **/
         @JsonProperty("entity_field_is_public")
         public String entityFieldIsPublic;
 
+        /**
+         * 文件名后缀
+         **/
+        @JsonProperty("file_name_suffix")
+        public String fileNameSuffix;
+
+        /**
+         * 实体类是否使用 生成 static 方法
+         **/
         @JsonProperty("entity_generate_static_method")
         public String entityGenerateStaticMethod;
 
+        /**
+         * 生成的文件是否按照 table 存储
+         **/
         @JsonProperty("store_by_table")
         public String storeByTable;
 
@@ -60,6 +75,11 @@ public class ConfigEntity {
 
         @JsonProperty("package_name")
         public String packageName;
+
+        /**
+         * 生成的文件是否放在 .auto 目录下
+         **/
+        public String local;
     }
 
     @Data

@@ -7,6 +7,7 @@ import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import com.platform.auto.sys.order.Order;
 import com.platform.auto.util.AutoUtil;
+import com.platform.auto.util.FileUtil;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -23,7 +24,7 @@ import static com.platform.auto.util.CharUtil.*;
 /**
  * 基础的生成类
  **/
-public abstract class BaseCreator {
+public class BaseCreator {
 
     private static final Logger logger = AutoLogger.getLogger(BaseCreator.class);
 
@@ -253,6 +254,12 @@ public abstract class BaseCreator {
             this.codeList.add(line.toString());
         }
     }
+
+    public void createFromInfo(Table table, ConfigEntity.Info info) throws Exception{
+        BaseCreator baseCreator = new BaseCreator(info, table);
+        AutoUtil.newCodeToFile(baseCreator.codeList, FileUtil.createFile(table, info, info.fileNameSuffix));
+    }
+
 
     /**
      * 将占位符，替换成 具体的内容

@@ -1,6 +1,5 @@
 package com.platform.auto.jdbc;
 
-import com.platform.auto.config.Config;
 import com.platform.auto.config.ConfigEntity;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.Table;
@@ -35,9 +34,7 @@ public class ControllerCreator extends BaseCreator {
      **/
     public ControllerCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
         super(info, table);
-        if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, CONTROLLER_JAVA));
-        }
+        AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, info.fileNameSuffix));
     }
 
 }
