@@ -50,15 +50,15 @@
     "tb_user_facebook"
   ],
   "template": {
-    "controller": ".config/template/templateController.up",
-    "service": ".config/template/templateService.up",
-    "mapper": ".config/template/templateMapper.up",
-    "sqlProvider": ".config/template/templateSqlProvider.up",
-    "entity": ".config/template/templateEntity.up",
-    "data": ".config/template/templateData.up",
-    "dto": ".config/template/templateDto.up",
-    "useful": ".config/template/templateUseful.up",
-    "docTable": ".config/template/templateDocTable.up",
-    "docPostMan": ".config/template/templatePostManTable.up"
+    "controller": "templateController.up",
+    "service": "templateService.up",
+    "mapper": "templateMapper.up",
+    "sqlProvider": "templateSqlProvider.up",
+    "entity": "templateEntity.up",
+    "data": "templateData.up",
+    "dto": "templateDto.up",
+    "useful": "templateUseful.up",
+    "docTable": "templateDocTable.up",
+    "docPostMan": "templatePostManTable.up"
   }
 }

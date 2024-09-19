@@ -50,7 +50,8 @@ public class Config {
 
     // todo : D:\ksm\code\playlet\playlet-app-api\.auto\.config\local.json
     public static String local_path;
-    public static String base_java_path = "/src/main/java/";
+    public static final String base_java_path = "/src/main/java/";
+    public static final String config_template_prefix = ".config/template/";
 
     public static ConfigEntity getConfig() {
         try {
@@ -123,6 +124,10 @@ public class Config {
                 + Config.base_java_path
                 + packageName.replace(".", "/")
                 + "/";
+    }
+
+    public static String getTemplatePath(String templateFileName) {
+        return config_template_prefix + templateFileName;
     }
 
     /**
@@ -216,8 +221,8 @@ public class Config {
             field.setAccessible(true);
             String getMethodName = "get" + field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
             Method method = clazz.getMethod(getMethodName);
-            String templateFilePath = method.invoke(template).toString();
-            String templateLocalFilePath = project_auto_path + "/" + templateFilePath;
+            String templateFilePath = getTemplatePath(method.invoke(template).toString());
+            String templateLocalFilePath = project_auto_path + "/" + getTemplatePath(templateFilePath);
             FileUtil.createFile(templateLocalFilePath);
             AutoUtil.listToFile(templateLocalFilePath, AutoUtil.readFromResources(templateFilePath));
         }
