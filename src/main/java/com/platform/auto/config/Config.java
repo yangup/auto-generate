@@ -1,5 +1,6 @@
 package com.platform.auto.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.intellij.openapi.project.Project;
@@ -53,6 +54,11 @@ public class Config {
     public static String local_path;
     public static final String base_java_path = "/src/main/java/";
     public static final String config_template_prefix = ".config/template/";
+
+
+    static {
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
 
     public static ConfigEntity getConfig() {
         try {
