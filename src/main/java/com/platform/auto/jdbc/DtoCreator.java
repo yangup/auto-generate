@@ -35,7 +35,7 @@ public class DtoCreator extends BaseCreator {
     }
 
     public DtoCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
-        super(info.template, table);
+        super(info, table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             if (line.contains(Order.getOrder(Order.startField))) {

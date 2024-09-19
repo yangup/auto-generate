@@ -33,7 +33,7 @@ public class UsefulCreator extends BaseCreator {
     }
 
     public UsefulCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
-        super(info.template, table);
+        super(info, table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             if (Order.check(line, Order.jsonStart)) {

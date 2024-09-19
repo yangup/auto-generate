@@ -1,4 +1,4 @@
-package -packageSqlProvider-;
+package -packagePackage-;
 
 import com.playlet.common.common.BaseSqlProvider;
 import com.playlet.common.common.QueryMap;

@@ -1,4 +1,4 @@
-package -packageController-;
+package -packagePackage-;
 
 import com.playlet.common.common.BaseController;
 import com.playlet.common.common.QueryMap;

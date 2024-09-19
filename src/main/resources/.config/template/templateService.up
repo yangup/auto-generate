@@ -1,4 +1,4 @@
-package -packageService-;
+package -packagePackage-;
 
 import com.playlet.common.common.BaseService;
 import com.playlet.common.common.QueryMap;

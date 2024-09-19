@@ -45,15 +45,16 @@ public enum Order {
     dateYMDHM,
     dateYMDHMS,
     // ctr中的包名
-    packageController,
-    packageEntity,
+//    packageController,
+    packagePackage,
+//    packageEntity,
     // ser中的包名
-    packageService,
+//    packageService,
     // model中的包名
-    packageTable,
+//    packageTable,
     // mapper中的包名
-    packageMapper,
-    packageSqlProvider,
+//    packageMapper,
+//    packageSqlProvider,
     // 开始产生json数据
     jsonStart,
     jsonKeyValueComment,

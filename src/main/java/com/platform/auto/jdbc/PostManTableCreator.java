@@ -28,7 +28,7 @@ public class PostManTableCreator extends BaseCreator {
     }
 
     public PostManTableCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
-        super(info.template, table);
+        super(info, table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             line = Order.change(line, Order.name, FileUtil.getTableNameJavaLower(table));

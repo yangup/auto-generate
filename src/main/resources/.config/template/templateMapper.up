@@ -1,4 +1,4 @@
-package -packageMapper-;
+package -packagePackage-;
 
 import com.playlet.common.common.QueryMap;
 import com.playlet.common.common.paginator.PageBounds;

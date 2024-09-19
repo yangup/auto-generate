@@ -33,7 +33,7 @@ public class EntityCreator extends BaseCreator {
      * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
      */
     public EntityCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
-        super(info.template, table);
+        super(info, table);
         this.info = info;
         List<String> templateList = this.copyCodeListAndClear();
         this.list = this.table.columnInfos;

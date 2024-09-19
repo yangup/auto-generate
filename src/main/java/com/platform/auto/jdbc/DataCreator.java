@@ -32,7 +32,7 @@ public class DataCreator extends BaseCreator {
      * @param table
      */
     public DataCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
-        super(info.template, table);
+        super(info, table);
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             // TODO: 可以添加其他逻辑

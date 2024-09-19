@@ -1,7 +1,7 @@
 package com.platform.auto.jdbc.base;
 
-
 import com.platform.auto.config.Config;
+import com.platform.auto.config.ConfigEntity;
 import com.platform.auto.jdbc.model.*;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
@@ -11,6 +11,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,8 @@ public abstract class BaseCreator {
     public List<String> codeList;
     public Table table;
     public String template;
+    // 配置信息
+    ConfigEntity.Info info;
 
     public BaseCreator() {
 
@@ -45,6 +48,7 @@ public abstract class BaseCreator {
         try {
             this.init();
         } catch (Exception e) {
+            logger.info(e);
         }
     }
 
@@ -52,9 +56,10 @@ public abstract class BaseCreator {
      * 根据模板来生成指定的代码
      * 将通用模板下的字段, 替换成 指定 @param table 下的字段
      **/
-    public BaseCreator(String template, Table table) {
-        this.template = template;
+    public BaseCreator(ConfigEntity.Info info, Table table) {
+        this.info = info;
         this.table = table;
+        this.template = info.template;
         this.codeList = new ArrayList<>(128);
         try {
             this.init();
@@ -87,33 +92,15 @@ public abstract class BaseCreator {
             lineReplaceOrder(line, Order.dateYMDHMSS, DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
             lineReplaceOrder(line, Order.dateYMDHM, DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm"));
             lineReplaceOrder(line, Order.dateYMDHMS, DateFormatUtils.format(new Date(), "yyyyMMdd_HHmmss"));
-            lineReplaceOrder(line, Order.packageController, Config.getPath(CONTROLLER_UP) != null ? Config.getPath(CONTROLLER_UP).packageName : "");
-            // todo : 将ser中的包名改成 packageService
-            lineReplaceOrder(line, Order.packageService,
-                    Config.getPath(SERVICE_UP) != null ? Config.getPath(SERVICE_UP).packageName :
-                            (Config.getPathByType(DB) != null ? Config.getPathByType(DB).packageName : "")
-                                    + (isTrue(Config.getConfig().getStoreByTable()) ? "." + tableNameJava.toLowerCase() : "")
-            );
-            lineReplaceOrder(line, Order.packageEntity,
-                    Config.getPath(ENTITY_UP) != null ? Config.getPath(ENTITY_UP).packageName :
-                            (Config.getPathByType(DB) != null ? Config.getPathByType(DB).packageName : "")
-                                    + (isTrue(Config.getConfig().getStoreByTable()) ? "." + tableNameJava.toLowerCase() : "")
-            );
-            lineReplaceOrder(line, Order.frontFilePath, table.tableNameJavaParam);
-            // todo : 将dao中的包名改成 packageMapper
-            lineReplaceOrder(line, Order.packageMapper,
-                    Config.getPath(MAPPER_UP) != null ? Config.getPath(MAPPER_UP).packageName :
-                            (Config.getPathByType(DB) != null ? Config.getPathByType(DB).packageName : "")
-                                    + (isTrue(Config.getConfig().getStoreByTable()) ? "." + tableNameJava.toLowerCase() : ""));
-            // todo : 将table中的包名改成 packageTable
-            lineReplaceOrder(line, Order.packageTable,
-                    Config.getPathByType(DB) != null ? Config.getPathByType(DB).packageName : ""
-                            + (isTrue(Config.getConfig().getStoreByTable()) ? "." + tableNameJava.toLowerCase() : ""));
-            // todo : 将mapper中的包名改成 packageSqlProvider com.platform.db.admin.demo3
-            lineReplaceOrder(line, Order.packageSqlProvider,
-                    Config.getPath(SQL_PROVIDER_UP) != null ? Config.getPath(SQL_PROVIDER_UP).packageName :
-                            (Config.getPathByType(DB) != null ? Config.getPathByType(DB).packageName : "")
-                                    + (isTrue(Config.getConfig().getStoreByTable()) ? "." + tableNameJava.toLowerCase() : ""));
+            String path = isTrue(Config.getConfig().getStoreByTable()) ? "." + table.tableNameJava.toLowerCase() : "";
+            if (isNotBlank(info.storeByTable)) {
+                if (isTrue(info.storeByTable)) {
+                    path = "." + table.tableNameJava.toLowerCase();
+                } else {
+                    path = "";
+                }
+            }
+            lineReplaceOrder(line, Order.packagePackage, info.path.packageName + path);
             lineReplaceOrder(line, Order.tableName, table.tableName);
 
             // todo : 在文档中, find 接口
