@@ -17,6 +17,7 @@
   "info": [
     {
       "template": "templateController.up",
+      "store_by_table": false,
       "remark": "generate controller",
       "path": {
         "project_name": "api",

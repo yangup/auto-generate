@@ -54,10 +54,16 @@ public class FileUtil extends StringUtils {
      * 生成文件 , 统一生成 在 db 文件夹下面的文件
      **/
     public static File createFile(Table table, ConfigEntity.Info info, String suffix) {
+        String path = StringUtils.isNotEmpty(table.javaFilePath) ? table.javaFilePath + File.separator : "";
+        if (isNotBlank(info.storeByTable)) {
+            if (isTrue(info.storeByTable)) {
+                path = table.tableNameJava.toLowerCase() + File.separator;
+            } else {
+                path = "";
+            }
+        }
         // todo : 新的文件创建文件夹, 文件
-        return createFile(getJavaFilePath(info.path) + (
-                StringUtils.isNotEmpty(table.javaFilePath) ? table.javaFilePath + File.separator : ""
-        ) + table.tableNameJava + suffix);
+        return createFile(getJavaFilePath(info.path) + path + table.tableNameJava + suffix);
     }
 
     public static String getTableNameJavaLower(final Table table) {

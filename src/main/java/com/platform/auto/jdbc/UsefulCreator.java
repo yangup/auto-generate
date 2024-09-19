@@ -1,6 +1,5 @@
 package com.platform.auto.jdbc;
 
-import com.platform.auto.config.Config;
 import com.platform.auto.config.ConfigEntity;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;

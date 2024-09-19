@@ -45,6 +45,9 @@ public class ConfigEntity {
         @JsonProperty("entity_generate_static_method")
         public String entityGenerateStaticMethod;
 
+        @JsonProperty("store_by_table")
+        public String storeByTable;
+
         public Path path;
 
     }
