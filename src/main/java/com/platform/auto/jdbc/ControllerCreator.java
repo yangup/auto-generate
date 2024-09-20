@@ -20,21 +20,21 @@ import static com.platform.auto.util.CharUtil.*;
  * @createTime 2016年7月21日 下午3:50:33
  */
 public class ControllerCreator extends BaseCreator {
-    /**
-     * 加载模板
-     *
-     * @param table
-     */
-    public ControllerCreator(Table table, ConfigEntity.Info info) throws Exception {
-        new ControllerCreator(table, info, false);
+
+    public ControllerCreator(BaseCreator baseCreator) {
+        super(baseCreator);
     }
 
-    /**
-     * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
-     **/
-    public ControllerCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
-        super(info, table);
-        AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info));
-    }
+//    public ControllerCreator(Table table, ConfigEntity.Info info) throws Exception {
+//        new ControllerCreator(table, info, false);
+//    }
+//
+//    /**
+//     * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
+//     **/
+//    public ControllerCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
+//        super(info, table);
+//        AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info));
+//    }
 
 }

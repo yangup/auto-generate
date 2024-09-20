@@ -2,11 +2,13 @@ package com.platform.auto.jdbc.base;
 
 import com.platform.auto.config.Config;
 import com.platform.auto.config.ConfigEntity;
+import com.platform.auto.jdbc.ControllerCreator;
 import com.platform.auto.jdbc.model.*;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import com.platform.auto.sys.order.Order;
 import com.platform.auto.util.AutoUtil;
+import com.platform.auto.util.FileUtil;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -29,11 +31,17 @@ public class BaseCreator {
     public List<String> codeList;
     public Table table;
     public String template;
-    // 配置信息
     public ConfigEntity.Info info;
 
     public BaseCreator() {
 
+    }
+
+    public BaseCreator(BaseCreator baseCreator) {
+        this.info = baseCreator.info;
+        this.table = baseCreator.table;
+        this.template = baseCreator.info.template;
+        this.codeList = baseCreator.codeList;
     }
 
     public BaseCreator(String template) {
@@ -252,10 +260,9 @@ public class BaseCreator {
     }
 
     public static void createFromInfo(Table table, ConfigEntity.Info info) throws Exception {
-//        BaseCreator baseCreator = new BaseCreator(info, table);
-//        ControllerCreator.create(baseCreator);
-//        ServiceCreator.create(baseCreator);
-//        AutoUtil.newCodeToFile(baseCreator.codeList, FileUtil.createFile(table, info));
+        BaseCreator baseCreator = new BaseCreator(info, table);
+        new ControllerCreator(baseCreator);
+        AutoUtil.newCodeToFile(baseCreator.codeList, FileUtil.createFile(table, info));
     }
 
 
