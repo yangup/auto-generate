@@ -42,6 +42,9 @@ public class SqlProviderCreator extends BaseCreator {
      * 在 Constant.java 中生成需要的常量
      * **/
     private void generateConstant(Table table) {
+        if (Config.getPathByType(CONSTANT) == null) {
+            return;
+        }
         List<String> constantList = AutoUtil.fileToList(new File(Config.getJavaFilePath(Config.getPathByType(CONSTANT)) + "Constant.java"));
         List<String> newCoodeList = new ArrayList<>(constantList.size() * 2);
         List<String> addCoodeList = new ArrayList<>();
