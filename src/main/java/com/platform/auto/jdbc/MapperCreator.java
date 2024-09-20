@@ -89,7 +89,7 @@ public class MapperCreator extends BaseCreator {
         }
 
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, MAPPER_JAVA));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info));
         }
     }
 

@@ -2,6 +2,8 @@ package com.platform.auto.jdbc.base;
 
 import com.platform.auto.config.Config;
 import com.platform.auto.config.ConfigEntity;
+import com.platform.auto.jdbc.ControllerCreator;
+import com.platform.auto.jdbc.ServiceCreator;
 import com.platform.auto.jdbc.model.*;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
@@ -32,7 +34,7 @@ public class BaseCreator {
     public Table table;
     public String template;
     // 配置信息
-    ConfigEntity.Info info;
+    public ConfigEntity.Info info;
 
     public BaseCreator() {
 
@@ -255,9 +257,11 @@ public class BaseCreator {
         }
     }
 
-    public void createFromInfo(Table table, ConfigEntity.Info info) throws Exception{
-        BaseCreator baseCreator = new BaseCreator(info, table);
-        AutoUtil.newCodeToFile(baseCreator.codeList, FileUtil.createFile(table, info, info.fileNameSuffix));
+    public static void createFromInfo(Table table, ConfigEntity.Info info) throws Exception {
+//        BaseCreator baseCreator = new BaseCreator(info, table);
+//        ControllerCreator.create(baseCreator);
+//        ServiceCreator.create(baseCreator);
+//        AutoUtil.newCodeToFile(baseCreator.codeList, FileUtil.createFile(table, info));
     }
 
 
