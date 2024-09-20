@@ -2,13 +2,11 @@ package com.platform.auto.jdbc.base;
 
 import com.platform.auto.config.Config;
 import com.platform.auto.config.ConfigEntity;
-import com.platform.auto.jdbc.*;
 import com.platform.auto.jdbc.model.*;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import com.platform.auto.sys.order.Order;
 import com.platform.auto.util.AutoUtil;
-import com.platform.auto.util.FileUtil;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
