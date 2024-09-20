@@ -49,7 +49,7 @@ public class DocTableCreator extends BaseCreator {
             }
         }
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, info.fileNameSuffix), "- 最后修改时间 :");
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info), "- 最后修改时间 :");
         }
     }
 

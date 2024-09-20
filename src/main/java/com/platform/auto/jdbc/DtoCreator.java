@@ -46,7 +46,7 @@ public class DtoCreator extends BaseCreator {
         }
 
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, DTO_JAVA));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info));
         }
 
     }

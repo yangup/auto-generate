@@ -34,7 +34,7 @@ public class ControllerCreator extends BaseCreator {
      **/
     public ControllerCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
         super(info, table);
-        AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, info.fileNameSuffix));
+        AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info));
     }
 
 }

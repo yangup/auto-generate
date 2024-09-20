@@ -45,7 +45,7 @@ public class EntityCreator extends BaseCreator {
             }
         }
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, ENTITY_JAVA));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info));
         }
     }
 

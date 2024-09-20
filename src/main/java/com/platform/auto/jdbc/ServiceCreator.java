@@ -56,7 +56,7 @@ public class ServiceCreator extends BaseCreator {
         }
 
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, SERVICE_JAVA));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info));
         }
     }
 

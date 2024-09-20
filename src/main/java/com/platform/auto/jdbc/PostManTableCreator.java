@@ -42,7 +42,7 @@ public class PostManTableCreator extends BaseCreator {
             codeList.add(line);
         }
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, info.fileNameSuffix), 2, 4);
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info), 2, 4);
         }
     }
 

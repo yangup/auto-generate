@@ -45,7 +45,7 @@ public class SqlProviderCreator extends BaseCreator {
             codeList.add(line.toString());
         }
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, SQLPROVIDER_JAVA));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info));
         }
     }
 

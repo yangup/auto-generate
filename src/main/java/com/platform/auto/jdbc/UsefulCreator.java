@@ -172,7 +172,7 @@ public class UsefulCreator extends BaseCreator {
         }
 
         if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info, info.fileNameSuffix));
+            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info));
         }
     }
 
