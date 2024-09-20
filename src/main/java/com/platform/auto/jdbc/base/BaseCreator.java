@@ -66,14 +66,6 @@ public class BaseCreator {
     }
 
     public void create() {
-        try {
-            this.init();
-        } catch (Exception e) {
-            logger.info(e);
-        }
-    }
-
-    public void init() {
         if (isEmpty(table) || isEmpty(this.template)) {
             logger.info("table name or template is empty");
             return;
