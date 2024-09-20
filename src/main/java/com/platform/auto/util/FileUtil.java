@@ -7,12 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.platform.auto.config.Config.*;
-import static com.platform.auto.config.ConfigEntity.*;
 import static com.platform.auto.util.CharUtil.*;
 
 public class FileUtil extends StringUtils {

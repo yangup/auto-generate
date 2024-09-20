@@ -1,14 +1,11 @@
 package com.platform.auto.util;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.TypeToJavaData;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,27 +41,6 @@ public class CharUtil extends ObjectUtils {
     public static String GET = "GET";
     public static String POST = "POST";
     public static String _FILTER = ".filter";
-    public static String CONTROLLER_JAVA = "Controller.java";
-    public static String SERVICE_JAVA = "Service.java";
-    public static String MAPPER_JAVA = "Mapper.java";
-    public static String SQLPROVIDER_JAVA = "SqlProvider.java";
-    public static String ENTITY_JAVA = "Entity.java";
-    public static String DATA_JAVA = "Data.java";
-    public static String DTO_JAVA = "Dto.java";
-    public static String _USEFUL_TXT = "_useful.txt";
-    public static String _DOC_TXT = "_doc.txt";
-    public static String _POSTMAN_JSON = "_postman.json";
-
-    public static String CONTROLLER_UP = "Controller.up";
-    public static String SERVICE_UP = "Service.up";
-    public static String MAPPER_UP = "Mapper.up";
-    public static String SQL_PROVIDER_UP = "SqlProvider.up";
-    public static String ENTITY_UP = "Entity.up";
-    public static String DATA_UP = "Data.up";
-    public static String DTO_UP = "Dto.up";
-    public static String USEFUL_UP = "Useful.up";
-    public static String DOC_TABLE_UP = "DocTable.up";
-    public static String DOC_POSTMAN_UP = "PostManTable.up";
     public static String CONSTANT = "constant";
     public static String DB = "db";
 
