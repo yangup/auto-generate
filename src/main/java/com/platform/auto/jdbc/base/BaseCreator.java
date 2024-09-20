@@ -44,11 +44,6 @@ public class BaseCreator {
         this.template = template;
         this.table = table;
         this.codeList = new ArrayList<>(128);
-        try {
-            this.init();
-        } catch (Exception e) {
-            logger.info(e);
-        }
     }
 
     /**
@@ -60,6 +55,9 @@ public class BaseCreator {
         this.table = table;
         this.template = info.template;
         this.codeList = new ArrayList<>(128);
+    }
+
+    public void create() {
         try {
             this.init();
         } catch (Exception e) {
