@@ -33,6 +33,8 @@ public enum Order {
     // house_side_info -> housesideinfo
     // model产生的时候生成的field
     startField,
+    startFieldDto,
+    startFieldData,
     // 当前用户
     user,
     tableNameJavaLower,

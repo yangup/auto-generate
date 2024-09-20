@@ -31,7 +31,7 @@ public class DataCreator extends BaseCreator {
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             // TODO: 可以添加其他逻辑
-            if (Order.check(line, Order.startField)) {
+            if (Order.check(line, Order.startFieldData)) {
                 createField();
             } else if (Order.check(line, Order.importPage)) {
                 importData();

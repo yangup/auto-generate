@@ -17,6 +17,6 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 public class -tableNameJava-Data extends -tableNameJava-Entity {
 
-	-startField-
+	-startFieldData-
 
 }

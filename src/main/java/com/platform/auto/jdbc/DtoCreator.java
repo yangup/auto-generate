@@ -34,7 +34,7 @@ public class DtoCreator extends BaseCreator {
     public void create() {
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
-            if (line.contains(Order.getOrder(Order.startField))) {
+            if (line.contains(Order.getOrder(Order.startFieldDto))) {
                 createField();
             } else {
                 codeList.add(line);
