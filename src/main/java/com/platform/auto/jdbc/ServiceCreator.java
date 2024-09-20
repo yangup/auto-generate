@@ -26,20 +26,13 @@ import static com.platform.auto.util.CharUtil.*;
  * @createTime 2016年7月21日 下午3:50:33
  */
 public class ServiceCreator extends BaseCreator {
-    /**
-     * 加载模板
-     *
-     * @param table
-     */
-    public ServiceCreator(Table table, ConfigEntity.Info info) throws Exception {
-        new ServiceCreator(table, info, false);
+
+    public ServiceCreator(BaseCreator baseCreator) {
+        super(baseCreator);
     }
 
-    /**
-     * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
-     **/
-    public ServiceCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
-        super(info, table);
+    @Override
+    public void create() {
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String line : codeTempList) {
             if (Order.check(line, Order.importService)) {
@@ -53,10 +46,6 @@ public class ServiceCreator extends BaseCreator {
             } else {
                 this.codeList.add(line);
             }
-        }
-
-        if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info));
         }
     }
 

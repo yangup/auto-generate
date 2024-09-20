@@ -23,18 +23,13 @@ import static com.platform.auto.util.CharUtil.*;
 public class EntityCreator extends BaseCreator {
 
     private List<ColumnInfo> list;
-    private ConfigEntity.Info info;
 
-    public EntityCreator(Table table, ConfigEntity.Info info) throws Exception {
-        new EntityCreator(table, info, false);
+    public EntityCreator(BaseCreator baseCreator) {
+        super(baseCreator);
     }
 
-    /**
-     * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
-     */
-    public EntityCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
-        super(info, table);
-        this.info = info;
+    @Override
+    public void create() {
         List<String> templateList = this.copyCodeListAndClear();
         this.list = this.table.columnInfos;
         for (String line : templateList) {
@@ -43,9 +38,6 @@ public class EntityCreator extends BaseCreator {
             } else {
                 codeList.add(line);
             }
-        }
-        if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info));
         }
     }
 

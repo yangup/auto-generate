@@ -6,7 +6,9 @@ import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
+import com.platform.auto.util.AutoUtil;
 import com.platform.auto.util.CharUtil;
+import com.platform.auto.util.FileUtil;
 
 import java.util.List;
 
@@ -44,48 +46,20 @@ public class ConnectionAuto extends CharUtil {
                     if (isBlank(info.template)) {
                         continue;
                     }
-                    BaseCreator.createFromInfo(table, info);
+                    BaseCreator baseCreator = new BaseCreator(info, table);
+                    baseCreator.create();
+                    new ControllerCreator(baseCreator).create();
+                    new ServiceCreator(baseCreator).create();
+                    new MapperCreator(baseCreator).create();
+                    new EntityCreator(baseCreator).create();
+                    new SqlProviderCreator(baseCreator).create();
+                    new DataCreator(baseCreator).create();
+                    new DtoCreator(baseCreator).create();
+                    new UsefulCreator(baseCreator).create();
+                    new DocTableCreator(baseCreator).create();
+                    new PostManTableCreator(baseCreator).create();
+                    AutoUtil.newCodeToFile(baseCreator.codeList, FileUtil.createFile(table, info));
                     logger.info("table: {}, info: {}", table.tableNameJavaParam, info);
-//                    if (info.template.contains(CONTROLLER_UP)) {
-//                        new ControllerCreator(table, info);
-//                        logger.info("table: {}, template_controller: {}", table.tableNameJavaParam, info.template);
-//                    }
-//                    if (info.template.contains(SERVICE_UP)) {
-//                        new ServiceCreator(table, info);
-//                        logger.info("table: {}, template_service: {}", table.tableNameJavaParam, info.template);
-//                    }
-//                    if (info.template.contains(MAPPER_UP)) {
-//                        new MapperCreator(table, info);
-//                        logger.info("table: {}, template_mapper: {}", table.tableNameJavaParam, info.template);
-//                    }
-//                    if (info.template.contains(SQL_PROVIDER_UP)) {
-//                        new SqlProviderCreator(table, info);
-//                        logger.info("table: {}, template_sqlProvider: {}", table.tableNameJavaParam, info.template);
-//                    }
-//                    if (info.template.contains(ENTITY_UP)) {
-//                        new EntityCreator(table, info);
-//                        logger.info("table: {}, template_entity: {}", table.tableNameJavaParam, info.template);
-//                    }
-//                    if (info.template.contains(DATA_UP)) {
-//                        new DataCreator(table, info);
-//                        logger.info("table: {}, template_data: {}", table.tableNameJavaParam, info.template);
-//                    }
-//                    if (info.template.contains(DTO_UP)) {
-//                        new DtoCreator(table, info);
-//                        logger.info("table: {}, template_dto: {}", table.tableNameJavaParam, info.template);
-//                    }
-//                    if (info.template.contains(USEFUL_UP)) {
-//                        new UsefulCreator(table, info);
-//                        logger.info("table: {}, template_useful: {}", table.tableNameJavaParam, info.template);
-//                    }
-//                    if (info.template.contains(DOC_TABLE_UP)) {
-//                        new DocTableCreator(table, info);
-//                        logger.info("table: {}, template_docTable: {}", table.tableNameJavaParam, info.template);
-//                    }
-//                    if (info.template.contains(DOC_POSTMAN_UP)) {
-//                        new PostManTableCreator(table, info);
-//                        logger.info("table: {}, template_docPostMan: {}", table.tableNameJavaParam, info.template);
-//                    }
                 }
             } catch (Exception e) {
                 logger.info("generate_error,table: {}", table.tableNameJavaParam);

@@ -21,20 +21,12 @@ import static com.platform.auto.util.CharUtil.*;
 
 public class SqlProviderCreator extends BaseCreator {
 
-    /**
-     * 加载模板
-     *
-     * @param table
-     */
-    public SqlProviderCreator(Table table, ConfigEntity.Info info) throws Exception {
-        this(table, info, false);
+    public SqlProviderCreator(BaseCreator baseCreator) {
+        super(baseCreator);
     }
 
-    /**
-     * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
-     **/
-    public SqlProviderCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
-        super(info, table);
+    @Override
+    public void create() {
         generateConstant(table);
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String lineTemp : codeTempList) {
@@ -44,15 +36,12 @@ public class SqlProviderCreator extends BaseCreator {
             }
             codeList.add(line.toString());
         }
-        if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info));
-        }
     }
 
     /***
      * 在 Constant.java 中生成需要的常量
      * **/
-    private void generateConstant(Table table) throws Exception {
+    private void generateConstant(Table table) {
         List<String> constantList = AutoUtil.fileToList(new File(Config.getJavaFilePath(Config.getPathByType(CONSTANT)) + "Constant.java"));
         List<String> newCoodeList = new ArrayList<>(constantList.size() * 2);
         List<String> addCoodeList = new ArrayList<>();
@@ -95,7 +84,10 @@ public class SqlProviderCreator extends BaseCreator {
         if (StringUtils.equals(String.join("", constantList), String.join("", newCoodeList))) {
             return;
         }
-        AutoUtil.listToFile(new File(Config.getJavaFilePath(Config.getPathByType(CONSTANT)) + "Constant.java"), newCoodeList);
+        try {
+            AutoUtil.listToFile(new File(Config.getJavaFilePath(Config.getPathByType(CONSTANT)) + "Constant.java"), newCoodeList);
+        } catch (Exception e) {
+        }
     }
 
     //sql.whereIsNotNULL("a.alarm_site_id", equal(queryMap.get(ALARM_SITE_ID)));

@@ -22,17 +22,12 @@ import static com.platform.auto.util.CharUtil.*;
  */
 public class DataCreator extends BaseCreator {
 
-    public DataCreator(Table table, ConfigEntity.Info info) throws Exception {
-        this(table, info, false);
+    public DataCreator(BaseCreator baseCreator) {
+        super(baseCreator);
     }
 
-    /**
-     * 加载模板
-     *
-     * @param table
-     */
-    public DataCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
-        super(info, table);
+    @Override
+    public void create() {
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             // TODO: 可以添加其他逻辑
@@ -45,9 +40,6 @@ public class DataCreator extends BaseCreator {
             } else {
                 codeList.add(line);
             }
-        }
-        if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info));
         }
     }
 

@@ -19,16 +19,13 @@ import static com.platform.auto.util.CharUtil.*;
  *
  */
 public class PostManTableCreator extends BaseCreator {
-    /**
-     * 加载模板
-     */
 
-    public PostManTableCreator(Table table, ConfigEntity.Info info) throws Exception {
-        new PostManTableCreator(table, info, false);
+    public PostManTableCreator(BaseCreator baseCreator) {
+        super(baseCreator);
     }
 
-    public PostManTableCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
-        super(info, table);
+    @Override
+    public void create() {
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             line = Order.change(line, Order.name, FileUtil.getTableNameJavaLower(table));
@@ -40,9 +37,6 @@ public class PostManTableCreator extends BaseCreator {
                 line = line.replace(Order.getOrder(Order.queryFindParam), queryFindParam(wp));
             }
             codeList.add(line);
-        }
-        if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info), 2, 4);
         }
     }
 

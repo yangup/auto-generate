@@ -29,18 +29,12 @@ public class MapperCreator extends BaseCreator {
     // todo : 换行, 每满5个就换行
     public static final int COUNT = 5;
 
-    /**
-     * @param table
-     */
-    public MapperCreator(Table table, ConfigEntity.Info info) throws Exception {
-        new MapperCreator(table, info,false);
+    public MapperCreator(BaseCreator baseCreator) {
+        super(baseCreator);
     }
 
-    /**
-     * @param isList : 是否只把生成的数据, 放入到 list 中, 不做其他的处理
-     **/
-    public MapperCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
-        super(info, table);
+    @Override
+    public void create() {
         List<String> codeTempList = this.copyCodeListAndClear();
         for (String line : codeTempList) {
             if (Order.check(line, Order.sqlFieldRaw)) {
@@ -86,10 +80,6 @@ public class MapperCreator extends BaseCreator {
                 continue;
             }
             this.codeList.add(line);
-        }
-
-        if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info));
         }
     }
 

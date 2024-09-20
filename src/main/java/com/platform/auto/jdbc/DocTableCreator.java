@@ -25,17 +25,13 @@ import static com.platform.auto.util.CharUtil.*;
  * @createTime 2016年7月21日 下午3:50:33
  */
 public class DocTableCreator extends BaseCreator {
-    /**
-     * 加载模板
-     *
-     * @param table
-     */
-    public DocTableCreator(Table table, ConfigEntity.Info info) throws Exception {
-        this(table, info, false);
+
+    public DocTableCreator(BaseCreator baseCreator) {
+        super(baseCreator);
     }
 
-    public DocTableCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
-        super(info, table);
+    @Override
+    public void create() {
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             if (Order.check(line, Order.tableJson)) {
@@ -47,9 +43,6 @@ public class DocTableCreator extends BaseCreator {
             } else {
                 codeList.add(line);
             }
-        }
-        if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info), "- 最后修改时间 :");
         }
     }
 
@@ -79,7 +72,7 @@ public class DocTableCreator extends BaseCreator {
         codeList.add("}");
     }
 
-    private void createJsonKeyValueComment(String w) throws Exception {
+    private void createJsonKeyValueComment(String w) {
         // TODO: json 的 key, value
         List<String> jsonList = new ArrayList<>();
         // TODO: comment

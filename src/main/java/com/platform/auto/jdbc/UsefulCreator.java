@@ -23,17 +23,12 @@ import static com.platform.auto.util.CharUtil.*;
  */
 public class UsefulCreator extends BaseCreator {
 
-    /**
-     * 加载模板
-     *
-     * @param table
-     */
-    public UsefulCreator(Table table, ConfigEntity.Info info) throws Exception {
-        new UsefulCreator(table, info, false);
+    public UsefulCreator(BaseCreator baseCreator) {
+        super(baseCreator);
     }
 
-    public UsefulCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
-        super(info, table);
+    @Override
+    public void create() {
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             if (Order.check(line, Order.jsonStart)) {
@@ -169,10 +164,6 @@ public class UsefulCreator extends BaseCreator {
             } else {
                 codeList.add(line);
             }
-        }
-
-        if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info));
         }
     }
 

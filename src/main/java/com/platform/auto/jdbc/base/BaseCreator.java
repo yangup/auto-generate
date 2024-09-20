@@ -2,7 +2,7 @@ package com.platform.auto.jdbc.base;
 
 import com.platform.auto.config.Config;
 import com.platform.auto.config.ConfigEntity;
-import com.platform.auto.jdbc.ControllerCreator;
+import com.platform.auto.jdbc.*;
 import com.platform.auto.jdbc.model.*;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
@@ -250,14 +250,6 @@ public class BaseCreator {
             this.codeList.add(line.toString());
         }
     }
-
-    public static void createFromInfo(Table table, ConfigEntity.Info info) throws Exception {
-        BaseCreator baseCreator = new BaseCreator(info, table);
-        baseCreator.create();
-        new ControllerCreator(baseCreator).create();
-        AutoUtil.newCodeToFile(baseCreator.codeList, FileUtil.createFile(table, info));
-    }
-
 
     /**
      * 将占位符，替换成 具体的内容

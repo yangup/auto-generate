@@ -25,17 +25,13 @@ import static com.platform.auto.util.CharUtil.*;
  * @createTime 2016年7月21日 下午3:50:33
  */
 public class DtoCreator extends BaseCreator {
-    /**
-     * 加载模板
-     *
-     * @param table
-     */
-    public DtoCreator(Table table, ConfigEntity.Info info) throws Exception {
-        new DtoCreator(table, info, false);
+
+    public DtoCreator(BaseCreator baseCreator) {
+        super(baseCreator);
     }
 
-    public DtoCreator(Table table, ConfigEntity.Info info, boolean isList) throws Exception {
-        super(info, table);
+    @Override
+    public void create() {
         List<String> templateList = this.copyCodeListAndClear();
         for (String line : templateList) {
             if (line.contains(Order.getOrder(Order.startField))) {
@@ -44,11 +40,6 @@ public class DtoCreator extends BaseCreator {
                 codeList.add(line);
             }
         }
-
-        if (!isList) {
-            AutoUtil.newCodeToFile(codeList, FileUtil.createFile(table, info));
-        }
-
     }
 
     private void createField() {
