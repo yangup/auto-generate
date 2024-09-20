@@ -8,6 +8,7 @@ import com.platform.auto.sys.log.Logger;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +40,18 @@ public class Application {
 
         logger.info("end");
 
+    }
+
+    // for test
+    public static void main(String[] args) throws Exception {
+        File currentDir = new File(".");
+        String absolutePath = currentDir.getAbsolutePath().replace("\\", "/");
+        Config.project_base_path = absolutePath.substring(0, absolutePath.length() - 2);
+        Config.project_auto_path = Config.project_base_path + "/" + Config.auto_name;
+        Config.project_config_path = Config.project_auto_path + "/" + Config.auto_config_name;
+        Config.project_template_path = Config.project_config_path + "/template";
+        Config.log_path = Config.project_config_path + "/log.txt";
+        Application.start(List.of("tb_user_apple"));
     }
 
 }
