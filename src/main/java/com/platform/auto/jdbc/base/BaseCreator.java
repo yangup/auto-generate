@@ -275,7 +275,7 @@ public class BaseCreator {
 
     public List<String> copyCodeListAndClear() {
         List<String> codeTempList = new ArrayList<>(this.codeList);
-        this.codeList = new ArrayList<>(codeTempList.size() * 2);
+        this.codeList.clear();
         return codeTempList;
     }
 
