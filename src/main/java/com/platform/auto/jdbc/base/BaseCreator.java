@@ -261,7 +261,8 @@ public class BaseCreator {
 
     public static void createFromInfo(Table table, ConfigEntity.Info info) throws Exception {
         BaseCreator baseCreator = new BaseCreator(info, table);
-        new ControllerCreator(baseCreator);
+        baseCreator.create();
+        new ControllerCreator(baseCreator).create();
         AutoUtil.newCodeToFile(baseCreator.codeList, FileUtil.createFile(table, info));
     }
 
