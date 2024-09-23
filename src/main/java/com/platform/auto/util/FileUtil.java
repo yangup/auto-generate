@@ -14,6 +14,10 @@ import static com.platform.auto.util.CharUtil.*;
 
 public class FileUtil extends StringUtils {
 
+    public static File createLocalFile(final String fileName) {
+        return createFile(project_auto_path + fileName);
+    }
+
     public static File createFile(final String fileName) {
         try {
             File file = new File(fileName);

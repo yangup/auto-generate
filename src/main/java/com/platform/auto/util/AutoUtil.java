@@ -15,6 +15,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.platform.auto.config.Config.project_auto_path;
+
 public class AutoUtil extends CharUtil {
 
     private static final Logger logger = AutoLogger.getLogger(AutoUtil.class);
@@ -98,9 +100,13 @@ public class AutoUtil extends CharUtil {
         writer.close();
     }
 
-
     public static void listToFile(String path, List<String> data) throws Exception {
         listToFile(new File(path), data);
+    }
+
+
+    public static void listToLocalFile(String path, List<String> data) throws Exception {
+        listToFile(new File(project_auto_path + path), data);
     }
 
     /**

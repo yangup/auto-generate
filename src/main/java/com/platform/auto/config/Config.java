@@ -12,13 +12,10 @@ import com.platform.auto.util.AutoUtil;
 import com.platform.auto.util.FileUtil;
 import org.apache.commons.lang3.StringUtils;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.platform.auto.util.AutoUtil.*;
-import static com.platform.auto.util.CharUtil.*;
 import static com.platform.auto.config.ConfigEntity.*;
 
 public class Config {
