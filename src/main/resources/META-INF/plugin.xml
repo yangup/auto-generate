@@ -38,6 +38,7 @@
         <li><b>1.8.1</b> 2024-09-18. type to java use config json</li>
         <li><b>2.0.0</b> 2024-09-19. review code</li>
         <li><b>2.0.1</b> 2024-09-20. review code</li>
+        <li><b>2.1.0</b> 2024-09-23. generated-request.http</li>
       </ul>
     ]]>
     </change-notes>
