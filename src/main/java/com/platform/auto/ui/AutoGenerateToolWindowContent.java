@@ -155,7 +155,7 @@ public class AutoGenerateToolWindowContent {
 
         logger.info("create content panel");
         if (Config.existLocal()) {
-            initStartAsync();
+            initStartAsync(true);
         }
     }
 
@@ -328,6 +328,10 @@ public class AutoGenerateToolWindowContent {
     }
 
     public void initStartAsync() {
+        initStartAsync(false);
+    }
+
+    public void initStartAsync(boolean init) {
         Config.initProject(this.project);
         logger.info("refresh");
         if (runFlag.get()) {
@@ -338,7 +342,7 @@ public class AutoGenerateToolWindowContent {
         dbNameComboBox.setEnabled(false);
         logger.info("initStartAsync");
         new Thread(() -> {
-            initTableList();
+            initTableList(init);
             runFlag.set(false);
             refresh.setIcon(AllIcons.General.InlineRefresh);
             dbNameComboBox.setEnabled(true);
@@ -353,6 +357,10 @@ public class AutoGenerateToolWindowContent {
     }
 
     public void initTableList() {
+        initTableList(false);
+    }
+
+    public void initTableList(boolean init) {
         try {
             logger.info("initTableList");
             generateAllParent.setVisible(true);
@@ -360,7 +368,7 @@ public class AutoGenerateToolWindowContent {
             dbNameComboBoxPanel.setVisible(true);
             Config.initProject(this.project);
             Config.initFile();
-            Config.initLocalData();
+            Config.initLocalData(init);
             addDbName();
             tableNameFilter.setText(Config.getLocal() == null ? "" : Config.getLocal().getFilterTableNameText());
         } catch (Exception ex) {

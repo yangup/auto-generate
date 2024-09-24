@@ -145,7 +145,10 @@ public class Config {
     /**
      * 本地数据的初始化
      **/
-    public static void initLocalData() throws Exception {
+    public static void initLocalData(boolean init) throws Exception {
+        if (isNotEmpty(getLocal().dbInfoList) && init) {
+            return;
+        }
         config = null;
         Connection.prepare(
                 getConfig().jdbc.clazz,
