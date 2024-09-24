@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class LocalEntity {
 
-    public Long time;
+    public String time;
 
     public String filterTableNameText;
 

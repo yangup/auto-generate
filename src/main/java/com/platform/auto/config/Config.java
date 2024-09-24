@@ -101,7 +101,7 @@ public class Config {
 
     public static void refreshLocal() {
         try {
-            local.time = System.currentTimeMillis();
+            local.time = getNowTime();
             objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
             AutoUtil.listToFile(project_config_path + "/local.json", List.of(objectMapper.writeValueAsString(local)));
             local = null;
@@ -199,6 +199,10 @@ public class Config {
         log_path = project_config_path + "/log.txt";
     }
 
+    public static String getNowTime() {
+        return new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+    }
+
     /**
      * 将 config 信息, 拷贝到 .auto 项目目录下面
      **/
@@ -210,7 +214,7 @@ public class Config {
         local_path = project_config_path + "/local.json";
         if (StringUtils.isBlank(readFromLocalJson(auto_config_name + "/local.json"))) {
             LocalEntity localEntity = new LocalEntity();
-            localEntity.time = System.currentTimeMillis();
+            localEntity.time = getNowTime();
             // 默认 config 中的 db name
             localEntity.selectedDbName = getConfigFromResources().jdbc.database;
             AutoUtil.listToFile(local_path, List.of(objectMapper.writeValueAsString(localEntity)));
