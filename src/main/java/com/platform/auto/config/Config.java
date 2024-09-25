@@ -85,17 +85,17 @@ public class Config {
         return local;
     }
 
-    public static boolean existLocal() {
+    public static boolean existLocal(String path) {
         try {
-            if (FileUtil.exists(Config.project_auto_path + "/" + log_path_file_name)) {
-                logger.info("existLocal, true");
+            if (FileUtil.exists(Config.project_auto_path + "/" + path)) {
+                logger.info("existLocal, true, {}", path);
                 return true;
             }
         } catch (Exception e) {
-            logger.info("existLocal, false");
+            logger.info("existLocal, false, {}", path);
             return false;
         }
-        logger.info("existLocal, false");
+        logger.info("existLocal, false, {}", path);
         return false;
     }
 
@@ -206,7 +206,9 @@ public class Config {
     public static void initFile() throws Exception {
         config = null;
         local = null;
-        strToLocalFile(log_path_file_name, getNowTime());
+        if (!existLocal(log_path_file_name)) {
+            FileUtil.createLocalFile(local_path_file_name);
+        }
         if (StringUtils.isBlank(readFromLocalJson(local_path_file_name))) {
             LocalEntity localEntity = new LocalEntity();
             localEntity.time = getNowTime();

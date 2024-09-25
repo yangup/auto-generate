@@ -154,7 +154,7 @@ public class AutoGenerateToolWindowContent {
         contentPanel.add(new JPanel());
 
         logger.info("create content panel");
-        if (Config.existLocal()) {
+        if (Config.existLocal(Config.log_path_file_name)) {
             initStartAsync(true);
         }
     }
