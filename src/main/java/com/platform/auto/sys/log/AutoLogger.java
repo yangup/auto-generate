@@ -60,7 +60,7 @@ public class AutoLogger implements Logger {
         loggingEvent.setArgumentArray(args);
         loggingEvent.setThrowable(throwable);
         StringBuilder sb = new StringBuilder();
-        sb.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(loggingEvent.getTimeStamp())));
+        sb.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date(loggingEvent.getTimeStamp())));
         sb.append(" " + loggingEvent.getLevel());
         sb.append(" " + formatLoggerName(loggingEvent.getLoggerName()));
         if (loggingEvent.getArgumentArray() != null) {
