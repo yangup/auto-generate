@@ -57,8 +57,8 @@ public class ControllerCreator extends BaseCreator {
         // http-client.private.env.json
         String requestFileName = "generated-requests.http";
         String envJsonFileName = "http-client.private.env.json";
-        String requestPath = "/http/" + requestFileName;
-        String envPath = "/http/" + envJsonFileName;
+        String requestPath = "http/" + requestFileName;
+        String envPath = "http/" + envJsonFileName;
         FileUtil.createLocalFile(requestPath);
         FileUtil.createLocalFile(envPath);
         if (StringUtils.isBlank(readFromLocalJson(envPath))) {

@@ -14,8 +14,8 @@ import static com.platform.auto.util.CharUtil.*;
 
 public class FileUtil extends StringUtils {
 
-    public static File createLocalFile(final String fileName) {
-        return createFile(project_auto_path + fileName);
+    public static void createLocalFile(final String fileName) {
+        createFile(project_auto_path + fileName);
     }
 
     public static File createFile(final String fileName) {
@@ -48,18 +48,18 @@ public class FileUtil extends StringUtils {
      * 生成文件 , 统一生成 在 db 文件夹下面的文件
      **/
     public static File createFile(Table table, ConfigEntity.Info info) {
-        String path = StringUtils.isNotEmpty(table.javaFilePath) ? table.javaFilePath + File.separator : "";
+        String path = StringUtils.isNotEmpty(table.javaFilePath) ? table.javaFilePath + "/" : "";
         if (isNotBlank(info.storeByTable)) {
             if (isTrue(info.storeByTable)) {
-                path = table.tableNameJava.toLowerCase() + File.separator;
+                path = table.tableNameJava.toLowerCase() + "/";
             } else {
                 path = "";
             }
         }
         // 文件放在 .auto 下面
         if (isTrue(info.path.local)) {
-            return createFile(Config.project_auto_path + File.separator + "txt" +
-                    File.separator + path + table.tableNameJava + info.fileNameSuffix);
+            return createFile(Config.project_auto_path + "/" + "txt" +
+                    "/" + path + table.tableNameJava + info.fileNameSuffix);
         } else {
             // todo : 新的文件创建文件夹, 文件
             return createFile(getJavaFilePath(info.path) + path + table.tableNameJava + info.fileNameSuffix);

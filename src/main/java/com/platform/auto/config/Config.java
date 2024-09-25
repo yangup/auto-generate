@@ -8,10 +8,10 @@ import com.intellij.openapi.project.ProjectUtil;
 import com.platform.auto.jdbc.Connection;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
-import com.platform.auto.util.AutoUtil;
 import com.platform.auto.util.FileUtil;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,28 +34,24 @@ public class Config {
     public static String project_base_path;
     public static final String auto_name = ".auto";
     public static final String auto_config_name = ".config";
-    public static final String auto_local_name = "local";
+    public static final String auto_local_name = ".local";
 
     // todo : D:\ksm\code\playlet\playlet-app-api\.auto
     public static String project_auto_path;
 
-    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\.config
-    public static String project_config_path;
+    // todo : .config\config.json
+    public static String config_path_file_name = auto_config_name + "/" + "config.json";
 
-    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\local
-    public static String project_local_path;
+    // todo : .config\typeToJavaData.json
+    public static String config_path_type_to_java_data_file_name = auto_config_name + "/" + "typeToJavaData.json";
 
-    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\.config\template
-    public static String project_template_path;
+    // todo : .local\log.txt
+    public static String log_path_file_name = auto_local_name + "/" + "log.txt";
 
-    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\local\log.txt
-    public static String log_path;
-
-    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\local\local.json
-    public static String local_path;
+    // todo : .local\local.json
+    public static String local_path_file_name = auto_local_name + "/" + "local.json";
     public static final String base_java_path = "/src/main/java/";
     public static final String config_template_prefix = ".config/template/";
-
 
     static {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -63,7 +59,7 @@ public class Config {
 
     public static ConfigEntity getConfig() {
         try {
-            config = config == null ? objectMapper.readValue(readFromLocalJson(auto_config_name + "/config.json"), ConfigEntity.class) : config;
+            config = config == null ? objectMapper.readValue(readFromLocalJson(config_path_file_name), ConfigEntity.class) : config;
         } catch (Exception e) {
             logger.info(e);
         }
@@ -72,16 +68,16 @@ public class Config {
 
     public static ConfigEntity getConfigFromResources() {
         try {
-            return objectMapper.readValue(String.join(" ", AutoUtil.readFromResources(auto_config_name + "/config.json")), ConfigEntity.class);
+            return objectMapper.readValue(String.join(" ", readFromResources(auto_config_name + "/config.json")), ConfigEntity.class);
         } catch (Exception e) {
             logger.info(e);
         }
-        return null;
+        return new ConfigEntity();
     }
 
     public static LocalEntity getLocal() {
         try {
-            local = local == null ? objectMapper.readValue(readFromLocalJson(auto_local_name + "/local.json"), LocalEntity.class) : local;
+            local = local == null ? objectMapper.readValue(readFromLocalJson(local_path_file_name), LocalEntity.class) : local;
         } catch (Exception e) {
             logger.info(e);
             return new LocalEntity();
@@ -91,7 +87,7 @@ public class Config {
 
     public static boolean existLocal() {
         try {
-            if (isNotBlank(readFromLocalJson(auto_local_name + "/local.json"))) {
+            if (FileUtil.exists(Config.project_auto_path + "/" + log_path_file_name)) {
                 logger.info("existLocal, true");
                 return true;
             }
@@ -107,7 +103,7 @@ public class Config {
         try {
             local.time = getNowTime();
             objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-            AutoUtil.listToFile(project_config_path + "/local.json", List.of(objectMapper.writeValueAsString(local)));
+            listToLocalFile(local_path_file_name, List.of(objectMapper.writeValueAsString(local)));
             local = null;
             getLocal();
         } catch (Exception e) {
@@ -198,10 +194,6 @@ public class Config {
         project = ProjectUtil.currentOrDefaultProject(projectParam);
         project_base_path = project.getBasePath();
         project_auto_path = project_base_path + "/" + auto_name;
-        project_config_path = project_auto_path + "/" + auto_config_name;
-        project_local_path = project_auto_path + "/" + auto_local_name;
-        project_template_path = project_config_path + "/template";
-        log_path = project_local_path + "/log.txt";
     }
 
     public static String getNowTime() {
@@ -214,40 +206,35 @@ public class Config {
     public static void initFile() throws Exception {
         config = null;
         local = null;
-        FileUtil.createFile(log_path);
-        FileUtil.createFile(project_config_path + "/config.json");
-        // for local.json
-        local_path = project_local_path + "/local.json";
-        if (StringUtils.isBlank(readFromLocalJson(auto_local_name + "/local.json"))) {
+        strToLocalFile(log_path_file_name, getNowTime());
+        if (StringUtils.isBlank(readFromLocalJson(local_path_file_name))) {
             LocalEntity localEntity = new LocalEntity();
             localEntity.time = getNowTime();
             // 默认 config 中的 db name
             localEntity.selectedDbName = getConfigFromResources().jdbc.database;
-            AutoUtil.listToFile(local_path, List.of(objectMapper.writeValueAsString(localEntity)));
+            listToLocalFile(local_path_file_name, List.of(objectMapper.writeValueAsString(localEntity)));
             logger.info("init_local.json");
         }
 
-        if (StringUtils.isBlank(readFromLocalJson(auto_config_name + "/typeToJavaData.json"))) {
-            AutoUtil.listToFile(project_config_path + "/typeToJavaData.json", AutoUtil.readFromResources(auto_config_name + "/typeToJavaData.json"));
+        if (StringUtils.isBlank(readFromLocalJson(config_path_type_to_java_data_file_name))) {
+            listToLocalFile(config_path_type_to_java_data_file_name, readFromResources(auto_config_name + "/typeToJavaData.json"));
         }
 
         // 当 config 存在的时候,就不需要
-        String configJson = project_config_path + "/config.json";
-        if (FileUtil.exists(configJson)) {
+        if (FileUtil.exists(config_path_file_name)) {
             return;
         }
+
         // todo : 拷贝系统的 config 配置
-        logger.info("initConfig: {}", configJson);
-        AutoUtil.listToFile(configJson, AutoUtil.readFromResources(auto_config_name + "/config.json"));
+        logger.info("initConfig: {}", project_auto_path);
+        listToLocalFile(config_path_file_name, readFromResources(auto_config_name + "/config.json"));
         List<Info> infoList = getConfigFromResources().info;
         for (Info info : infoList) {
             if (isBlank(info.template)) {
                 continue;
             }
             String templateFilePath = getTemplatePath(info.template);
-            String templateLocalFilePath = project_auto_path + "/" + templateFilePath;
-            FileUtil.createFile(templateLocalFilePath);
-            AutoUtil.listToFile(templateLocalFilePath, AutoUtil.readFromResources(templateFilePath));
+            listToLocalFile(templateFilePath, readFromResources(templateFilePath));
         }
     }
 

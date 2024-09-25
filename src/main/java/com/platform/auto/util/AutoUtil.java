@@ -65,6 +65,9 @@ public class AutoUtil extends CharUtil {
 
     public static List<String> readFromLocal(String name) {
         String path = Config.project_auto_path + "/" + name;
+        if (!FileUtil.exists(path)) {
+            return new ArrayList<>();
+        }
         List<String> data = new LinkedList<>();
         try {
             try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
@@ -85,8 +88,10 @@ public class AutoUtil extends CharUtil {
      ***/
     public static String readFromLocalJson(String name) {
         return readFromLocal(name).stream().filter(string ->
-                !string.trim().startsWith("//") && !string.trim().startsWith("#")
-        ).collect(Collectors.joining(" "));
+                        !string.trim().startsWith("//")
+                                && !string.trim().startsWith("#")
+                )
+                .collect(Collectors.joining(" "));
     }
 
     public static void listToFile(File file, List<String> data) throws Exception {
@@ -101,12 +106,18 @@ public class AutoUtil extends CharUtil {
     }
 
     public static void listToFile(String path, List<String> data) throws Exception {
+        if (!FileUtil.exists(path)) {
+            FileUtil.createFile(path);
+        }
         listToFile(new File(path), data);
     }
 
+    public static void strToLocalFile(String path, String data) throws Exception {
+        listToLocalFile(path, List.of(data));
+    }
 
     public static void listToLocalFile(String path, List<String> data) throws Exception {
-        listToFile(new File(project_auto_path + path), data);
+        listToFile(project_auto_path + "/" + path, data);
     }
 
     /**
