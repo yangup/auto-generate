@@ -215,6 +215,7 @@ public class Config {
         config = null;
         local = null;
         FileUtil.createFile(log_path);
+        FileUtil.createFile(project_config_path + "/config.json");
         // for local.json
         local_path = project_local_path + "/local.json";
         if (StringUtils.isBlank(readFromLocalJson(auto_local_name + "/local.json"))) {
