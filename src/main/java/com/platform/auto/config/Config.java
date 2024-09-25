@@ -221,7 +221,7 @@ public class Config {
         }
 
         // 当 config 存在的时候,就不需要
-        if (FileUtil.exists(config_path_file_name)) {
+        if (FileUtil.exists(project_auto_path + "/" + config_path_file_name)) {
             return;
         }
 
