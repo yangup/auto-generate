@@ -40,16 +40,16 @@ public class Config {
     public static String project_auto_path;
 
     // todo : .config\config.json
-    public static String config_path_file_name = auto_config_name + "/" + "config.json";
+    public static String config_path_file_name = auto_config_name + "/config.json";
 
     // todo : .config\typeToJavaData.json
-    public static String config_path_type_to_java_data_file_name = auto_config_name + "/" + "typeToJavaData.json";
+    public static String config_path_type_to_java_data_file_name = auto_config_name + "/typeToJavaData.json";
 
     // todo : .local\log.txt
-    public static String log_path_file_name = auto_local_name + "/" + "log.txt";
+    public static String log_path_file_name = auto_local_name + "/log.txt";
 
     // todo : .local\local.json
-    public static String local_path_file_name = auto_local_name + "/" + "local.json";
+    public static String local_path_file_name = auto_local_name + "/local.json";
     public static final String base_java_path = "/src/main/java/";
     public static final String config_template_prefix = ".config/template/";
 
@@ -103,7 +103,7 @@ public class Config {
         try {
             local.time = getNowTime();
             objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-            listToLocalFile(local_path_file_name, List.of(objectMapper.writeValueAsString(local)));
+            strToLocalFile(local_path_file_name, objectMapper.writeValueAsString(local));
             local = null;
             getLocal();
         } catch (Exception e) {
@@ -114,12 +114,6 @@ public class Config {
     public static Path getPathByType(String type) {
         return getConfig().info.stream().filter(
                 info -> equalsAnyIgnoreCase(info.type, type)
-        ).findFirst().orElse(new Info()).getPath();
-    }
-
-    public static Path getPath(final String template) {
-        return getConfig().info.stream().filter(
-                info -> isNotBlank(info.template) && info.template.contains(template)
         ).findFirst().orElse(new Info()).getPath();
     }
 
