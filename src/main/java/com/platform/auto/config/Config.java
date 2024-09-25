@@ -207,7 +207,7 @@ public class Config {
         config = null;
         local = null;
         if (!existLocal(log_path_file_name)) {
-            FileUtil.createLocalFile(local_path_file_name);
+            FileUtil.createLocalFile(log_path_file_name);
         }
         if (StringUtils.isBlank(readFromLocalJson(local_path_file_name))) {
             LocalEntity localEntity = new LocalEntity();
