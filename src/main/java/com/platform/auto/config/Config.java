@@ -34,6 +34,7 @@ public class Config {
     public static String project_base_path;
     public static final String auto_name = ".auto";
     public static final String auto_config_name = ".config";
+    public static final String auto_local_name = "local";
 
     // todo : D:\ksm\code\playlet\playlet-app-api\.auto
     public static String project_auto_path;
@@ -41,13 +42,16 @@ public class Config {
     // todo : D:\ksm\code\playlet\playlet-app-api\.auto\.config
     public static String project_config_path;
 
+    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\local
+    public static String project_local_path;
+
     // todo : D:\ksm\code\playlet\playlet-app-api\.auto\.config\template
     public static String project_template_path;
 
-    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\.config\log.txt
+    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\local\log.txt
     public static String log_path;
 
-    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\.config\local.json
+    // todo : D:\ksm\code\playlet\playlet-app-api\.auto\local\local.json
     public static String local_path;
     public static final String base_java_path = "/src/main/java/";
     public static final String config_template_prefix = ".config/template/";
@@ -195,8 +199,9 @@ public class Config {
         project_base_path = project.getBasePath();
         project_auto_path = project_base_path + "/" + auto_name;
         project_config_path = project_auto_path + "/" + auto_config_name;
+        project_local_path = project_auto_path + "/" + auto_local_name;
         project_template_path = project_config_path + "/template";
-        log_path = project_config_path + "/log.txt";
+        log_path = project_local_path + "/log.txt";
     }
 
     public static String getNowTime() {
@@ -211,8 +216,8 @@ public class Config {
         local = null;
         FileUtil.createFile(log_path);
         // for local.json
-        local_path = project_config_path + "/local.json";
-        if (StringUtils.isBlank(readFromLocalJson(auto_config_name + "/local.json"))) {
+        local_path = project_local_path + "/local.json";
+        if (StringUtils.isBlank(readFromLocalJson(auto_local_name + "/local.json"))) {
             LocalEntity localEntity = new LocalEntity();
             localEntity.time = getNowTime();
             // 默认 config 中的 db name
