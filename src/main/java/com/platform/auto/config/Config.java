@@ -87,7 +87,7 @@ public class Config {
 
     public static boolean existLocal(String path) {
         try {
-            if (FileUtil.exists(Config.project_auto_path + "/" + path)) {
+            if (FileUtil.exists(project_auto_path + "/" + path)) {
                 logger.info("existLocal, true, {}", path);
                 return true;
             }
@@ -223,7 +223,7 @@ public class Config {
         }
 
         // 当 config 存在的时候,就不需要
-        if (FileUtil.exists(project_auto_path + "/" + config_path_file_name)) {
+        if (existLocal(config_path_file_name)) {
             return;
         }
 
