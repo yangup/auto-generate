@@ -81,7 +81,7 @@ public class Config {
 
     public static LocalEntity getLocal() {
         try {
-            local = local == null ? objectMapper.readValue(readFromLocalJson(auto_config_name + "/local.json"), LocalEntity.class) : local;
+            local = local == null ? objectMapper.readValue(readFromLocalJson(auto_local_name + "/local.json"), LocalEntity.class) : local;
         } catch (Exception e) {
             logger.info(e);
             return new LocalEntity();
@@ -91,7 +91,7 @@ public class Config {
 
     public static boolean existLocal() {
         try {
-            if (isNotBlank(readFromLocalJson(auto_config_name + "/local.json"))) {
+            if (isNotBlank(readFromLocalJson(auto_local_name + "/local.json"))) {
                 logger.info("existLocal, true");
                 return true;
             }
