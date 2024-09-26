@@ -104,6 +104,7 @@ public class ControllerCreator extends BaseCreator {
                 if (isEqual(frontPath, path)) {
                     continue;
                 }
+                frontPath = frontPath.startsWith("/") ? frontPath : "/" + frontPath;
                 httpCodeList.add("### " + frontPath + path);
                 if (this.codeList.get(i).trim().contains("@GetMapping(\"")) {
                     String host = "GET {{host}}" + frontPath + path;

@@ -1,6 +1,5 @@
 package com.platform.auto;
 
-import com.intellij.openapi.project.ProjectUtil;
 import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.ConnectionAuto;
 import com.platform.auto.jdbc.model.TypeToJavaData;
