@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectUtil;
 import com.platform.auto.jdbc.Connection;
+import com.platform.auto.jdbc.ControllerCreator;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import com.platform.auto.util.FileUtil;
@@ -219,6 +220,8 @@ public class Config {
         if (existLocal(config_path_file_name)) {
             return;
         }
+
+        ControllerCreator.createRequestInit();
 
         // todo : 拷贝系统的 config 配置
         logger.info("initConfig: {}", project_auto_path);

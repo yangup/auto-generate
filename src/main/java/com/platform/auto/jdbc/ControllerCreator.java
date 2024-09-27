@@ -49,10 +49,7 @@ public class ControllerCreator extends BaseCreator {
         }
     }
 
-    /**
-     * 生成 .http 文件
-     **/
-    public void createRequest() throws Exception {
+    public static void createRequestInit() throws Exception {
         // generated-requests.http
         // http-client.private.env.json
         String requestFileName = "http.http";
@@ -71,7 +68,14 @@ public class ControllerCreator extends BaseCreator {
             ))));
             logger.info("init: {}", envPath);
         }
+    }
 
+    /**
+     * 生成 .http 文件
+     **/
+    public void createRequest() throws Exception {
+        createRequestInit();
+        String requestPath = "http/http.http";
 //        ### v1/Report/type/buriedPointCommon.all
 //        POST {{host}}/v1/Report/type/buriedPointCommon.all
 //        Content-Type: application/json;charset=utf-8
