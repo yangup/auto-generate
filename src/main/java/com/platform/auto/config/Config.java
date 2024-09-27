@@ -11,7 +11,6 @@ import com.platform.auto.sys.log.Logger;
 import com.platform.auto.util.FileUtil;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
