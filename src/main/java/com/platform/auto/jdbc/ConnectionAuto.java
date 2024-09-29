@@ -1,7 +1,7 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.config.Config;
-import com.platform.auto.config.ConfigEntity;
+import com.platform.auto.entity.ConfigInfoEntity;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.sys.log.AutoLogger;
@@ -41,8 +41,8 @@ public class ConnectionAuto extends CharUtil {
     public static void generate(List<Table> tables) {
         tables.forEach(table -> {
             try {
-                List<ConfigEntity.Info> infoList = Config.getConfig().info;
-                for (ConfigEntity.Info info : infoList) {
+                List<ConfigInfoEntity> infoList = Config.getConfig().info;
+                for (ConfigInfoEntity info : infoList) {
                     if (isBlank(info.template)) {
                         continue;
                     }

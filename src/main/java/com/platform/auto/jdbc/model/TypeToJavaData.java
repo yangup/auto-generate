@@ -2,18 +2,15 @@ package com.platform.auto.jdbc.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.platform.auto.config.Config;
-import com.platform.auto.config.ConfigEntity;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 

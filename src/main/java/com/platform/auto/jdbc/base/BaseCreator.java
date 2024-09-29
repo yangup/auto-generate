@@ -1,7 +1,8 @@
 package com.platform.auto.jdbc.base;
 
 import com.platform.auto.config.Config;
-import com.platform.auto.config.ConfigEntity;
+import com.platform.auto.entity.ConfigEntity;
+import com.platform.auto.entity.ConfigInfoEntity;
 import com.platform.auto.jdbc.model.*;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
@@ -29,7 +30,7 @@ public class BaseCreator {
     public List<String> codeList;
     public Table table;
     public String template;
-    public ConfigEntity.Info info;
+    public ConfigInfoEntity info;
 
     public BaseCreator() {
 
@@ -56,7 +57,7 @@ public class BaseCreator {
      * 根据模板来生成指定的代码
      * 将通用模板下的字段, 替换成 指定 @param table 下的字段
      **/
-    public BaseCreator(ConfigEntity.Info info, Table table) {
+    public BaseCreator(ConfigInfoEntity info, Table table) {
         this.info = info;
         this.table = table;
         this.template = info.template;

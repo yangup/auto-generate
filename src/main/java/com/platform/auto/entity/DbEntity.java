@@ -1,4 +1,4 @@
-package com.platform.auto.config;
+package com.platform.auto.entity;
 
 import lombok.Data;
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectUtil;
+import com.platform.auto.entity.*;
 import com.platform.auto.jdbc.Connection;
 import com.platform.auto.jdbc.ControllerCreator;
 import com.platform.auto.sys.log.AutoLogger;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.platform.auto.util.AutoUtil.*;
-import static com.platform.auto.config.ConfigEntity.*;
+import static com.platform.auto.entity.ConfigEntity.*;
 
 public class Config {
 
@@ -111,16 +112,16 @@ public class Config {
         }
     }
 
-    public static Path getPathByType(String type) {
+    public static PathEntity getPathByType(String type) {
         return getConfig().info.stream().filter(
                 info -> equalsAnyIgnoreCase(info.type, type)
-        ).findFirst().orElse(new Info()).getPath();
+        ).findFirst().orElse(new ConfigInfoEntity()).getPath();
     }
 
     /**
      * 从 config.json 中解析出,生成的代码的存放路径
      ***/
-    public static String getJavaFilePath(Path path) {
+    public static String getJavaFilePath(PathEntity path) {
         return getJavaFilePath(path.projectName, path.packageName);
     }
 
@@ -226,8 +227,8 @@ public class Config {
         // todo : 拷贝系统的 config 配置
         logger.info("initConfig: {}", project_auto_path);
         listToLocalFile(config_path_file_name, readFromResources(auto_config_name + "/config.json"));
-        List<Info> infoList = getConfigFromResources().info;
-        for (Info info : infoList) {
+        List<ConfigInfoEntity> infoList = getConfigFromResources().info;
+        for (ConfigInfoEntity info : infoList) {
             if (isBlank(info.template)) {
                 continue;
             }

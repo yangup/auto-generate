@@ -1,7 +1,8 @@
 package com.platform.auto.util;
 
 import com.platform.auto.config.Config;
-import com.platform.auto.config.ConfigEntity;
+import com.platform.auto.entity.ConfigEntity;
+import com.platform.auto.entity.ConfigInfoEntity;
 import com.platform.auto.jdbc.model.Table;
 import org.apache.commons.lang3.StringUtils;
 
@@ -47,7 +48,7 @@ public class FileUtil extends StringUtils {
     /**
      * 生成文件 , 统一生成 在 db 文件夹下面的文件
      **/
-    public static File createFile(Table table, ConfigEntity.Info info) {
+    public static File createFile(Table table, ConfigInfoEntity info) {
         String path = StringUtils.isNotEmpty(table.javaFilePath) ? table.javaFilePath + "/" : "";
         if (isNotBlank(info.storeByTable)) {
             if (isTrue(info.storeByTable)) {

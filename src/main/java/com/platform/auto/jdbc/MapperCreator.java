@@ -1,13 +1,9 @@
 package com.platform.auto.jdbc;
 
-import com.platform.auto.config.Config;
-import com.platform.auto.config.ConfigEntity;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
-import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.sys.order.Order;
 import com.platform.auto.util.AutoUtil;
-import com.platform.auto.util.FileUtil;
 
 import java.util.List;
 

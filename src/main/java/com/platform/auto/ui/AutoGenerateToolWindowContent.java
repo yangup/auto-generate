@@ -15,7 +15,7 @@ import com.intellij.ui.components.JBTextField;
 import com.platform.auto.Application;
 import com.platform.auto.AutoGenerateToolWindowFactory;
 import com.platform.auto.config.Config;
-import com.platform.auto.config.DbEntity;
+import com.platform.auto.entity.DbEntity;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import lombok.Getter;

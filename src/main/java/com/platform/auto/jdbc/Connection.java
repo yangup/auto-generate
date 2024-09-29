@@ -1,6 +1,6 @@
 package com.platform.auto.jdbc;
 
-import com.platform.auto.config.LocalEntity;
+import com.platform.auto.entity.LocalEntity;
 import com.platform.auto.jdbc.base.TableFactory;
 import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.sys.log.AutoLogger;
