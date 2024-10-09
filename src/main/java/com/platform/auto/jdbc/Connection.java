@@ -6,6 +6,7 @@ import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import com.platform.auto.util.CharUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -118,6 +119,7 @@ public class Connection extends CharUtil {
      * 返回每个表应该生成的代码的数据
      **/
     public static List<Table> getTableRun(List<String> tableName) throws Exception {
+        tableName = tableName.stream().filter(StringUtils::isNotBlank).collect(Collectors.toList());
         if (isNotEmpty(tableName)) {
             logger.info("tableName: {}", String.join(",", tableName));
         }
