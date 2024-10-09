@@ -1,7 +1,6 @@
 package com.platform.auto.jdbc.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.platform.auto.config.Config;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import lombok.Data;
@@ -14,7 +13,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.platform.auto.util.AutoUtil.readFromLocalJson;
+import static com.platform.auto.util.AutoUtil.*;
+import static com.platform.auto.config.Config.*;
 
 /**
  * 数据库中的类型, 向 java 中的类型转变的处理类
@@ -72,7 +72,7 @@ public class TypeToJavaData {
      **/
     public static void init() {
         try {
-            fieldMapping = objectMapper.readValue(readFromLocalJson(Config.auto_config_name + "/typeToJavaData.json"),
+            fieldMapping = objectMapper.readValue(readFromLocalJson(config_path_type_to_java_data_file_name),
                     objectMapper.getTypeFactory().constructCollectionType(List.class, TypeToJavaData.class));
         } catch (Exception e) {
             logger.info(e);

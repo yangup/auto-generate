@@ -2,7 +2,6 @@ package com.platform.auto.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectUtil;
 import com.platform.auto.entity.*;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.platform.auto.util.AutoUtil.*;
-import static com.platform.auto.entity.ConfigEntity.*;
 
 public class Config {
 
@@ -103,8 +101,7 @@ public class Config {
     public static void refreshLocal() {
         try {
             local.time = getNowTime();
-            objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-            strToLocalFile(local_path_file_name, objectMapper.writeValueAsString(local));
+            objectToLocalFile(local_path_file_name, local);
             local = null;
             getLocal();
         } catch (Exception e) {
@@ -209,7 +206,7 @@ public class Config {
             localEntity.time = getNowTime();
             // 默认 config 中的 db name
             localEntity.selectedDbName = getConfigFromResources().jdbc.database;
-            listToLocalFile(local_path_file_name, List.of(objectMapper.writeValueAsString(localEntity)));
+            objectToLocalFile(local_path_file_name, localEntity);
             logger.info("init_local.json");
         }
 

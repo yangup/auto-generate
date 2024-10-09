@@ -1,5 +1,8 @@
 package com.platform.auto.util;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.platform.auto.config.Config;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
@@ -20,6 +23,13 @@ import static com.platform.auto.config.Config.project_auto_path;
 public class AutoUtil extends CharUtil {
 
     private static final Logger logger = AutoLogger.getLogger(AutoUtil.class);
+
+    public static final ObjectMapper objectMapper = new ObjectMapper();
+
+    static {
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+    }
 
     /**
      * 读取文件到 list
@@ -114,6 +124,14 @@ public class AutoUtil extends CharUtil {
 
     public static void strToLocalFile(String path, String data) throws Exception {
         listToLocalFile(path, List.of(data));
+    }
+
+    public static void objectToLocalFile(String path, Object data) throws Exception {
+        strToLocalFile(path, objectToString(data));
+    }
+
+    public static String objectToString(Object obj) throws Exception {
+        return objectMapper.writeValueAsString(obj);
     }
 
     public static void listToLocalFile(String path, List<String> data) throws Exception {

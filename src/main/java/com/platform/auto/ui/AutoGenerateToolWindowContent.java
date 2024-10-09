@@ -35,6 +35,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static java.util.Objects.*;
+import static com.platform.auto.util.UiUtil.*;
 
 public class AutoGenerateToolWindowContent {
 
@@ -52,19 +53,15 @@ public class AutoGenerateToolWindowContent {
 
     // 刷新框
     private final JBLabel refresh = new JBLabel("REFRESH", AllIcons.General.InlineRefresh, JLabel.LEFT);
-    private JPanel refreshParent = null;
     // 生成所有的按钮
     private final JBLabel generateAll = new JBLabel("Generate after filter", AllIcons.Actions.Execute, JLabel.LEFT);
-    private JPanel generateAllParent = null;
     // 数据库名称显示框
     private final ComboBox<ComboBoxItem> dbNameComboBox = new ComboBox<>();
-    private JPanel dbNameComboBoxPanel = null;
 
     // 表名称输入框
     private final JBTextField tableNameFilter = new JBTextField(25); // 设置列数限制
-    private JPanel tableNameFilterPanel = null;
-    // 表名称列表
-    private final List<JPanel> tableNamePanelList = new ArrayList<>();
+//    // 表名称列表
+//    private final List<JPanel> tableNamePanelList = new ArrayList<>();
 
     private Icon loadingIcon = null;
 
@@ -99,20 +96,20 @@ public class AutoGenerateToolWindowContent {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 1) {
-                    buttonSelected(refreshParent);
+                    buttonSelected(refresh);
                 }
                 if (e.getClickCount() == 2) {
                     initStartAsync();
                 }
             }
         });
-        refreshParent = addComponentToContent(refresh, true);
+        addComponentToContent(refresh, true);
         // 下拉选择框
-        dbNameComboBoxPanel = addComponentToContent(dbNameComboBox, true);
-        dbNameComboBoxPanel.setVisible(false);
+        addComponentToContent(dbNameComboBox, true);
+        setParentVisible(dbNameComboBox, false);
 
         // table name filter
-        tableNameFilterPanel = new JPanel(new BorderLayout());
+        JPanel tableNameFilterPanel = new JPanel(new BorderLayout());
         tableNameFilterPanel.add(new JLabel(AllIcons.Actions.Find), BorderLayout.WEST); // 图标在左侧
         tableNameFilterPanel.add(tableNameFilter, BorderLayout.CENTER); // 文本框在中间
         tableNameFilter.getEmptyText().setText("Table name filter");
@@ -124,17 +121,17 @@ public class AutoGenerateToolWindowContent {
             showTableName();
         });
         addComponentToContent(tableNameFilterPanel, false);
-        tableNameFilterPanel.setVisible(false);
+        setParentVisible(tableNameFilter, false);
 
         generateAll.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 1) {
-                    buttonSelected(generateAllParent);
+                    buttonSelected(generateAll);
                 }
                 if (e.getClickCount() == 2) {
                     List<String> buttonNameList = new ArrayList<>();
-                    for (JPanel button : tableNamePanelList) {
+                    for (Component button : buttonPanel.getComponents()) {
                         if (button.isVisible()) {
                             buttonNameList.add(button.getName());
                         }
@@ -148,8 +145,8 @@ public class AutoGenerateToolWindowContent {
                 }
             }
         });
-        generateAllParent = addComponentToContent(generateAll, true);
-        generateAllParent.setVisible(false);
+        addComponentToContent(generateAll, true);
+        setParentVisible(generateAll, false);
         // 分割符号
         contentPanel.add(new JPanel());
 
@@ -170,26 +167,14 @@ public class AutoGenerateToolWindowContent {
         return addComponentToPanel(component, buttonPanel, true);
     }
 
-    private JPanel addComponentToPanel(JComponent component, JPanel panel, boolean needCursor) {
-        // 添加按钮和其他组件
-        JPanel out = new JPanel(new BorderLayout());
-        out.add(component, BorderLayout.WEST);
-        if (needCursor) {
-            component.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        }
-        out.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 3));
-        panel.add(out);
-        return out;
-    }
-
-    private void buttonSelected(JComponent component) {
+    private void buttonSelected(JComponent childComponent) {
         Color defaultColor = UIManager.getColor("Button.background");
-        refreshParent.setBackground(defaultColor);
-        generateAllParent.setBackground(defaultColor);
-        for (JPanel button : tableNamePanelList) {
+        setParentBackgroundColor(refresh, defaultColor);
+        setParentBackgroundColor(generateAll, defaultColor);
+        for (Component button : buttonPanel.getComponents()) {
             button.setBackground(defaultColor);
         }
-        component.setBackground(SELECTED_COLOR);
+        setParentBackgroundColor(childComponent, SELECTED_COLOR);
     }
 
     /**
@@ -234,10 +219,11 @@ public class AutoGenerateToolWindowContent {
 
         lastTime.set(System.currentTimeMillis());
         logger.info("addTableName-start");
-        for (JPanel button : tableNamePanelList) {
-            buttonPanel.remove(button);
-        }
-        tableNamePanelList.clear();
+//        for (JPanel button : tableNamePanelList) {
+//            buttonPanel.remove(button);
+//        }
+//        tableNamePanelList.clear();
+        buttonPanel.removeAll();
 
         logger.info("addTableName-selectedDbName: {}", Config.getLocal().selectedDbName);
 
@@ -247,16 +233,15 @@ public class AutoGenerateToolWindowContent {
             }
             for (String tableName : dbEntity.tableNameList) {
                 JBLabel tableNameLabel = new JBLabel(tableName, AllIcons.Nodes.DataTables, JLabel.LEFT);
-                JPanel temp = addComponentToButton(tableNameLabel);
                 tableNameLabel.setName(tableName);
-                temp.setName(tableName);
-                tableNamePanelList.add(temp);
+                addComponentToButton(tableNameLabel);
+//                tableNamePanelList.add(temp);
                 logger.info("tableName_create: {}", tableName);
                 tableNameLabel.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         if (e.getClickCount() == 1) {
-                            buttonSelected(temp);
+                            buttonSelected(tableNameLabel);
                         }
                         if (e.getClickCount() == 2) {
                             logger.info("startGenerateAsync: {}", tableNameLabel.getName());
@@ -271,7 +256,7 @@ public class AutoGenerateToolWindowContent {
     }
 
     private void showTableName() {
-        for (JComponent button : tableNamePanelList) {
+        for (Component button : buttonPanel.getComponents()) {
             if (StringUtils.isBlank(Config.getLocal().getFilterTableNameText())
                     || StringUtils.containsIgnoreCase(button.getName(), Config.getLocal().getFilterTableNameText())) {
                 button.setVisible(true);
@@ -296,9 +281,9 @@ public class AutoGenerateToolWindowContent {
             return;
         }
         logger.info("startGenerateAsync: {}", String.join(",", tableNameList));
-        for (JPanel button : tableNamePanelList) {
+        for (Component button : buttonPanel.getComponents()) {
             if (tableNameList.contains(button.getName())) {
-                ((JBLabel) button.getComponent(0)).setIcon(loadingIcon);
+                ((JBLabel) ((JPanel) button).getComponent(0)).setIcon(loadingIcon);
             }
         }
         dbNameComboBox.setEnabled(false);
@@ -311,8 +296,8 @@ public class AutoGenerateToolWindowContent {
             } finally {
                 dbNameComboBox.setEnabled(true);
                 runFlag.set(false);
-                for (JPanel button : tableNamePanelList) {
-                    ((JBLabel) button.getComponent(0)).setIcon(AllIcons.Nodes.DataTables);
+                for (Component button : buttonPanel.getComponents()) {
+                    ((JBLabel) ((JPanel) button).getComponent(0)).setIcon(AllIcons.Nodes.DataTables);
                 }
                 generateAll.setIcon(AllIcons.Actions.Execute);
                 // 使用异步刷新机制
@@ -363,9 +348,10 @@ public class AutoGenerateToolWindowContent {
     public void initTableList(boolean init) {
         try {
             logger.info("initTableList");
-            generateAllParent.setVisible(true);
-            tableNameFilterPanel.setVisible(true);
-            dbNameComboBoxPanel.setVisible(true);
+            generateAll.getParent().setVisible(true);
+            setParentVisible(generateAll, true);
+            setParentVisible(dbNameComboBox, true);
+            setParentVisible(tableNameFilter, true);
             Config.initProject(this.project);
             Config.initFile();
             Config.initLocalData(init);

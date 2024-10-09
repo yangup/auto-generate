@@ -1,6 +1,5 @@
 package com.platform.auto.jdbc;
 
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
@@ -14,7 +13,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.platform.auto.util.AutoUtil.readFromLocalJson;
+import static com.platform.auto.util.AutoUtil.*;
 import static com.platform.auto.util.CharUtil.*;
 import static com.platform.auto.config.Config.*;
 
@@ -59,13 +58,12 @@ public class ControllerCreator extends BaseCreator {
         FileUtil.createLocalFile(requestPath);
         FileUtil.createLocalFile(envPath);
         if (StringUtils.isBlank(readFromLocalJson(envPath))) {
-            objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-            AutoUtil.listToLocalFile(envPath, List.of(objectMapper.writeValueAsString(Map.of(
+            objectToLocalFile(envPath, Map.of(
                     "prod", Map.of("host", "https://admin-prod.baidu.com"),
                     "test", Map.of("host", "https://admin-test.baidu.com"),
                     "dev", Map.of("host", "https://admin-dev.baidu.com"),
                     "local", Map.of("host", "http://127.0.0.1:8080")
-            ))));
+            ));
             logger.info("init: {}", envPath);
         }
     }
