@@ -108,7 +108,7 @@ public class AutoGenerateToolWindowContent {
 
         // table name filter
         JPanel tableNameFilterPanel = new JPanel(new BorderLayout());
-        tableNameFilterPanel.add(new JLabel(AllIcons.Actions.Find), BorderLayout.WEST); // 图标在左侧
+        tableNameFilterPanel.add(new JLabel(AllIcons.General.Filter), BorderLayout.WEST); // 图标在左侧
         tableNameFilterPanel.add(tableNameFilter, BorderLayout.CENTER); // 文本框在中间
         tableNameFilter.getEmptyText().setText("Table name filter");
         tableNameFilter.grabFocus();
