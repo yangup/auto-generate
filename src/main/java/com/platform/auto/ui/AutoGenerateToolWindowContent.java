@@ -60,8 +60,6 @@ public class AutoGenerateToolWindowContent {
 
     // 表名称输入框
     private final JBTextField tableNameFilter = new JBTextField(25); // 设置列数限制
-//    // 表名称列表
-//    private final List<JPanel> tableNamePanelList = new ArrayList<>();
 
     private Icon loadingIcon = null;
 
