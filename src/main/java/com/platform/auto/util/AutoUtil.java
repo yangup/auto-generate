@@ -275,7 +275,7 @@ public class AutoUtil extends CharUtil {
             }
             // TODO: 和以前的文件一样, 不需要修改
             if (StringUtils.equals(String.join("", codeList1), String.join("", nowList1))) {
-                logger.info("same code", file.getName());
+                logger.info("same code: {}", file.getName());
                 return;
             }
             listToFile(file, codeList);
