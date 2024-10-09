@@ -67,7 +67,7 @@ public class Config {
 
     public static ConfigEntity getConfigFromResources() {
         try {
-            return objectMapper.readValue(String.join(" ", readFromResources(auto_config_name + "/config.json")), ConfigEntity.class);
+            return objectMapper.readValue(String.join(" ", readFromResources(config_path_file_name)), ConfigEntity.class);
         } catch (Exception e) {
             logger.info(e);
         }
@@ -211,7 +211,7 @@ public class Config {
         }
 
         if (StringUtils.isBlank(readFromLocalJson(config_path_type_to_java_data_file_name))) {
-            listToLocalFile(config_path_type_to_java_data_file_name, readFromResources(auto_config_name + "/typeToJavaData.json"));
+            listToLocalFile(config_path_type_to_java_data_file_name, readFromResources(config_path_type_to_java_data_file_name));
         }
 
         // 当 config 存在的时候,就不需要
@@ -223,7 +223,7 @@ public class Config {
 
         // todo : 拷贝系统的 config 配置
         logger.info("initConfig: {}", project_auto_path);
-        listToLocalFile(config_path_file_name, readFromResources(auto_config_name + "/config.json"));
+        listToLocalFile(config_path_file_name, readFromResources(config_path_file_name));
         List<ConfigInfoEntity> infoList = getConfigFromResources().info;
         for (ConfigInfoEntity info : infoList) {
             if (isBlank(info.template)) {
