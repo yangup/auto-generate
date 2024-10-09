@@ -63,7 +63,7 @@ public class DtoCreator extends BaseCreator {
                 // Integer
                 codeList.add(prefix + ParamValidationAnnotation.MIN.replaceInfo(msg, 0));
                 codeList.add(prefix + ParamValidationAnnotation.MAX.replaceInfo(msg,
-                        Integer.parseInt(AnnotationUtil.getNumberByLength(columninfo.numericPrecisionInt))
+                        Long.parseLong(AnnotationUtil.getNumberByLength(columninfo.numericPrecisionInt))
                 ));
             } else if (TypeToJavaData.isBigDecimal(columninfo.dataTypeJava)) {
                 // BigDecimal

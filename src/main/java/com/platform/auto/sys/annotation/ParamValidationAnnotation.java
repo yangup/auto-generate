@@ -146,7 +146,7 @@ public enum ParamValidationAnnotation {
     /**
      * 更换 模板中的 数字, msg
      **/
-    public String replaceInfo(String msg, int... is) {
+    public String replaceInfo(String msg, long... is) {
         List<Object> data = new ArrayList<>();
         Arrays.stream(is).forEach(data::add);
         data.add(msg);
