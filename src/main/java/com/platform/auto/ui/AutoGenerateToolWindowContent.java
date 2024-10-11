@@ -77,9 +77,7 @@ public class AutoGenerateToolWindowContent {
         parentPanel.setLayout(new BorderLayout(20, 20));
         parentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         createContentPanel();
-        JBScrollPane jbScrollPane = new JBScrollPane(buttonPanel);
-        jbScrollPane.setBorder(null);
-        contentPanel.add(jbScrollPane);
+        addComponentToContent(buttonPanel, false);
         parentPanel.add(contentPanel, BorderLayout.PAGE_START);
     }
 
