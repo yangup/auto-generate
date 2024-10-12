@@ -217,10 +217,6 @@ public class AutoGenerateToolWindowContent {
 
         lastTime.set(System.currentTimeMillis());
         logger.info("addTableName-start");
-//        for (JPanel button : tableNamePanelList) {
-//            buttonPanel.remove(button);
-//        }
-//        tableNamePanelList.clear();
         buttonPanel.removeAll();
 
         logger.info("addTableName-selectedDbName: {}", Config.getLocal().selectedDbName);
