@@ -77,10 +77,12 @@ public class AutoGenerateToolWindowContent {
         parentPanel.setLayout(new BorderLayout(20, 20));
         parentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         createContentPanel();
-        JBScrollPane jbScrollPane = new JBScrollPane(buttonPanel);
-        jbScrollPane.setBorder(null);
-        contentPanel.add(jbScrollPane);
-        parentPanel.add(contentPanel, BorderLayout.PAGE_START);
+        contentPanel.add(buttonPanel);
+        JScrollPane scrollPane = new JScrollPane(contentPanel);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); // 如果不需要水平滚动条
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        parentPanel.add(scrollPane, BorderLayout.PAGE_START);
     }
 
     @NotNull
