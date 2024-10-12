@@ -229,7 +229,6 @@ public class AutoGenerateToolWindowContent {
                 JBLabel tableNameLabel = new JBLabel(tableName, AllIcons.Nodes.DataTables, JLabel.LEFT);
                 tableNameLabel.setName(tableName);
                 addComponentToButton(tableNameLabel);
-//                tableNamePanelList.add(temp);
                 logger.info("tableName_create: {}", tableName);
                 tableNameLabel.addMouseListener(new MouseAdapter() {
                     @Override
