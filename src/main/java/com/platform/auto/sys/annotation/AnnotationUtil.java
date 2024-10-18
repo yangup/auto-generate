@@ -6,97 +6,6 @@ import java.util.regex.Pattern;
 
 public class AnnotationUtil {
 
-//    public static String change(String str, String... msgs) {
-//        if (StringUtils.isEmpty(str) || msgs == null) {
-//            return str;
-//        }
-//        int s = -1, e = -1;
-//        for (int i = 0; i < msgs.length; i++) {
-//            String msg = msgs[i];
-//            if ((s = str.indexOf("{")) != -1 && (e = str.indexOf("}")) != -1) {
-//                str = str.replace(str.substring(s, e + 1), CharUtil.s + msg + CharUtil.s);
-//            }
-//        }
-//        return str;
-//    }
-//
-//    // @Length(min = {min}, max = {max}, message = {msg})
-//    public static String changeInt(String str, String msg, int... is) {
-//        if (StringUtils.isEmpty(str) || msg == null) {
-//            return str;
-//        }
-//        int s = -1, e = -1;
-//        // 替换数字
-//        for (int i = 0; i < is.length; i++) {
-//            int ii = is[i];
-//            if ((s = str.indexOf("{")) != -1 && (e = str.indexOf("}")) != -1) {
-//                str = str.replace(str.substring(s, e + 1), "" + ii);
-//            }
-//        }
-//        // 替换msg
-//        if ((s = str.indexOf("{")) != -1 && (e = str.indexOf("}")) != -1) {
-//            str = str.replace(str.substring(s, e + 1), CharUtil.s + msg + CharUtil.s);
-//        }
-//        return str;
-//    }
-//
-//    public static String changeIntNumber(String str, String msg, int... is) {
-//        if (StringUtils.isEmpty(str) || msg == null) {
-//            return str;
-//        }
-//        int s = -1, e = -1;
-//        // 替换数字
-//        for (int i = 0; i < is.length; i++) {
-//            int ii = is[i];
-//            if ((s = str.indexOf("{")) != -1 && (e = str.indexOf("}")) != -1) {
-//                str = str.replace(str.substring(s, e + 1), getNumberByLength(ii));
-//            }
-//        }
-//        // 替换msg
-//        if ((s = str.indexOf("{")) != -1 && (e = str.indexOf("}")) != -1) {
-//            str = str.replace(str.substring(s, e + 1), CharUtil.s + msg + CharUtil.s);
-//        }
-//        return str;
-//    }
-//
-//    public static String changeIntNumberMax(String str, String msg, int... is) {
-//        if (StringUtils.isEmpty(str) || msg == null) {
-//            return str;
-//        }
-//        int s = -1, e = -1;
-//        // 替换数字
-//        for (int i = 0; i < is.length; i++) {
-//            int ii = is[i];
-//            if ((s = str.indexOf("{")) != -1 && (e = str.indexOf("}")) != -1) {
-//                str = str.replace(str.substring(s, e + 1), getNumberByLength(ii));
-//            }
-//        }
-//        // 替换msg
-//        if ((s = str.indexOf("{")) != -1 && (e = str.indexOf("}")) != -1) {
-//            str = str.replace(str.substring(s, e + 1), CharUtil.s + msg + CharUtil.s);
-//        }
-//        return str;
-//    }
-//
-//    public static String changeIntNumberMin(String str, String msg, int... is) {
-//        if (StringUtils.isEmpty(str) || msg == null) {
-//            return str;
-//        }
-//        int s = -1, e = -1;
-//        // 替换数字
-//        for (int i = 0; i < is.length; i++) {
-//            int ii = is[i];
-//            if ((s = str.indexOf("{")) != -1 && (e = str.indexOf("}")) != -1) {
-//                str = str.replace(str.substring(s, e + 1), getNumberByLength(ii));
-//            }
-//        }
-//        // 替换msg
-//        if ((s = str.indexOf("{")) != -1 && (e = str.indexOf("}")) != -1) {
-//            str = str.replace(str.substring(s, e + 1), CharUtil.s + msg + CharUtil.s);
-//        }
-//        return str;
-//    }
-
     /**
      * 获得i个9
      **/
@@ -112,7 +21,7 @@ public class AnnotationUtil {
     }
 
     public static String replacePlaceholders(String template, String msg) {
-        return AnnotationUtil.replacePlaceholders(template, List.of(msg));
+        return replacePlaceholders(template, List.of(msg));
     }
 
     /**
