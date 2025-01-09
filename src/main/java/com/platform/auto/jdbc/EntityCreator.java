@@ -51,7 +51,7 @@ public class EntityCreator extends BaseCreator {
             }
             String publicMethod = isTrue(info.entityFieldIsPublic) ? "public" : "private";
             if (columninfo.isId && isNotBlank(info.addOneRowForId)) {
-                codeList.add(t + info.addOneRowForId + ";");
+                codeList.add(t + info.addOneRowForId.replace("{id}", field));
             }
             codeList.add(t + publicMethod + w + type + w + field + ";");
         }

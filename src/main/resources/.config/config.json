@@ -55,7 +55,7 @@
     {
       "template": "templateEntity.up",
       "entity_field_is_public": true,
-      "add_one_row_for_id": "@TableId(value = \"id\", type = IdType.AUTO)",
+      "add_one_row_for_id": "@TableId(value = \"{id}\", type = IdType.AUTO)",
       "entity_generate_static_method": true,
       "file_name_suffix": "Entity.java",
       "remark": "generate entity",
