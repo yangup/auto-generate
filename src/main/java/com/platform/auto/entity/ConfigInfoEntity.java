@@ -18,6 +18,9 @@ public class ConfigInfoEntity {
     @JsonProperty("entity_field_is_public")
     public String entityFieldIsPublic;
 
+    @JsonProperty("add_one_row_for_id")
+    public String addOneRowForId;
+
     /**
      * 文件名后缀
      **/
