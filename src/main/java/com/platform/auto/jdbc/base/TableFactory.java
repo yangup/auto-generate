@@ -158,7 +158,9 @@ public class TableFactory {
             if (equalsIgnoreCase("pri", columninfo.columnKey)
                     || (table.id == null && equalsIgnoreCase("id", columninfo.columnKey))) {
                 table.id = columninfo;
-                columninfo.typeToJavaData = TypeToJavaData.obtainId();
+                if (!equalsIgnoreCase(columninfo.typeToJavaData.typeJava, String.class.getSimpleName())) {
+                    columninfo.typeToJavaData = TypeToJavaData.obtainId();
+                }
             }
             // TODO : 确定 java 中 使用什么名字
             columninfo.columnNameJava = isEmpty(columninfo.columnNameJava) ? toJava(columninfo.columnName.toLowerCase()) : columninfo.columnNameJava;
