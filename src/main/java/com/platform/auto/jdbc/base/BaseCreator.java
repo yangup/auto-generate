@@ -278,6 +278,10 @@ public class BaseCreator {
         return codeTempList;
     }
 
+    public String getClazzNameSuffix() {
+        return info.fileNameSuffix.replace(".java", "");
+    }
+
 
     /**
      * 创建列的说明数据

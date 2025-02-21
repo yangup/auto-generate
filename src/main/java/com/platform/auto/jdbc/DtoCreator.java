@@ -102,7 +102,7 @@ public class DtoCreator extends BaseCreator {
         codeList.add("    /**\n" +
                 "     * static method\n" +
                 "     **/");
-        String dto = info.fileNameSuffix.replace(".java", "");
+        String dto = getClazzNameSuffix();
         codeList.add(t + "public static " + table.tableNameJava + dto + " of() {");
 //        codeList.add(t + t + "return new " + table.tableNameJava + "Dto();");
         codeList.add(t + t + "return " + table.tableNameJava + dto + ".builder().build();");

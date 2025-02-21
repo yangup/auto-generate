@@ -58,9 +58,9 @@ public class EntityCreator extends BaseCreator {
 
         if (isTrue(info.entityGenerateStaticMethod)) {
             codeList.add(n + "    /**\n" + "     * static method\n" + "     **/");
-            codeList.add(t + "public static " + table.tableNameJava + "Entity of() {");
-//        codeList.add(t + t + "return new " + table.tableNameJava + "Entity();");
-            codeList.add(t + t + "return " + table.tableNameJava + "Entity.builder().build();");
+            String clazzNameSuffix = getClazzNameSuffix();
+            codeList.add(t + "public static " + table.tableNameJava + clazzNameSuffix + " of() {");
+            codeList.add(t + t + "return " + table.tableNameJava + clazzNameSuffix + ".builder().build();");
             codeList.add(t + "}");
         }
     }
