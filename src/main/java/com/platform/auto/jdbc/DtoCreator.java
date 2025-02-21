@@ -43,7 +43,11 @@ public class DtoCreator extends BaseCreator {
             final String name = columninfo.columnNameJava;
             // 注释部分
             codeList.add(CharUtil.t + "/* " + columninfo.columnCommentRaw + " */");
-            codeList.add(CharUtil.t + "// @JsonProperty(\"" + columninfo.columnName + "\")");
+            String needJsonProperty = "// ";
+            if (isTrue(info.needJsonProperty)) {
+                needJsonProperty = "";
+            }
+            codeList.add(CharUtil.t + needJsonProperty + "@JsonProperty(\"" + columninfo.columnName + "\")");
             String note = "";
             // TODO: 2021/11/9 这些都注释掉
             if (isIdCreateTimeUpdateTime(name)

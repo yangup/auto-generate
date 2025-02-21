@@ -27,6 +27,9 @@ public class ConfigInfoEntity {
     @JsonProperty("file_name_suffix")
     public String fileNameSuffix;
 
+    @JsonProperty("need_json_property")
+    public String needJsonProperty;
+
     /**
      * 实体类是否使用 生成 static 方法
      **/
