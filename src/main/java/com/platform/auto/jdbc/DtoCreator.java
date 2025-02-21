@@ -43,11 +43,6 @@ public class DtoCreator extends BaseCreator {
             final String name = columninfo.columnNameJava;
             // 注释部分
             codeList.add(CharUtil.t + "/* " + columninfo.columnCommentRaw + " */");
-            String needJsonProperty = "// ";
-            if (isTrue(info.needJsonProperty)) {
-                needJsonProperty = "";
-            }
-            codeList.add(CharUtil.t + needJsonProperty + "@JsonProperty(\"" + columninfo.columnName + "\")");
             String note = "";
             // TODO: 2021/11/9 这些都注释掉
             if (isIdCreateTimeUpdateTime(name)
@@ -94,6 +89,12 @@ public class DtoCreator extends BaseCreator {
                 codeList.add(prefix + ParamValidationAnnotation.NOT_NULL.replaceInfo(msg));
             }
 
+            String needJsonProperty = "//";
+            if (isTrue(info.needJsonProperty)) {
+                needJsonProperty = "";
+            }
+            codeList.add(needJsonProperty + CharUtil.t + "@JsonProperty(\"" + columninfo.columnName + "\")");
+
             // 代码部分
             codeList.add(CharUtil.t + "public " + columninfo.dataTypeJava + " " + columninfo.columnNameJava + ";\n");
         }
@@ -101,9 +102,10 @@ public class DtoCreator extends BaseCreator {
         codeList.add("    /**\n" +
                 "     * static method\n" +
                 "     **/");
-        codeList.add(t + "public static " + table.tableNameJava + "Dto of() {");
+        String dto = info.fileNameSuffix.replace(".java", "");
+        codeList.add(t + "public static " + table.tableNameJava + dto + " of() {");
 //        codeList.add(t + t + "return new " + table.tableNameJava + "Dto();");
-        codeList.add(t + t + "return " + table.tableNameJava + "Dto.builder().build();");
+        codeList.add(t + t + "return " + table.tableNameJava + dto + ".builder().build();");
         codeList.add(t + "}");
     }
 
