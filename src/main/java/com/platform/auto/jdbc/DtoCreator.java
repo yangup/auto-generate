@@ -42,7 +42,7 @@ public class DtoCreator extends BaseCreator {
             ColumnInfo columninfo = this.table.columnInfos.get(i);
             final String name = columninfo.columnNameJava;
             // 注释部分
-            codeList.add(CharUtil.t + "/* " + columninfo.columnCommentRaw + " */");
+            codeList.add(t + "// todo: " + columninfo.columnCommentRaw);
             String note = "";
             // TODO: 2021/11/9 这些都注释掉
             if (isIdCreateTimeUpdateTime(name)
@@ -93,10 +93,10 @@ public class DtoCreator extends BaseCreator {
             if (isTrue(info.needJsonProperty)) {
                 needJsonProperty = "";
             }
-            codeList.add(needJsonProperty + CharUtil.t + "@JsonProperty(\"" + columninfo.columnName + "\")");
+            codeList.add(needJsonProperty + t + "@JsonProperty(\"" + columninfo.columnName + "\")");
 
             // 代码部分
-            codeList.add(CharUtil.t + "public " + columninfo.dataTypeJava + " " + columninfo.columnNameJava + ";\n");
+            codeList.add(t + "public " + columninfo.dataTypeJava + " " + columninfo.columnNameJava + ";\n");
         }
 
         codeList.add("    /**\n" +
