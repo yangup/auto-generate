@@ -28,6 +28,7 @@ public class AutoUtil extends CharUtil {
 
     static {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        // 主要用于 格式化 JSON 输出，让 JSON 变得更易读（带有换行和缩进）。
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
