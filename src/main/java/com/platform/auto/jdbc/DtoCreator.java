@@ -89,10 +89,7 @@ public class DtoCreator extends BaseCreator {
                 codeList.add(prefix + ParamValidationAnnotation.NOT_NULL.replaceInfo(msg));
             }
 
-            String needJsonProperty = "//";
-            if (isTrue(info.needJsonProperty)) {
-                needJsonProperty = "";
-            }
+            String needJsonProperty = isTrue(info.needJsonProperty) ? "" : "//";
             codeList.add(needJsonProperty + t + "@JsonProperty(\"" + columninfo.columnName + "\")");
 
             // 代码部分
