@@ -153,15 +153,15 @@ public class TableFactory {
         for (ColumnInfo columninfo : table.columnInfos) {
             String type = columninfo.dataType;
             // TODO : 确定 java 中 使用什么类型
-            columninfo.typeToJavaData = TypeToJavaData.obtainTypeToJavaData(type);
+            columninfo.typeToJavaData = TypeToJavaData.getTypeToJavaData(type, columninfo.columnName);
             // todo : 确定主键
-            if (equalsIgnoreCase("pri", columninfo.columnKey)
-                    || (table.id == null && equalsIgnoreCase("id", columninfo.columnKey))) {
-                table.id = columninfo;
-                if (!equalsIgnoreCase(columninfo.typeToJavaData.typeJava, String.class.getSimpleName())) {
-                    columninfo.typeToJavaData = TypeToJavaData.obtainId();
-                }
-            }
+//            if (equalsIgnoreCase("pri", columninfo.columnKey)
+//                    || (table.id == null && equalsIgnoreCase("id", columninfo.columnKey))) {
+//                table.id = columninfo;
+//                if (!equalsIgnoreCase(columninfo.typeToJavaData.typeJava, String.class.getSimpleName())) {
+//                    columninfo.typeToJavaData = TypeToJavaData.obtainId();
+//                }
+//            }
             // TODO : 确定 java 中 使用什么名字
             columninfo.columnNameJava = isEmpty(columninfo.columnNameJava) ? toJava(columninfo.columnName.toLowerCase()) : columninfo.columnNameJava;
             columninfo.isOtherId = columninfo.columnName.toUpperCase().endsWith("_ID");

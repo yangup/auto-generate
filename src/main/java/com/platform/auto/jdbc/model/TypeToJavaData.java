@@ -32,6 +32,17 @@ public class TypeToJavaData {
     // todo : 例如 : {"enum", "binary", "blob", "char", "enum", "fixed", "longblob", "tinyblob", "tinytext", "varbinary", "varchar", "longtext", "mediumblob", "set", "text"}
     public List<String> type;
 
+    // todo : 例如 : {"id"}
+    public List<String> columnName;
+
+    // todo : 后缀
+    // todo : 例如 : {"_id"}
+    public List<String> suffix;
+
+    // todo : 前缀
+    // todo : 例如 : {"app_"}
+    public List<String> prefix;
+
     // todo : java中的数据类型
     // todo : 例如 : String
     public String typeJava;
@@ -133,22 +144,39 @@ public class TypeToJavaData {
         return isSame(type, Boolean.class);
     }
 
-    public static TypeToJavaData obtainTypeToJavaData(String type) {
+    public static TypeToJavaData getTypeToJavaData(String dataType, String columnName) {
+        TypeToJavaData result = null;
         for (TypeToJavaData f : fieldMapping) {
-            if (f.type.stream().anyMatch(t -> StringUtils.equalsIgnoreCase(t, type))) {
-                return f;
+            if (f.columnName != null && f.columnName.stream().anyMatch(t -> StringUtils.equalsIgnoreCase(t, columnName))) {
+                result = f;
+                break;
             }
         }
-        return null;
-    }
-
-    public static TypeToJavaData obtainId() {
-        for (TypeToJavaData f : fieldMapping) {
-            if (f.type.size() == 1 && f.type.stream().anyMatch(t -> StringUtils.equalsIgnoreCase(t, "id"))) {
-                return f;
+        if (result == null) {
+            for (TypeToJavaData f : fieldMapping) {
+                if (f.suffix != null && f.suffix.stream().anyMatch(t -> columnName.toUpperCase().endsWith(t.toUpperCase()))) {
+                    result = f;
+                    break;
+                }
             }
         }
-        return null;
+        if (result == null) {
+            for (TypeToJavaData f : fieldMapping) {
+                if (f.prefix != null && f.prefix.stream().anyMatch(t -> columnName.toUpperCase().startsWith(t.toUpperCase()))) {
+                    result = f;
+                    break;
+                }
+            }
+        }
+        if (result == null) {
+            for (TypeToJavaData f : fieldMapping) {
+                if (f.type != null && f.type.stream().anyMatch(t -> StringUtils.equalsIgnoreCase(t, dataType))) {
+                    result = f;
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
     public static TypeToJavaData obtainByJavaType(String type) {

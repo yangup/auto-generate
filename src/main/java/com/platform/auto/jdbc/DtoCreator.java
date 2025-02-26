@@ -62,9 +62,13 @@ public class DtoCreator extends BaseCreator {
             } else if (TypeToJavaData.isInt(columninfo.dataTypeJava)) {
                 // Integer
                 codeList.add(prefix + ParamValidationAnnotation.MIN.replaceInfo(msg, 0));
-                codeList.add(prefix + ParamValidationAnnotation.MAX.replaceInfo(msg,
-                        Long.parseLong(AnnotationUtil.getNumberByLength(columninfo.numericPrecisionInt))
-                ));
+                long maxTemp = 0L;
+                try {
+                    maxTemp = Long.parseLong(AnnotationUtil.getNumberByLength(columninfo.numericPrecisionInt));
+                } catch (Exception e) {
+                    maxTemp = Long.MAX_VALUE;
+                }
+                codeList.add(prefix + ParamValidationAnnotation.MAX.replaceInfo(msg, maxTemp));
             } else if (TypeToJavaData.isBigDecimal(columninfo.dataTypeJava)) {
                 // BigDecimal
                 codeList.add(prefix + ParamValidationAnnotation.DECIMAL_MIN.replaceInfo(msg, 0));
