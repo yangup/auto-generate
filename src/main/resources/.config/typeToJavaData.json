@@ -1,6 +1,6 @@
 [
 	{
-		"type": [
+		"columnName": [
 			"id"
 		],
 		"typeJava": "Long",
