@@ -48,6 +48,7 @@
         <li><b>2.1.7</b> 2025-01-03. add version limit</li>
         <li><b>2.1.8</b> 2025-01-09. update entity.java</li>
         <li><b>2.1.9</b> 2025-02-21. update dto.java</li>
+        <li><b>2.2.0</b> 2025-03-21. upgrade</li>
       </ul>
     ]]>
     </change-notes>
