@@ -80,6 +80,7 @@ public class BaseCreator {
             StringBuilder line = new StringBuilder(lineTemp);
             lineReplaceOrder(line, Order.uuid, UUID.randomUUID());
             lineReplaceOrder(line, Order.tableComment, tableComment);
+            lineReplaceOrder(line, Order.tableNameSimple, table.tableNameSimple);
             lineReplaceOrder(line, Order.tableCommentRaw, table.tableCommentRaw);
             lineReplaceOrder(line, Order.author, Config.getConfig().author);
             lineReplaceOrder(line, Order.tableNameJava, tableNameJava);

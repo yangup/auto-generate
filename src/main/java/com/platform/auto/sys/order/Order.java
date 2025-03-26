@@ -60,6 +60,7 @@ public enum Order {
     // 开始产生json数据
     jsonStart,
     jsonKeyValueComment,
+    tableNameSimple,
     tableJson,
     columnNoteWithLength,
 
