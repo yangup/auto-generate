@@ -81,6 +81,7 @@ public class BaseCreator {
             lineReplaceOrder(line, Order.uuid, UUID.randomUUID());
             lineReplaceOrder(line, Order.tableComment, tableComment);
             lineReplaceOrder(line, Order.tableNameSimple, table.tableNameSimple);
+            lineReplaceOrder(line, Order.tableNameSimpleUpperCase, table.tableNameSimple.toUpperCase());
             lineReplaceOrder(line, Order.tableCommentRaw, table.tableCommentRaw);
             lineReplaceOrder(line, Order.author, Config.getConfig().author);
             lineReplaceOrder(line, Order.tableNameJava, tableNameJava);

@@ -61,6 +61,7 @@ public enum Order {
     jsonStart,
     jsonKeyValueComment,
     tableNameSimple,
+    tableNameSimpleUpperCase,
     tableJson,
     columnNoteWithLength,
 
