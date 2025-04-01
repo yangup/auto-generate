@@ -48,7 +48,7 @@ public class Application {
         String absolutePath = currentDir.getAbsolutePath().replace("\\", "/");
         Config.project_base_path = absolutePath.substring(0, absolutePath.length() - 2);
         Config.project_auto_path = Config.project_base_path + "/" + Config.auto_name;
-        Application.start(List.of("tb_user_apple"));
+        Application.start(List.of("mns_fail_log", "t_system_privilege", "t_system_privilege_server", "t_system_role", "t_system_role_privilege", "t_system_user", "t_system_user_role", "t_system_user_setting", "tb_deposite_bank_card_setting", "tb_deposite_bank_statement", "tb_deposite_merchant", "tb_disburse_bank_card_setting", "tb_disburse_order", "tb_disburse_order_statement", "tb_merchant_info"));
     }
 
 }

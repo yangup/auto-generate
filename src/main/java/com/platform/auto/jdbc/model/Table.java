@@ -56,48 +56,48 @@ public class Table {
         idFindParamStatic.add(QueryMapFindParam.of(
                 "id", "", "字符串", "id,例如: 1234", false, false
         ));
-        idFindParamStatic.add(QueryMapFindParam.of(
-                "ids", "", "字符串", "多个id以逗号分隔,例如: 1234,2345", false, false
-        ));
+//        idFindParamStatic.add(QueryMapFindParam.of(
+//                "ids", "", "字符串", "多个id以逗号分隔,例如: 1234,2345", false, false
+//        ));
         pageBoundsFindParamStatic.add(QueryMapFindParam.of(
                 "page", "1", "整数", "页码,第几页,编号从 1 开始, 默认第1页", false, true
         ));
         pageBoundsFindParamStatic.add(QueryMapFindParam.of(
                 "size", "10", "整数", "每页多少条数据,默认值:1 , 最大1000", false, true
         ));
-        pageBoundsFindParamStatic.add(QueryMapFindParam.of(
-                "limit", "10", "整数", "每页多少条数据,默认值:1 , 最大1000,与size 一样", false, false
-        ));
-        queryMapFindParamStatic.add(QueryMapFindParam.of(
-                "startTime", "", "日期时间", "开始时间,例如 : 2017-01-01 12:13:14 </br> 或者 例如 : 2017-01-01", false, false
-        ));
-        queryMapFindParamStatic.add(QueryMapFindParam.of(
-                "endTime", "", "日期时间", "结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
-        ));
-        queryMapFindParamStatic.add(QueryMapFindParam.of(
-                "all", "all", "字符串", "分页状态下,查询出全部数据,相当于page=1,size=2000", false, false
-        ));
-        queryMapFindParamStatic.add(QueryMapFindParam.of(
-                "_all", "_all", "字符串", "查询全部的原始数据,小心使用,相当于page=1,size=20000,_raw=_raw", false, false
-        ));
-        queryMapFindParamStatic.add(QueryMapFindParam.of(
-                "_one", "_one", "字符串", "查询出一条数据,相当于page=1,size=1,返回对象,不是数组", false, false
-        ));
-        queryMapFindParamStatic.add(QueryMapFindParam.of(
-                "_raw", "_raw", "字符串", "原始数据查询,查询原始表数据,不附带其他,数据结构与表对应起来", false, false
-        ));
-        createUpdateTimeFindParamStatic.add(QueryMapFindParam.of(
-                "createTimeFrom", "", "日期时间", "产生时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
-        ));
-        createUpdateTimeFindParamStatic.add(QueryMapFindParam.of(
-                "createTimeTo", "", "日期时间", "产生时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
-        ));
-        createUpdateTimeFindParamStatic.add(QueryMapFindParam.of(
-                "updateTimeFrom", "", "日期时间", "更新时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
-        ));
-        createUpdateTimeFindParamStatic.add(QueryMapFindParam.of(
-                "updateTimeTo", "", "日期时间", "更新时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
-        ));
+//        pageBoundsFindParamStatic.add(QueryMapFindParam.of(
+//                "limit", "10", "整数", "每页多少条数据,默认值:1 , 最大1000,与size 一样", false, false
+//        ));
+//        queryMapFindParamStatic.add(QueryMapFindParam.of(
+//                "startTime", "", "日期时间", "开始时间,例如 : 2017-01-01 12:13:14 </br> 或者 例如 : 2017-01-01", false, false
+//        ));
+//        queryMapFindParamStatic.add(QueryMapFindParam.of(
+//                "endTime", "", "日期时间", "结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
+//        ));
+//        queryMapFindParamStatic.add(QueryMapFindParam.of(
+//                "all", "all", "字符串", "分页状态下,查询出全部数据,相当于page=1,size=2000", false, false
+//        ));
+//        queryMapFindParamStatic.add(QueryMapFindParam.of(
+//                "_all", "_all", "字符串", "查询全部的原始数据,小心使用,相当于page=1,size=20000,_raw=_raw", false, false
+//        ));
+//        queryMapFindParamStatic.add(QueryMapFindParam.of(
+//                "_one", "_one", "字符串", "查询出一条数据,相当于page=1,size=1,返回对象,不是数组", false, false
+//        ));
+//        queryMapFindParamStatic.add(QueryMapFindParam.of(
+//                "_raw", "_raw", "字符串", "原始数据查询,查询原始表数据,不附带其他,数据结构与表对应起来", false, false
+//        ));
+//        createUpdateTimeFindParamStatic.add(QueryMapFindParam.of(
+//                "createTimeFrom", "", "日期时间", "产生时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
+//        ));
+//        createUpdateTimeFindParamStatic.add(QueryMapFindParam.of(
+//                "createTimeTo", "", "日期时间", "产生时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
+//        ));
+//        createUpdateTimeFindParamStatic.add(QueryMapFindParam.of(
+//                "updateTimeFrom", "", "日期时间", "更新时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
+//        ));
+//        createUpdateTimeFindParamStatic.add(QueryMapFindParam.of(
+//                "updateTimeTo", "", "日期时间", "更新时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
+//        ));
 
         allParamStatic.addAll(queryMapFindParamStatic);
         allParamStatic.addAll(pageBoundsFindParamStatic);

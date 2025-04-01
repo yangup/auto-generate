@@ -379,6 +379,9 @@ public class BaseCreator {
                     if (isNotEmpty(c.typeDocNote)) {
                         des += "</br>" + c.typeDocNote;
                     }
+                    if ("ids".equals(f.name)) {
+                        continue;
+                    }
                     queryFindParamDocOneLine(sb, wp, f.name, des, c.typeDoc);
                 }
             }
