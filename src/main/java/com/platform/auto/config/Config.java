@@ -7,6 +7,7 @@ import com.intellij.openapi.project.ProjectUtil;
 import com.platform.auto.entity.*;
 import com.platform.auto.jdbc.Connection;
 import com.platform.auto.jdbc.ControllerCreator;
+import com.platform.auto.jdbc.HttpCreator;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import com.platform.auto.util.FileUtil;
@@ -212,7 +213,7 @@ public class Config {
             return;
         }
 
-        ControllerCreator.createRequestInit();
+        HttpCreator.createRequestInit();
 
         // todo : 拷贝系统的 config 配置
         logger.info("initConfig: {}", project_auto_path);
