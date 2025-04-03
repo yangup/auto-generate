@@ -93,6 +93,14 @@
       }
     },
     {
+      "template": "templateHttp.up",
+      "remark": "generate http",
+      "path": {
+        "local": true,
+        "path": "http/http.http"
+      }
+    },
+    {
       "template": "templateDocTable.up",
       "remark": "generate doc table",
       "file_name_suffix": "_doc.txt",

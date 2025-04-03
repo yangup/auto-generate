@@ -12,6 +12,8 @@ public class PathEntity {
     @JsonProperty("package_name")
     public String packageName;
 
+    public String path;
+
     /**
      * 生成的文件是否放在 .auto 目录下
      **/

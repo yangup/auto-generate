@@ -282,4 +282,21 @@ public class AutoUtil extends CharUtil {
             listToFile(file, codeList);
         }
     }
+
+    /**
+     * 将新生成的文件, 追加到文件末尾
+     **/
+    public static void newCodeToAppendFile(List<String> codeList, File file) throws Exception {
+        if (ObjectUtils.isEmpty(codeList)) {
+            logger.info("codeList is empty");
+            return;
+        }
+        List<String> nowList = fileToList(file);
+        if (ObjectUtils.isEmpty(nowList)) {
+            listToFile(file, codeList);
+        } else {
+            nowList.addAll(codeList);
+            listToFile(file, nowList);
+        }
+    }
 }

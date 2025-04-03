@@ -59,8 +59,12 @@ public class FileUtil extends StringUtils {
         }
         // 文件放在 .auto 下面
         if (isTrue(info.path.local)) {
-            return createFile(Config.project_auto_path + "/" + "txt" +
-                    "/" + path + table.tableNameJava + info.fileNameSuffix);
+            if (isNotBlank(info.path.path)) {
+                return createFile(Config.project_auto_path + "/" + info.path.path);
+            } else {
+                return createFile(Config.project_auto_path + "/" + "txt" +
+                        "/" + path + table.tableNameJava + info.fileNameSuffix);
+            }
         } else {
             // todo : 新的文件创建文件夹, 文件
             return createFile(getJavaFilePath(info.path) + path + table.tableNameJava + info.fileNameSuffix);
