@@ -130,7 +130,9 @@ public class ControllerCreator extends BaseCreator {
                                 this.table.columnInfos.stream()
                                         .map(c -> String.format("\"%s\": %s",
                                                 c.columnNameJava,
-                                                (c.typeToJavaData.jsonNeedColon ? "\"" : "") + c.columnNameJava + (c.typeToJavaData.jsonNeedColon ? "\"" : "")
+                                                (c.typeToJavaData.jsonNeedColon ? "\"" : "") +
+                                                        (c.typeToJavaData.jsonNeedColon ? c.columnNameJava : 1234)
+                                                        + (c.typeToJavaData.jsonNeedColon ? "\"" : "")
                                         )).toList()
                         ));
                     }
