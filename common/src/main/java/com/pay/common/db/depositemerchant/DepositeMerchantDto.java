@@ -43,15 +43,15 @@ public class DepositeMerchantDto {
 
     // todo: 金额
 //    @DecimalMin(value = "0", inclusive = false, message = "amount is empty or incorrect")
-//    @DecimalMax(value = ""9999999999999"."99"", inclusive = false, message = "amount is empty or incorrect")
+//    @DecimalMax(value = ""9999999999999.99"", inclusive = false, message = "amount is empty or incorrect")
 //    @Digits(integer = 13, fraction = 2, message = "amount is empty or incorrect")
     @NotNull(message = "amount is empty or incorrect")
 //    @JsonProperty("amount")
     public BigDecimal amount;
 
-    // todo: 收款金额asdsafd
+    // todo: 收款金额
 //    @DecimalMin(value = "0", inclusive = false, message = "billAmount is empty or incorrect")
-//    @DecimalMax(value = ""9999999999999"."99"", inclusive = false, message = "billAmount is empty or incorrect")
+//    @DecimalMax(value = ""9999999999999.99"", inclusive = false, message = "billAmount is empty or incorrect")
 //    @Digits(integer = 13, fraction = 2, message = "billAmount is empty or incorrect")
 //    @NotNull(message = "billAmount is empty or incorrect")
 //    @JsonProperty("bill_amount")
@@ -146,7 +146,7 @@ public class DepositeMerchantDto {
 
     // todo: 渠道费
 //    @DecimalMin(value = "0", inclusive = false, message = "channelFee is empty or incorrect")
-//    @DecimalMax(value = ""9999999999999"."99"", inclusive = false, message = "channelFee is empty or incorrect")
+//    @DecimalMax(value = ""9999999999999.99"", inclusive = false, message = "channelFee is empty or incorrect")
 //    @Digits(integer = 13, fraction = 2, message = "channelFee is empty or incorrect")
 //    @NotNull(message = "channelFee is empty or incorrect")
 //    @JsonProperty("channel_fee")
