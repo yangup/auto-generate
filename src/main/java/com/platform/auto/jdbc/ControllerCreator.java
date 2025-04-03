@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import static com.platform.auto.util.AutoUtil.*;
 import static com.platform.auto.util.CharUtil.*;
@@ -128,6 +129,7 @@ public class ControllerCreator extends BaseCreator {
                     } else {
                         httpCodeList.add("  " + String.join(",\n  ",
                                 this.table.columnInfos.stream()
+                                        .filter(c -> Stream.of("createTime", "updateTime").noneMatch(cc -> equalsIgnoreCase(c.columnNameJava, cc)))
                                         .map(c -> String.format("\"%s\": %s",
                                                 c.columnNameJava,
                                                 (c.typeToJavaData.jsonNeedColon ? "\"" : "") +
