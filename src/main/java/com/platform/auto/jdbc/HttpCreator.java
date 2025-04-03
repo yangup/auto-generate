@@ -79,7 +79,11 @@ public class HttpCreator extends BaseCreator {
             if (Stream.of("createTime", "updateTime").anyMatch(cc -> equalsIgnoreCase(columninfo.columnNameJava, cc))) {
                 continue;
             }
-            codeList.add("    \"" + field + "\"" + ": \"" + (columninfo.typeToJavaData.jsonNeedColon ? columninfo.columnNameJava : 1234) + "\"" + dd);
+            String value = "\"" + (columninfo.typeToJavaData.jsonNeedColon ? columninfo.columnNameJava : 1234) + "\"";
+            if (!columninfo.typeToJavaData.jsonNeedColon) {
+                value = "" + 1234;
+            }
+            codeList.add("    \"" + field + "\"" + ": " + value + dd);
         }
 
     }
