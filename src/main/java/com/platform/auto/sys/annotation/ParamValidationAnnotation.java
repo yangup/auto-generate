@@ -84,7 +84,7 @@ public enum ParamValidationAnnotation {
     // 这个约束的参数是一个通过BigDecimal定义的最大值的字符串表示.小数存在精度-限制必须为一个不大于指定值的数字
     // @DecimalMin(value = "2", message = "@DecimalMin-2-最小值不能为空")
     // 最大值--int : 整数部分--fra : 小数部分
-    DECIMAL_MAX("@DecimalMax(value = \"{int}.{fra}\", inclusive = false, message = {msg})"),
+    DECIMAL_MAX("@DecimalMax(value = \"{intFra}\", inclusive = false, message = {msg})"),
 
     // #被标注的值必须不小于约束中指定的最小值.
     // 这个约束的参数是一个通过BigDecimal定义的最小值的字符串表示.小数存在精度-限制必须为一个不小于指定值的数字<br>
