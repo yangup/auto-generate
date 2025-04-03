@@ -84,12 +84,12 @@ public enum ParamValidationAnnotation {
     // 这个约束的参数是一个通过BigDecimal定义的最大值的字符串表示.小数存在精度-限制必须为一个不大于指定值的数字
     // @DecimalMin(value = "2", message = "@DecimalMin-2-最小值不能为空")
     // 最大值--int : 整数部分--fra : 小数部分
-    DECIMAL_MAX("@DecimalMax(value = \"{int}.{fra}\", message = {msg})"),
+    DECIMAL_MAX("@DecimalMax(value = \"{int}.{fra}\", inclusive = false, message = {msg})"),
 
     // #被标注的值必须不小于约束中指定的最小值.
     // 这个约束的参数是一个通过BigDecimal定义的最小值的字符串表示.小数存在精度-限制必须为一个不小于指定值的数字<br>
     // @DecimalMax(value = "4", message = "@DecimalMax-4-最大值不能为空")
-    DECIMAL_MIN("@DecimalMin(value = \"{int}\", message = {msg})"),
+    DECIMAL_MIN("@DecimalMin(value = \"{int}\", inclusive = false, message = {msg})"),
 
     // #验证 Number 和 String 的构成是否合法
     // #@Digits(integer=,fraction=)
@@ -146,7 +146,7 @@ public enum ParamValidationAnnotation {
     /**
      * 更换 模板中的 数字, msg
      **/
-    public String replaceInfo(String msg, long... is) {
+    public String replaceInfo(String msg, Object... is) {
         List<Object> data = new ArrayList<>();
         Arrays.stream(is).forEach(data::add);
         data.add(msg);

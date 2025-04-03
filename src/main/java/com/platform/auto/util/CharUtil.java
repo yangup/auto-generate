@@ -196,14 +196,11 @@ public class CharUtil extends ObjectUtils {
     }
 
     public static String getZero(int length) {
-        StringBuilder result = new StringBuilder();
-        if (length < 1) {
-            return result.toString();
-        }
-        for (int i = 0; i < length; i++) {
-            result.append("0");
-        }
-        return result.toString();
+        return length > 0 ? "0".repeat(length) : "";
+    }
+
+    public static String get9(int length) {
+        return length > 0 ? "9".repeat(length) : "";
     }
 
     /**
