@@ -76,7 +76,7 @@ public class DtoCreator extends BaseCreator {
                 int numericPrecision = columninfo.numericPrecisionInt;
                 int numericScale = columninfo.numericScaleInt;
                 codeList.add(prefix1 + ParamValidationAnnotation.DECIMAL_MAX.replaceInfo(msg,
-                        get9(numericPrecision - numericScale), get9(numericScale)));
+                        get9(numericPrecision - numericScale) + "." + get9(numericScale)));
                 codeList.add(prefix1 + ParamValidationAnnotation.DIGITS.replaceInfo(msg,
                         numericPrecision - numericScale, numericScale));
                 codeList.add(prefix + ParamValidationAnnotation.NOT_NULL.replaceInfo(msg));
