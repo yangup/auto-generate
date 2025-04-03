@@ -1,0 +1,45 @@
+
+### /depositeMerchant/addUpdate
+POST {{host}}/depositeMerchant/addUpdate
+Content-Type: application/json
+
+{
+  "id": "id",
+  "merchantId": "merchantId",
+  "transactionId": "transactionId",
+  "method": "method",
+  "amount": amount,
+  "billAmount": billAmount,
+  "bankCode": "bankCode",
+  "cardNo": "cardNo",
+  "depositeBankCode": "depositeBankCode",
+  "depositeCardNo": "depositeCardNo",
+  "depositeName": "depositeName",
+  "depositePhone": "depositePhone",
+  "expireTime": "expireTime",
+  "expireTimeReal": "expireTimeReal",
+  "name": "name",
+  "phone": "phone",
+  "description": "description",
+  "qrCode": "qrCode",
+  "status": "status",
+  "statusCallback": "statusCallback",
+  "transactionTime": "transactionTime",
+  "channelFee": channelFee,
+  "depositeBankStatementId": "depositeBankStatementId",
+  "accountHolder": "accountHolder",
+  "callbackUrl": "callbackUrl",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /depositeMerchant/find
+GET {{host}}/depositeMerchant/find
+
+### /depositeMerchant/delete
+POST {{host}}/depositeMerchant/delete
+Content-Type: application/json
+
+{
+  "id": "1234567890"
+}
