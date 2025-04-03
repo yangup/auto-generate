@@ -71,13 +71,13 @@ public class DtoCreator extends BaseCreator {
                 codeList.add(prefix + ParamValidationAnnotation.MAX.replaceInfo(msg, maxTemp));
             } else if (TypeToJavaData.isBigDecimal(columninfo.dataTypeJava)) {
                 // BigDecimal
-                prefix = "//" + CharUtil.t;
-                codeList.add(prefix + ParamValidationAnnotation.DECIMAL_MIN.replaceInfo(msg, 0));
+                String prefix1 = "//" + CharUtil.t;
+                codeList.add(prefix1 + ParamValidationAnnotation.DECIMAL_MIN.replaceInfo(msg, 0));
                 int numericPrecision = columninfo.numericPrecisionInt;
                 int numericScale = columninfo.numericScaleInt;
-                codeList.add(prefix + ParamValidationAnnotation.DECIMAL_MAX.replaceInfo(msg,
+                codeList.add(prefix1 + ParamValidationAnnotation.DECIMAL_MAX.replaceInfo(msg,
                         get9(numericPrecision - numericScale), get9(numericScale)));
-                codeList.add(prefix + ParamValidationAnnotation.DIGITS.replaceInfo(msg,
+                codeList.add(prefix1 + ParamValidationAnnotation.DIGITS.replaceInfo(msg,
                         numericPrecision - numericScale, numericScale));
                 codeList.add(prefix + ParamValidationAnnotation.NOT_NULL.replaceInfo(msg));
             } else if (TypeToJavaData.isString(columninfo.dataTypeJava)) {
