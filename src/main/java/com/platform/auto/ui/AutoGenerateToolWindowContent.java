@@ -301,6 +301,7 @@ public class AutoGenerateToolWindowContent {
                         Config.getLocal().configJsonName = jbRadioButton.getText();
                     }
                 }
+                Config.refreshLocal();
                 Application.start(tableNameList);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
