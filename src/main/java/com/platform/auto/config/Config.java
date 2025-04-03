@@ -40,6 +40,7 @@ public class Config {
 
     // todo : .config\config.json
     public static String config_path_file_name = auto_config_name + "/config.json";
+    public static String config_path_file_name_1 = auto_config_name + "/config1.json";
 
     // todo : .config\typeToJavaData.json
     public static String config_path_type_to_java_data_file_name = auto_config_name + "/typeToJavaData.json";
@@ -56,9 +57,13 @@ public class Config {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
-    public static ConfigEntity getConfig() {
+    public static ConfigEntity getConfig(String... configJsonName) {
         try {
-            config = config == null ? objectMapper.readValue(readFromLocalJson(config_path_file_name), ConfigEntity.class) : config;
+            String configJsonNameUse = "config.json";
+            if (configJsonName != null && configJsonName.length > 0 && StringUtils.isNotBlank(configJsonName[configJsonName.length - 1])) {
+                configJsonNameUse = configJsonName[configJsonName.length - 1];
+            }
+            config = config == null ? objectMapper.readValue(readFromLocalJson(auto_config_name + "/" + configJsonNameUse), ConfigEntity.class) : config;
         } catch (Exception e) {
             logger.info(e);
         }
@@ -110,9 +115,7 @@ public class Config {
     }
 
     public static PathEntity getPathByType(String type) {
-        return getConfig().info.stream().filter(
-                info -> equalsAnyIgnoreCase(info.type, type)
-        ).findFirst().orElse(new ConfigInfoEntity()).getPath();
+        return getConfig().info.stream().filter(info -> equalsAnyIgnoreCase(info.type, type)).findFirst().orElse(new ConfigInfoEntity()).getPath();
     }
 
     /**
@@ -123,11 +126,7 @@ public class Config {
     }
 
     public static String getJavaFilePath(String projectName, String packageName) {
-        return project_base_path + "/"
-                + projectName.replace(".", "/")
-                + Config.base_java_path
-                + packageName.replace(".", "/")
-                + "/";
+        return project_base_path + "/" + projectName.replace(".", "/") + Config.base_java_path + packageName.replace(".", "/") + "/";
     }
 
     public static String getTemplatePath(String templateFileName) {
@@ -142,13 +141,7 @@ public class Config {
             return;
         }
         config = null;
-        Connection.prepare(
-                getConfig().jdbc.clazz,
-                getConfig().jdbc.url,
-                getConfig().jdbc.username,
-                getConfig().jdbc.password,
-                getConfig().jdbc.database
-        );
+        Connection.prepare(getConfig().jdbc.clazz, getConfig().jdbc.url, getConfig().jdbc.username, getConfig().jdbc.password, getConfig().jdbc.database);
         List<LocalEntity.TableEntity> tableList = Connection.getAllTableInfo();
         logger.info("initLocalData");
 
@@ -224,6 +217,7 @@ public class Config {
         // todo : 拷贝系统的 config 配置
         logger.info("initConfig: {}", project_auto_path);
         listToLocalFile(config_path_file_name, readFromResources(config_path_file_name));
+        listToLocalFile(config_path_file_name_1, readFromResources(config_path_file_name));
         List<ConfigInfoEntity> infoList = getConfigFromResources().info;
         for (ConfigInfoEntity info : infoList) {
             if (isBlank(info.template)) {

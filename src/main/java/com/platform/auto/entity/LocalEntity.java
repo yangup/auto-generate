@@ -14,6 +14,7 @@ public class LocalEntity {
     public String time;
 
     public String filterTableNameText;
+    public String configJsonName;
 
     public String selectedDbName;
 
