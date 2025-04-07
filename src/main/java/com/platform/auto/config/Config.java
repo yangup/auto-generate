@@ -41,7 +41,8 @@ public class Config {
 
     // todo : .config\config.json
     public static String config_path_file_name = auto_config_name + "/config.json";
-    public static String config_path_file_name_1 = auto_config_name + "/config1.json";
+    public static String config_path_file_name_add_column = auto_config_name + "/config_add_column.json";
+    public static String config_path_file_name_simple = auto_config_name + "/config_simple.json";
 
     // todo : .config\typeToJavaData.json
     public static String config_path_type_to_java_data_file_name = auto_config_name + "/typeToJavaData.json";
@@ -218,7 +219,8 @@ public class Config {
         // todo : 拷贝系统的 config 配置
         logger.info("initConfig: {}", project_auto_path);
         listToLocalFile(config_path_file_name, readFromResources(config_path_file_name));
-        listToLocalFile(config_path_file_name_1, readFromResources(config_path_file_name));
+        listToLocalFile(config_path_file_name_add_column, readFromResources(config_path_file_name));
+        listToLocalFile(config_path_file_name_simple, readFromResources(config_path_file_name));
         List<ConfigInfoEntity> infoList = getConfigFromResources().info;
         for (ConfigInfoEntity info : infoList) {
             if (isBlank(info.template)) {

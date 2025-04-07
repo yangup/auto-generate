@@ -52,7 +52,9 @@ public class AutoGenerateToolWindowContent {
     private final JPanel buttonPanel = new JPanel();
 
     private final JBRadioButton configJson = new JBRadioButton("config.json");
-    private final JBRadioButton config1Json = new JBRadioButton("config1.json");
+    private final JBRadioButton configAddColumnJson = new JBRadioButton("config_add_column.json");
+    private final JBRadioButton configSimpleJson = new JBRadioButton("config_simple.json");
+    private final List<JBRadioButton> configList = List.of(configJson, configAddColumnJson, configSimpleJson);
 
     // 刷新框
     private final JBLabel refresh = new JBLabel("REFRESH", AllIcons.General.InlineRefresh, JLabel.LEFT);
@@ -111,9 +113,11 @@ public class AutoGenerateToolWindowContent {
         configJson.setSelected(true);
         ButtonGroup group = new ButtonGroup();
         group.add(configJson);
-        group.add(config1Json);
+        group.add(configAddColumnJson);
+        group.add(configSimpleJson);
         addComponentToContent(configJson, true);
-        addComponentToContent(config1Json, true);
+        addComponentToContent(configAddColumnJson, true);
+        addComponentToContent(configSimpleJson, true);
 
         // 下拉选择框
         addComponentToContent(dbNameComboBox, true);
@@ -296,7 +300,7 @@ public class AutoGenerateToolWindowContent {
         new Thread(() -> {
             try {
                 runFlag.set(true);
-                for (JBRadioButton jbRadioButton : List.of(configJson, config1Json)) {
+                for (JBRadioButton jbRadioButton : configList) {
                     if (jbRadioButton.isSelected()) {
                         Config.getLocal().configJsonName = jbRadioButton.getText();
                     }
