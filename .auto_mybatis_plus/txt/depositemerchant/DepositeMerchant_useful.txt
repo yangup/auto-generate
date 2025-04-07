@@ -1,0 +1,961 @@
+{
+    "id": "id",
+    "merchantId": "merchantId",
+    "transactionId": "transactionId",
+    "method": "method",
+    "amount": "amount",
+    "billAmount": "billAmount",
+    "bankCode": "bankCode",
+    "cardNo": "cardNo",
+    "depositeBankCode": "depositeBankCode",
+    "depositeCardNo": "depositeCardNo",
+    "depositeName": "depositeName",
+    "depositePhone": "depositePhone",
+    "expireTime": "expireTime",
+    "expireTimeReal": "expireTimeReal",
+    "name": "name",
+    "phone": "phone",
+    "description": "description",
+    "qrCode": "qrCode",
+    "status": "status",
+    "statusCallback": "statusCallback",
+    "transactionTime": "transactionTime",
+    "channelFee": "channelFee",
+    "depositeBankStatementId": "depositeBankStatementId",
+    "accountHolder": "accountHolder",
+    "callbackUrl": "callbackUrl",
+    "createTime": "createTime",
+    "updateTime": "updateTime"
+}
+
+
+@RequestParam(name = "id", required = false) String id,
+@RequestParam(name = "merchantId", required = false) String merchantId,
+@RequestParam(name = "transactionId", required = false) String transactionId,
+@RequestParam(name = "method", required = false) String method,
+@RequestParam(name = "amount", required = false) BigDecimal amount,
+@RequestParam(name = "billAmount", required = false) BigDecimal billAmount,
+@RequestParam(name = "bankCode", required = false) String bankCode,
+@RequestParam(name = "cardNo", required = false) String cardNo,
+@RequestParam(name = "depositeBankCode", required = false) String depositeBankCode,
+@RequestParam(name = "depositeCardNo", required = false) String depositeCardNo,
+@RequestParam(name = "depositeName", required = false) String depositeName,
+@RequestParam(name = "depositePhone", required = false) String depositePhone,
+@RequestParam(name = "expireTime", required = false) LocalDateTime expireTime,
+@RequestParam(name = "expireTimeReal", required = false) LocalDateTime expireTimeReal,
+@RequestParam(name = "name", required = false) String name,
+@RequestParam(name = "phone", required = false) String phone,
+@RequestParam(name = "description", required = false) String description,
+@RequestParam(name = "qrCode", required = false) String qrCode,
+@RequestParam(name = "status", required = false) String status,
+@RequestParam(name = "statusCallback", required = false) String statusCallback,
+@RequestParam(name = "transactionTime", required = false) LocalDateTime transactionTime,
+@RequestParam(name = "channelFee", required = false) BigDecimal channelFee,
+@RequestParam(name = "depositeBankStatementId", required = false) String depositeBankStatementId,
+@RequestParam(name = "accountHolder", required = false) String accountHolder,
+@RequestParam(name = "callbackUrl", required = false) String callbackUrl,
+@RequestParam(name = "createTime", required = false) LocalDateTime createTime,
+@RequestParam(name = "updateTime", required = false) LocalDateTime updateTime
+
+
+{
+    title: '主键ID',
+    key: 'id',
+},{
+    title: '商户ID',
+    key: 'merchantId',
+},{
+    title: '商户订单号',
+    key: 'transactionId',
+},{
+    title: '支付方式',
+    key: 'method',
+},{
+    title: '金额',
+    key: 'amount',
+},{
+    title: '收款金额',
+    key: 'billAmount',
+},{
+    title: '银行卡开户行编码（例如：KTB等）',
+    key: 'bankCode',
+},{
+    title: '银行卡号',
+    key: 'cardNo',
+},{
+    title: '收款卡,银行卡开户行编码（例如：KTB等）',
+    key: 'depositeBankCode',
+},{
+    title: '收款卡,银行卡号',
+    key: 'depositeCardNo',
+},{
+    title: '收款卡,银行卡号',
+    key: 'depositeName',
+},{
+    title: '收款卡, phone',
+    key: 'depositePhone',
+},{
+    title: '失效时间,初次时间',
+    key: 'expireTime',
+},{
+    title: '失效时间,以点击链接的时间为准',
+    key: 'expireTimeReal',
+},{
+    title: '名字',
+    key: 'name',
+},{
+    title: '电话号码',
+    key: 'phone',
+},{
+    title: '额外字段',
+    key: 'description',
+},{
+    title: '收款二维码,method为qrPay时返回',
+    key: 'qrCode',
+},{
+    title: '收款状态',
+    key: 'status',
+},{
+    title: '回调状态',
+    key: 'statusCallback',
+},{
+    title: '交易时间',
+    key: 'transactionTime',
+},{
+    title: '渠道费',
+    key: 'channelFee',
+},{
+    title: '代收款银行流水ID',
+    key: 'depositeBankStatementId',
+},{
+    title: '入账人',
+    key: 'accountHolder',
+},{
+    title: 'callback url',
+    key: 'callbackUrl',
+},{
+    title: '数据插入时间',
+    key: 'createTime',
+},{
+    title: '最后更新时间',
+    key: 'updateTime',
+}
+
+
+{
+    title: '主键ID',
+    width: 100,
+    key: 'id',
+},{
+    title: '商户ID',
+    width: 100,
+    key: 'merchantId',
+},{
+    title: '商户订单号',
+    width: 100,
+    key: 'transactionId',
+},{
+    title: '支付方式',
+    width: 100,
+    key: 'method',
+},{
+    title: '金额',
+    width: 100,
+    key: 'amount',
+},{
+    title: '收款金额',
+    width: 100,
+    key: 'billAmount',
+},{
+    title: '银行卡开户行编码（例如：KTB等）',
+    width: 100,
+    key: 'bankCode',
+},{
+    title: '银行卡号',
+    width: 100,
+    key: 'cardNo',
+},{
+    title: '收款卡,银行卡开户行编码（例如：KTB等）',
+    width: 100,
+    key: 'depositeBankCode',
+},{
+    title: '收款卡,银行卡号',
+    width: 100,
+    key: 'depositeCardNo',
+},{
+    title: '收款卡,银行卡号',
+    width: 100,
+    key: 'depositeName',
+},{
+    title: '收款卡, phone',
+    width: 100,
+    key: 'depositePhone',
+},{
+    title: '失效时间,初次时间',
+    width: 100,
+    key: 'expireTime',
+},{
+    title: '失效时间,以点击链接的时间为准',
+    width: 100,
+    key: 'expireTimeReal',
+},{
+    title: '名字',
+    width: 100,
+    key: 'name',
+},{
+    title: '电话号码',
+    width: 100,
+    key: 'phone',
+},{
+    title: '额外字段',
+    width: 100,
+    key: 'description',
+},{
+    title: '收款二维码,method为qrPay时返回',
+    width: 100,
+    key: 'qrCode',
+},{
+    title: '收款状态',
+    width: 100,
+    key: 'status',
+},{
+    title: '回调状态',
+    width: 100,
+    key: 'statusCallback',
+},{
+    title: '交易时间',
+    width: 100,
+    key: 'transactionTime',
+},{
+    title: '渠道费',
+    width: 100,
+    key: 'channelFee',
+},{
+    title: '代收款银行流水ID',
+    width: 100,
+    key: 'depositeBankStatementId',
+},{
+    title: '入账人',
+    width: 100,
+    key: 'accountHolder',
+},{
+    title: 'callback url',
+    width: 100,
+    key: 'callbackUrl',
+},{
+    title: '数据插入时间',
+    width: 100,
+    key: 'createTime',
+},{
+    title: '最后更新时间',
+    width: 100,
+    key: 'updateTime',
+}
+
+
+主键ID
+商户ID
+商户订单号
+支付方式
+金额
+收款金额
+银行卡开户行编码（例如：KTB等）
+银行卡号
+收款卡,银行卡开户行编码（例如：KTB等）
+收款卡,银行卡号
+收款卡,银行卡号
+收款卡, phone
+失效时间,初次时间
+失效时间,以点击链接的时间为准
+名字
+电话号码
+额外字段
+收款二维码,method为qrPay时返回
+收款状态
+回调状态
+交易时间
+渠道费
+代收款银行流水ID
+入账人
+callback url
+数据插入时间
+最后更新时间
+
+
+id
+merchant_id
+transaction_id
+method
+amount
+bill_amount
+bank_code
+card_no
+deposite_bank_code
+deposite_card_no
+deposite_name
+deposite_phone
+expire_time
+expire_time_real
+name
+phone
+description
+qr_code
+status
+status_callback
+transaction_time
+channel_fee
+deposite_bank_statement_id
+account_holder
+callback_url
+create_time
+update_time
+
+
+id
+merchantId
+transactionId
+method
+amount
+billAmount
+bankCode
+cardNo
+depositeBankCode
+depositeCardNo
+depositeName
+depositePhone
+expireTime
+expireTimeReal
+name
+phone
+description
+qrCode
+status
+statusCallback
+transactionTime
+channelFee
+depositeBankStatementId
+accountHolder
+callbackUrl
+createTime
+updateTime
+
+tableName : tb_deposite_merchant
+
+a.id, a.merchant_id, a.transaction_id, a.method, a.amount, a.bill_amount, a.bank_code, a.card_no, a.deposite_bank_code, a.deposite_card_no, a.deposite_name, a.deposite_phone, a.expire_time, a.expire_time_real, a.name, a.phone, a.description, a.qr_code, a.status, a.status_callback, a.transaction_time, a.channel_fee, a.deposite_bank_statement_id, a.account_holder, a.callback_url, a.create_time, a.update_time,
+
+
+a.id,
+a.merchant_id,
+a.transaction_id,
+a.method,
+a.amount,
+a.bill_amount,
+a.bank_code,
+a.card_no,
+a.deposite_bank_code,
+a.deposite_card_no,
+a.deposite_name,
+a.deposite_phone,
+a.expire_time,
+a.expire_time_real,
+a.name,
+a.phone,
+a.description,
+a.qr_code,
+a.status,
+a.status_callback,
+a.transaction_time,
+a.channel_fee,
+a.deposite_bank_statement_id,
+a.account_holder,
+a.callback_url,
+a.create_time,
+a.update_time,
+
+
+// api/api.js 中, 需要生成的代码
+
+  depositeMerchantFind(query) {
+    return this.get('/depositeMerchant/find', query)
+  }
+
+  depositeMerchantFindAll(query) {
+    return this.getFindAll('/depositeMerchant/find', query)
+  }
+
+  depositeMerchantAll() {
+    return this.getAll('/depositeMerchant/find')
+  }
+
+  depositeMerchantOne(id) {
+    return this.getOne('/depositeMerchant/find', id)
+  }
+
+  depositeMerchantAddUpdate(obj, by) {
+    return this.postBy('/depositeMerchant/addUpdate', obj, by)
+  }
+
+  depositeMerchantDelete(obj) {
+    return this.post('/depositeMerchant/delete', obj)
+  }
+
+
+// router/index.js 中, 需要生成的代码
+
+  {
+    path: '/-frontFilePath-/depositeMerchant',
+    component: () => import('@/views/-frontFilePath-/depositeMerchant'),
+  },
+
+
+      // 前端代码中详情数据的展示
+      <el-descriptions border :column="2">
+        <!--<el-descriptions-item label="主键ID">{{ temp.id }}</el-descriptions-item>-->
+        <!--<el-descriptions-item label="商户ID">{{ temp.merchantId }}</el-descriptions-item>-->
+        <!--<el-descriptions-item label="商户订单号">{{ temp.transactionId }}</el-descriptions-item>-->
+        <el-descriptions-item label="支付方式">{{ temp.method }}</el-descriptions-item>
+        <el-descriptions-item label="金额">{{ temp.amount }}</el-descriptions-item>
+        <el-descriptions-item label="收款金额">{{ temp.billAmount }}</el-descriptions-item>
+        <el-descriptions-item label="银行卡开户行编码（例如：KTB等）">{{ temp.bankCode }}</el-descriptions-item>
+        <el-descriptions-item label="银行卡号">{{ temp.cardNo }}</el-descriptions-item>
+        <el-descriptions-item label="收款卡,银行卡开户行编码（例如：KTB等）">{{ temp.depositeBankCode }}</el-descriptions-item>
+        <el-descriptions-item label="收款卡,银行卡号">{{ temp.depositeCardNo }}</el-descriptions-item>
+        <el-descriptions-item label="收款卡,银行卡号">{{ temp.depositeName }}</el-descriptions-item>
+        <el-descriptions-item label="收款卡, phone">{{ temp.depositePhone }}</el-descriptions-item>
+        <el-descriptions-item label="失效时间,初次时间">{{ temp.expireTime }}</el-descriptions-item>
+        <el-descriptions-item label="失效时间,以点击链接的时间为准">{{ temp.expireTimeReal }}</el-descriptions-item>
+        <el-descriptions-item label="名字">{{ temp.name }}</el-descriptions-item>
+        <el-descriptions-item label="电话号码">{{ temp.phone }}</el-descriptions-item>
+        <el-descriptions-item label="额外字段">{{ temp.description }}</el-descriptions-item>
+        <el-descriptions-item label="收款二维码,method为qrPay时返回">{{ temp.qrCode }}</el-descriptions-item>
+        <el-descriptions-item label="收款状态">{{ temp.status }}</el-descriptions-item>
+        <el-descriptions-item label="回调状态">{{ temp.statusCallback }}</el-descriptions-item>
+        <el-descriptions-item label="交易时间">{{ temp.transactionTime }}</el-descriptions-item>
+        <el-descriptions-item label="渠道费">{{ temp.channelFee }}</el-descriptions-item>
+        <!--<el-descriptions-item label="代收款银行流水ID">{{ temp.depositeBankStatementId }}</el-descriptions-item>-->
+        <el-descriptions-item label="入账人">{{ temp.accountHolder }}</el-descriptions-item>
+        <el-descriptions-item label="callback url">{{ temp.callbackUrl }}</el-descriptions-item>
+        <!--<el-descriptions-item label="数据插入时间">{{ temp.createTime }}</el-descriptions-item>-->
+        <!--<el-descriptions-item label="最后更新时间">{{ temp.updateTime }}</el-descriptions-item>-->
+      </el-descriptions>
+
+      <el-form label-position="left" inline class="demo-table-expand">
+        <!--<el-form-item label="主键ID"><span>{{temp.id}}</span></el-form-item>-->
+        <!--<el-form-item label="商户ID"><span>{{temp.merchantId}}</span></el-form-item>-->
+        <!--<el-form-item label="商户订单号"><span>{{temp.transactionId}}</span></el-form-item>-->
+        <el-form-item label="支付方式"><span>{{temp.method}}</span></el-form-item>
+        <el-form-item label="金额"><span>{{temp.amount}}</span></el-form-item>
+        <el-form-item label="收款金额"><span>{{temp.billAmount}}</span></el-form-item>
+        <el-form-item label="银行卡开户行编码（例如：KTB等）"><span>{{temp.bankCode}}</span></el-form-item>
+        <el-form-item label="银行卡号"><span>{{temp.cardNo}}</span></el-form-item>
+        <el-form-item label="收款卡,银行卡开户行编码（例如：KTB等）"><span>{{temp.depositeBankCode}}</span></el-form-item>
+        <el-form-item label="收款卡,银行卡号"><span>{{temp.depositeCardNo}}</span></el-form-item>
+        <el-form-item label="收款卡,银行卡号"><span>{{temp.depositeName}}</span></el-form-item>
+        <el-form-item label="收款卡, phone"><span>{{temp.depositePhone}}</span></el-form-item>
+        <el-form-item label="失效时间,初次时间"><span>{{temp.expireTime}}</span></el-form-item>
+        <el-form-item label="失效时间,以点击链接的时间为准"><span>{{temp.expireTimeReal}}</span></el-form-item>
+        <el-form-item label="名字"><span>{{temp.name}}</span></el-form-item>
+        <el-form-item label="电话号码"><span>{{temp.phone}}</span></el-form-item>
+        <el-form-item label="额外字段"><span>{{temp.description}}</span></el-form-item>
+        <el-form-item label="收款二维码,method为qrPay时返回"><span>{{temp.qrCode}}</span></el-form-item>
+        <el-form-item label="收款状态"><span>{{temp.status}}</span></el-form-item>
+        <el-form-item label="回调状态"><span>{{temp.statusCallback}}</span></el-form-item>
+        <el-form-item label="交易时间"><span>{{temp.transactionTime}}</span></el-form-item>
+        <el-form-item label="渠道费"><span>{{temp.channelFee}}</span></el-form-item>
+        <!--<el-form-item label="代收款银行流水ID"><span>{{temp.depositeBankStatementId}}</span></el-form-item>-->
+        <el-form-item label="入账人"><span>{{temp.accountHolder}}</span></el-form-item>
+        <el-form-item label="callback url"><span>{{temp.callbackUrl}}</span></el-form-item>
+        <!--<el-form-item label="数据插入时间"><span>{{temp.createTime}}</span></el-form-item>-->
+        <!--<el-form-item label="最后更新时间"><span>{{temp.updateTime}}</span></el-form-item>-->
+      </el-form>
+
+
+export const DEPOSITE_MERCHANT_METHOD = {
+  QR_PAY: '二维码扫码',
+  BANK_TRANSFER: '网银转账',
+}
+export const DEPOSITE_MERCHANT_STATUS = {
+  CREATED: '新产生',
+  IN_USE: '使用中',
+  DONE: '收款完成',
+  DEPRECATED: '废弃',
+}
+
+'支付方式', '金额', '收款金额', '银行卡开户行编码（例如：KTB等）', '银行卡号', '收款卡,银行卡开户行编码（例如：KTB等）', '收款卡,银行卡号', '收款卡,银行卡号', '收款卡, phone', '失效时间,初次时间', '失效时间,以点击链接的时间为准', '名字', '电话号码', '额外字段', '收款二维码,method为qrPay时返回', '收款状态', '回调状态', '交易时间', '渠道费', '入账人', 'callback url'
+
+['method', DEPOSITE_MERCHANT_METHOD], 'amount', 'billAmount', 'bankCode', 'cardNo', 'depositeBankCode', 'depositeCardNo', 'depositeName', 'depositePhone', 'expireTime', 'expireTimeReal', 'name', 'phone', 'description', 'qrCode', ['status', DEPOSITE_MERCHANT_STATUS], 'statusCallback', 'transactionTime', 'channelFee', 'accountHolder', 'callbackUrl'
+
+| page                | 否 | 整数     | 页码,第几页,编号从 1 开始, 默认第1页
+| size                | 否 | 整数     | 每页多少条数据,默认值:1 , 最大1000
+| limit               | 否 | 整数     | 每页多少条数据,默认值:1 , 最大1000,与size 一样
+| id                  | 否 | 字符串   | id,例如: 1234
+| ids                 | 否 | 字符串   | 多个id以逗号分隔,例如: 1234,2345
+| merchantId          | 否 | 字符串   | 商户ID-多个以逗号分割
+| transactionId       | 否 | 字符串   | 商户订单号-多个以逗号分割
+| method              | 否 | 字符串   | 支付方式-多个以逗号分割</br>QR_PAY : 二维码扫码</br>BANK_TRANSFER : 网银转账</br>
+| status              | 否 | 字符串   | 收款状态-多个以逗号分割</br>CREATED : 新产生</br>IN_USE : 使用中</br>DONE : 收款完成</br>DEPRECATED : 废弃</br>
+| depositeBankStatementId| 否 | 字符串   | 代收款银行流水ID-多个以逗号分割
+| startTime           | 否 | 日期时间 | 开始时间,例如 : 2017-01-01 12:13:14 </br> 或者 例如 : 2017-01-01
+| endTime             | 否 | 日期时间 | 结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| all                 | 否 | 字符串   | 分页状态下,查询出全部数据,相当于page=1,size=2000
+| _all                | 否 | 字符串   | 查询全部的原始数据,小心使用,相当于page=1,size=20000,_raw=_raw
+| _one                | 否 | 字符串   | 查询出一条数据,相当于page=1,size=1,返回对象,不是数组
+| _raw                | 否 | 字符串   | 原始数据查询,查询原始表数据,不附带其他,数据结构与表对应起来
+| createTimeFrom      | 否 | 日期时间 | 产生时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| createTimeTo        | 否 | 日期时间 | 产生时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| updateTimeFrom      | 否 | 日期时间 | 更新时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| updateTimeTo        | 否 | 日期时间 | 更新时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+
+| id                  | 是 | 字符串   | 主键ID</br>***最大长度:32***
+| merchantId          | 是 | 字符串   | 商户ID</br>***最大长度:32***
+| transactionId       | 是 | 字符串   | 商户订单号</br>***最大长度:64***
+| method              | 是 | 字符串   | 支付方式</br>QR_PAY : 二维码扫码</br>BANK_TRANSFER : 网银转账</br>***最大长度:64***
+| amount              | 是 | 浮点数   | 金额</br>***整数最大长度:13***</br>***小数最大长度:2***
+| billAmount          | 否 | 浮点数   | 收款金额</br>***整数最大长度:13***</br>***小数最大长度:2***
+| bankCode            | 否 | 字符串   | 银行卡开户行编码（例如：KTB等）</br>***最大长度:32***
+| cardNo              | 否 | 字符串   | 银行卡号</br>***最大长度:64***
+| depositeBankCode    | 否 | 字符串   | 收款卡,银行卡开户行编码（例如：KTB等）</br>***最大长度:32***
+| depositeCardNo      | 否 | 字符串   | 收款卡,银行卡号</br>***最大长度:64***
+| depositeName        | 否 | 字符串   | 收款卡,银行卡号</br>***最大长度:64***
+| depositePhone       | 否 | 字符串   | 收款卡, phone</br>***最大长度:64***
+| expireTime          | 是 | 日期时间 | 失效时间,初次时间</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+| expireTimeReal      | 否 | 日期时间 | 失效时间,以点击链接的时间为准</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+| name                | 否 | 字符串   | 名字</br>***最大长度:64***
+| phone               | 否 | 字符串   | 电话号码</br>***最大长度:64***
+| description         | 否 | 字符串   | 额外字段</br>***最大长度:128***
+| qrCode              | 否 | 字符串   | 收款二维码,method为qrPay时返回</br>***最大长度:128***
+| status              | 是 | 字符串   | 收款状态</br>CREATED : 新产生</br>IN_USE : 使用中</br>DONE : 收款完成</br>DEPRECATED : 废弃</br>***最大长度:32***
+| statusCallback      | 否 | 字符串   | 回调状态</br>***最大长度:32***
+| transactionTime     | 否 | 日期时间 | 交易时间</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+| channelFee          | 否 | 浮点数   | 渠道费</br>***整数最大长度:13***</br>***小数最大长度:2***
+| depositeBankStatementId| 否 | 字符串   | 代收款银行流水ID</br>***最大长度:32***
+| accountHolder       | 否 | 字符串   | 入账人</br>***最大长度:128***
+| callbackUrl         | 否 | 字符串   | callback url</br>***最大长度:128***
+| createTime          | 是 | 日期时间 | 数据插入时间</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+| updateTime          | 是 | 日期时间 | 最后更新时间</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+
+
+    // TODO: controller 通用模板
+    // TODO: controller 通用模板
+    // TODO: controller 通用模板
+    @GetMapping("info")
+    public ReturnData info(
+            @RequestParam(name = "merchantId", required = false) String merchantId,
+            @RequestParam(name = "transactionId", required = false) String transactionId,
+            @RequestParam(name = "method", required = false) String method,
+            @RequestParam(name = "amount", required = false) BigDecimal amount,
+            @RequestParam(name = "billAmount", required = false) BigDecimal billAmount,
+            @RequestParam(name = "bankCode", required = false) String bankCode,
+            @RequestParam(name = "cardNo", required = false) String cardNo,
+            @RequestParam(name = "depositeBankCode", required = false) String depositeBankCode,
+            @RequestParam(name = "depositeCardNo", required = false) String depositeCardNo,
+            @RequestParam(name = "depositeName", required = false) String depositeName,
+            @RequestParam(name = "depositePhone", required = false) String depositePhone,
+            @RequestParam(name = "expireTime", required = false) LocalDateTime expireTime,
+            @RequestParam(name = "expireTimeReal", required = false) LocalDateTime expireTimeReal,
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "phone", required = false) String phone,
+            @RequestParam(name = "description", required = false) String description,
+            @RequestParam(name = "qrCode", required = false) String qrCode,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "statusCallback", required = false) String statusCallback,
+            @RequestParam(name = "transactionTime", required = false) LocalDateTime transactionTime,
+            @RequestParam(name = "channelFee", required = false) BigDecimal channelFee,
+            @RequestParam(name = "depositeBankStatementId", required = false) String depositeBankStatementId,
+            @RequestParam(name = "accountHolder", required = false) String accountHolder,
+            @RequestParam(name = "callbackUrl", required = false) String callbackUrl
+    ) throws Exception {
+        List<DepositeMerchantEntity> list = depositeMerchantService.findByInfo(
+                merchantId,
+                transactionId,
+                method,
+                amount,
+                billAmount,
+                bankCode,
+                cardNo,
+                depositeBankCode,
+                depositeCardNo,
+                depositeName,
+                depositePhone,
+                expireTime,
+                expireTimeReal,
+                name,
+                phone,
+                description,
+                qrCode,
+                status,
+                statusCallback,
+                transactionTime,
+                channelFee,
+                depositeBankStatementId,
+                accountHolder,
+                callbackUrl
+        );
+        return ok(list);
+    }
+
+    @GetMapping("infoOne")
+    public ReturnData infoOne(
+            @RequestParam(name = "merchantId", required = false) String merchantId,
+            @RequestParam(name = "transactionId", required = false) String transactionId,
+            @RequestParam(name = "method", required = false) String method,
+            @RequestParam(name = "amount", required = false) BigDecimal amount,
+            @RequestParam(name = "billAmount", required = false) BigDecimal billAmount,
+            @RequestParam(name = "bankCode", required = false) String bankCode,
+            @RequestParam(name = "cardNo", required = false) String cardNo,
+            @RequestParam(name = "depositeBankCode", required = false) String depositeBankCode,
+            @RequestParam(name = "depositeCardNo", required = false) String depositeCardNo,
+            @RequestParam(name = "depositeName", required = false) String depositeName,
+            @RequestParam(name = "depositePhone", required = false) String depositePhone,
+            @RequestParam(name = "expireTime", required = false) LocalDateTime expireTime,
+            @RequestParam(name = "expireTimeReal", required = false) LocalDateTime expireTimeReal,
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "phone", required = false) String phone,
+            @RequestParam(name = "description", required = false) String description,
+            @RequestParam(name = "qrCode", required = false) String qrCode,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "statusCallback", required = false) String statusCallback,
+            @RequestParam(name = "transactionTime", required = false) LocalDateTime transactionTime,
+            @RequestParam(name = "channelFee", required = false) BigDecimal channelFee,
+            @RequestParam(name = "depositeBankStatementId", required = false) String depositeBankStatementId,
+            @RequestParam(name = "accountHolder", required = false) String accountHolder,
+            @RequestParam(name = "callbackUrl", required = false) String callbackUrl
+    ) throws Exception {
+        DepositeMerchantEntity one = depositeMerchantService.findOneByInfo(
+                merchantId,
+                transactionId,
+                method,
+                amount,
+                billAmount,
+                bankCode,
+                cardNo,
+                depositeBankCode,
+                depositeCardNo,
+                depositeName,
+                depositePhone,
+                expireTime,
+                expireTimeReal,
+                name,
+                phone,
+                description,
+                qrCode,
+                status,
+                statusCallback,
+                transactionTime,
+                channelFee,
+                depositeBankStatementId,
+                accountHolder,
+                callbackUrl
+        );
+        return ok(one);
+    }
+
+
+    // TODO: service 通用模板
+    // TODO: service 通用模板
+    // TODO: service 通用模板
+    public int updateByInfo(
+            String id,
+            String merchantId,
+            String transactionId,
+            String method,
+            BigDecimal amount,
+            BigDecimal billAmount,
+            String bankCode,
+            String cardNo,
+            String depositeBankCode,
+            String depositeCardNo,
+            String depositeName,
+            String depositePhone,
+            LocalDateTime expireTime,
+            LocalDateTime expireTimeReal,
+            String name,
+            String phone,
+            String description,
+            String qrCode,
+            String status,
+            String statusCallback,
+            LocalDateTime transactionTime,
+            BigDecimal channelFee,
+            String depositeBankStatementId,
+            String accountHolder,
+            String callbackUrl
+    ) {
+        return depositeMerchantMapper.updateByInfo(
+                id,
+                merchantId,
+                transactionId,
+                method,
+                amount,
+                billAmount,
+                bankCode,
+                cardNo,
+                depositeBankCode,
+                depositeCardNo,
+                depositeName,
+                depositePhone,
+                expireTime,
+                expireTimeReal,
+                name,
+                phone,
+                description,
+                qrCode,
+                status,
+                statusCallback,
+                transactionTime,
+                channelFee,
+                depositeBankStatementId,
+                accountHolder,
+                callbackUrl
+        );
+    }
+
+    public List<DepositeMerchantEntity> findByInfo(
+            String merchantId,
+            String transactionId,
+            String method,
+            BigDecimal amount,
+            BigDecimal billAmount,
+            String bankCode,
+            String cardNo,
+            String depositeBankCode,
+            String depositeCardNo,
+            String depositeName,
+            String depositePhone,
+            LocalDateTime expireTime,
+            LocalDateTime expireTimeReal,
+            String name,
+            String phone,
+            String description,
+            String qrCode,
+            String status,
+            String statusCallback,
+            LocalDateTime transactionTime,
+            BigDecimal channelFee,
+            String depositeBankStatementId,
+            String accountHolder,
+            String callbackUrl
+    ) {
+        List<DepositeMerchantEntity> list = depositeMerchantMapper.findByInfo(
+                merchantId,
+                transactionId,
+                method,
+                amount,
+                billAmount,
+                bankCode,
+                cardNo,
+                depositeBankCode,
+                depositeCardNo,
+                depositeName,
+                depositePhone,
+                expireTime,
+                expireTimeReal,
+                name,
+                phone,
+                description,
+                qrCode,
+                status,
+                statusCallback,
+                transactionTime,
+                channelFee,
+                depositeBankStatementId,
+                accountHolder,
+                callbackUrl
+        );
+        return list;
+    }
+
+    public DepositeMerchantEntity findOneByInfo(
+            String merchantId,
+            String transactionId,
+            String method,
+            BigDecimal amount,
+            BigDecimal billAmount,
+            String bankCode,
+            String cardNo,
+            String depositeBankCode,
+            String depositeCardNo,
+            String depositeName,
+            String depositePhone,
+            LocalDateTime expireTime,
+            LocalDateTime expireTimeReal,
+            String name,
+            String phone,
+            String description,
+            String qrCode,
+            String status,
+            String statusCallback,
+            LocalDateTime transactionTime,
+            BigDecimal channelFee,
+            String depositeBankStatementId,
+            String accountHolder,
+            String callbackUrl
+    ) {
+        DepositeMerchantEntity one = depositeMerchantMapper.findOneByInfo(
+                merchantId,
+                transactionId,
+                method,
+                amount,
+                billAmount,
+                bankCode,
+                cardNo,
+                depositeBankCode,
+                depositeCardNo,
+                depositeName,
+                depositePhone,
+                expireTime,
+                expireTimeReal,
+                name,
+                phone,
+                description,
+                qrCode,
+                status,
+                statusCallback,
+                transactionTime,
+                channelFee,
+                depositeBankStatementId,
+                accountHolder,
+                callbackUrl
+        );
+        return one;
+    }
+
+
+    // TODO: mapper 通用模板
+    // TODO: mapper 通用模板
+    // TODO: mapper 通用模板
+    @Update(" update tb_deposite_merchant set" +
+            " merchant_id = #{merchantId}, transaction_id = #{transactionId}, method = #{method}, amount = #{amount}," +
+            " bill_amount = #{billAmount}, bank_code = #{bankCode}, card_no = #{cardNo}, deposite_bank_code = #{depositeBankCode}," +
+            " deposite_card_no = #{depositeCardNo}, deposite_name = #{depositeName}, deposite_phone = #{depositePhone}, expire_time = #{expireTime}," +
+            " expire_time_real = #{expireTimeReal}, name = #{name}, phone = #{phone}, description = #{description}, qr_code = #{qrCode}, status = #{status}," +
+            " status_callback = #{statusCallback}, transaction_time = #{transactionTime}, channel_fee = #{channelFee}," +
+            " deposite_bank_statement_id = #{depositeBankStatementId}, account_holder = #{accountHolder}, callback_url = #{callbackUrl}, update_time = now()" +
+            " where id = #{id}")
+    int updateByInfo(@Param("id") String id,
+                     @Param("merchantId") String merchantId,
+                     @Param("transactionId") String transactionId,
+                     @Param("method") String method,
+                     @Param("amount") BigDecimal amount,
+                     @Param("billAmount") BigDecimal billAmount,
+                     @Param("bankCode") String bankCode,
+                     @Param("cardNo") String cardNo,
+                     @Param("depositeBankCode") String depositeBankCode,
+                     @Param("depositeCardNo") String depositeCardNo,
+                     @Param("depositeName") String depositeName,
+                     @Param("depositePhone") String depositePhone,
+                     @Param("expireTime") LocalDateTime expireTime,
+                     @Param("expireTimeReal") LocalDateTime expireTimeReal,
+                     @Param("name") String name,
+                     @Param("phone") String phone,
+                     @Param("description") String description,
+                     @Param("qrCode") String qrCode,
+                     @Param("status") String status,
+                     @Param("statusCallback") String statusCallback,
+                     @Param("transactionTime") LocalDateTime transactionTime,
+                     @Param("channelFee") BigDecimal channelFee,
+                     @Param("depositeBankStatementId") String depositeBankStatementId,
+                     @Param("accountHolder") String accountHolder,
+                     @Param("callbackUrl") String callbackUrl);
+
+    @Select("SELECT a.* FROM tb_deposite_merchant a" +
+            " WHERE a.merchant_id = #{merchantId}" +
+            " AND a.transaction_id = #{transactionId}" +
+            " AND a.method = #{method}" +
+            " AND a.amount = #{amount}" +
+            " AND a.bill_amount = #{billAmount}" +
+            " AND a.bank_code = #{bankCode}" +
+            " AND a.card_no = #{cardNo}" +
+            " AND a.deposite_bank_code = #{depositeBankCode}" +
+            " AND a.deposite_card_no = #{depositeCardNo}" +
+            " AND a.deposite_name = #{depositeName}" +
+            " AND a.deposite_phone = #{depositePhone}" +
+            " AND a.expire_time = #{expireTime}" +
+            " AND a.expire_time_real = #{expireTimeReal}" +
+            " AND a.name = #{name}" +
+            " AND a.phone = #{phone}" +
+            " AND a.description = #{description}" +
+            " AND a.qr_code = #{qrCode}" +
+            " AND a.status = #{status}" +
+            " AND a.status_callback = #{statusCallback}" +
+            " AND a.transaction_time = #{transactionTime}" +
+            " AND a.channel_fee = #{channelFee}" +
+            " AND a.deposite_bank_statement_id = #{depositeBankStatementId}" +
+            " AND a.account_holder = #{accountHolder}" +
+            " AND a.callback_url = #{callbackUrl}" +
+            " order by a.id desc LIMIT 10000")
+    List<DepositeMerchantEntity> findByInfo(@Param("merchantId") String merchantId,
+                                            @Param("transactionId") String transactionId,
+                                            @Param("method") String method,
+                                            @Param("amount") BigDecimal amount,
+                                            @Param("billAmount") BigDecimal billAmount,
+                                            @Param("bankCode") String bankCode,
+                                            @Param("cardNo") String cardNo,
+                                            @Param("depositeBankCode") String depositeBankCode,
+                                            @Param("depositeCardNo") String depositeCardNo,
+                                            @Param("depositeName") String depositeName,
+                                            @Param("depositePhone") String depositePhone,
+                                            @Param("expireTime") LocalDateTime expireTime,
+                                            @Param("expireTimeReal") LocalDateTime expireTimeReal,
+                                            @Param("name") String name,
+                                            @Param("phone") String phone,
+                                            @Param("description") String description,
+                                            @Param("qrCode") String qrCode,
+                                            @Param("status") String status,
+                                            @Param("statusCallback") String statusCallback,
+                                            @Param("transactionTime") LocalDateTime transactionTime,
+                                            @Param("channelFee") BigDecimal channelFee,
+                                            @Param("depositeBankStatementId") String depositeBankStatementId,
+                                            @Param("accountHolder") String accountHolder,
+                                            @Param("callbackUrl") String callbackUrl);
+
+    @Select("SELECT a.* FROM tb_deposite_merchant a" +
+            " WHERE a.merchant_id = #{merchantId}" +
+            " AND a.transaction_id = #{transactionId}" +
+            " AND a.method = #{method}" +
+            " AND a.amount = #{amount}" +
+            " AND a.bill_amount = #{billAmount}" +
+            " AND a.bank_code = #{bankCode}" +
+            " AND a.card_no = #{cardNo}" +
+            " AND a.deposite_bank_code = #{depositeBankCode}" +
+            " AND a.deposite_card_no = #{depositeCardNo}" +
+            " AND a.deposite_name = #{depositeName}" +
+            " AND a.deposite_phone = #{depositePhone}" +
+            " AND a.expire_time = #{expireTime}" +
+            " AND a.expire_time_real = #{expireTimeReal}" +
+            " AND a.name = #{name}" +
+            " AND a.phone = #{phone}" +
+            " AND a.description = #{description}" +
+            " AND a.qr_code = #{qrCode}" +
+            " AND a.status = #{status}" +
+            " AND a.status_callback = #{statusCallback}" +
+            " AND a.transaction_time = #{transactionTime}" +
+            " AND a.channel_fee = #{channelFee}" +
+            " AND a.deposite_bank_statement_id = #{depositeBankStatementId}" +
+            " AND a.account_holder = #{accountHolder}" +
+            " AND a.callback_url = #{callbackUrl}" +
+            " order by a.id desc LIMIT 1")
+    DepositeMerchantEntity findOneByInfo(@Param("merchantId") String merchantId,
+                                         @Param("transactionId") String transactionId,
+                                         @Param("method") String method,
+                                         @Param("amount") BigDecimal amount,
+                                         @Param("billAmount") BigDecimal billAmount,
+                                         @Param("bankCode") String bankCode,
+                                         @Param("cardNo") String cardNo,
+                                         @Param("depositeBankCode") String depositeBankCode,
+                                         @Param("depositeCardNo") String depositeCardNo,
+                                         @Param("depositeName") String depositeName,
+                                         @Param("depositePhone") String depositePhone,
+                                         @Param("expireTime") LocalDateTime expireTime,
+                                         @Param("expireTimeReal") LocalDateTime expireTimeReal,
+                                         @Param("name") String name,
+                                         @Param("phone") String phone,
+                                         @Param("description") String description,
+                                         @Param("qrCode") String qrCode,
+                                         @Param("status") String status,
+                                         @Param("statusCallback") String statusCallback,
+                                         @Param("transactionTime") LocalDateTime transactionTime,
+                                         @Param("channelFee") BigDecimal channelFee,
+                                         @Param("depositeBankStatementId") String depositeBankStatementId,
+                                         @Param("accountHolder") String accountHolder,
+                                         @Param("callbackUrl") String callbackUrl);

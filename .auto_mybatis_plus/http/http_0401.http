@@ -1,0 +1,458 @@
+
+### /receiveBankCardSetting/delete
+POST {{host}}/backend/receiveBankCardSetting/delete
+Content-Type: application/json
+
+{
+  "id": id
+}
+
+### /receiveBankCardSetting/addUpdate
+POST {{host}}/backend/receiveBankCardSetting/addUpdate
+Content-Type: application/json
+
+{
+  "bankName": "bankName",
+  "bankCode": "bankCode",
+  "cardNo": "cardNo",
+  "status": "status"
+}
+
+### /receiveBankCardSetting/find
+GET {{host}}/backend/receiveBankCardSetting/find?page=1&size=2
+
+
+### /disburseBankCardSetting/delete
+POST {{host}}/backend/disburseBankCardSetting/delete
+Content-Type: application/json
+
+{
+  "id": id
+}
+
+### /disburseBankCardSetting/addUpdate
+POST {{host}}/backend/disburseBankCardSetting/addUpdate
+Content-Type: application/json
+
+{
+  "id": id,
+  "bankName": "bankName",
+  "bankCode": "bankCode",
+  "cardNo": "cardNo",
+  "singleDisburseLimit": singleDisburseLimit,
+  "dailyDisburseLimit": dailyDisburseLimit,
+  "status": "status",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /disburseBankCardSetting/find
+GET {{host}}/backend/disburseBankCardSetting/find
+
+
+### /disburseOrder/delete
+POST {{host}}/backend/disburseOrder/delete
+Content-Type: application/json
+
+{
+  "id": id
+}
+
+### /disburseOrder/addUpdate
+POST {{host}}/backend/disburseOrder/addUpdate
+Content-Type: application/json
+
+{
+  "id": id,
+  "merchantId": "merchantId",
+  "merTransactionId": "merTransactionId",
+  "amount": amount,
+  "bankCode": "bankCode",
+  "cardNo": "cardNo",
+  "name": "name",
+  "phone": "phone",
+  "status": "status",
+  "statementId": "statementId",
+  "disburseTime": "disburseTime",
+  "disburseEndTime": "disburseEndTime",
+  "reason": "reason",
+  "operatorId": "operatorId",
+  "callBackUrl": "callBackUrl",
+  "callBackStatus": "callBackStatus",
+  "callBackTime": "callBackTime",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /disburseOrder/find
+GET {{host}}/backend/disburseOrder/find
+
+
+### /depositeBankCardSetting/delete
+POST {{host}}/backend/depositeBankCardSetting/delete
+Content-Type: application/json
+
+{
+  "id": id
+}
+
+### /depositeBankCardSetting/addUpdate
+POST {{host}}/backend/depositeBankCardSetting/addUpdate
+Content-Type: application/json
+
+{
+  "id": id,
+  "bankName": "bankName",
+  "bankCode": "bankCode",
+  "cardNo": "cardNo",
+  "quota": quota,
+  "status": "status",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /depositeBankCardSetting/find
+GET {{host}}/backend/depositeBankCardSetting/find
+
+
+### /systemUserSetting/delete
+POST {{host}}/backend/systemUserSetting/delete
+Content-Type: application/json
+
+{
+  "id": id
+}
+
+### /systemUserSetting/addUpdate
+POST {{host}}/backend/systemUserSetting/addUpdate
+Content-Type: application/json
+
+{
+  "id": id,
+  "userId": "userId",
+  "setData": "setData",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /systemUserSetting/find
+GET {{host}}/backend/systemUserSetting/find
+
+
+### /systemRole/delete
+POST {{host}}/backend/systemRole/delete
+Content-Type: application/json
+
+{
+  "id": id
+}
+
+### /systemRole/addUpdate
+POST {{host}}/backend/systemRole/addUpdate
+Content-Type: application/json
+
+{
+  "id": id,
+  "roleName": "roleName",
+  "status": "status",
+  "description": "description",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /systemRole/find
+GET {{host}}/backend/systemRole/find
+
+
+### /systemPrivilegeServer/delete
+POST {{host}}/backend/systemPrivilegeServer/delete
+Content-Type: application/json
+
+{
+  "id": id
+}
+
+### /systemPrivilegeServer/addUpdate
+POST {{host}}/backend/systemPrivilegeServer/addUpdate
+Content-Type: application/json
+
+{
+  "id": id,
+  "privilegeId": "privilegeId",
+  "type": "type",
+  "url": "url",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /systemPrivilegeServer/find
+GET {{host}}/backend/systemPrivilegeServer/find
+
+
+### /depositeMerchant/delete
+POST {{host}}/backend/depositeMerchant/delete
+Content-Type: application/json
+
+{
+  "id": id
+}
+
+### /depositeMerchant/addUpdate
+POST {{host}}/backend/depositeMerchant/addUpdate
+Content-Type: application/json
+
+{
+  "id": id,
+  "merchantId": "merchantId",
+  "transactionId": "transactionId",
+  "method": "method",
+  "amount": amount,
+  "billAmount": billAmount,
+  "bankCode": "bankCode",
+  "cardNo": "cardNo",
+  "depositeBankCode": "depositeBankCode",
+  "depositeCardNo": "depositeCardNo",
+  "expireTime": "expireTime",
+  "expireTimeReal": "expireTimeReal",
+  "name": "name",
+  "phone": "phone",
+  "description": "description",
+  "qrCode": "qrCode",
+  "status": "status",
+  "statusCallback": "statusCallback",
+  "transactionTime": "transactionTime",
+  "channelFee": channelFee,
+  "depositeBankStatementId": "depositeBankStatementId",
+  "accountHolder": "accountHolder",
+  "callbackUrl": "callbackUrl",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /depositeMerchant/find
+GET {{host}}/backend/depositeMerchant/find
+
+
+### /depositeBankStatement/delete
+POST {{host}}/backend/depositeBankStatement/delete
+Content-Type: application/json
+
+{
+  "id": id
+}
+
+### /depositeBankStatement/addUpdate
+POST {{host}}/backend/depositeBankStatement/addUpdate
+Content-Type: application/json
+
+{
+  "id": id,
+  "depositeBankCode": "depositeBankCode",
+  "depositeCardNo": "depositeCardNo",
+  "billAmount": billAmount,
+  "transactionTime": "transactionTime",
+  "cardNoSuffix": "cardNoSuffix",
+  "accountHolder": "accountHolder",
+  "infoUrl": "infoUrl",
+  "status": "status",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /depositeBankStatement/find
+GET {{host}}/backend/depositeBankStatement/find
+
+
+### /systemUserRole/delete
+POST {{host}}/backend/systemUserRole/delete
+Content-Type: application/json
+
+{
+  "id": id
+}
+
+### /systemUserRole/addUpdate
+POST {{host}}/backend/systemUserRole/addUpdate
+Content-Type: application/json
+
+{
+  "id": id,
+  "userId": "userId",
+  "roleId": "roleId",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /systemUserRole/find
+GET {{host}}/backend/systemUserRole/find
+
+
+### /systemRolePrivilege/delete
+POST {{host}}/backend/systemRolePrivilege/delete
+Content-Type: application/json
+
+{
+  "id": id
+}
+
+### /systemRolePrivilege/addUpdate
+POST {{host}}/backend/systemRolePrivilege/addUpdate
+Content-Type: application/json
+
+{
+  "id": id,
+  "roleId": "roleId",
+  "privilegeId": "privilegeId",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /systemRolePrivilege/find
+GET {{host}}/backend/systemRolePrivilege/find
+
+
+### /merchantInfo/delete
+POST {{host}}/backend/merchantInfo/delete
+Content-Type: application/json
+
+{
+  "id": id
+}
+
+### /merchantInfo/addUpdate
+POST {{host}}/backend/merchantInfo/addUpdate
+Content-Type: application/json
+
+{
+  "id": id,
+  "merchantInfo": "merchantInfo",
+  "accessKey": "accessKey",
+  "secretKey": "secretKey",
+  "status": "status",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /merchantInfo/find
+GET {{host}}/backend/merchantInfo/find
+
+
+### /systemUser/delete
+POST {{host}}/backend/systemUser/delete
+Content-Type: application/json
+
+{
+  "id": id
+}
+
+### /systemUser/addUpdate
+POST {{host}}/backend/systemUser/addUpdate
+Content-Type: application/json
+
+{
+  "id": id,
+  "loginName": "loginName",
+  "fullName": "fullName",
+  "password": "password",
+  "type": "type",
+  "status": "status",
+  "failedLoginCount": failedLoginCount,
+  "lastTime": "lastTime",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /systemUser/find
+GET {{host}}/backend/systemUser/find
+
+
+### /mnsFailLog/delete
+POST {{host}}/backend/mnsFailLog/delete
+Content-Type: application/json
+
+{
+  "id": id
+}
+
+### /mnsFailLog/addUpdate
+POST {{host}}/backend/mnsFailLog/addUpdate
+Content-Type: application/json
+
+{
+  "id": id,
+  "queue": "queue",
+  "scene": "scene",
+  "msgBody": "msgBody",
+  "errorMsg": "errorMsg",
+  "remark": "remark",
+  "createdAt": "createdAt",
+  "updatedAt": "updatedAt"
+}
+
+### /mnsFailLog/find
+GET {{host}}/backend/mnsFailLog/find
+
+
+### /disburseOrderStatement/delete
+POST {{host}}/backend/disburseOrderStatement/delete
+Content-Type: application/json
+
+{
+  "id": id
+}
+
+### /disburseOrderStatement/addUpdate
+POST {{host}}/backend/disburseOrderStatement/addUpdate
+Content-Type: application/json
+
+{
+  "id": id,
+  "disburseOrderId": "disburseOrderId",
+  "amount": amount,
+  "bankCode": "bankCode",
+  "cardNo": "cardNo",
+  "operatorId": "operatorId",
+  "status": "status",
+  "proof": "proof",
+  "proofInfo": "proofInfo",
+  "disburseBankCardId": "disburseBankCardId",
+  "disburseBankCardNo": "disburseBankCardNo",
+  "disburseTime": "disburseTime",
+  "disburseEndTime": "disburseEndTime",
+  "reason": "reason",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /disburseOrderStatement/find
+GET {{host}}/backend/disburseOrderStatement/find
+
+
+### /systemPrivilege/delete
+POST {{host}}/backend/systemPrivilege/delete
+Content-Type: application/json
+
+{
+  "id": id
+}
+
+### /systemPrivilege/addUpdate
+POST {{host}}/backend/systemPrivilege/addUpdate
+Content-Type: application/json
+
+{
+  "id": id,
+  "icon": "icon",
+  "name": "name",
+  "url": "url",
+  "status": "status",
+  "type": "type",
+  "parentId": "parentId",
+  "sort": sort,
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /systemPrivilege/find
+GET {{host}}/backend/systemPrivilege/find
+

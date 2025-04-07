@@ -84,6 +84,7 @@ public enum Order {
     serFindTypeName,
     serviceName,
     serviceFindName,
+    serviceFindMethod,
     controllerFindParam,
 
     mapperSelectKeyValue,

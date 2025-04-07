@@ -1,0 +1,111 @@
+{
+  "author": "yangpu",
+  "store_by_table": true,
+  "remove_prefix": [
+    "T_",
+    "X_",
+    "S_",
+    "TB_"
+  ],
+  "jdbc": {
+    "clazz": "com.mysql.cj.jdbc.Driver",
+    "url": "jdbc:mysql://dev-db.ksmdev.top:3306",
+    "username": "root",
+    "password": "123456",
+    "database": "yp3"
+  },
+  "info": [
+    {
+      "template": "templateUseful.up",
+      "remark": "generate useful",
+      "file_name_suffix": "_useful.txt",
+      "store_by_table": true,
+      "path": {
+        "local": true
+      }
+    },
+    {
+      "template": "templateDocTable.up",
+      "remark": "generate doc table",
+      "file_name_suffix": "_doc.txt",
+      "store_by_table": true,
+      "path": {
+        "local": true
+      }
+    },
+    {
+      "template": "templateController.up",
+      "store_by_table": false,
+      "remark": "generate controller",
+      "file_name_suffix": "Controller.java",
+      "path": {
+        "project_name": "api",
+        "package_name": "com.pay.api.controller"
+      }
+    },
+    {
+      "template": "templateService.up",
+      "remark": "generate service",
+      "file_name_suffix": "Service.java",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.pay.common.db"
+      }
+    },
+    {
+      "template": "templateMapper.up",
+      "remark": "generate mapper",
+      "file_name_suffix": "Mapper.java",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.pay.common.db"
+      }
+    },
+    {
+      "template": "templateEntity.up",
+      "entity_field_is_public": true,
+      "entity_generate_static_method": true,
+      "file_name_suffix": "Entity.java",
+      "add_one_row_for_id": "@TableId",
+      "remark": "generate entity",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.pay.common.db"
+      }
+    },
+    {
+      "template": "templateData.up",
+      "remark": "generate data",
+      "file_name_suffix": "Data.java",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.pay.common.db"
+      }
+    },
+    {
+      "template": "templateDto.up",
+      "remark": "generate dto",
+      "file_name_suffix": "Dto.java",
+      "need_json_property": false,
+      "path": {
+        "project_name": "common",
+        "package_name": "com.pay.common.db"
+      }
+    },
+    
+    {
+      "type": "constant",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.pay.common.constant"
+      }
+    },
+    {
+      "type": "db",
+      "path": {
+        "project_name": "common",
+        "package_name": "com.pay.common.db"
+      }
+    }
+  ]
+}

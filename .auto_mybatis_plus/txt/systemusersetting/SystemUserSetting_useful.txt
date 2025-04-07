@@ -1,0 +1,260 @@
+{
+    "id": "id",
+    "userId": "userId",
+    "setData": "setData",
+    "createTime": "createTime",
+    "updateTime": "updateTime"
+}
+
+
+@RequestParam(name = "id", required = false) String id,
+@RequestParam(name = "userId", required = false) String userId,
+@RequestParam(name = "setData", required = false) String setData,
+@RequestParam(name = "createTime", required = false) LocalDateTime createTime,
+@RequestParam(name = "updateTime", required = false) LocalDateTime updateTime
+
+
+{
+    title: 'id',
+    key: 'id',
+},{
+    title: '用户',
+    key: 'userId',
+},{
+    title: '配置数据',
+    key: 'setData',
+},{
+    title: '产生时间',
+    key: 'createTime',
+},{
+    title: '更新时间',
+    key: 'updateTime',
+}
+
+
+{
+    title: 'id',
+    width: 100,
+    key: 'id',
+},{
+    title: '用户',
+    width: 100,
+    key: 'userId',
+},{
+    title: '配置数据',
+    width: 100,
+    key: 'setData',
+},{
+    title: '产生时间',
+    width: 100,
+    key: 'createTime',
+},{
+    title: '更新时间',
+    width: 100,
+    key: 'updateTime',
+}
+
+
+id
+用户
+配置数据
+产生时间
+更新时间
+
+
+id
+user_id
+set_data
+create_time
+update_time
+
+
+id
+userId
+setData
+createTime
+updateTime
+
+tableName : t_system_user_setting
+
+a.id, a.user_id, a.set_data, a.create_time, a.update_time,
+
+
+a.id,
+a.user_id,
+a.set_data,
+a.create_time,
+a.update_time,
+
+
+// api/api.js 中, 需要生成的代码
+
+  systemUserSettingFind(query) {
+    return this.get('/systemUserSetting/find', query)
+  }
+
+  systemUserSettingFindAll(query) {
+    return this.getFindAll('/systemUserSetting/find', query)
+  }
+
+  systemUserSettingAll() {
+    return this.getAll('/systemUserSetting/find')
+  }
+
+  systemUserSettingOne(id) {
+    return this.getOne('/systemUserSetting/find', id)
+  }
+
+  systemUserSettingAddUpdate(obj, by) {
+    return this.postBy('/systemUserSetting/addUpdate', obj, by)
+  }
+
+  systemUserSettingDelete(obj) {
+    return this.post('/systemUserSetting/delete', obj)
+  }
+
+
+// router/index.js 中, 需要生成的代码
+
+  {
+    path: '/-frontFilePath-/systemUserSetting',
+    component: () => import('@/views/-frontFilePath-/systemUserSetting'),
+  },
+
+
+      // 前端代码中详情数据的展示
+      <el-descriptions border :column="2">
+        <!--<el-descriptions-item label="id">{{ temp.id }}</el-descriptions-item>-->
+        <!--<el-descriptions-item label="用户">{{ temp.userId }}</el-descriptions-item>-->
+        <el-descriptions-item label="配置数据">{{ temp.setData }}</el-descriptions-item>
+        <!--<el-descriptions-item label="产生时间">{{ temp.createTime }}</el-descriptions-item>-->
+        <!--<el-descriptions-item label="更新时间">{{ temp.updateTime }}</el-descriptions-item>-->
+      </el-descriptions>
+
+      <el-form label-position="left" inline class="demo-table-expand">
+        <!--<el-form-item label="id"><span>{{temp.id}}</span></el-form-item>-->
+        <!--<el-form-item label="用户"><span>{{temp.userId}}</span></el-form-item>-->
+        <el-form-item label="配置数据"><span>{{temp.setData}}</span></el-form-item>
+        <!--<el-form-item label="产生时间"><span>{{temp.createTime}}</span></el-form-item>-->
+        <!--<el-form-item label="更新时间"><span>{{temp.updateTime}}</span></el-form-item>-->
+      </el-form>
+
+
+
+''
+
+ 
+
+| page                | 否 | 整数     | 页码,第几页,编号从 1 开始, 默认第1页
+| size                | 否 | 整数     | 每页多少条数据,默认值:1 , 最大1000
+| limit               | 否 | 整数     | 每页多少条数据,默认值:1 , 最大1000,与size 一样
+| id                  | 否 | 字符串   | id,例如: 1234
+| ids                 | 否 | 字符串   | 多个id以逗号分隔,例如: 1234,2345
+| userId              | 否 | 字符串   | 用户-多个以逗号分割</br>常量
+| startTime           | 否 | 日期时间 | 开始时间,例如 : 2017-01-01 12:13:14 </br> 或者 例如 : 2017-01-01
+| endTime             | 否 | 日期时间 | 结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| all                 | 否 | 字符串   | 分页状态下,查询出全部数据,相当于page=1,size=2000
+| _all                | 否 | 字符串   | 查询全部的原始数据,小心使用,相当于page=1,size=20000,_raw=_raw
+| _one                | 否 | 字符串   | 查询出一条数据,相当于page=1,size=1,返回对象,不是数组
+| _raw                | 否 | 字符串   | 原始数据查询,查询原始表数据,不附带其他,数据结构与表对应起来
+| createTimeFrom      | 否 | 日期时间 | 产生时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| createTimeTo        | 否 | 日期时间 | 产生时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| updateTimeFrom      | 否 | 日期时间 | 更新时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| updateTimeTo        | 否 | 日期时间 | 更新时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+
+| id                  | 是 | 字符串   | id</br>***最大长度:32***
+| userId              | 是 | 字符串   | 用户</br>常量</br>***最大长度:32***
+| setData             | 否 | 字符串   | 配置数据</br>***最大长度:65535***
+| createTime          | 是 | 日期时间 | 产生时间</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+| updateTime          | 是 | 日期时间 | 更新时间</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+
+
+    // TODO: controller 通用模板
+    // TODO: controller 通用模板
+    // TODO: controller 通用模板
+    @GetMapping("info")
+    public ReturnData info(
+            @RequestParam(name = "userId", required = false) String userId,
+            @RequestParam(name = "setData", required = false) String setData
+    ) throws Exception {
+        List<SystemUserSettingEntity> list = systemUserSettingService.findByInfo(
+                userId,
+                setData
+        );
+        return ok(list);
+    }
+
+    @GetMapping("infoOne")
+    public ReturnData infoOne(
+            @RequestParam(name = "userId", required = false) String userId,
+            @RequestParam(name = "setData", required = false) String setData
+    ) throws Exception {
+        SystemUserSettingEntity one = systemUserSettingService.findOneByInfo(
+                userId,
+                setData
+        );
+        return ok(one);
+    }
+
+
+    // TODO: service 通用模板
+    // TODO: service 通用模板
+    // TODO: service 通用模板
+    public int updateByInfo(
+            String id,
+            String userId,
+            String setData
+    ) {
+        return systemUserSettingMapper.updateByInfo(
+                id,
+                userId,
+                setData
+        );
+    }
+
+    public List<SystemUserSettingEntity> findByInfo(
+            String userId,
+            String setData
+    ) {
+        List<SystemUserSettingEntity> list = systemUserSettingMapper.findByInfo(
+                userId,
+                setData
+        );
+        return list;
+    }
+
+    public SystemUserSettingEntity findOneByInfo(
+            String userId,
+            String setData
+    ) {
+        SystemUserSettingEntity one = systemUserSettingMapper.findOneByInfo(
+                userId,
+                setData
+        );
+        return one;
+    }
+
+
+    // TODO: mapper 通用模板
+    // TODO: mapper 通用模板
+    // TODO: mapper 通用模板
+    @Update(" update t_system_user_setting set" +
+            " user_id = #{userId}, set_data = #{setData}, update_time = now()" +
+            " where id = #{id}")
+    int updateByInfo(@Param("id") String id,
+                     @Param("userId") String userId,
+                     @Param("setData") String setData);
+
+    @Select("SELECT a.* FROM t_system_user_setting a" +
+            " WHERE a.user_id = #{userId}" +
+            " AND a.set_data = #{setData}" +
+            " order by a.id desc LIMIT 10000")
+    List<SystemUserSettingEntity> findByInfo(@Param("userId") String userId,
+                                             @Param("setData") String setData);
+
+    @Select("SELECT a.* FROM t_system_user_setting a" +
+            " WHERE a.user_id = #{userId}" +
+            " AND a.set_data = #{setData}" +
+            " order by a.id desc LIMIT 1")
+    SystemUserSettingEntity findOneByInfo(@Param("userId") String userId,
+                                          @Param("setData") String setData);

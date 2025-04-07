@@ -1,0 +1,290 @@
+{
+    "id": "id",
+    "roleName": "roleName",
+    "status": "status",
+    "description": "description",
+    "createTime": "createTime",
+    "updateTime": "updateTime"
+}
+
+
+@RequestParam(name = "id", required = false) String id,
+@RequestParam(name = "roleName", required = false) String roleName,
+@RequestParam(name = "status", required = false) String status,
+@RequestParam(name = "description", required = false) String description,
+@RequestParam(name = "createTime", required = false) LocalDateTime createTime,
+@RequestParam(name = "updateTime", required = false) LocalDateTime updateTime
+
+
+{
+    title: 'id',
+    key: 'id',
+},{
+    title: '角色名字',
+    key: 'roleName',
+},{
+    title: '角色状态',
+    key: 'status',
+},{
+    title: '角色描述',
+    key: 'description',
+},{
+    title: '产生时间',
+    key: 'createTime',
+},{
+    title: '更新时间',
+    key: 'updateTime',
+}
+
+
+{
+    title: 'id',
+    width: 100,
+    key: 'id',
+},{
+    title: '角色名字',
+    width: 100,
+    key: 'roleName',
+},{
+    title: '角色状态',
+    width: 100,
+    key: 'status',
+},{
+    title: '角色描述',
+    width: 100,
+    key: 'description',
+},{
+    title: '产生时间',
+    width: 100,
+    key: 'createTime',
+},{
+    title: '更新时间',
+    width: 100,
+    key: 'updateTime',
+}
+
+
+id
+角色名字
+角色状态
+角色描述
+产生时间
+更新时间
+
+
+id
+role_name
+status
+description
+create_time
+update_time
+
+
+id
+roleName
+status
+description
+createTime
+updateTime
+
+tableName : t_system_role
+
+a.id, a.role_name, a.status, a.description, a.create_time, a.update_time,
+
+
+a.id,
+a.role_name,
+a.status,
+a.description,
+a.create_time,
+a.update_time,
+
+
+// api/api.js 中, 需要生成的代码
+
+  systemRoleFind(query) {
+    return this.get('/systemRole/find', query)
+  }
+
+  systemRoleFindAll(query) {
+    return this.getFindAll('/systemRole/find', query)
+  }
+
+  systemRoleAll() {
+    return this.getAll('/systemRole/find')
+  }
+
+  systemRoleOne(id) {
+    return this.getOne('/systemRole/find', id)
+  }
+
+  systemRoleAddUpdate(obj, by) {
+    return this.postBy('/systemRole/addUpdate', obj, by)
+  }
+
+  systemRoleDelete(obj) {
+    return this.post('/systemRole/delete', obj)
+  }
+
+
+// router/index.js 中, 需要生成的代码
+
+  {
+    path: '/-frontFilePath-/systemRole',
+    component: () => import('@/views/-frontFilePath-/systemRole'),
+  },
+
+
+      // 前端代码中详情数据的展示
+      <el-descriptions border :column="2">
+        <!--<el-descriptions-item label="id">{{ temp.id }}</el-descriptions-item>-->
+        <el-descriptions-item label="角色名字">{{ temp.roleName }}</el-descriptions-item>
+        <el-descriptions-item label="角色状态">{{ temp.status }}</el-descriptions-item>
+        <el-descriptions-item label="角色描述">{{ temp.description }}</el-descriptions-item>
+        <!--<el-descriptions-item label="产生时间">{{ temp.createTime }}</el-descriptions-item>-->
+        <!--<el-descriptions-item label="更新时间">{{ temp.updateTime }}</el-descriptions-item>-->
+      </el-descriptions>
+
+      <el-form label-position="left" inline class="demo-table-expand">
+        <!--<el-form-item label="id"><span>{{temp.id}}</span></el-form-item>-->
+        <el-form-item label="角色名字"><span>{{temp.roleName}}</span></el-form-item>
+        <el-form-item label="角色状态"><span>{{temp.status}}</span></el-form-item>
+        <el-form-item label="角色描述"><span>{{temp.description}}</span></el-form-item>
+        <!--<el-form-item label="产生时间"><span>{{temp.createTime}}</span></el-form-item>-->
+        <!--<el-form-item label="更新时间"><span>{{temp.updateTime}}</span></el-form-item>-->
+      </el-form>
+
+
+
+'角色名字', '角色状态', '角色描述'
+
+'roleName', 'status', 'description'
+
+| page                | 否 | 整数     | 页码,第几页,编号从 1 开始, 默认第1页
+| size                | 否 | 整数     | 每页多少条数据,默认值:1 , 最大1000
+| limit               | 否 | 整数     | 每页多少条数据,默认值:1 , 最大1000,与size 一样
+| id                  | 否 | 字符串   | id,例如: 1234
+| ids                 | 否 | 字符串   | 多个id以逗号分隔,例如: 1234,2345
+| startTime           | 否 | 日期时间 | 开始时间,例如 : 2017-01-01 12:13:14 </br> 或者 例如 : 2017-01-01
+| endTime             | 否 | 日期时间 | 结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| all                 | 否 | 字符串   | 分页状态下,查询出全部数据,相当于page=1,size=2000
+| _all                | 否 | 字符串   | 查询全部的原始数据,小心使用,相当于page=1,size=20000,_raw=_raw
+| _one                | 否 | 字符串   | 查询出一条数据,相当于page=1,size=1,返回对象,不是数组
+| _raw                | 否 | 字符串   | 原始数据查询,查询原始表数据,不附带其他,数据结构与表对应起来
+| createTimeFrom      | 否 | 日期时间 | 产生时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| createTimeTo        | 否 | 日期时间 | 产生时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| updateTimeFrom      | 否 | 日期时间 | 更新时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| updateTimeTo        | 否 | 日期时间 | 更新时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+
+| id                  | 是 | 字符串   | id</br>***最大长度:32***
+| roleName            | 是 | 字符串   | 角色名字</br>***最大长度:64***
+| status              | 是 | 字符串   | 角色状态</br>***最大长度:16***
+| description         | 否 | 字符串   | 角色描述</br>***最大长度:64***
+| createTime          | 是 | 日期时间 | 产生时间</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+| updateTime          | 是 | 日期时间 | 更新时间</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+
+
+    // TODO: controller 通用模板
+    // TODO: controller 通用模板
+    // TODO: controller 通用模板
+    @GetMapping("info")
+    public ReturnData info(
+            @RequestParam(name = "roleName", required = false) String roleName,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "description", required = false) String description
+    ) throws Exception {
+        List<SystemRoleEntity> list = systemRoleService.findByInfo(
+                roleName,
+                status,
+                description
+        );
+        return ok(list);
+    }
+
+    @GetMapping("infoOne")
+    public ReturnData infoOne(
+            @RequestParam(name = "roleName", required = false) String roleName,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "description", required = false) String description
+    ) throws Exception {
+        SystemRoleEntity one = systemRoleService.findOneByInfo(
+                roleName,
+                status,
+                description
+        );
+        return ok(one);
+    }
+
+
+    // TODO: service 通用模板
+    // TODO: service 通用模板
+    // TODO: service 通用模板
+    public int updateByInfo(
+            String id,
+            String roleName,
+            String status,
+            String description
+    ) {
+        return systemRoleMapper.updateByInfo(
+                id,
+                roleName,
+                status,
+                description
+        );
+    }
+
+    public List<SystemRoleEntity> findByInfo(
+            String roleName,
+            String status,
+            String description
+    ) {
+        List<SystemRoleEntity> list = systemRoleMapper.findByInfo(
+                roleName,
+                status,
+                description
+        );
+        return list;
+    }
+
+    public SystemRoleEntity findOneByInfo(
+            String roleName,
+            String status,
+            String description
+    ) {
+        SystemRoleEntity one = systemRoleMapper.findOneByInfo(
+                roleName,
+                status,
+                description
+        );
+        return one;
+    }
+
+
+    // TODO: mapper 通用模板
+    // TODO: mapper 通用模板
+    // TODO: mapper 通用模板
+    @Update(" update t_system_role set" +
+            " role_name = #{roleName}, status = #{status}, description = #{description}, update_time = now()" +
+            " where id = #{id}")
+    int updateByInfo(@Param("id") String id,
+                     @Param("roleName") String roleName,
+                     @Param("status") String status,
+                     @Param("description") String description);
+
+    @Select("SELECT a.* FROM t_system_role a" +
+            " WHERE a.role_name = #{roleName}" +
+            " AND a.status = #{status}" +
+            " AND a.description = #{description}" +
+            " order by a.id desc LIMIT 10000")
+    List<SystemRoleEntity> findByInfo(@Param("roleName") String roleName,
+                                      @Param("status") String status,
+                                      @Param("description") String description);
+
+    @Select("SELECT a.* FROM t_system_role a" +
+            " WHERE a.role_name = #{roleName}" +
+            " AND a.status = #{status}" +
+            " AND a.description = #{description}" +
+            " order by a.id desc LIMIT 1")
+    SystemRoleEntity findOneByInfo(@Param("roleName") String roleName,
+                                   @Param("status") String status,
+                                   @Param("description") String description);

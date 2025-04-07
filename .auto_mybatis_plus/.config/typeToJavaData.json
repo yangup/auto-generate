@@ -1,0 +1,145 @@
+[
+	{
+		"type": [
+			"bool",
+			"boolean"
+		],
+		"typeJava": "Boolean",
+		"typeDoc": "布尔型数据",
+		"typeDocNote": "只能填写 true 或 false ",
+		"jsonNeedColon": false,
+		"javaPackage": null
+	},
+	{
+		"type": [
+			"bit",
+			"tinyint",
+			"smallint",
+			"int",
+			"integer",
+			"mediummint",
+			"int4"
+		],
+		"typeJava": "Integer",
+		"typeDoc": "整数",
+		"typeDocNote": "",
+		"jsonNeedColon": false,
+		"javaPackage": null
+	},
+	{
+		"type": [
+			""
+		],
+		"typeJava": "BigInteger",
+		"typeDoc": "整数",
+		"typeDocNote": "",
+		"jsonNeedColon": false,
+		"javaPackage": "java.math.BigInteger"
+	},
+	{
+		"type": [
+			"bigint",
+			"int8"
+		],
+		"typeJava": "Long",
+		"typeDoc": "整数",
+		"typeDocNote": "",
+		"jsonNeedColon": false,
+		"javaPackage": null
+	},
+	{
+		"type": [
+			"dec",
+			"decimal",
+			"double",
+			"dec",
+			"decimal",
+			"double",
+			"numeric",
+			"float",
+			"real"
+		],
+		"typeJava": "BigDecimal",
+		"typeDoc": "浮点数",
+		"typeDocNote": "",
+		"jsonNeedColon": false,
+		"javaPackage": "java.math.BigDecimal"
+	},
+	{
+		"type": [
+			"enum",
+			"binary",
+			"blob",
+			"char",
+			"enum",
+			"fixed",
+			"longblob",
+			"tinyblob",
+			"tinytext",
+			"varbinary",
+			"varchar",
+			"longtext",
+			"mediumblob",
+			"set",
+			"text",
+			"json"
+		],
+		"typeJava": "String",
+		"typeDoc": "字符串",
+		"typeDocNote": "",
+		"jsonNeedColon": true,
+		"javaPackage": null
+	},
+	{
+		"type": [
+			"timestamp",
+			"timestamptz",
+			"datetime"
+		],
+		"typeJava": "LocalDateTime",
+		"typeDoc": "日期时间",
+		"typeDocNote": "格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14",
+		"jsonNeedColon": true,
+		"javaPackage": "java.time.LocalDateTime"
+	},
+	{
+		"type": [
+			"date"
+		],
+		"typeJava": "LocalDate",
+		"typeDoc": "日期",
+		"typeDocNote": "格式 : yyyy-MM-dd </br> 例如 : 2013-05-17",
+		"jsonNeedColon": true,
+		"javaPackage": "java.time.LocalDate"
+	},
+	{
+		"type": [
+			"time"
+		],
+		"typeJava": "LocalTime",
+		"typeDoc": "时间",
+		"typeDocNote": "格式 : HH:mm:ss </br> 例如 : 12:13:14",
+		"jsonNeedColon": true,
+		"javaPackage": "java.time.LocalTime"
+	},
+	{
+		"type": [
+			"year"
+		],
+		"typeJava": "Year",
+		"typeDoc": "年",
+		"typeDocNote": "格式 : yyyy </br> 例如 : 2013",
+		"jsonNeedColon": true,
+		"javaPackage": "java.time.Year"
+	},
+	{
+		"type": [
+			"byte"
+		],
+		"typeJava": "Byte",
+		"typeDoc": "字节类型",
+		"typeDocNote": "只能填写 1 或 0",
+		"jsonNeedColon": false,
+		"javaPackage": "java.lang.Byte"
+	}
+]

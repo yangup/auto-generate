@@ -1,0 +1,291 @@
+{
+    "id": "id",
+    "privilegeId": "privilegeId",
+    "type": "type",
+    "url": "url",
+    "createTime": "createTime",
+    "updateTime": "updateTime"
+}
+
+
+@RequestParam(name = "id", required = false) String id,
+@RequestParam(name = "privilegeId", required = false) String privilegeId,
+@RequestParam(name = "type", required = false) String type,
+@RequestParam(name = "url", required = false) String url,
+@RequestParam(name = "createTime", required = false) LocalDateTime createTime,
+@RequestParam(name = "updateTime", required = false) LocalDateTime updateTime
+
+
+{
+    title: 'id',
+    key: 'id',
+},{
+    title: '权限',
+    key: 'privilegeId',
+},{
+    title: '后端权限匹配类型,例如,正则表达式,带*匹配,完全匹配',
+    key: 'type',
+},{
+    title: '后端url',
+    key: 'url',
+},{
+    title: '产生时间',
+    key: 'createTime',
+},{
+    title: '更新时间',
+    key: 'updateTime',
+}
+
+
+{
+    title: 'id',
+    width: 100,
+    key: 'id',
+},{
+    title: '权限',
+    width: 100,
+    key: 'privilegeId',
+},{
+    title: '后端权限匹配类型,例如,正则表达式,带*匹配,完全匹配',
+    width: 100,
+    key: 'type',
+},{
+    title: '后端url',
+    width: 100,
+    key: 'url',
+},{
+    title: '产生时间',
+    width: 100,
+    key: 'createTime',
+},{
+    title: '更新时间',
+    width: 100,
+    key: 'updateTime',
+}
+
+
+id
+权限
+后端权限匹配类型,例如,正则表达式,带*匹配,完全匹配
+后端url
+产生时间
+更新时间
+
+
+id
+privilege_id
+type
+url
+create_time
+update_time
+
+
+id
+privilegeId
+type
+url
+createTime
+updateTime
+
+tableName : t_system_privilege_server
+
+a.id, a.privilege_id, a.type, a.url, a.create_time, a.update_time,
+
+
+a.id,
+a.privilege_id,
+a.type,
+a.url,
+a.create_time,
+a.update_time,
+
+
+// api/api.js 中, 需要生成的代码
+
+  systemPrivilegeServerFind(query) {
+    return this.get('/systemPrivilegeServer/find', query)
+  }
+
+  systemPrivilegeServerFindAll(query) {
+    return this.getFindAll('/systemPrivilegeServer/find', query)
+  }
+
+  systemPrivilegeServerAll() {
+    return this.getAll('/systemPrivilegeServer/find')
+  }
+
+  systemPrivilegeServerOne(id) {
+    return this.getOne('/systemPrivilegeServer/find', id)
+  }
+
+  systemPrivilegeServerAddUpdate(obj, by) {
+    return this.postBy('/systemPrivilegeServer/addUpdate', obj, by)
+  }
+
+  systemPrivilegeServerDelete(obj) {
+    return this.post('/systemPrivilegeServer/delete', obj)
+  }
+
+
+// router/index.js 中, 需要生成的代码
+
+  {
+    path: '/-frontFilePath-/systemPrivilegeServer',
+    component: () => import('@/views/-frontFilePath-/systemPrivilegeServer'),
+  },
+
+
+      // 前端代码中详情数据的展示
+      <el-descriptions border :column="2">
+        <!--<el-descriptions-item label="id">{{ temp.id }}</el-descriptions-item>-->
+        <!--<el-descriptions-item label="权限">{{ temp.privilegeId }}</el-descriptions-item>-->
+        <el-descriptions-item label="后端权限匹配类型,例如,正则表达式,带*匹配,完全匹配">{{ temp.type }}</el-descriptions-item>
+        <el-descriptions-item label="后端url">{{ temp.url }}</el-descriptions-item>
+        <!--<el-descriptions-item label="产生时间">{{ temp.createTime }}</el-descriptions-item>-->
+        <!--<el-descriptions-item label="更新时间">{{ temp.updateTime }}</el-descriptions-item>-->
+      </el-descriptions>
+
+      <el-form label-position="left" inline class="demo-table-expand">
+        <!--<el-form-item label="id"><span>{{temp.id}}</span></el-form-item>-->
+        <!--<el-form-item label="权限"><span>{{temp.privilegeId}}</span></el-form-item>-->
+        <el-form-item label="后端权限匹配类型,例如,正则表达式,带*匹配,完全匹配"><span>{{temp.type}}</span></el-form-item>
+        <el-form-item label="后端url"><span>{{temp.url}}</span></el-form-item>
+        <!--<el-form-item label="产生时间"><span>{{temp.createTime}}</span></el-form-item>-->
+        <!--<el-form-item label="更新时间"><span>{{temp.updateTime}}</span></el-form-item>-->
+      </el-form>
+
+
+
+'后端权限匹配类型,例如,正则表达式,带*匹配,完全匹配', '后端url'
+
+'type', 'url'
+
+| page                | 否 | 整数     | 页码,第几页,编号从 1 开始, 默认第1页
+| size                | 否 | 整数     | 每页多少条数据,默认值:1 , 最大1000
+| limit               | 否 | 整数     | 每页多少条数据,默认值:1 , 最大1000,与size 一样
+| id                  | 否 | 字符串   | id,例如: 1234
+| ids                 | 否 | 字符串   | 多个id以逗号分隔,例如: 1234,2345
+| privilegeId         | 否 | 字符串   | 权限-多个以逗号分割</br>常量
+| startTime           | 否 | 日期时间 | 开始时间,例如 : 2017-01-01 12:13:14 </br> 或者 例如 : 2017-01-01
+| endTime             | 否 | 日期时间 | 结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| all                 | 否 | 字符串   | 分页状态下,查询出全部数据,相当于page=1,size=2000
+| _all                | 否 | 字符串   | 查询全部的原始数据,小心使用,相当于page=1,size=20000,_raw=_raw
+| _one                | 否 | 字符串   | 查询出一条数据,相当于page=1,size=1,返回对象,不是数组
+| _raw                | 否 | 字符串   | 原始数据查询,查询原始表数据,不附带其他,数据结构与表对应起来
+| createTimeFrom      | 否 | 日期时间 | 产生时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| createTimeTo        | 否 | 日期时间 | 产生时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| updateTimeFrom      | 否 | 日期时间 | 更新时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| updateTimeTo        | 否 | 日期时间 | 更新时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+
+| id                  | 是 | 字符串   | id</br>***最大长度:32***
+| privilegeId         | 是 | 字符串   | 权限</br>常量</br>***最大长度:32***
+| type                | 是 | 字符串   | 后端权限匹配类型,例如,正则表达式,带*匹配,完全匹配</br>***最大长度:16***
+| url                 | 是 | 字符串   | 后端url</br>***最大长度:128***
+| createTime          | 是 | 日期时间 | 产生时间</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+| updateTime          | 是 | 日期时间 | 更新时间</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+
+
+    // TODO: controller 通用模板
+    // TODO: controller 通用模板
+    // TODO: controller 通用模板
+    @GetMapping("info")
+    public ReturnData info(
+            @RequestParam(name = "privilegeId", required = false) String privilegeId,
+            @RequestParam(name = "type", required = false) String type,
+            @RequestParam(name = "url", required = false) String url
+    ) throws Exception {
+        List<SystemPrivilegeServerEntity> list = systemPrivilegeServerService.findByInfo(
+                privilegeId,
+                type,
+                url
+        );
+        return ok(list);
+    }
+
+    @GetMapping("infoOne")
+    public ReturnData infoOne(
+            @RequestParam(name = "privilegeId", required = false) String privilegeId,
+            @RequestParam(name = "type", required = false) String type,
+            @RequestParam(name = "url", required = false) String url
+    ) throws Exception {
+        SystemPrivilegeServerEntity one = systemPrivilegeServerService.findOneByInfo(
+                privilegeId,
+                type,
+                url
+        );
+        return ok(one);
+    }
+
+
+    // TODO: service 通用模板
+    // TODO: service 通用模板
+    // TODO: service 通用模板
+    public int updateByInfo(
+            String id,
+            String privilegeId,
+            String type,
+            String url
+    ) {
+        return systemPrivilegeServerMapper.updateByInfo(
+                id,
+                privilegeId,
+                type,
+                url
+        );
+    }
+
+    public List<SystemPrivilegeServerEntity> findByInfo(
+            String privilegeId,
+            String type,
+            String url
+    ) {
+        List<SystemPrivilegeServerEntity> list = systemPrivilegeServerMapper.findByInfo(
+                privilegeId,
+                type,
+                url
+        );
+        return list;
+    }
+
+    public SystemPrivilegeServerEntity findOneByInfo(
+            String privilegeId,
+            String type,
+            String url
+    ) {
+        SystemPrivilegeServerEntity one = systemPrivilegeServerMapper.findOneByInfo(
+                privilegeId,
+                type,
+                url
+        );
+        return one;
+    }
+
+
+    // TODO: mapper 通用模板
+    // TODO: mapper 通用模板
+    // TODO: mapper 通用模板
+    @Update(" update t_system_privilege_server set" +
+            " privilege_id = #{privilegeId}, type = #{type}, url = #{url}, update_time = now()" +
+            " where id = #{id}")
+    int updateByInfo(@Param("id") String id,
+                     @Param("privilegeId") String privilegeId,
+                     @Param("type") String type,
+                     @Param("url") String url);
+
+    @Select("SELECT a.* FROM t_system_privilege_server a" +
+            " WHERE a.privilege_id = #{privilegeId}" +
+            " AND a.type = #{type}" +
+            " AND a.url = #{url}" +
+            " order by a.id desc LIMIT 10000")
+    List<SystemPrivilegeServerEntity> findByInfo(@Param("privilegeId") String privilegeId,
+                                                 @Param("type") String type,
+                                                 @Param("url") String url);
+
+    @Select("SELECT a.* FROM t_system_privilege_server a" +
+            " WHERE a.privilege_id = #{privilegeId}" +
+            " AND a.type = #{type}" +
+            " AND a.url = #{url}" +
+            " order by a.id desc LIMIT 1")
+    SystemPrivilegeServerEntity findOneByInfo(@Param("privilegeId") String privilegeId,
+                                              @Param("type") String type,
+                                              @Param("url") String url);

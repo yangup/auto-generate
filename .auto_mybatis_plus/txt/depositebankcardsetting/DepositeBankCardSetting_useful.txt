@@ -1,0 +1,453 @@
+{
+    "id": "id",
+    "bankName": "bankName",
+    "bankCode": "bankCode",
+    "name": "name",
+    "phone": "phone",
+    "cardNo": "cardNo",
+    "systemUserId": "systemUserId",
+    "quota": "quota",
+    "status": "status",
+    "createTime": "createTime",
+    "updateTime": "updateTime"
+}
+
+
+@RequestParam(name = "id", required = false) String id,
+@RequestParam(name = "bankName", required = false) String bankName,
+@RequestParam(name = "bankCode", required = false) String bankCode,
+@RequestParam(name = "name", required = false) String name,
+@RequestParam(name = "phone", required = false) String phone,
+@RequestParam(name = "cardNo", required = false) String cardNo,
+@RequestParam(name = "systemUserId", required = false) String systemUserId,
+@RequestParam(name = "quota", required = false) BigDecimal quota,
+@RequestParam(name = "status", required = false) String status,
+@RequestParam(name = "createTime", required = false) LocalDateTime createTime,
+@RequestParam(name = "updateTime", required = false) LocalDateTime updateTime
+
+
+{
+    title: '主键ID',
+    key: 'id',
+},{
+    title: '银行名称',
+    key: 'bankName',
+},{
+    title: '银行卡开户行编码（例如：KTB等）',
+    key: 'bankCode',
+},{
+    title: '收款人姓名',
+    key: 'name',
+},{
+    title: '收款人phone',
+    key: 'phone',
+},{
+    title: '银行卡号',
+    key: 'cardNo',
+},{
+    title: '系统用户ID',
+    key: 'systemUserId',
+},{
+    title: '额度',
+    key: 'quota',
+},{
+    title: '银行卡状态',
+    key: 'status',
+},{
+    title: '数据插入时间',
+    key: 'createTime',
+},{
+    title: '最后更新时间',
+    key: 'updateTime',
+}
+
+
+{
+    title: '主键ID',
+    width: 100,
+    key: 'id',
+},{
+    title: '银行名称',
+    width: 100,
+    key: 'bankName',
+},{
+    title: '银行卡开户行编码（例如：KTB等）',
+    width: 100,
+    key: 'bankCode',
+},{
+    title: '收款人姓名',
+    width: 100,
+    key: 'name',
+},{
+    title: '收款人phone',
+    width: 100,
+    key: 'phone',
+},{
+    title: '银行卡号',
+    width: 100,
+    key: 'cardNo',
+},{
+    title: '系统用户ID',
+    width: 100,
+    key: 'systemUserId',
+},{
+    title: '额度',
+    width: 100,
+    key: 'quota',
+},{
+    title: '银行卡状态',
+    width: 100,
+    key: 'status',
+},{
+    title: '数据插入时间',
+    width: 100,
+    key: 'createTime',
+},{
+    title: '最后更新时间',
+    width: 100,
+    key: 'updateTime',
+}
+
+
+主键ID
+银行名称
+银行卡开户行编码（例如：KTB等）
+收款人姓名
+收款人phone
+银行卡号
+系统用户ID
+额度
+银行卡状态
+数据插入时间
+最后更新时间
+
+
+id
+bank_name
+bank_code
+name
+phone
+card_no
+system_user_id
+quota
+status
+create_time
+update_time
+
+
+id
+bankName
+bankCode
+name
+phone
+cardNo
+systemUserId
+quota
+status
+createTime
+updateTime
+
+tableName : tb_deposite_bank_card_setting
+
+a.id, a.bank_name, a.bank_code, a.name, a.phone, a.card_no, a.system_user_id, a.quota, a.status, a.create_time, a.update_time,
+
+
+a.id,
+a.bank_name,
+a.bank_code,
+a.name,
+a.phone,
+a.card_no,
+a.system_user_id,
+a.quota,
+a.status,
+a.create_time,
+a.update_time,
+
+
+// api/api.js 中, 需要生成的代码
+
+  depositeBankCardSettingFind(query) {
+    return this.get('/depositeBankCardSetting/find', query)
+  }
+
+  depositeBankCardSettingFindAll(query) {
+    return this.getFindAll('/depositeBankCardSetting/find', query)
+  }
+
+  depositeBankCardSettingAll() {
+    return this.getAll('/depositeBankCardSetting/find')
+  }
+
+  depositeBankCardSettingOne(id) {
+    return this.getOne('/depositeBankCardSetting/find', id)
+  }
+
+  depositeBankCardSettingAddUpdate(obj, by) {
+    return this.postBy('/depositeBankCardSetting/addUpdate', obj, by)
+  }
+
+  depositeBankCardSettingDelete(obj) {
+    return this.post('/depositeBankCardSetting/delete', obj)
+  }
+
+
+// router/index.js 中, 需要生成的代码
+
+  {
+    path: '/-frontFilePath-/depositeBankCardSetting',
+    component: () => import('@/views/-frontFilePath-/depositeBankCardSetting'),
+  },
+
+
+      // 前端代码中详情数据的展示
+      <el-descriptions border :column="2">
+        <!--<el-descriptions-item label="主键ID">{{ temp.id }}</el-descriptions-item>-->
+        <el-descriptions-item label="银行名称">{{ temp.bankName }}</el-descriptions-item>
+        <el-descriptions-item label="银行卡开户行编码（例如：KTB等）">{{ temp.bankCode }}</el-descriptions-item>
+        <el-descriptions-item label="收款人姓名">{{ temp.name }}</el-descriptions-item>
+        <el-descriptions-item label="收款人phone">{{ temp.phone }}</el-descriptions-item>
+        <el-descriptions-item label="银行卡号">{{ temp.cardNo }}</el-descriptions-item>
+        <!--<el-descriptions-item label="系统用户ID">{{ temp.systemUserId }}</el-descriptions-item>-->
+        <el-descriptions-item label="额度">{{ temp.quota }}</el-descriptions-item>
+        <el-descriptions-item label="银行卡状态">{{ temp.status }}</el-descriptions-item>
+        <!--<el-descriptions-item label="数据插入时间">{{ temp.createTime }}</el-descriptions-item>-->
+        <!--<el-descriptions-item label="最后更新时间">{{ temp.updateTime }}</el-descriptions-item>-->
+      </el-descriptions>
+
+      <el-form label-position="left" inline class="demo-table-expand">
+        <!--<el-form-item label="主键ID"><span>{{temp.id}}</span></el-form-item>-->
+        <el-form-item label="银行名称"><span>{{temp.bankName}}</span></el-form-item>
+        <el-form-item label="银行卡开户行编码（例如：KTB等）"><span>{{temp.bankCode}}</span></el-form-item>
+        <el-form-item label="收款人姓名"><span>{{temp.name}}</span></el-form-item>
+        <el-form-item label="收款人phone"><span>{{temp.phone}}</span></el-form-item>
+        <el-form-item label="银行卡号"><span>{{temp.cardNo}}</span></el-form-item>
+        <!--<el-form-item label="系统用户ID"><span>{{temp.systemUserId}}</span></el-form-item>-->
+        <el-form-item label="额度"><span>{{temp.quota}}</span></el-form-item>
+        <el-form-item label="银行卡状态"><span>{{temp.status}}</span></el-form-item>
+        <!--<el-form-item label="数据插入时间"><span>{{temp.createTime}}</span></el-form-item>-->
+        <!--<el-form-item label="最后更新时间"><span>{{temp.updateTime}}</span></el-form-item>-->
+      </el-form>
+
+
+export const DEPOSITE_BANK_CARD_SETTING_STATUS = {
+  CREATED: '新产生',
+  IN_USE: '使用中',
+  CLOSED: '关闭',
+}
+
+'银行名称', '银行卡开户行编码（例如：KTB等）', '收款人姓名', '收款人phone', '银行卡号', '额度', '银行卡状态'
+
+'bankName', 'bankCode', 'name', 'phone', 'cardNo', 'quota', ['status', DEPOSITE_BANK_CARD_SETTING_STATUS]
+
+| page                | 否 | 整数     | 页码,第几页,编号从 1 开始, 默认第1页
+| size                | 否 | 整数     | 每页多少条数据,默认值:1 , 最大1000
+| limit               | 否 | 整数     | 每页多少条数据,默认值:1 , 最大1000,与size 一样
+| id                  | 否 | 字符串   | id,例如: 1234
+| ids                 | 否 | 字符串   | 多个id以逗号分隔,例如: 1234,2345
+| systemUserId        | 否 | 字符串   | 系统用户ID-多个以逗号分割
+| status              | 否 | 字符串   | 银行卡状态-多个以逗号分割</br>CREATED : 新产生</br>IN_USE : 使用中</br>CLOSED : 关闭</br>
+| startTime           | 否 | 日期时间 | 开始时间,例如 : 2017-01-01 12:13:14 </br> 或者 例如 : 2017-01-01
+| endTime             | 否 | 日期时间 | 结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| all                 | 否 | 字符串   | 分页状态下,查询出全部数据,相当于page=1,size=2000
+| _all                | 否 | 字符串   | 查询全部的原始数据,小心使用,相当于page=1,size=20000,_raw=_raw
+| _one                | 否 | 字符串   | 查询出一条数据,相当于page=1,size=1,返回对象,不是数组
+| _raw                | 否 | 字符串   | 原始数据查询,查询原始表数据,不附带其他,数据结构与表对应起来
+| createTimeFrom      | 否 | 日期时间 | 产生时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| createTimeTo        | 否 | 日期时间 | 产生时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| updateTimeFrom      | 否 | 日期时间 | 更新时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| updateTimeTo        | 否 | 日期时间 | 更新时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+
+| id                  | 是 | 字符串   | 主键ID</br>***最大长度:32***
+| bankName            | 是 | 字符串   | 银行名称</br>***最大长度:64***
+| bankCode            | 是 | 字符串   | 银行卡开户行编码（例如：KTB等）</br>***最大长度:32***
+| name                | 是 | 字符串   | 收款人姓名</br>***最大长度:64***
+| phone               | 是 | 字符串   | 收款人phone</br>***最大长度:64***
+| cardNo              | 是 | 字符串   | 银行卡号</br>***最大长度:64***
+| systemUserId        | 是 | 字符串   | 系统用户ID</br>***最大长度:32***
+| quota               | 是 | 浮点数   | 额度</br>***整数最大长度:13***</br>***小数最大长度:2***
+| status              | 是 | 字符串   | 银行卡状态</br>CREATED : 新产生</br>IN_USE : 使用中</br>CLOSED : 关闭</br>***最大长度:32***
+| createTime          | 是 | 日期时间 | 数据插入时间</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+| updateTime          | 是 | 日期时间 | 最后更新时间</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+
+
+    // TODO: controller 通用模板
+    // TODO: controller 通用模板
+    // TODO: controller 通用模板
+    @GetMapping("info")
+    public ReturnData info(
+            @RequestParam(name = "bankName", required = false) String bankName,
+            @RequestParam(name = "bankCode", required = false) String bankCode,
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "phone", required = false) String phone,
+            @RequestParam(name = "cardNo", required = false) String cardNo,
+            @RequestParam(name = "systemUserId", required = false) String systemUserId,
+            @RequestParam(name = "quota", required = false) BigDecimal quota,
+            @RequestParam(name = "status", required = false) String status
+    ) throws Exception {
+        List<DepositeBankCardSettingEntity> list = depositeBankCardSettingService.findByInfo(
+                bankName,
+                bankCode,
+                name,
+                phone,
+                cardNo,
+                systemUserId,
+                quota,
+                status
+        );
+        return ok(list);
+    }
+
+    @GetMapping("infoOne")
+    public ReturnData infoOne(
+            @RequestParam(name = "bankName", required = false) String bankName,
+            @RequestParam(name = "bankCode", required = false) String bankCode,
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "phone", required = false) String phone,
+            @RequestParam(name = "cardNo", required = false) String cardNo,
+            @RequestParam(name = "systemUserId", required = false) String systemUserId,
+            @RequestParam(name = "quota", required = false) BigDecimal quota,
+            @RequestParam(name = "status", required = false) String status
+    ) throws Exception {
+        DepositeBankCardSettingEntity one = depositeBankCardSettingService.findOneByInfo(
+                bankName,
+                bankCode,
+                name,
+                phone,
+                cardNo,
+                systemUserId,
+                quota,
+                status
+        );
+        return ok(one);
+    }
+
+
+    // TODO: service 通用模板
+    // TODO: service 通用模板
+    // TODO: service 通用模板
+    public int updateByInfo(
+            String id,
+            String bankName,
+            String bankCode,
+            String name,
+            String phone,
+            String cardNo,
+            String systemUserId,
+            BigDecimal quota,
+            String status
+    ) {
+        return depositeBankCardSettingMapper.updateByInfo(
+                id,
+                bankName,
+                bankCode,
+                name,
+                phone,
+                cardNo,
+                systemUserId,
+                quota,
+                status
+        );
+    }
+
+    public List<DepositeBankCardSettingEntity> findByInfo(
+            String bankName,
+            String bankCode,
+            String name,
+            String phone,
+            String cardNo,
+            String systemUserId,
+            BigDecimal quota,
+            String status
+    ) {
+        List<DepositeBankCardSettingEntity> list = depositeBankCardSettingMapper.findByInfo(
+                bankName,
+                bankCode,
+                name,
+                phone,
+                cardNo,
+                systemUserId,
+                quota,
+                status
+        );
+        return list;
+    }
+
+    public DepositeBankCardSettingEntity findOneByInfo(
+            String bankName,
+            String bankCode,
+            String name,
+            String phone,
+            String cardNo,
+            String systemUserId,
+            BigDecimal quota,
+            String status
+    ) {
+        DepositeBankCardSettingEntity one = depositeBankCardSettingMapper.findOneByInfo(
+                bankName,
+                bankCode,
+                name,
+                phone,
+                cardNo,
+                systemUserId,
+                quota,
+                status
+        );
+        return one;
+    }
+
+
+    // TODO: mapper 通用模板
+    // TODO: mapper 通用模板
+    // TODO: mapper 通用模板
+    @Update(" update tb_deposite_bank_card_setting set" +
+            " bank_name = #{bankName}, bank_code = #{bankCode}, name = #{name}, phone = #{phone}, card_no = #{cardNo}," +
+            " system_user_id = #{systemUserId}, quota = #{quota}, status = #{status}, update_time = now()" +
+            " where id = #{id}")
+    int updateByInfo(@Param("id") String id,
+                     @Param("bankName") String bankName,
+                     @Param("bankCode") String bankCode,
+                     @Param("name") String name,
+                     @Param("phone") String phone,
+                     @Param("cardNo") String cardNo,
+                     @Param("systemUserId") String systemUserId,
+                     @Param("quota") BigDecimal quota,
+                     @Param("status") String status);
+
+    @Select("SELECT a.* FROM tb_deposite_bank_card_setting a" +
+            " WHERE a.bank_name = #{bankName}" +
+            " AND a.bank_code = #{bankCode}" +
+            " AND a.name = #{name}" +
+            " AND a.phone = #{phone}" +
+            " AND a.card_no = #{cardNo}" +
+            " AND a.system_user_id = #{systemUserId}" +
+            " AND a.quota = #{quota}" +
+            " AND a.status = #{status}" +
+            " order by a.id desc LIMIT 10000")
+    List<DepositeBankCardSettingEntity> findByInfo(@Param("bankName") String bankName,
+                                                   @Param("bankCode") String bankCode,
+                                                   @Param("name") String name,
+                                                   @Param("phone") String phone,
+                                                   @Param("cardNo") String cardNo,
+                                                   @Param("systemUserId") String systemUserId,
+                                                   @Param("quota") BigDecimal quota,
+                                                   @Param("status") String status);
+
+    @Select("SELECT a.* FROM tb_deposite_bank_card_setting a" +
+            " WHERE a.bank_name = #{bankName}" +
+            " AND a.bank_code = #{bankCode}" +
+            " AND a.name = #{name}" +
+            " AND a.phone = #{phone}" +
+            " AND a.card_no = #{cardNo}" +
+            " AND a.system_user_id = #{systemUserId}" +
+            " AND a.quota = #{quota}" +
+            " AND a.status = #{status}" +
+            " order by a.id desc LIMIT 1")
+    DepositeBankCardSettingEntity findOneByInfo(@Param("bankName") String bankName,
+                                                @Param("bankCode") String bankCode,
+                                                @Param("name") String name,
+                                                @Param("phone") String phone,
+                                                @Param("cardNo") String cardNo,
+                                                @Param("systemUserId") String systemUserId,
+                                                @Param("quota") BigDecimal quota,
+                                                @Param("status") String status);

@@ -1,0 +1,328 @@
+{
+    "id": "id",
+    "merchantInfo": "merchantInfo",
+    "accessKey": "accessKey",
+    "secretKey": "secretKey",
+    "status": "status",
+    "createTime": "createTime",
+    "updateTime": "updateTime"
+}
+
+
+@RequestParam(name = "id", required = false) String id,
+@RequestParam(name = "merchantInfo", required = false) String merchantInfo,
+@RequestParam(name = "accessKey", required = false) String accessKey,
+@RequestParam(name = "secretKey", required = false) String secretKey,
+@RequestParam(name = "status", required = false) String status,
+@RequestParam(name = "createTime", required = false) LocalDateTime createTime,
+@RequestParam(name = "updateTime", required = false) LocalDateTime updateTime
+
+
+{
+    title: '主键ID',
+    key: 'id',
+},{
+    title: '商户信息',
+    key: 'merchantInfo',
+},{
+    title: 'access_key',
+    key: 'accessKey',
+},{
+    title: 'secret_key',
+    key: 'secretKey',
+},{
+    title: '状态',
+    key: 'status',
+},{
+    title: '数据插入时间',
+    key: 'createTime',
+},{
+    title: '最后更新时间',
+    key: 'updateTime',
+}
+
+
+{
+    title: '主键ID',
+    width: 100,
+    key: 'id',
+},{
+    title: '商户信息',
+    width: 100,
+    key: 'merchantInfo',
+},{
+    title: 'access_key',
+    width: 100,
+    key: 'accessKey',
+},{
+    title: 'secret_key',
+    width: 100,
+    key: 'secretKey',
+},{
+    title: '状态',
+    width: 100,
+    key: 'status',
+},{
+    title: '数据插入时间',
+    width: 100,
+    key: 'createTime',
+},{
+    title: '最后更新时间',
+    width: 100,
+    key: 'updateTime',
+}
+
+
+主键ID
+商户信息
+access_key
+secret_key
+状态
+数据插入时间
+最后更新时间
+
+
+id
+merchant_info
+access_key
+secret_key
+status
+create_time
+update_time
+
+
+id
+merchantInfo
+accessKey
+secretKey
+status
+createTime
+updateTime
+
+tableName : tb_merchant_info
+
+a.id, a.merchant_info, a.access_key, a.secret_key, a.status, a.create_time, a.update_time,
+
+
+a.id,
+a.merchant_info,
+a.access_key,
+a.secret_key,
+a.status,
+a.create_time,
+a.update_time,
+
+
+// api/api.js 中, 需要生成的代码
+
+  merchantInfoFind(query) {
+    return this.get('/merchantInfo/find', query)
+  }
+
+  merchantInfoFindAll(query) {
+    return this.getFindAll('/merchantInfo/find', query)
+  }
+
+  merchantInfoAll() {
+    return this.getAll('/merchantInfo/find')
+  }
+
+  merchantInfoOne(id) {
+    return this.getOne('/merchantInfo/find', id)
+  }
+
+  merchantInfoAddUpdate(obj, by) {
+    return this.postBy('/merchantInfo/addUpdate', obj, by)
+  }
+
+  merchantInfoDelete(obj) {
+    return this.post('/merchantInfo/delete', obj)
+  }
+
+
+// router/index.js 中, 需要生成的代码
+
+  {
+    path: '/-frontFilePath-/merchantInfo',
+    component: () => import('@/views/-frontFilePath-/merchantInfo'),
+  },
+
+
+      // 前端代码中详情数据的展示
+      <el-descriptions border :column="2">
+        <!--<el-descriptions-item label="主键ID">{{ temp.id }}</el-descriptions-item>-->
+        <el-descriptions-item label="商户信息">{{ temp.merchantInfo }}</el-descriptions-item>
+        <el-descriptions-item label="access_key">{{ temp.accessKey }}</el-descriptions-item>
+        <el-descriptions-item label="secret_key">{{ temp.secretKey }}</el-descriptions-item>
+        <el-descriptions-item label="状态">{{ temp.status }}</el-descriptions-item>
+        <!--<el-descriptions-item label="数据插入时间">{{ temp.createTime }}</el-descriptions-item>-->
+        <!--<el-descriptions-item label="最后更新时间">{{ temp.updateTime }}</el-descriptions-item>-->
+      </el-descriptions>
+
+      <el-form label-position="left" inline class="demo-table-expand">
+        <!--<el-form-item label="主键ID"><span>{{temp.id}}</span></el-form-item>-->
+        <el-form-item label="商户信息"><span>{{temp.merchantInfo}}</span></el-form-item>
+        <el-form-item label="access_key"><span>{{temp.accessKey}}</span></el-form-item>
+        <el-form-item label="secret_key"><span>{{temp.secretKey}}</span></el-form-item>
+        <el-form-item label="状态"><span>{{temp.status}}</span></el-form-item>
+        <!--<el-form-item label="数据插入时间"><span>{{temp.createTime}}</span></el-form-item>-->
+        <!--<el-form-item label="最后更新时间"><span>{{temp.updateTime}}</span></el-form-item>-->
+      </el-form>
+
+
+export const MERCHANT_INFO_STATUS = {
+  ON: '启用',
+  OFF: '禁用',
+}
+
+'商户信息', 'access_key', 'secret_key', '状态'
+
+'merchantInfo', 'accessKey', 'secretKey', ['status', MERCHANT_INFO_STATUS]
+
+| page                | 否 | 整数     | 页码,第几页,编号从 1 开始, 默认第1页
+| size                | 否 | 整数     | 每页多少条数据,默认值:1 , 最大1000
+| limit               | 否 | 整数     | 每页多少条数据,默认值:1 , 最大1000,与size 一样
+| id                  | 否 | 字符串   | id,例如: 1234
+| ids                 | 否 | 字符串   | 多个id以逗号分隔,例如: 1234,2345
+| accessKey           | 否 | 字符串   | access_key
+| status              | 否 | 字符串   | 状态-多个以逗号分割</br>ON : 启用</br>OFF : 禁用</br>
+| startTime           | 否 | 日期时间 | 开始时间,例如 : 2017-01-01 12:13:14 </br> 或者 例如 : 2017-01-01
+| endTime             | 否 | 日期时间 | 结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| all                 | 否 | 字符串   | 分页状态下,查询出全部数据,相当于page=1,size=2000
+| _all                | 否 | 字符串   | 查询全部的原始数据,小心使用,相当于page=1,size=20000,_raw=_raw
+| _one                | 否 | 字符串   | 查询出一条数据,相当于page=1,size=1,返回对象,不是数组
+| _raw                | 否 | 字符串   | 原始数据查询,查询原始表数据,不附带其他,数据结构与表对应起来
+| createTimeFrom      | 否 | 日期时间 | 产生时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| createTimeTo        | 否 | 日期时间 | 产生时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| updateTimeFrom      | 否 | 日期时间 | 更新时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| updateTimeTo        | 否 | 日期时间 | 更新时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+
+| id                  | 是 | 字符串   | 主键ID</br>***最大长度:32***
+| merchantInfo        | 是 | 字符串   | 商户信息</br>***最大长度:64***
+| accessKey           | 是 | 字符串   | access_key</br>***最大长度:64***
+| secretKey           | 是 | 字符串   | secret_key</br>***最大长度:64***
+| status              | 是 | 字符串   | 状态</br>ON : 启用</br>OFF : 禁用</br>***最大长度:32***
+| createTime          | 是 | 日期时间 | 数据插入时间</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+| updateTime          | 是 | 日期时间 | 最后更新时间</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+
+
+    // TODO: controller 通用模板
+    // TODO: controller 通用模板
+    // TODO: controller 通用模板
+    @GetMapping("info")
+    public ReturnData info(
+            @RequestParam(name = "merchantInfo", required = false) String merchantInfo,
+            @RequestParam(name = "accessKey", required = false) String accessKey,
+            @RequestParam(name = "secretKey", required = false) String secretKey,
+            @RequestParam(name = "status", required = false) String status
+    ) throws Exception {
+        List<MerchantInfoEntity> list = merchantInfoService.findByInfo(
+                merchantInfo,
+                accessKey,
+                secretKey,
+                status
+        );
+        return ok(list);
+    }
+
+    @GetMapping("infoOne")
+    public ReturnData infoOne(
+            @RequestParam(name = "merchantInfo", required = false) String merchantInfo,
+            @RequestParam(name = "accessKey", required = false) String accessKey,
+            @RequestParam(name = "secretKey", required = false) String secretKey,
+            @RequestParam(name = "status", required = false) String status
+    ) throws Exception {
+        MerchantInfoEntity one = merchantInfoService.findOneByInfo(
+                merchantInfo,
+                accessKey,
+                secretKey,
+                status
+        );
+        return ok(one);
+    }
+
+
+    // TODO: service 通用模板
+    // TODO: service 通用模板
+    // TODO: service 通用模板
+    public int updateByInfo(
+            String id,
+            String merchantInfo,
+            String accessKey,
+            String secretKey,
+            String status
+    ) {
+        return merchantInfoMapper.updateByInfo(
+                id,
+                merchantInfo,
+                accessKey,
+                secretKey,
+                status
+        );
+    }
+
+    public List<MerchantInfoEntity> findByInfo(
+            String merchantInfo,
+            String accessKey,
+            String secretKey,
+            String status
+    ) {
+        List<MerchantInfoEntity> list = merchantInfoMapper.findByInfo(
+                merchantInfo,
+                accessKey,
+                secretKey,
+                status
+        );
+        return list;
+    }
+
+    public MerchantInfoEntity findOneByInfo(
+            String merchantInfo,
+            String accessKey,
+            String secretKey,
+            String status
+    ) {
+        MerchantInfoEntity one = merchantInfoMapper.findOneByInfo(
+                merchantInfo,
+                accessKey,
+                secretKey,
+                status
+        );
+        return one;
+    }
+
+
+    // TODO: mapper 通用模板
+    // TODO: mapper 通用模板
+    // TODO: mapper 通用模板
+    @Update(" update tb_merchant_info set" +
+            " merchant_info = #{merchantInfo}, access_key = #{accessKey}, secret_key = #{secretKey}, status = #{status}," +
+            " update_time = now()" +
+            " where id = #{id}")
+    int updateByInfo(@Param("id") String id,
+                     @Param("merchantInfo") String merchantInfo,
+                     @Param("accessKey") String accessKey,
+                     @Param("secretKey") String secretKey,
+                     @Param("status") String status);
+
+    @Select("SELECT a.* FROM tb_merchant_info a" +
+            " WHERE a.merchant_info = #{merchantInfo}" +
+            " AND a.access_key = #{accessKey}" +
+            " AND a.secret_key = #{secretKey}" +
+            " AND a.status = #{status}" +
+            " order by a.id desc LIMIT 10000")
+    List<MerchantInfoEntity> findByInfo(@Param("merchantInfo") String merchantInfo,
+                                        @Param("accessKey") String accessKey,
+                                        @Param("secretKey") String secretKey,
+                                        @Param("status") String status);
+
+    @Select("SELECT a.* FROM tb_merchant_info a" +
+            " WHERE a.merchant_info = #{merchantInfo}" +
+            " AND a.access_key = #{accessKey}" +
+            " AND a.secret_key = #{secretKey}" +
+            " AND a.status = #{status}" +
+            " order by a.id desc LIMIT 1")
+    MerchantInfoEntity findOneByInfo(@Param("merchantInfo") String merchantInfo,
+                                     @Param("accessKey") String accessKey,
+                                     @Param("secretKey") String secretKey,
+                                     @Param("status") String status);

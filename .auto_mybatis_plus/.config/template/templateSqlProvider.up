@@ -1,0 +1,33 @@
+package -packagePackage-;
+
+import com.playlet.common.common.BaseSqlProvider;
+import com.playlet.common.common.QueryMap;
+import com.playlet.common.util.common.StringSql;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * -tableComment-
+ * -tableNameJava-
+ *
+ * @author -author-
+ */
+public class -tableNameJava-SqlProvider extends BaseSqlProvider {
+
+    public String find(Map<String, Object> params) {
+        QueryMap queryMap = (QueryMap) params.get(QUERY_MAP);
+        queryMap = QueryMap.ofNotNULL(queryMap);
+
+        StringSql sql = StringSql.of("select a.*");
+        sql.append("FROM -tableName- a", true);
+        sql.whereIsNotNULL("a.id", inComma(queryMap.id()));
+        sql.whereIsNotNULL("a.id", inComma(queryMap.ids()));
+        -queryMapParam-
+        sql.whereIsNotNULL("a.create_time >=", str(queryMap.startTime()));
+        sql.whereIsNotNULL("a.create_time <", str(queryMap.endTime()));
+        sql.append("order by a.create_time desc");
+        return sql.toString();
+    }
+
+}

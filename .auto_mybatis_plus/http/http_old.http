@@ -1,0 +1,399 @@
+
+### /depositeMerchant/delete
+POST {{host}}/backend/depositeMerchant/delete
+Content-Type: application/json
+
+{
+  "id": "id"
+}
+
+### /depositeMerchant/addUpdate
+POST {{host}}/backend/depositeMerchant/addUpdate
+Content-Type: application/json
+
+{
+  "id": "id",
+  "merchantId": "merchantId",
+  "transactionId": "transactionId",
+  "method": "method",
+  "amount": amount,
+  "billAmount": billAmount,
+  "bankCode": "bankCode",
+  "cardNo": "cardNo",
+  "depositeBankCode": "depositeBankCode",
+  "depositeCardNo": "depositeCardNo",
+  "expireTime": "expireTime",
+  "expireTimeReal": "expireTimeReal",
+  "name": "name",
+  "phone": "phone",
+  "description": "description",
+  "qrCode": "qrCode",
+  "status": "status",
+  "transactionTime": "transactionTime",
+  "channelFee": channelFee,
+  "depositeBankStatementId": "depositeBankStatementId",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /depositeMerchant/find
+GET {{host}}/backend/depositeMerchant/find
+
+
+### /depositeBankStatement/delete
+POST {{host}}/backend/depositeBankStatement/delete
+Content-Type: application/json
+
+{
+  "id": "TDBS202503280942150000227843"
+}
+
+### /depositeBankStatement/addUpdate
+POST {{host}}/backend/depositeBankStatement/addUpdate
+Content-Type: application/json
+
+{
+  "id": "id",
+  "depositeBankCode": "depositeBankCode",
+  "depositeCardNo": "depositeCardNo",
+  "billAmount": billAmount,
+  "transactionTime": "transactionTime",
+  "status": "status",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /depositeBankStatement/find
+GET {{host}}/backend/depositeBankStatement/find
+
+
+### /merchantInfo/delete
+POST {{host}}/backend/merchantInfo/delete
+Content-Type: application/json
+
+{
+  "id": "tmi2025032613303400000002"
+}
+
+### /merchantInfo/addUpdate
+POST {{host}}/backend/merchantInfo/addUpdate
+Content-Type: application/json
+
+{
+  "merchantInfo": "merchantInfo",
+  "accessKey": "accessKey",
+  "secretKey": "secretKey",
+  "status": "ON"
+}
+
+### /merchantInfo/find
+GET {{host}}/backend/merchantInfo/find
+
+
+### /depositeBankCardSetting/delete
+POST {{host}}/backend/depositeBankCardSetting/delete
+Content-Type: application/json
+
+{
+  "id": "id"
+}
+
+### /depositeBankCardSetting/addUpdate
+POST {{host}}/backend/depositeBankCardSetting/addUpdate
+Content-Type: application/json
+
+{
+  "bankName": "KTB2",
+  "bankCode": "KTB2",
+  "cardNo": "2222222",
+  "quota": "500000",
+  "status": "IN_USE"
+}
+
+### /depositeBankCardSetting/find
+GET {{host}}/backend/depositeBankCardSetting/find
+
+
+### /info
+GET {{host}}/backend/info
+
+### /infoOne
+GET {{host}}/backend/infoOne
+
+
+### /disburseBankCardSetting/delete
+POST {{host}}/backend/disburseBankCardSetting/delete
+Content-Type: application/json
+
+{
+  "id": "id"
+}
+
+### /disburseBankCardSetting/addUpdate
+POST {{host}}/backend/disburseBankCardSetting/addUpdate
+Content-Type: application/json
+
+{
+  "id": "id",
+  "bankName": "bankName",
+  "bankCode": "bankCode",
+  "cardNo": "cardNo",
+  "singleDisburseLimit": singleDisburseLimit,
+  "dailyDisburseLimit": dailyDisburseLimit,
+  "status": "status",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /disburseBankCardSetting/find
+GET {{host}}/backend/disburseBankCardSetting/find
+
+
+### /disburseOrder/delete
+POST {{host}}/backend/disburseOrder/delete
+Content-Type: application/json
+
+{
+  "id": "id"
+}
+
+### /disburseOrder/addUpdate
+POST {{host}}/backend/disburseOrder/addUpdate
+Content-Type: application/json
+
+{
+  "id": "id",
+  "orderNo": "orderNo",
+  "merchantNo": "merchantNo",
+  "merTransactionId": "merTransactionId",
+  "amount": amount,
+  "bankCode": "bankCode",
+  "cardNo": "cardNo",
+  "name": "name",
+  "phone": "phone",
+  "operatorId": "operatorId",
+  "status": "status",
+  "callBackStatus": "callBackStatus",
+  "callBackTime": "callBackTime",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /disburseOrder/find
+GET {{host}}/backend/disburseOrder/find
+
+
+### /disburseOrderStatement/delete
+POST {{host}}/backend/disburseOrderStatement/delete
+Content-Type: application/json
+
+{
+  "id": "id"
+}
+
+### /disburseOrderStatement/addUpdate
+POST {{host}}/backend/disburseOrderStatement/addUpdate
+Content-Type: application/json
+
+{
+  "id": "id",
+  "orderNo": "orderNo",
+  "amount": amount,
+  "bankCode": "bankCode",
+  "cardNo": "cardNo",
+  "operatorId": "operatorId",
+  "status": "status",
+  "proof": "proof",
+  "proofInfo": "proofInfo",
+  "disburseBankCardId": "disburseBankCardId",
+  "disburseBankCardNo": "disburseBankCardNo",
+  "disburseTime": "disburseTime",
+  "disburseEndTime": "disburseEndTime",
+  "reason": "reason",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /disburseOrderStatement/find
+GET {{host}}/backend/disburseOrderStatement/find
+
+
+### /systemPrivilege/delete
+POST {{host}}/backend/systemPrivilege/delete
+Content-Type: application/json
+
+{
+  "id": "id"
+}
+
+### /systemPrivilege/addUpdate
+POST {{host}}/backend/systemPrivilege/addUpdate
+Content-Type: application/json
+
+{
+  "id": "id",
+  "icon": "icon",
+  "name": "name",
+  "url": "url",
+  "status": "status",
+  "type": "type",
+  "parentId": "parentId",
+  "sort": sort,
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /systemPrivilege/find
+GET {{host}}/backend/systemPrivilege/find
+
+
+### /systemPrivilegeServer/delete
+POST {{host}}/backend/systemPrivilegeServer/delete
+Content-Type: application/json
+
+{
+  "id": "id"
+}
+
+### /systemPrivilegeServer/addUpdate
+POST {{host}}/backend/systemPrivilegeServer/addUpdate
+Content-Type: application/json
+
+{
+  "id": "id",
+  "privilegeId": "privilegeId",
+  "type": "type",
+  "url": "url",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /systemPrivilegeServer/find
+GET {{host}}/backend/systemPrivilegeServer/find
+
+
+### /systemRole/delete
+POST {{host}}/backend/systemRole/delete
+Content-Type: application/json
+
+{
+  "id": "id"
+}
+
+### /systemRole/addUpdate
+POST {{host}}/backend/systemRole/addUpdate
+Content-Type: application/json
+
+{
+  "id": "id",
+  "roleName": "roleName",
+  "status": "status",
+  "description": "description",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /systemRole/find
+GET {{host}}/backend/systemRole/find
+
+
+### /systemRolePrivilege/delete
+POST {{host}}/backend/systemRolePrivilege/delete
+Content-Type: application/json
+
+{
+  "id": "id"
+}
+
+### /systemRolePrivilege/addUpdate
+POST {{host}}/backend/systemRolePrivilege/addUpdate
+Content-Type: application/json
+
+{
+  "id": "id",
+  "roleId": "roleId",
+  "privilegeId": "privilegeId",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /systemRolePrivilege/find
+GET {{host}}/backend/systemRolePrivilege/find
+
+
+### /systemUser/delete
+POST {{host}}/backend/systemUser/delete
+Content-Type: application/json
+
+{
+  "id": "id"
+}
+
+### /systemUser/addUpdate
+POST {{host}}/backend/systemUser/addUpdate
+Content-Type: application/json
+
+{
+  "id": "id",
+  "loginName": "loginName",
+  "fullName": "fullName",
+  "password": "password",
+  "type": "type",
+  "status": "status",
+  "failedLoginCount": failedLoginCount,
+  "lastTime": "lastTime",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /systemUser/find
+GET {{host}}/backend/systemUser/find
+
+
+### /systemUserRole/delete
+POST {{host}}/backend/systemUserRole/delete
+Content-Type: application/json
+
+{
+  "id": "id"
+}
+
+### /systemUserRole/addUpdate
+POST {{host}}/backend/systemUserRole/addUpdate
+Content-Type: application/json
+
+{
+  "id": "id",
+  "userId": "userId",
+  "roleId": "roleId",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /systemUserRole/find
+GET {{host}}/backend/systemUserRole/find
+
+
+### /systemUserSetting/delete
+POST {{host}}/backend/systemUserSetting/delete
+Content-Type: application/json
+
+{
+  "id": "id"
+}
+
+### /systemUserSetting/addUpdate
+POST {{host}}/backend/systemUserSetting/addUpdate
+Content-Type: application/json
+
+{
+  "id": "id",
+  "userId": "userId",
+  "setData": "setData",
+  "createTime": "createTime",
+  "updateTime": "updateTime"
+}
+
+### /systemUserSetting/find
+GET {{host}}/backend/systemUserSetting/find
+

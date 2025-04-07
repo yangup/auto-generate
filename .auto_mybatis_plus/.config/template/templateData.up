@@ -1,0 +1,22 @@
+package -packagePackage-;
+
+-importPage-
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+-importPageList-
+/**
+ * -tableCommentRaw-
+ * -tableNameJava-
+ *
+ * @author -author-
+ */
+@Data
+@SuperBuilder
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+public class -tableNameJava-Data extends -tableNameJava-Entity {
+
+	-startFieldData-
+
+}

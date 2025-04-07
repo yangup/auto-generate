@@ -38,6 +38,8 @@ public class ServiceCreator extends BaseCreator {
                 importServiceCollectors();
             } else if (Order.check(line, Order.autowiredService)) {
                 autowiredService();
+            } else if (Order.check(line, Order.serviceFindMethod)) {
+                serviceFindMethod(line);
             } else if (Order.check(line, Order.findMethod)) {
                 findMethod();
             } else {
@@ -74,6 +76,15 @@ public class ServiceCreator extends BaseCreator {
         for (PageListParam param : table.relateTable) {
             codeList.add(t + "@Autowired");
             codeList.add(t + String.format("private %sService %sService;\n", param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam));
+        }
+    }
+
+
+    private void serviceFindMethod(String line) {
+        String wp = getLeftWhitespace(new StringBuilder(line), Order.serviceFindMethod);
+        for (ColumnInfo c : table.columnInfos) {
+            codeList.add("//" + wp + String.format("wrapper.eq(isNotEmpty(queryMap.get(\"%s\")), -tableNameJava-Entity::get%s, queryMap.get(\"%s\"));",
+                    c.columnNameJava, firstToUppercase(c.columnNameJava), c.columnNameJava));
         }
     }
 

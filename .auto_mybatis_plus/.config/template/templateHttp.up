@@ -1,0 +1,19 @@
+
+### /-tableNameJavaParam-/addUpdate
+POST {{host}}/-tableNameJavaParam-/addUpdate
+Content-Type: application/json
+
+{
+-jsonStart2-
+}
+
+### /-tableNameJavaParam-/find
+GET {{host}}/-tableNameJavaParam-/find
+
+### /-tableNameJavaParam-/delete
+POST {{host}}/-tableNameJavaParam-/delete
+Content-Type: application/json
+
+{
+  "id": "1234567890"
+}

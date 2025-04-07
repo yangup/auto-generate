@@ -1,0 +1,261 @@
+{
+    "id": "id",
+    "roleId": "roleId",
+    "privilegeId": "privilegeId",
+    "createTime": "createTime",
+    "updateTime": "updateTime"
+}
+
+
+@RequestParam(name = "id", required = false) String id,
+@RequestParam(name = "roleId", required = false) String roleId,
+@RequestParam(name = "privilegeId", required = false) String privilegeId,
+@RequestParam(name = "createTime", required = false) LocalDateTime createTime,
+@RequestParam(name = "updateTime", required = false) LocalDateTime updateTime
+
+
+{
+    title: 'id',
+    key: 'id',
+},{
+    title: '角色',
+    key: 'roleId',
+},{
+    title: '权限',
+    key: 'privilegeId',
+},{
+    title: '产生时间',
+    key: 'createTime',
+},{
+    title: '更新时间',
+    key: 'updateTime',
+}
+
+
+{
+    title: 'id',
+    width: 100,
+    key: 'id',
+},{
+    title: '角色',
+    width: 100,
+    key: 'roleId',
+},{
+    title: '权限',
+    width: 100,
+    key: 'privilegeId',
+},{
+    title: '产生时间',
+    width: 100,
+    key: 'createTime',
+},{
+    title: '更新时间',
+    width: 100,
+    key: 'updateTime',
+}
+
+
+id
+角色
+权限
+产生时间
+更新时间
+
+
+id
+role_id
+privilege_id
+create_time
+update_time
+
+
+id
+roleId
+privilegeId
+createTime
+updateTime
+
+tableName : t_system_role_privilege
+
+a.id, a.role_id, a.privilege_id, a.create_time, a.update_time,
+
+
+a.id,
+a.role_id,
+a.privilege_id,
+a.create_time,
+a.update_time,
+
+
+// api/api.js 中, 需要生成的代码
+
+  systemRolePrivilegeFind(query) {
+    return this.get('/systemRolePrivilege/find', query)
+  }
+
+  systemRolePrivilegeFindAll(query) {
+    return this.getFindAll('/systemRolePrivilege/find', query)
+  }
+
+  systemRolePrivilegeAll() {
+    return this.getAll('/systemRolePrivilege/find')
+  }
+
+  systemRolePrivilegeOne(id) {
+    return this.getOne('/systemRolePrivilege/find', id)
+  }
+
+  systemRolePrivilegeAddUpdate(obj, by) {
+    return this.postBy('/systemRolePrivilege/addUpdate', obj, by)
+  }
+
+  systemRolePrivilegeDelete(obj) {
+    return this.post('/systemRolePrivilege/delete', obj)
+  }
+
+
+// router/index.js 中, 需要生成的代码
+
+  {
+    path: '/-frontFilePath-/systemRolePrivilege',
+    component: () => import('@/views/-frontFilePath-/systemRolePrivilege'),
+  },
+
+
+      // 前端代码中详情数据的展示
+      <el-descriptions border :column="2">
+        <!--<el-descriptions-item label="id">{{ temp.id }}</el-descriptions-item>-->
+        <!--<el-descriptions-item label="角色">{{ temp.roleId }}</el-descriptions-item>-->
+        <!--<el-descriptions-item label="权限">{{ temp.privilegeId }}</el-descriptions-item>-->
+        <!--<el-descriptions-item label="产生时间">{{ temp.createTime }}</el-descriptions-item>-->
+        <!--<el-descriptions-item label="更新时间">{{ temp.updateTime }}</el-descriptions-item>-->
+      </el-descriptions>
+
+      <el-form label-position="left" inline class="demo-table-expand">
+        <!--<el-form-item label="id"><span>{{temp.id}}</span></el-form-item>-->
+        <!--<el-form-item label="角色"><span>{{temp.roleId}}</span></el-form-item>-->
+        <!--<el-form-item label="权限"><span>{{temp.privilegeId}}</span></el-form-item>-->
+        <!--<el-form-item label="产生时间"><span>{{temp.createTime}}</span></el-form-item>-->
+        <!--<el-form-item label="更新时间"><span>{{temp.updateTime}}</span></el-form-item>-->
+      </el-form>
+
+
+
+''
+
+ 
+
+| page                | 否 | 整数     | 页码,第几页,编号从 1 开始, 默认第1页
+| size                | 否 | 整数     | 每页多少条数据,默认值:1 , 最大1000
+| limit               | 否 | 整数     | 每页多少条数据,默认值:1 , 最大1000,与size 一样
+| id                  | 否 | 字符串   | id,例如: 1234
+| ids                 | 否 | 字符串   | 多个id以逗号分隔,例如: 1234,2345
+| roleId              | 否 | 字符串   | 角色-多个以逗号分割</br>常量
+| privilegeId         | 否 | 字符串   | 权限-多个以逗号分割</br>常量
+| startTime           | 否 | 日期时间 | 开始时间,例如 : 2017-01-01 12:13:14 </br> 或者 例如 : 2017-01-01
+| endTime             | 否 | 日期时间 | 结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| all                 | 否 | 字符串   | 分页状态下,查询出全部数据,相当于page=1,size=2000
+| _all                | 否 | 字符串   | 查询全部的原始数据,小心使用,相当于page=1,size=20000,_raw=_raw
+| _one                | 否 | 字符串   | 查询出一条数据,相当于page=1,size=1,返回对象,不是数组
+| _raw                | 否 | 字符串   | 原始数据查询,查询原始表数据,不附带其他,数据结构与表对应起来
+| createTimeFrom      | 否 | 日期时间 | 产生时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| createTimeTo        | 否 | 日期时间 | 产生时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| updateTimeFrom      | 否 | 日期时间 | 更新时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+| updateTimeTo        | 否 | 日期时间 | 更新时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02
+
+| id                  | 是 | 字符串   | id</br>***最大长度:32***
+| roleId              | 是 | 字符串   | 角色</br>常量</br>***最大长度:32***
+| privilegeId         | 是 | 字符串   | 权限</br>常量</br>***最大长度:32***
+| createTime          | 是 | 日期时间 | 产生时间</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+| updateTime          | 是 | 日期时间 | 更新时间</br>格式 : yyyy-MM-dd HH:mm:ss </br> 例如 : 2013-05-09 12:13:14
+
+
+    // TODO: controller 通用模板
+    // TODO: controller 通用模板
+    // TODO: controller 通用模板
+    @GetMapping("info")
+    public ReturnData info(
+            @RequestParam(name = "roleId", required = false) String roleId,
+            @RequestParam(name = "privilegeId", required = false) String privilegeId
+    ) throws Exception {
+        List<SystemRolePrivilegeEntity> list = systemRolePrivilegeService.findByInfo(
+                roleId,
+                privilegeId
+        );
+        return ok(list);
+    }
+
+    @GetMapping("infoOne")
+    public ReturnData infoOne(
+            @RequestParam(name = "roleId", required = false) String roleId,
+            @RequestParam(name = "privilegeId", required = false) String privilegeId
+    ) throws Exception {
+        SystemRolePrivilegeEntity one = systemRolePrivilegeService.findOneByInfo(
+                roleId,
+                privilegeId
+        );
+        return ok(one);
+    }
+
+
+    // TODO: service 通用模板
+    // TODO: service 通用模板
+    // TODO: service 通用模板
+    public int updateByInfo(
+            String id,
+            String roleId,
+            String privilegeId
+    ) {
+        return systemRolePrivilegeMapper.updateByInfo(
+                id,
+                roleId,
+                privilegeId
+        );
+    }
+
+    public List<SystemRolePrivilegeEntity> findByInfo(
+            String roleId,
+            String privilegeId
+    ) {
+        List<SystemRolePrivilegeEntity> list = systemRolePrivilegeMapper.findByInfo(
+                roleId,
+                privilegeId
+        );
+        return list;
+    }
+
+    public SystemRolePrivilegeEntity findOneByInfo(
+            String roleId,
+            String privilegeId
+    ) {
+        SystemRolePrivilegeEntity one = systemRolePrivilegeMapper.findOneByInfo(
+                roleId,
+                privilegeId
+        );
+        return one;
+    }
+
+
+    // TODO: mapper 通用模板
+    // TODO: mapper 通用模板
+    // TODO: mapper 通用模板
+    @Update(" update t_system_role_privilege set" +
+            " role_id = #{roleId}, privilege_id = #{privilegeId}, update_time = now()" +
+            " where id = #{id}")
+    int updateByInfo(@Param("id") String id,
+                     @Param("roleId") String roleId,
+                     @Param("privilegeId") String privilegeId);
+
+    @Select("SELECT a.* FROM t_system_role_privilege a" +
+            " WHERE a.role_id = #{roleId}" +
+            " AND a.privilege_id = #{privilegeId}" +
+            " order by a.id desc LIMIT 10000")
+    List<SystemRolePrivilegeEntity> findByInfo(@Param("roleId") String roleId,
+                                               @Param("privilegeId") String privilegeId);
+
+    @Select("SELECT a.* FROM t_system_role_privilege a" +
+            " WHERE a.role_id = #{roleId}" +
+            " AND a.privilege_id = #{privilegeId}" +
+            " order by a.id desc LIMIT 1")
+    SystemRolePrivilegeEntity findOneByInfo(@Param("roleId") String roleId,
+                                            @Param("privilegeId") String privilegeId);
