@@ -68,16 +68,13 @@ public class ServiceCreator extends BaseCreator {
         }
     }
 
-    //    @Autowired
-//    private CustomerService customerService;
+//    private @Autowired CustomerService customerService;
     private void autowiredService() {
         for (Table ta : table.otherTable) {
-            codeList.add(t + "@Autowired");
-            codeList.add(t + String.format("private %sService %sService;\n", ta.tableNameJava, ta.tableNameJavaParam));
+            codeList.add(t + String.format("private @Autowired %sService %sService;\n", ta.tableNameJava, ta.tableNameJavaParam));
         }
         for (PageListParam param : table.relateTable) {
-            codeList.add(t + "@Autowired");
-            codeList.add(t + String.format("private %sService %sService;\n", param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam));
+            codeList.add(t + String.format("private @Autowired %sService %sService;\n", param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam));
         }
     }
 
