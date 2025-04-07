@@ -40,6 +40,8 @@ public class ServiceCreator extends BaseCreator {
                 autowiredService();
             } else if (Order.check(line, Order.serviceFindMethod)) {
                 serviceFindMethod(line);
+            } else if (Order.check(line, Order.serviceFindMethodMore)) {
+                serviceFindMethodMore(line);
             } else if (Order.check(line, Order.findMethod)) {
                 findMethod();
             } else {
@@ -79,8 +81,15 @@ public class ServiceCreator extends BaseCreator {
         }
     }
 
-
     private void serviceFindMethod(String line) {
+        String wp = getLeftWhitespace(new StringBuilder(line), Order.serviceFindMethod);
+        for (ColumnInfo c : table.columnInfos) {
+            codeList.add("//" + wp + String.format("wrapper.eq(isNotEmpty(queryMap.get(\"%s\")), -tableNameJava-Entity::get%s, queryMap.get(\"%s\"));",
+                    c.columnNameJava, firstToUppercase(c.columnNameJava), c.columnNameJava));
+        }
+    }
+
+    private void serviceFindMethodMore(String line) {
         String wp = getLeftWhitespace(new StringBuilder(line), Order.serviceFindMethod);
         for (ColumnInfo c : table.columnInfos) {
             codeList.add("//" + wp + String.format("wrapper.eq(isNotEmpty(queryMap.get(\"%s\")), -tableNameJava-Entity::get%s, queryMap.get(\"%s\"));",
