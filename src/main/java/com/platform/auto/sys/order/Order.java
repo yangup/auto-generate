@@ -124,7 +124,6 @@ public enum Order {
     importService,
     importServiceCollectors,
     autowiredService,
-    findMethod,
     ;
 
     public static boolean checkNeed(String columnName) {
