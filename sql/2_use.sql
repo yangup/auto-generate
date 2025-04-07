@@ -76,7 +76,7 @@ CREATE TABLE `tb_deposite_merchant`
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_merchant_id_transaction_id` (`merchant_id`, `transaction_id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT = '商户提交过来的收款信息;merchant_id:t_merchant_info.id';
+  DEFAULT CHARSET = utf8mb4 COMMENT = '商户提交过来的收款信息;merchant_id:tb_merchant_info.id';
 
 
 

@@ -68,21 +68,25 @@ public class ServiceCreator extends BaseCreator {
         }
     }
 
-//    private @Autowired CustomerService customerService;
+    //    private @Autowired CustomerService customerService;
     private void autowiredService() {
-        for (Table ta : table.otherTable) {
-            codeList.add(t + String.format("private @Autowired %sService %sService;\n", ta.tableNameJava, ta.tableNameJavaParam));
+        if (table.otherTable != null) {
+            for (Table ta : table.otherTable) {
+                codeList.add(t + String.format("private @Autowired %sService %sService;\n", ta.tableNameJava, ta.tableNameJavaParam));
+            }
         }
-        for (PageListParam param : table.relateTable) {
-            codeList.add(t + String.format("private @Autowired %sService %sService;\n", param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam));
+        if (table.relateTable != null) {
+            for (PageListParam param : table.relateTable) {
+                codeList.add(t + String.format("private @Autowired %sService %sService;\n", param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam));
+            }
         }
     }
 
     private void serviceFindMethod(String line) {
         String wp = getLeftWhitespace(new StringBuilder(line), Order.serviceFindMethod);
         for (ColumnInfo c : table.columnInfos) {
-            codeList.add("//" + wp + String.format("wrapper.eq(isNotEmpty(queryMap.get(\"%s\")), -tableNameJava-Entity::get%s, queryMap.get(\"%s\"));",
-                    c.columnNameJava, firstToUppercase(c.columnNameJava), c.columnNameJava));
+            codeList.add("//" + wp + String.format("wrapper.eq(isNotEmpty(queryMap.get(\"%s\")), %sEntity::get%s, queryMap.get(\"%s\"));",
+                    c.columnNameJava, table.tableNameJava, firstToUppercase(c.columnNameJava), c.columnNameJava));
         }
     }
 
@@ -92,7 +96,7 @@ public class ServiceCreator extends BaseCreator {
                 if (columnInfo.otherTable == null) {
                     continue;
                 }
-                codeList.add(t2 + String.format("Set<Integer> %sIds = page.stream().filter(d -> isNotEmpty(d.%s)).map(d -> d.%s).collect(Collectors.toSet());",
+                codeList.add(t2 + String.format("Set<String> %sIds = page.stream().filter(d -> isNotEmpty(d.%s)).map(d -> d.%s).collect(Collectors.toSet());",
                         columnInfo.otherTable.tableNameJavaParam, columnInfo.columnNameJava, columnInfo.columnNameJava));
                 codeList.add(t2 + String.format("PageList<%sData> %sPageList = %sService.find(QueryMap.ofIDS(%sIds));",
                         columnInfo.otherTable.tableNameJava, columnInfo.otherTable.tableNameJavaParam,
@@ -100,7 +104,7 @@ public class ServiceCreator extends BaseCreator {
             }
             for (PageListParam param : table.relateTable) {
                 codeList.add(t2 + String.format("Set<Integer> %ss = page.stream().filter(d -> isNotEmpty(d.%s)).map(d -> d.%s).collect(Collectors.toSet());",
-                        param.thisTableColumn.columnNameJava, param.thisTableColumn.columnNameJava));
+                        param.thisTableColumn.columnNameJava, param.thisTableColumn.columnNameJava, param.thisTableColumn.columnNameJava));
                 codeList.add(t2 + String.format("PageList<%sData> %sPageList = %sService.find(QueryMap.of(\"%s\", %ss));",
                         param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam,
                         param.otherTable.tableNameJavaParam,
@@ -132,7 +136,7 @@ public class ServiceCreator extends BaseCreator {
             }
             codeList.add(t2 + "}");
         } else {
-            codeList.add("//        Set<Integer> ids = page.stream().map(one -> one.id).collect(Collectors.toSet());\n" +
+            codeList.add("//        Set<String> ids = page.stream().map(one -> one.id).collect(Collectors.toSet());\n" +
                     "//        for (" + table.tableNameJava + "Data " + table.tableNameJavaParam + " : page) {\n" +
                     "//\n" +
                     "//        }");
