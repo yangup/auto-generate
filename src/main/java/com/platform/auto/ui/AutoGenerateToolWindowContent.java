@@ -274,6 +274,12 @@ public class AutoGenerateToolWindowContent {
                 button.setVisible(false);
             }
         }
+
+        SwingUtilities.invokeLater(() -> {
+            // 刷新表格显示
+            buttonPanel.revalidate();
+            buttonPanel.repaint();
+        });
         logger.info("showTableName");
     }
 
