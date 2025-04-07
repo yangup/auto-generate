@@ -42,8 +42,6 @@ public class ServiceCreator extends BaseCreator {
                 serviceFindMethod(line);
             } else if (Order.check(line, Order.serviceFindMethodMore)) {
                 serviceFindMethodMore(line);
-            } else if (Order.check(line, Order.findMethod)) {
-                findMethod();
             } else {
                 this.codeList.add(line);
             }
@@ -96,101 +94,46 @@ public class ServiceCreator extends BaseCreator {
                 if (columnInfo.otherTable == null) {
                     continue;
                 }
-                codeList.add(t2 + String.format("Set<String> %sIds = page.stream().filter(d -> isNotEmpty(d.%s)).map(d -> d.%s).collect(Collectors.toSet());",
-                        columnInfo.otherTable.tableNameJavaParam, columnInfo.columnNameJava, columnInfo.columnNameJava));
-                codeList.add(t2 + String.format("PageList<%sData> %sPageList = %sService.find(QueryMap.ofIDS(%sIds));",
-                        columnInfo.otherTable.tableNameJava, columnInfo.otherTable.tableNameJavaParam,
+                codeList.add(t2 + String.format("Set<String> %sIds = page.stream().map(d -> d.%s).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());",
+                        columnInfo.otherTable.tableNameJavaParam, columnInfo.columnNameJava));
+                codeList.add(t2 + String.format("PageList<%sData> %sPageList = isNotEmpty(%sIds) ? %sService.find(QueryMap.ofIDS(%sIds)) : null;",
+                        columnInfo.otherTable.tableNameJava, columnInfo.otherTable.tableNameJavaParam, columnInfo.otherTable.tableNameJavaParam,
                         columnInfo.otherTable.tableNameJavaParam, columnInfo.otherTable.tableNameJavaParam));
             }
             for (PageListParam param : table.relateTable) {
-                codeList.add(t2 + String.format("Set<Integer> %ss = page.stream().filter(d -> isNotEmpty(d.%s)).map(d -> d.%s).collect(Collectors.toSet());",
-                        param.thisTableColumn.columnNameJava, param.thisTableColumn.columnNameJava, param.thisTableColumn.columnNameJava));
-                codeList.add(t2 + String.format("PageList<%sData> %sPageList = %sService.find(QueryMap.of(\"%s\", %ss));",
-                        param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam,
+                codeList.add(t2 + String.format("Set<String> %ss = page.stream().map(d -> d.%s).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());",
+                        param.thisTableColumn.columnNameJava, param.thisTableColumn.columnNameJava));
+                codeList.add(t2 + String.format("PageList<%sData> %sPageList = isNotEmpty(%ss) ? %sService.find(QueryMap.of(\"%s\", %ss)) : null;",
+                        param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam, param.thisTableColumn.columnNameJava,
                         param.otherTable.tableNameJavaParam,
                         param.otherTableColumn.columnNameJava, param.thisTableColumn.columnNameJava));
             }
-            codeList.add(t2 + String.format("for (%sData %s : page) {", table.tableNameJava, table.tableNameJavaParam));
+            // 拼接查询
+            codeList.add(t2 + String.format("for (%sData a : page) {", table.tableNameJava));
             for (ColumnInfo columnInfo : table.columnInfos) {
                 if (columnInfo.otherTable == null) {
                     continue;
                 }
-                // demo3.customer = customerPageList.stream().filter(customerPage -> equals(demo3.customerId, customerPage.id)).findFirst().orElse(null);
-                codeList.add(t3 + String.format("%s.%s = %sPageList.stream().filter(%sData -> equals(%s.%s, %sData.id)).findFirst().orElse(null);",
-                        table.tableNameJavaParam, columnInfo.otherTable.tableNameJavaParam,
-                        columnInfo.otherTable.tableNameJavaParam, columnInfo.otherTable.tableNameJavaParam, table.tableNameJavaParam,
-                        columnInfo.columnNameJava, columnInfo.otherTable.tableNameJavaParam));
+                // a.customer = customerPageList == null ? null : customerPageList.stream().filter(b -> equals(a.customerId, b.id)).findFirst().orElse(null);
+                codeList.add(t3 + String.format("a.%s = %sPageList == null ? null ? %sPageList.stream().filter(b -> equals(a.%s, b.id)).findFirst().orElse(null);",
+                        columnInfo.otherTable.tableNameJavaParam, columnInfo.otherTable.tableNameJavaParam,
+                        columnInfo.otherTable.tableNameJavaParam, columnInfo.otherTable.tableNameJavaParam));
             }
             for (PageListParam param : table.relateTable) {
                 if (param.more) {
-                    codeList.add(t3 + String.format("%s.%sList = %sPageList.stream().filter(%sData -> equals(%s.%s, %sData.%s)).collect(Collectors.toList());",
-                            table.tableNameJavaParam, param.otherTable.tableNameJavaParam,
-                            param.otherTable.tableNameJavaParam, param.otherTable.tableNameJavaParam, table.tableNameJavaParam,
-                            param.thisTableColumn.columnNameJava, param.otherTable.tableNameJavaParam, param.otherTableColumn.columnNameJava));
+                    codeList.add(t3 + String.format("a.%sList = %sPageList == null ? null : %sPageList.stream().filter(b -> equals(a.%s, b.%s)).collect(Collectors.toList());",
+                            param.otherTable.tableNameJavaParam, param.otherTable.tableNameJavaParam,
+                            param.otherTable.tableNameJavaParam, param.otherTable.tableNameJavaParam, param.otherTableColumn.columnNameJava));
                 } else {
-                    codeList.add(t3 + String.format("%s.%s = %sPageList.stream().filter(%sPage -> equals(%s.%s, %sPage.%s)).findFirst().orElse(null);",
-                            table.tableNameJavaParam, param.otherTable.tableNameJavaParam,
-                            param.otherTable.tableNameJavaParam, param.otherTable.tableNameJavaParam, table.tableNameJavaParam,
-                            param.thisTableColumn.columnNameJava, param.otherTable.tableNameJavaParam, param.otherTableColumn.columnNameJava));
+                    codeList.add(t3 + String.format("a.%s = %sPageList == null ? null : %sPageList.stream().filter(b -> equals(a.%s, b.%s)).findFirst().orElse(null);",
+                            param.otherTable.tableNameJavaParam, param.otherTable.tableNameJavaParam,
+                            param.otherTable.tableNameJavaParam,
+                            param.thisTableColumn.columnNameJava, param.otherTableColumn.columnNameJava));
                 }
             }
             codeList.add(t2 + "}");
         } else {
             codeList.add("//        Set<String> ids = page.stream().map(one -> one.id).collect(Collectors.toSet());\n" +
-                    "//        for (" + table.tableNameJava + "Data " + table.tableNameJavaParam + " : page) {\n" +
-                    "//\n" +
-                    "//        }");
-        }
-    }
-
-    private void findMethod() {
-        if (isNotEmpty(table.otherTable) || isNotEmpty(table.relateTable)) {
-            for (ColumnInfo columnInfo : table.columnInfos) {
-                if (columnInfo.otherTable == null) {
-                    continue;
-                }
-                codeList.add(t2 + String.format("Set<Integer> %sIds = page.stream().map(one -> one.%s).collect(Collectors.toSet());",
-                        columnInfo.otherTable.tableNameJavaParam, columnInfo.columnNameJava));
-                codeList.add(t2 + String.format("PageList<%sData> %sPageList = %sService.find(QueryMap.ofIDS(%sIds));",
-                        columnInfo.otherTable.tableNameJava, columnInfo.otherTable.tableNameJavaParam,
-                        columnInfo.otherTable.tableNameJavaParam, columnInfo.otherTable.tableNameJavaParam));
-            }
-            for (PageListParam param : table.relateTable) {
-                codeList.add(t2 + String.format("Set<Integer> %ss = page.stream().map(one -> one.%s).collect(Collectors.toSet());",
-                        param.thisTableColumn.columnNameJava, param.thisTableColumn.columnNameJava));
-                codeList.add(t2 + String.format("PageList<%sData> %sPageList = %sService.find(QueryMap.of(\"%s\", %ss));",
-                        param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam,
-                        param.otherTable.tableNameJavaParam,
-                        param.otherTableColumn.columnNameJava, param.thisTableColumn.columnNameJava));
-            }
-            codeList.add(t2 + String.format("for (%sData %s : page) {", table.tableNameJava, table.tableNameJavaParam));
-            for (ColumnInfo columnInfo : table.columnInfos) {
-                if (columnInfo.otherTable == null) {
-                    continue;
-                }
-                // demo3.customer = customerPageList.stream().filter(customerPage -> equals(demo3.customerId, customerPage.id)).findFirst().orElse(null);
-                codeList.add(t3 + String.format("%s.%s = %sPageList.stream().filter(%sData -> equals(%s.%s, %sData.id)).findFirst().orElse(null);",
-                        table.tableNameJavaParam, columnInfo.otherTable.tableNameJavaParam,
-                        columnInfo.otherTable.tableNameJavaParam, columnInfo.otherTable.tableNameJavaParam, table.tableNameJavaParam,
-                        columnInfo.columnNameJava, columnInfo.otherTable.tableNameJavaParam));
-            }
-            for (PageListParam param : table.relateTable) {
-                // demo3.customer = customerPageList.stream().filter(customerPage -> equals(demo3.customerId, customerPage.id)).collect(Collectors.toList());
-                if (param.more) {
-                    codeList.add(t3 + String.format("%s.%sList = %sPageList.stream().filter(%sData -> equals(%s.%s, %sData.%s)).collect(Collectors.toList());",
-                            table.tableNameJavaParam, param.otherTable.tableNameJavaParam,
-                            param.otherTable.tableNameJavaParam, param.otherTable.tableNameJavaParam, table.tableNameJavaParam,
-                            param.thisTableColumn.columnNameJava, param.otherTable.tableNameJavaParam, param.otherTableColumn.columnNameJava));
-                } else {
-                    codeList.add(t3 + String.format("%s.%s = %sPageList.stream().filter(%sPage -> equals(%s.%s, %sPage.%s)).findFirst().orElse(null);",
-                            table.tableNameJavaParam, param.otherTable.tableNameJavaParam,
-                            param.otherTable.tableNameJavaParam, param.otherTable.tableNameJavaParam, table.tableNameJavaParam,
-                            param.thisTableColumn.columnNameJava, param.otherTable.tableNameJavaParam, param.otherTableColumn.columnNameJava));
-                }
-            }
-            codeList.add(t2 + "}");
-        } else {
-            codeList.add("//        Set<Integer> ids = page.stream().map(one -> one.id).collect(Collectors.toSet());\n" +
                     "//        for (" + table.tableNameJava + "Data " + table.tableNameJavaParam + " : page) {\n" +
                     "//\n" +
                     "//        }");

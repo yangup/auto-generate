@@ -1,5 +1,6 @@
 package -packagePackage-;
 
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -14,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @NoArgsConstructor
+@TableName("-tableName-")
 public class -tableNameJava-Entity {
 
 	-startField-

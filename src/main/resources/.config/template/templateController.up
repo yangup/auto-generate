@@ -1,15 +1,19 @@
 package -packagePackage-;
 
-import com.playlet.common.common.BaseController;
-import com.playlet.common.common.QueryMap;
-import com.playlet.common.common.paginator.PageBounds;
-import com.playlet.common.common.ReturnData;
-import com.playlet.common.db.-tableNameJavaLower-.*;
+import com.pay.common.common.QueryMap;
+import com.pay.common.common.ReturnData;
+import com.pay.common.common.paginator.PageBounds;
+import com.pay.common.db.-tableNameJavaLower-.*;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.beans.BeanUtils.*;
+import static com.pay.common.constant.Constant.*;
+import static com.pay.common.common.ReturnData.*;
+import static org.apache.commons.lang3.ObjectUtils.*;
 
 /**
  * -tableComment-
@@ -18,13 +22,12 @@ import org.springframework.web.bind.annotation.*;
  * @author -author-
  */
 @Slf4j
-// @CrossOrigin
+@CrossOrigin
 @RestController
 @RequestMapping("/-tableNameJavaParam-/")
 public class -tableNameJava-Controller extends BaseController {
 
-    @Autowired
-    private -tableNameJava-Service -tableNameJavaParam-Service;
+    private @Autowired -tableNameJava-Service -tableNameJavaParam-Service;
 
     @PostMapping("delete")
     @Operation(summary = "delete -tableComment-")

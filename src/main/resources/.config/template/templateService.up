@@ -1,18 +1,26 @@
 package -packagePackage-;
 
-import com.playlet.common.common.BaseService;
-import com.playlet.common.common.QueryMap;
-import com.playlet.common.common.paginator.PageBounds;
-import com.playlet.common.common.ReturnData;
-import com.playlet.common.paginator.PageList;
--importService-
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.pay.common.common.BaseService;
+import com.pay.common.common.QueryMap;
+import com.pay.common.common.ReturnData;
+import com.pay.common.common.paginator.PageBounds;
+import com.pay.common.paginator.PageList;
+import com.pay.common.util.RedissonUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.springframework.beans.BeanUtils.*;
+import static com.pay.common.common.ReturnData.*;
+import static org.apache.commons.lang3.StringUtils.*;
+
 import java.util.List;
--importServiceCollectors-
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * -tableComment-
@@ -24,24 +32,25 @@ import java.util.List;
 @Service
 public class -tableNameJava-Service extends BaseService {
 
-    @Autowired
-    private -tableNameJava-Mapper -tableNameJavaParam-Mapper;
+    private @Autowired -tableNameJava-Mapper -tableNameJavaParam-Mapper;
+    private @Autowired RedissonUtil redissonUtil;
 
     -autowiredService-
     @Transactional
-    public int createEntity(-tableNameJava-Entity entity) {
-        -tableNameJavaParam-Mapper.createEntity(entity);
+    public String createEntity(-tableNameJava-Entity entity) {
+        entity.id = redissonUtil.generateId(-tableNameJava-Entity.class, "-tableNameSimpleUpperCase-");
+        -tableNameJavaParam-Mapper.insert(entity);
         return entity.id;
     }
 
     @Transactional
-    public int deleteById(int id) {
+    public int deleteById(String id) {
         return -tableNameJavaParam-Mapper.deleteById(id);
     }
 
     @Transactional
     public int updateEntity(-tableNameJava-Entity entity) {
-        return -tableNameJavaParam-Mapper.updateEntity(entity);
+        return -tableNameJavaParam-Mapper.updateById(entity);
     }
 
     // TODO: 以下为查询
@@ -55,25 +64,49 @@ public class -tableNameJava-Service extends BaseService {
 
     public PageList<-tableNameJava-Data> find(QueryMap queryMap, PageBounds pageBounds) {
         queryMap = QueryMap.of(queryMap);
-        pageBounds = PageBounds.of(pageBounds, queryMap);
-        PageList<-tableNameJava-Data> page = -tableNameJavaParam-Mapper.find(queryMap, pageBounds);
+        pageBounds = pageBounds == null ? PageBounds.of() : pageBounds;
+        LambdaQueryWrapper<-tableNameJava-Entity> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(isNotEmpty(queryMap.get("id")), -tableNameJava-Entity::getId, queryMap.get("id"));
+        wrapper.in(isNotEmpty(queryMap.get("id")), -tableNameJava-Entity::getId, queryMap.get("ids"));
+        -serviceFindMethod-
+        wrapper.orderByDesc(-tableNameJava-Entity::getId);
+        PageList<-tableNameJava-Data> page = null;
+        if (pageBounds.isNotPageFind()) {
+            List<-tableNameJava-Data> dataList = -tableNameJavaParam-Mapper.selectList(wrapper).stream()
+                    .map(this::convertToData)
+                    .collect(Collectors.toList());
+            page = new PageList<>(dataList);
+        } else {
+            Page<-tableNameJava-Entity> pageData = -tableNameJavaParam-Mapper.selectPage(
+                    Page.of(pageBounds.getPage(), pageBounds.getSize()), wrapper);
+            List<-tableNameJava-Data> dataList = pageData.getRecords().stream()
+                    .map(this::convertToData)
+                    .collect(Collectors.toList());
+            page = new PageList<>(dataList, pageData.getTotal());
+        }
         if (isEmpty(page) || queryMap.raw()) {
             return page;
         }
-        -findMethod-
+        -serviceFindMethodMore-
         return page;
+    }
+
+    private -tableNameJava-Data convertToData(-tableNameJava-Entity entity) {
+        -tableNameJava-Data data = new -tableNameJava-Data();
+        copyProperties(entity, data);
+        return data;
     }
 
     // TODO: ReturnData - findQuery
     public ReturnData<Object> findQuery(QueryMap queryMap, PageBounds pageBounds) {
         queryMap = QueryMap.of(queryMap);
         if (queryMap.all()) {
-            return ok(this.find(QueryMap.of().rawTrue()));
+            return ReturnData.ok(this.find(QueryMap.of().rawTrue()));
         }
         if (queryMap.justOne()) {
-            return ok(this.findOne(queryMap));
+            return ReturnData.ok(this.findOne(queryMap));
         }
-        return ok(this.find(queryMap, PageBounds.of(pageBounds, queryMap)));
+        return ReturnData.ok(this.find(queryMap, PageBounds.of(pageBounds, queryMap)));
     }
 
 }
