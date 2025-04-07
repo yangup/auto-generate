@@ -54,6 +54,24 @@ public class -tableNameJava-Service extends BaseService {
     }
 
     // TODO: 以下为查询
+    private -tableNameJava-Data convertToData(-tableNameJava-Entity entity) {
+        -tableNameJava-Data data = new -tableNameJava-Data();
+        copyProperties(entity, data);
+        return data;
+    }
+
+    // TODO: ReturnData - findQuery
+    public ReturnData<Object> findQuery(QueryMap queryMap, PageBounds pageBounds) {
+        queryMap = QueryMap.of(queryMap);
+        if (queryMap.all()) {
+            return ReturnData.ok(this.find(QueryMap.of().rawTrue()));
+        }
+        if (queryMap.justOne()) {
+            return ReturnData.ok(this.findOne(queryMap));
+        }
+        return ReturnData.ok(this.find(queryMap, PageBounds.of(pageBounds, queryMap)));
+    }
+
     public -tableNameJava-Data findOne(QueryMap queryMap) {
         return find(queryMap, null).first();
     }
@@ -72,41 +90,16 @@ public class -tableNameJava-Service extends BaseService {
         wrapper.orderByDesc(-tableNameJava-Entity::getId);
         PageList<-tableNameJava-Data> page = null;
         if (pageBounds.isNotPageFind()) {
-            List<-tableNameJava-Data> dataList = -tableNameJavaParam-Mapper.selectList(wrapper).stream()
-                    .map(this::convertToData)
-                    .collect(Collectors.toList());
-            page = new PageList<>(dataList);
+            page = new PageList<>(-tableNameJavaParam-Mapper.selectList(wrapper).stream().map(this::convertToData).collect(Collectors.toList()));
         } else {
-            Page<-tableNameJava-Entity> pageData = -tableNameJavaParam-Mapper.selectPage(
-                    Page.of(pageBounds.getPage(), pageBounds.getSize()), wrapper);
-            List<-tableNameJava-Data> dataList = pageData.getRecords().stream()
-                    .map(this::convertToData)
-                    .collect(Collectors.toList());
-            page = new PageList<>(dataList, pageData.getTotal());
+            Page<-tableNameJava-Entity> pageData = -tableNameJavaParam-Mapper.selectPage(Page.of(pageBounds.getPage(), pageBounds.getSize()), wrapper);
+            page = new PageList<>(pageData.getRecords().stream().map(this::convertToData).collect(Collectors.toList()), pageData.getTotal());
         }
         if (isEmpty(page) || queryMap.raw()) {
             return page;
         }
         -serviceFindMethodMore-
         return page;
-    }
-
-    private -tableNameJava-Data convertToData(-tableNameJava-Entity entity) {
-        -tableNameJava-Data data = new -tableNameJava-Data();
-        copyProperties(entity, data);
-        return data;
-    }
-
-    // TODO: ReturnData - findQuery
-    public ReturnData<Object> findQuery(QueryMap queryMap, PageBounds pageBounds) {
-        queryMap = QueryMap.of(queryMap);
-        if (queryMap.all()) {
-            return ReturnData.ok(this.find(QueryMap.of().rawTrue()));
-        }
-        if (queryMap.justOne()) {
-            return ReturnData.ok(this.findOne(queryMap));
-        }
-        return ReturnData.ok(this.find(queryMap, PageBounds.of(pageBounds, queryMap)));
     }
 
 }
