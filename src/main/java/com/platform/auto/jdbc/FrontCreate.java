@@ -91,22 +91,22 @@ public class FrontCreate extends BaseCreator {
 
         File apiFile = FileUtil.createFile(info.path.apiFile, info.path.absoluteApiFile);
         List<String> apiList = AutoUtil.fileToList(apiFile);
-        int apiIndex = AutoUtil.strInListIndex(apiList, todo_auto_generate);
+        int apiIndex = AutoUtil.strInListIndex(apiList, todo_auto_generate) + 1;
 
         File constantFile = FileUtil.createFile(info.path.constantFile, info.path.absoluteConstantFile);
         List<String> constantFileList = AutoUtil.fileToList(constantFile);
-        int constantIndex = AutoUtil.strInListIndex(constantFileList, todo_auto_generate);
+        int constantIndex = AutoUtil.strInListIndex(constantFileList, todo_auto_generate) + 1;
 
         File routerFile = FileUtil.createFile(info.path.routerFile, info.path.absoluteRouterFile);
         List<String> routerList = AutoUtil.fileToList(routerFile);
-        int routerIndex = AutoUtil.strInListIndex(routerList, todo_auto_generate);
+        int routerIndex = AutoUtil.strInListIndex(routerList, todo_auto_generate) + 1;
 
         List<String> apiListNew = AutoUtil.subListAndTrim(usefulCodeList, "auto_generate_api_start", "auto_generate_api_end");
         int start = 0;
         for (int i = 0; i < apiListNew.size(); i++) {
             String line = apiListNew.get(i);
             if (isBlank(line)) {
-                List<String> tempApiList = apiList.subList(start, i);
+                List<String> tempApiList = apiListNew.subList(start, i);
                 if (!String.join("", apiList).contains(String.join("", tempApiList))) {
                     apiList.addAll(apiIndex, tempApiList);
                 }

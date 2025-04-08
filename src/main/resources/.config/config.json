@@ -130,7 +130,7 @@
       "is_front": true,
       "path": {
         "local": true,
-        "path": "front",
+        "path": "table",
         "api_file": ".config\\front\\api.js",
         "router_file": ".config\\front\\router.js",
         "constant_file": ".config\\front\\constant.js"
