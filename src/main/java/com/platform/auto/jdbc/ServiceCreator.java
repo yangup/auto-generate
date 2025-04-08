@@ -91,14 +91,14 @@ public class ServiceCreator extends BaseCreator {
                 }
                 codeList.add(t2 + String.format("Set<String> %sIds = page.stream().map(d -> d.%s).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());",
                         columnInfo.otherTable.tableNameJavaParam, columnInfo.columnNameJava));
-                codeList.add(t2 + String.format("PageList<%sData> %sPageList = isNotEmpty(%sIds) ? %sService.find(QueryMap.ofIDS(%sIds)) : null;",
+                codeList.add(t2 + String.format("PageList<%sData> %sPageList = isNotEmpty(%sIds) ? %sService.find(QueryMap.ofIDS(%sIds).rawTrue()) : null;",
                         columnInfo.otherTable.tableNameJava, columnInfo.otherTable.tableNameJavaParam, columnInfo.otherTable.tableNameJavaParam,
                         columnInfo.otherTable.tableNameJavaParam, columnInfo.otherTable.tableNameJavaParam));
             }
             for (PageListParam param : table.relateTable) {
                 codeList.add(t2 + String.format("Set<String> %ss = page.stream().map(d -> d.%s).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());",
                         param.thisTableColumn.columnNameJava, param.thisTableColumn.columnNameJava));
-                codeList.add(t2 + String.format("PageList<%sData> %sPageList = isNotEmpty(%ss) ? %sService.find(QueryMap.of(\"%s\", %ss)) : null;",
+                codeList.add(t2 + String.format("PageList<%sData> %sPageList = isNotEmpty(%ss) ? %sService.find(QueryMap.of(\"%s\", %ss).rawTrue()) : null;",
                         param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam, param.thisTableColumn.columnNameJava,
                         param.otherTable.tableNameJavaParam,
                         param.otherTableColumn.columnNameJava, param.thisTableColumn.columnNameJava));
