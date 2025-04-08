@@ -130,7 +130,7 @@ public class ServiceCreator extends BaseCreator {
                     codeList.add(t3 + "a.-a-List = -a-PageList == null ? null : -a-PageList.stream().filter(b -> equals(a.-b-, b.-c-)).collect(Collectors.toList());"
                             .replaceAll("-a-", param.otherTable.tableNameJavaParam)
                             .replaceAll("-b-", param.thisTableColumn.columnNameJava)
-                            .replaceAll("-b-", param.otherTableColumn.columnNameJava)
+                            .replaceAll("-c-", param.otherTableColumn.columnNameJava)
                     );
                 } else {
                     codeList.add(t3 + "a.-a- = -a-PageList == null ? null : -a-PageList.stream().filter(b -> equals(a.-b-, b.-c-)).findFirst().orElse(null);"
