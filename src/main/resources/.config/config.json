@@ -110,6 +110,14 @@
       }
     },
     {
+      "template": "templateFront.up",
+      "remark": "generate front file",
+      "path": {
+        "local": true,
+        "path": "D:\\github\\auto-generate\\.auto\\front"
+      }
+    },
+    {
       "template": "templatePostManTable.up",
       "remark": "generate postman table",
       "file_name_suffix": "_postman.json",
