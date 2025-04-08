@@ -94,7 +94,7 @@ public class ServiceCreator extends BaseCreator {
                 if (columnInfo.otherTable == null) {
                     continue;
                 }
-                codeList.add(t2 + "Set<String> -a-Ids = page.stream().map(d -> d.-b-).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());"
+                codeList.add(t2 + "Set<String> -a-Ids = page.stream().map(a -> a.-b-).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());"
                         .replaceAll("-a-", columnInfo.otherTable.tableNameJavaParam)
                         .replaceAll("-b-", columnInfo.columnNameJava)
                 );
@@ -104,7 +104,7 @@ public class ServiceCreator extends BaseCreator {
                 );
             }
             for (PageListParam param : table.relateTable) {
-                codeList.add(t2 + "Set<String> -a-s = page.stream().map(d -> d.-a-).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());"
+                codeList.add(t2 + "Set<String> -a-s = page.stream().map(a -> a.-a-).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());"
                         .replaceAll("-a-", param.thisTableColumn.columnNameJava)
                 );
                 codeList.add(t2 + "PageList<-a-Data> -b-PageList = isNotEmpty(-c-s) ? -b-Service.find(QueryMap.of(\"-d-\", -c-s).rawTrue()) : null;"
@@ -127,8 +127,9 @@ public class ServiceCreator extends BaseCreator {
             }
             for (PageListParam param : table.relateTable) {
                 if (param.more) {
-                    codeList.add(t3 + "a.-a-List = -a-PageList == null ? null : -a-PageList.stream().filter(b -> equals(a.-a-, b.-b-)).collect(Collectors.toList());"
+                    codeList.add(t3 + "a.-a-List = -a-PageList == null ? null : -a-PageList.stream().filter(b -> equals(a.-b-, b.-c-)).collect(Collectors.toList());"
                             .replaceAll("-a-", param.otherTable.tableNameJavaParam)
+                            .replaceAll("-b-", param.thisTableColumn.columnNameJava)
                             .replaceAll("-b-", param.otherTableColumn.columnNameJava)
                     );
                 } else {
