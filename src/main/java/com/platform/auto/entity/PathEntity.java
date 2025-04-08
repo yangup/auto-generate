@@ -12,10 +12,14 @@ public class PathEntity {
     @JsonProperty("package_name")
     public String packageName;
 
-    public String path;
+    // todo : 相对路径
+    // todo : .auto 下面 的文件
+    public String file;
 
-    /**
-     * 生成的文件是否放在 .auto 目录下
-     **/
+    // todo : 绝对路径
+    @JsonProperty("absolute_path")
+    public String absolutePath;
+
+    // todo : 生成的文件是否放在 .auto 目录下
     public String local;
 }

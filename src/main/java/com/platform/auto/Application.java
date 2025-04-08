@@ -52,7 +52,7 @@ public class Application {
 //        // 指定路径生成
 //        Config.project_base_path = "D:/ksm/code/th/biz/th-pay-server";
 //        Config.project_auto_path = Config.project_base_path + "/" + Config.auto_name;
-        Application.start(List.of("tb_merchant_info"));
+        Application.start(List.of("t_system_user"));
     }
 
 }

@@ -97,7 +97,7 @@
       "remark": "generate http",
       "path": {
         "local": true,
-        "path": "http/http.http"
+        "file": "http/http.http"
       }
     },
     {
@@ -112,9 +112,11 @@
     {
       "template": "templateFront.up",
       "remark": "generate front file",
+      "file_name_suffix": ".vue",
+      "store_by_table": false,
       "path": {
         "local": true,
-        "path": "D:\\github\\auto-generate\\.auto\\front"
+        "absolute_path": "D:\\github\\auto-generate\\.auto\\front"
       }
     },
     {

@@ -57,11 +57,16 @@ public class FileUtil extends StringUtils {
                 path = "";
             }
         }
-        // 文件放在 .auto 下面
+        // 文件放在本地
         if (isTrue(info.path.local)) {
-            if (isNotBlank(info.path.path)) {
-                return createFile(Config.project_auto_path + "/" + info.path.path);
+            if (isNotBlank(info.path.file)) {
+                // 文件放在 .auto 下面 的某一个文件中
+                return createFile(Config.project_auto_path + "/" + info.path.file);
+            } else if (isNotBlank(info.path.absolutePath)) {
+                // 绝对路径
+                return createFile(info.path.absolutePath + "/" + path + table.tableNameJava + info.fileNameSuffix);
             } else {
+                // 文件放在 .auto 下面 txt 文件夹中
                 return createFile(Config.project_auto_path + "/" + "txt" +
                         "/" + path + table.tableNameJava + info.fileNameSuffix);
             }
