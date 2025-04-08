@@ -4,25 +4,25 @@ create table t_system_user (
   login_name  	        varchar(64)          not null COMMENT '用户登录code',
   full_name  	        varchar(64)          not null COMMENT '用户登录全名',
   password  	        varchar(256)         not null COMMENT '密码',
-  type			        varchar(16)          not null COMMENT '类型',
-  status    	        varchar(16)          not null COMMENT '状态',
+  type			        varchar(16)          not null COMMENT '类型;ADMIN:系统管理员,NORMAL:正常用户',
+  status    	        varchar(16)          not null COMMENT '状态;ON:可用,OFF:禁用',
   failed_login_count    smallint unsigned    not null default 0 COMMENT '登录失败的次数',
   last_time             timestamp            not null default CURRENT_TIMESTAMP COMMENT '最后一次的登录失败,或者成功的时间',
   create_time           timestamp            not null default CURRENT_TIMESTAMP,
   update_time           timestamp            not null default CURRENT_TIMESTAMP,
   unique key unique_t_system_user_login_name(login_name)
-) comment='系统用户表';
+) comment='系统用户表;id:t_system_user_setting.user_id,just_one';
 
 
 drop table if exists t_system_user_setting;
 create table t_system_user_setting (
   id 			        varchar(32)          primary key,
-  user_id  	            varchar(32)          not null COMMENT '用户;t_system_user',
+  user_id  	            varchar(32)          not null COMMENT '用户id',
   set_data      	    text                 COMMENT '配置数据',
   create_time           timestamp            not null default CURRENT_TIMESTAMP,
   update_time           timestamp            not null default CURRENT_TIMESTAMP,
   unique key unique_t_system_user_setting_user_id(user_id)
-) comment='系统用户配置表;user_id:t_system_user.id';
+) comment='系统用户配置表';
 
 
 -- admin系统的角色表
@@ -30,7 +30,7 @@ drop table if exists t_system_role;
 create table t_system_role (
   id 			        varchar(32)          primary key,
   role_name  	        varchar(64)          not null COMMENT '角色名字',
-  status    	        varchar(16)          not null COMMENT '角色状态',
+  status    	        varchar(16)          not null COMMENT '角色状态;ON:可用,OFF:禁用',
   description	        varchar(64)                   COMMENT '角色描述',
   create_time           timestamp            not null default CURRENT_TIMESTAMP,
   update_time           timestamp            not null default CURRENT_TIMESTAMP,
@@ -44,9 +44,9 @@ create table t_system_privilege (
   icon  	            varchar(64)          not null COMMENT 'icon',
   name  	            varchar(64)          not null COMMENT '显示的名字',
   url  	                varchar(128)         COMMENT '前端url',
-  status    	        varchar(16)          not null COMMENT '状态,打开或者关闭',
-  type    	            varchar(16)          not null COMMENT '类型, 有链接的,无链接的',
-  parent_id             varchar(32)          COMMENT '父 id',
+  status    	        varchar(16)          not null COMMENT '状态;ON:可用,OFF:禁用',
+  type    	            varchar(16)          not null COMMENT '类型;PARENT:父节点,CHILD:子节点',
+  parent_id             varchar(32)          COMMENT '父id',
   sort                  bigint unsigned      not null default 0 COMMENT '排序字段',
   create_time           timestamp            not null default CURRENT_TIMESTAMP,
   update_time           timestamp            not null default CURRENT_TIMESTAMP,
@@ -57,32 +57,32 @@ create table t_system_privilege (
 drop table if exists t_system_privilege_server;
 create table t_system_privilege_server (
   id 			        varchar(32)          primary key,
-  privilege_id          varchar(32)          not null COMMENT '权限;t_system_privilege',
+  privilege_id          varchar(32)          not null COMMENT '权限',
   type    	            varchar(16)          not null COMMENT '后端权限匹配类型,例如,正则表达式,带*匹配,完全匹配',
   url  	                varchar(128)         not null COMMENT '后端url',
   create_time           timestamp            not null default CURRENT_TIMESTAMP,
   update_time           timestamp            not null default CURRENT_TIMESTAMP,
   unique key unique_t_system_privilege_server_url(url)
-) comment='系统服务端权限表;privilege_id:t_system_privilege.id';
+) comment='系统服务端权限表';
 
 drop table if exists t_system_user_role;
 create table t_system_user_role (
   id 			        varchar(32)          primary key,
-  user_id   	        varchar(32)          not null COMMENT '用户;t_system_user',
-  role_id   	        varchar(32)          not null COMMENT '角色;t_system_role',
+  user_id   	        varchar(32)          not null COMMENT '用户id',
+  role_id   	        varchar(32)          not null COMMENT '角色id',
   create_time           timestamp            not null default CURRENT_TIMESTAMP,
   update_time           timestamp            not null default CURRENT_TIMESTAMP
-) comment='系统用户角色关联表;user_id:t_system_user.id;role_id:t_system_role.id';
+) comment='系统用户角色关联表';
 
 
 drop table if exists t_system_role_privilege;
 create table t_system_role_privilege (
   id 			        varchar(32)          primary key,
-  role_id   	        varchar(32)          not null COMMENT '角色;t_system_role',
-  privilege_id          varchar(32)          not null COMMENT '权限;t_system_privilege',
+  role_id   	        varchar(32)          not null COMMENT '角色id',
+  privilege_id          varchar(32)          not null COMMENT '权限id',
   create_time           timestamp            not null default CURRENT_TIMESTAMP,
   update_time           timestamp            not null default CURRENT_TIMESTAMP
-) comment='系统角色权限关联表;role_id:t_system_role.id;privilege_id:t_system_privilege.id';
+) comment='系统角色权限关联表';
 
 
 
