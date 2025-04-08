@@ -6,6 +6,8 @@ import com.platform.auto.jdbc.model.FindData;
 import com.platform.auto.jdbc.model.TypeToJavaData;
 import com.platform.auto.sys.annotation.AnnotationUtil;
 import com.platform.auto.sys.order.Order;
+import com.platform.auto.util.AutoUtil;
+import com.platform.auto.util.FileUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -55,6 +57,26 @@ public class FrontCreate extends BaseCreator {
                 this.codeList.add(line);
             }
         }
+    }
+
+    /**
+     * 生成其他代码
+     */
+    public void generateOtherCode() {
+        // TODO: 随便添加一下 // api/api.js
+        // TODO: 随便添加一下 // router/index.js
+        // TODO: 随便添加一下 // utils/constant.js
+        if (info.path == null) {
+            return;
+        }
+        List<String> apiList = AutoUtil.fileToList(FileUtil.createFile(info.path.apiFile, info.path.absoluteApiFile));
+        List<String> apiList1 = new ArrayList<>(apiList);
+        List<String> constantFileList = AutoUtil.fileToList(FileUtil.createFile(info.path.constantFile, info.path.absoluteConstantFile));
+        List<String> constantFileList1 = new ArrayList<>(constantFileList);
+        List<String> routerList = AutoUtil.fileToList(FileUtil.createFile(info.path.routerFile, info.path.absoluteRouterFile));
+        List<String> routerList1 = new ArrayList<>(routerList);
+//        AutoUtil.checkColumn(apiList, this.codeUsefulList, tableNameJavaParam + "Delete(", 1, 4,
+//                "class Api {");
     }
 
     private void createElTableColumn() {

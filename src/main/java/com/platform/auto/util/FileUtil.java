@@ -80,6 +80,16 @@ public class FileUtil extends StringUtils {
         }
     }
 
+    public static File createFile(String pathFile, String absolutePathFile) {
+        if (isNotBlank(pathFile)) {
+            // 相对路径下的 . auto 下面
+            return createFile(Config.project_auto_path + "/" + pathFile);
+        } else if (isNotBlank(absolutePathFile)) {
+            return createFile(absolutePathFile);
+        }
+        return null;
+    }
+
     public static String getTableNameJavaLower(final Table table) {
         return CharUtil.firstToLowercase(table.tableNameJava);
     }
