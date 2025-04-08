@@ -55,9 +55,6 @@ public class PathEntity {
     @JsonProperty("constant_file")
     public String constantFile;
 
-    @JsonProperty("front_file_path")
-    public String frontFilePath;
-
     // todo : 生成的文件是否放在 .auto 目录下
     public String local;
 }

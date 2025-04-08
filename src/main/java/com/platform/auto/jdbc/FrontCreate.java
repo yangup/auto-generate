@@ -1,5 +1,7 @@
 package com.platform.auto.jdbc;
 
+import com.platform.auto.config.Config;
+import com.platform.auto.entity.ConfigInfoEntity;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.FindData;
@@ -10,6 +12,7 @@ import com.platform.auto.util.AutoUtil;
 import com.platform.auto.util.FileUtil;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.util.*;
 
 import static com.platform.auto.util.CharUtil.*;
@@ -57,26 +60,72 @@ public class FrontCreate extends BaseCreator {
                 this.codeList.add(line);
             }
         }
+        // TODO: 生成其他代码
+        try {
+            generateOtherCode();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
      * 生成其他代码
      */
-    public void generateOtherCode() {
+    public void generateOtherCode() throws Exception {
         // TODO: 随便添加一下 // api/api.js
         // TODO: 随便添加一下 // router/index.js
         // TODO: 随便添加一下 // utils/constant.js
         if (info.path == null) {
             return;
         }
-        List<String> apiList = AutoUtil.fileToList(FileUtil.createFile(info.path.apiFile, info.path.absoluteApiFile));
-        List<String> apiList1 = new ArrayList<>(apiList);
-        List<String> constantFileList = AutoUtil.fileToList(FileUtil.createFile(info.path.constantFile, info.path.absoluteConstantFile));
-        List<String> constantFileList1 = new ArrayList<>(constantFileList);
-        List<String> routerList = AutoUtil.fileToList(FileUtil.createFile(info.path.routerFile, info.path.absoluteRouterFile));
-        List<String> routerList1 = new ArrayList<>(routerList);
-//        AutoUtil.checkColumn(apiList, this.codeUsefulList, tableNameJavaParam + "Delete(", 1, 4,
-//                "class Api {");
+        ConfigInfoEntity useful = Config.getConfig().info.stream().filter(i -> isTrue(i.isUseful)).findFirst().orElse(null);
+        if (useful == null) {
+            return;
+        }
+        if (!isTrue(info.isFront)) {
+            return;
+        }
+        List<String> usefulCodeList = AutoUtil.fileToList(FileUtil.createFile(table, useful));
+        final String todo_auto_generate = "todo : auto-generate";
+
+        File apiFile = FileUtil.createFile(info.path.apiFile, info.path.absoluteApiFile);
+        List<String> apiList = AutoUtil.fileToList(apiFile);
+        int apiIndex = AutoUtil.strInListIndex(apiList, todo_auto_generate);
+
+        File constantFile = FileUtil.createFile(info.path.constantFile, info.path.absoluteConstantFile);
+        List<String> constantFileList = AutoUtil.fileToList(constantFile);
+        int constantIndex = AutoUtil.strInListIndex(constantFileList, todo_auto_generate);
+
+        File routerFile = FileUtil.createFile(info.path.routerFile, info.path.absoluteRouterFile);
+        List<String> routerList = AutoUtil.fileToList(routerFile);
+        int routerIndex = AutoUtil.strInListIndex(routerList, todo_auto_generate);
+
+        List<String> apiListNew = AutoUtil.subListAndTrim(usefulCodeList, "auto_generate_api_start", "auto_generate_api_end");
+        int start = 0;
+        for (int i = 0; i < apiListNew.size(); i++) {
+            String line = apiListNew.get(i);
+            if (isBlank(line)) {
+                List<String> tempApiList = apiList.subList(start, i);
+                if (!String.join("", apiList).contains(String.join("", tempApiList))) {
+                    apiList.addAll(apiIndex, tempApiList);
+                }
+                start = i + 1;
+            }
+        }
+        AutoUtil.listToFile(apiFile, apiList);
+
+        List<String> routerListNew = AutoUtil.subListAndTrim(usefulCodeList, "auto_generate_router_start", "auto_generate_router_end");
+        if (!String.join("", routerList).contains(String.join("", routerListNew))) {
+            routerList.addAll(routerIndex, routerListNew);
+        }
+        AutoUtil.listToFile(routerFile, routerList);
+
+        List<String> constantListNew = AutoUtil.subListAndTrim(usefulCodeList, "auto_generate_constant_start", "auto_generate_constant_end");
+        if (!String.join("", constantFileList).contains(String.join("", constantListNew))) {
+            constantFileList.addAll(constantIndex, constantListNew);
+        }
+        AutoUtil.listToFile(constantFile, constantFileList);
     }
 
     private void createElTableColumn() {

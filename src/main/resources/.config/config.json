@@ -88,6 +88,7 @@
       "remark": "generate useful",
       "file_name_suffix": "_useful.txt",
       "store_by_table": false,
+      "is_useful": true,
       "path": {
         "local": true,
         "path": "useful"
@@ -126,9 +127,9 @@
       "remark": "generate front file",
       "file_name_suffix": ".vue",
       "store_by_table": false,
+      "is_front": true,
       "path": {
         "local": true,
-        "front_file_path": "system",
         "path": "front",
         "api_file": ".config\\front\\api.js",
         "router_file": ".config\\front\\router.js",

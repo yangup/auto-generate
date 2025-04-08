@@ -23,6 +23,7 @@ tableName : -tableName-
 
 
 // api/api.js 中, 需要生成的代码
+// auto_generate_api_start
 
   -tableNameJavaParam-Find(query) {
     return this.get('/-tableNameJavaParam-/find', query)
@@ -48,13 +49,24 @@ tableName : -tableName-
     return this.post('/-tableNameJavaParam-/delete', obj)
   }
 
+// auto_generate_api_end
 
 // router/index.js 中, 需要生成的代码
+// auto_generate_router_start
 
   {
-    path: '/-frontFilePath-/-tableNameJavaParam-',
-    component: () => import('@/views/-frontFilePath-/-tableNameJavaParam-'),
+    path: '/table/-tableNameJavaParam-',
+    component: () => import('@/views/table/-tableNameJavaParam-'),
   },
+
+// auto_generate_router_end
+
+
+// auto_generate_constant_start
+
+-frontSelectConstant-
+
+// auto_generate_constant_end
 
 
       // 前端代码中详情数据的展示
@@ -67,7 +79,6 @@ tableName : -tableName-
       </el-form>
 
 
--frontSelectConstant-
 
 -commentList-
 

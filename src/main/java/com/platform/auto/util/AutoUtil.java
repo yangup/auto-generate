@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -152,6 +153,45 @@ public class AutoUtil extends CharUtil {
         }
         return -1;
     }
+
+    public static int strInListIndex(List<String> dataList, String str) {
+        for (int i = 0; i < dataList.size(); i++) {
+            String line = dataList.get(i);
+            if (line.contains(str)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static List<String> subListAndTrim(List<String> dataList, String startStr, String endStr) {
+        int start = -1;
+        int end = -1;
+        for (int i = 0; i < dataList.size(); i++) {
+            String line = dataList.get(i);
+            if (start == -1 && line.contains(startStr)) {
+                start = i;
+            } else if (start != -1 && end == -1 && line.contains(endStr)) {
+                end = i;
+                break;
+            }
+        }
+        if (start != -1 && end != -1 && start < end - 1) {
+            // 不包含 startStr 和 endStr 所在行
+            List<String> subList = new ArrayList<>(dataList.subList(start + 1, end));
+            // 去除开头空白行
+            while (!subList.isEmpty() && subList.get(0).trim().isEmpty()) {
+                subList.remove(0);
+            }
+            // 去除结尾空白行
+            while (!subList.isEmpty() && subList.get(subList.size() - 1).trim().isEmpty()) {
+                subList.remove(subList.size() - 1);
+            }
+            return subList;
+        }
+        return Collections.emptyList();
+    }
+
 
     /**
      * list 中 不包含 start , 也不包含 end, 删除

@@ -42,6 +42,12 @@ public class ConfigInfoEntity {
     @JsonProperty("store_by_table")
     public String storeByTable;
 
+    @JsonProperty("is_useful")
+    public String isUseful;
+
+    @JsonProperty("is_front")
+    public String isFront;
+
     public PathEntity path;
 
 }

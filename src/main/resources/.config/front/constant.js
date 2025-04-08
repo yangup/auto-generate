@@ -53,6 +53,8 @@ export function OBJ_VALUE(obj, value) {
   return Object.keys(obj).find(k => compare(obj[k], value))
 }
 
+// todo : auto-generate
+
 export const PRIVILEGE_TYPE = {
   PARENT: '父菜单',
   CHILD: '子权限',

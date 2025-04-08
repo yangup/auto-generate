@@ -2,6 +2,8 @@ import request from '@/utils/request'
 
 class Api {
 
+  // todo : auto-generate
+
   systemUserSettingFind(query) {
     return this.get('/systemUserSetting/find', query)
   }
