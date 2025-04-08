@@ -53,7 +53,7 @@ public class AutoGenerateToolWindowContent {
 
     private final JBRadioButton configJson = new JBRadioButton("config.json");
     private final JBRadioButton configAddColumnJson = new JBRadioButton("config_add_column.json");
-    private final JBRadioButton configSimpleJson = new JBRadioButton("config_simple.json");
+    private final JBRadioButton configSimpleJson = new JBRadioButton("config_front.json");
     private final List<JBRadioButton> configList = List.of(configJson, configAddColumnJson, configSimpleJson);
 
     // 刷新框
