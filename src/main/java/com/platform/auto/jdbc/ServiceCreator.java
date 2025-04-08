@@ -4,7 +4,6 @@ import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.PageListParam;
-import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.sys.order.Order;
 
 import java.util.List;
