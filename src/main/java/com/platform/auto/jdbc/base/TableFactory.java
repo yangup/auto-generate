@@ -109,6 +109,7 @@ public class TableFactory {
      * // todo : 有配置类的说明
      * // todo : 视频资源信息,每一集的信息;tb_video.id:video_id;
      * // todo : 视频资源信息,每一集的信息;tb_video.id:video_id,just_one;
+     * // todo : 系统用户表;id:t_system_user_setting.user_id,just_one
      **/
     public void tableCommentDeal(Table table, ColumnInfo columnFirst) {
         // TODO: 处理 table comment
@@ -127,6 +128,7 @@ public class TableFactory {
                     // todo : tb_video.id:video_id,just_one
                     Stream.of(str.split(":")).forEach(detailStr -> {
                         // todo : ["tb_video.id", "video_id,just_one"]
+                        // todo : ["id", "t_system_user_setting.user_id,just_one"]
                         String detailDealStr = detailStr.contains(",") ? detailStr.split(",")[0] : detailStr;
                         pageListParam.more = equalsAnyIgnoreCase(detailDealStr, detailStr);
                         if (detailDealStr.contains(".")) {
@@ -190,7 +192,7 @@ public class TableFactory {
      * // todo : 有配置类的说明
      * // todo : 请求类型;多选;CREATED:新产生,DONE:完成,CLOSED:关闭,FAILED:失败,FAILED1:失败1,FAILED2:失败2
      * // todo : 请求类型;CREATED:新产生,DONE:完成,CLOSED:关闭,FAILED:失败,FAILED1:失败1,FAILED2:失败2
-     * // todo : user_id.filter:tb_user
+     * // todo : user_id.filter
      **/
     public void columnCommentDeal(ColumnInfo columninfo) {
         // TODO : 注释
