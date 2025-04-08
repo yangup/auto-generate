@@ -78,6 +78,12 @@ public class ServiceCreator extends BaseCreator {
             String note = "//";
             if (!c.isId && isNotEmpty(c.findData)) {
                 note = "";
+                codeList.add(note + wp +
+                        "wrapper.in(isNotEmpty(queryMap.get(\"-a-s\")), -b-Entity::get-c-, queryMap.get(\"-a-s\"));"
+                                .replaceAll("-a-", c.columnNameJava)
+                                .replaceAll("-b-", table.tableNameJava)
+                                .replaceAll("-c-", firstToUppercase(c.columnNameJava))
+                );
             }
             codeList.add(note + wp +
                     "wrapper.eq(isNotEmpty(queryMap.get(\"-a-\")), -b-Entity::get-c-, queryMap.get(\"-a-\"));"
