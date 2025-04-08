@@ -1,16 +1,17 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.jdbc.base.BaseCreator;
+import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.FindData;
 import com.platform.auto.jdbc.model.TypeToJavaData;
 import com.platform.auto.sys.annotation.AnnotationUtil;
 import com.platform.auto.sys.order.Order;
-import com.platform.auto.util.AutoUtil;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
 import java.util.*;
-import java.util.stream.Collectors;
+
+import static com.platform.auto.util.CharUtil.*;
+import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 
 /**
  * yangpu.jdbc.mysql.ModelCreate.java<br>
@@ -21,30 +22,14 @@ import java.util.stream.Collectors;
  */
 public class FrontCreate extends BaseCreator {
 
-    /**
-     * 加载模板
-     *
-     * @param table
-     */
-    public FrontCreate(Table table) throws Exception {
-        new FrontCreate(table, false);
+    public FrontCreate(BaseCreator baseCreator) {
+        super(baseCreator);
     }
 
-    public FrontCreate(Table table, boolean isList) throws Exception {
-        this.table = table;
-        this.list = table.columnInfos;
-        this.importCodeList = new HashSet<>();
-        this.componentsCodeList = new HashSet<>();
-        this.returnCodeList = new HashSet<>();
-        UsefulCreate create = new UsefulCreate(table, true);
-        this.codeUsefulList = create.codeList;
-        List<String> templateList = AutoUtil.readTemplate(Constant.front);
-        // TODO: 模板中的数据, 使用数据库中的字段替换
-        templateList = AutoUtil.readWrite(templateList, table);
-        codeList = new ArrayList<>(templateList.size() * 2);
-
-        for (String line : templateList) {
-            boolean run = false;
+    @Override
+    public void create() {
+        List<String> codeTempList = this.copyCodeListAndClear();
+        for (String line : codeTempList) {
             if (Order.check(line, Order.startElTableColumn)) {
                 createElTableColumn();
             } else if (Order.check(line, Order.startElFormItem)) {
@@ -54,17 +39,10 @@ public class FrontCreate extends BaseCreator {
             } else if (Order.check(line, Order.startRules)) {
                 startRules();
             } else if (Order.check(line, Order.filterAll)) {
-                filterAll(getWhitespace(line.substring(0, line.indexOf(Order.getOrder(Order.filterAll))).length()));
-            } else {
-                run = true;
-            }
-            if (!run) {
-                continue;
-            }
-            if (Order.check(line, Order.queryParam)) {
+                filterAll(getLeftWhitespace(line, Order.filterAll));
+            } else if (Order.check(line, Order.queryParam)) {
                 // todo : 查询出这个命令距离左边的位置
-                int leftNum = line.substring(0, line.indexOf(Order.getOrder(Order.queryParam))).length();
-                String wp = getWhitespace(leftNum);
+                String wp = getLeftWhitespace(line, Order.queryParam);
                 List<String> sb = new ArrayList<>();
                 for (FindData f : table.findData) {
                     if (!Arrays.asList("page", "limit", "startTime", "endTime").contains(f.name)) {
@@ -72,146 +50,15 @@ public class FrontCreate extends BaseCreator {
                     }
                 }
                 line = line.replace(Order.getOrder(Order.queryParam), String.join(": undefined,\n" + wp, sb) + ": undefined,");
-            }
-            codeList.add(line);
-        }
-        // TODO: constant
-        List<String> constantList = list.stream().map(l -> l.constantName).collect(Collectors.toList());
-        constantList.removeAll(Collections.singleton(null));
-        if (isNotEmpty(constantList)) {
-            returnCodeList.addAll(constantList);
-            // todo :
-            importCodeList.add(String.format("import { %s } from '@/utils/constant'", String.join(", ", constantList)));
-        }
-        // TODO: 富文本编辑器
-        if (list.stream().anyMatch(o -> o.isText)) {
-//            insertLocation(IMPORT_LOCATION, "import { EDITOR_CONFIG } from '@/utils/request'", "import ClassicEditor from '@/utils/classic-editor'");
-//            insertLocation(RETURN_LOCATION, "editor: ClassicEditor,", "editorConfig: EDITOR_CONFIG,");
-        }
-
-        // TODO: 将需要导入的包的数据, 加入到代码中
-        insertLocation(IMPORT_LOCATION, importCodeList);
-        insertLocation(COMPONENT_LOCATION, componentsCodeList);
-        insertLocation(RETURN_LOCATION, returnCodeList);
-
-        if (!isList) {
-            if (isNotEmpty(Constant.path_front)) {
-                // TODO: 随便添加一下 // api/api.js
-                // TODO: 随便添加一下 // router/index.js
-                File api = new File(Constant.path_front + "src\\api\\api.js");
-                File route = new File(Constant.path_front + "src\\router\\index.js");
-                File constant = new File(Constant.path_front + "src\\utils\\constant.js");
-                List<String> apiList = AutoUtil.fileToList(api);
-                List<String> apiList1 = new ArrayList<>(apiList);
-                List<String> constantFileList = AutoUtil.fileToList(constant);
-                List<String> constantFileList1 = new ArrayList<>(constantFileList);
-                List<String> routerList = AutoUtil.fileToList(route);
-                List<String> routerList1 = new ArrayList<>(routerList);
-                String tableNameJavaParam = table.tableNameJavaParam;
-
-                AutoUtil.checkColumn(apiList, this.codeUsefulList, tableNameJavaParam + "Delete(", 1, 4,
-                        "class Api {");
-
-                AutoUtil.checkColumn(apiList, this.codeUsefulList, tableNameJavaParam + "AddUpdate(", 1, 4,
-                        "class Api {");
-
-                AutoUtil.checkColumn(apiList, this.codeUsefulList, tableNameJavaParam + "One(", 1, 4,
-                        "class Api {");
-
-                AutoUtil.checkColumn(apiList, this.codeUsefulList, tableNameJavaParam + "All(", 1, 4,
-                        "class Api {");
-
-                AutoUtil.checkColumn(apiList, this.codeUsefulList, tableNameJavaParam + "FindAll(", 1, 4,
-                        "class Api {");
-
-                AutoUtil.checkColumn(apiList, this.codeUsefulList, tableNameJavaParam + "Find(", 1, 4,
-                        "class Api {");
-
-                AutoUtil.checkColumn(routerList, this.codeUsefulList, "path: '/" + table.frontFilePath + "/" + tableNameJavaParam + "',", 1, 4,
-                        "// todo : auto-generate");
-
-                for (ColumnInfo c : list) {
-                    if (isNotEmpty(c.constantName)) {
-                        AutoUtil.checkColumn(constantFileList, this.codeUsefulList, "export const " + c.constantName, 0, 2 + c.select.size(), "// todo : auto-generate");
-                    }
-                }
-
-                // TODO: constant.js
-                if (!StringUtils.equals(String.join("", constantFileList1), String.join("", constantFileList))) {
-                    AutoUtil.listToFile(constant, constantFileList);
-                } else {
-                    log.out("same file", constant.getName());
-                }
-
-                // TODO: api.js
-                if (!StringUtils.equals(String.join("", apiList1), String.join("", apiList))) {
-                    AutoUtil.listToFile(api, apiList);
-                } else {
-                    log.out("same file", api.getName());
-                }
-
-                // TODO: router/index.js
-                if (!StringUtils.equals(String.join("", routerList1), String.join("", routerList))) {
-                    AutoUtil.listToFile(route, routerList);
-                } else {
-                    log.out("same file", route.getName());
-                }
-            }
-            AutoUtil.newCodeToFile(codeList,
-                    FileUtil.createFileFront(table.frontFilePath + File.separator + table.tableNameJavaParam + ".vue"));
-        }
-
-    }
-
-    /**
-     * 在指定位置的下一行, 插入代码
-     **/
-    private void insertLocation(String indexStr, Set<String> insertList) {
-        if (isEmpty(insertList)) {
-            return;
-        }
-        for (String s : insertList) {
-            insertLocation(indexStr, s);
-        }
-    }
-
-    /**
-     * 在指定位置的下一行, 插入代码
-     **/
-    private void insertLocation(String indexStr, String... ss) {
-        if (isEmpty(ss)) {
-            return;
-        }
-        int importIndex = AutoUtil.listIndex(codeList, indexStr);
-        if (importIndex != -1) {
-            for (String s : ss) {
-                String prefix = "";
-                String suffix = "";
-                if (COMPONENT_LOCATION.equals(indexStr)) {
-                    if (!s.startsWith("    ")) {
-                        prefix = "    ";
-                    }
-                    if (!s.endsWith(",")) {
-                        suffix = ",";
-                    }
-                }
-                if (RETURN_LOCATION.equals(indexStr)) {
-                    if (!s.startsWith("      ")) {
-                        prefix = "      ";
-                    }
-                    if (!s.endsWith(",")) {
-                        suffix = ",";
-                    }
-                }
-                codeList.add(importIndex + 1, prefix + s + suffix);
+            } else {
+                this.codeList.add(line);
             }
         }
     }
 
     private void createElTableColumn() {
         int countNote = 0;
-        for (int i = 0; i < list.size(); i++) {
-            ColumnInfo columninfo = list.get(i);
+        for (ColumnInfo columninfo : table.columnInfos) {
             String columnNameJava = columninfo.columnNameJava;
             String columnName = columninfo.columnName;
             String columnComment = columninfo.columnComment;
@@ -245,12 +92,10 @@ public class FrontCreate extends BaseCreator {
             countNote++;
             codeList.add(oneLine);
         }
-
     }
 
     private void startElFormItem() {
-        for (int i = 0; i < list.size(); i++) {
-            ColumnInfo columninfo = list.get(i);
+        for (ColumnInfo columninfo : table.columnInfos) {
             String type = columninfo.dataTypeJava;
             String columnNameJava = columninfo.columnNameJava;
             if (StringUtils.isBlank(columninfo.columnComment)) {
@@ -374,8 +219,7 @@ public class FrontCreate extends BaseCreator {
     private void startTemp() {
         String temp = null;
         List<String[]> fields = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            ColumnInfo columninfo = list.get(i);
+        for (ColumnInfo columninfo : table.columnInfos) {
             String type = columninfo.dataTypeJava;
             String field = columninfo.columnNameJava;
 
@@ -394,14 +238,12 @@ public class FrontCreate extends BaseCreator {
         for (String[] strings : fields) {
             codeList.add("        " + strings[0] + ": undefined,");
         }
-
     }
 
     private void startRules() {
         String temp = null;
         List<String[]> fields = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            ColumnInfo columninfo = list.get(i);
+        for (ColumnInfo columninfo : table.columnInfos) {
             String type = columninfo.dataTypeJava;
             String field = columninfo.columnNameJava;
 
@@ -428,8 +270,7 @@ public class FrontCreate extends BaseCreator {
     private void filterAll(String wp) {
         // todo : 未注释的数量
         int countNote = 0;
-        for (int i = 0; i < list.size(); i++) {
-            ColumnInfo columninfo = list.get(i);
+        for (ColumnInfo columninfo : table.columnInfos) {
             String dataTypeJava = columninfo.dataTypeJava;
             String columnNameJava = columninfo.columnNameJava;
             if (StringUtils.isBlank(columninfo.columnComment)) {
@@ -483,27 +324,5 @@ public class FrontCreate extends BaseCreator {
         }
 
     }
-
-    /**
-     *
-     **/
-    public static void checkColumn(Table table) throws Exception {
-        File file = FileUtil.getFile(table, "");
-        if (file == null) {
-            log.out("front is not exist");
-            return;
-        }
-        FrontCreate create = new FrontCreate(table, true);
-        // TODO: 现在代码中的情况
-        List<String> nowList = AutoUtil.fileToList(file);
-
-        AutoUtil.checkColumn(nowList, create.codeList, "<el-table v-loading=\"listLoading\"", "<el-table-column fixed=\"right\" label");
-        AutoUtil.checkColumn(nowList, create.codeList, "<el-form ref=\"dataForm\"", "</el-form>");
-        AutoUtil.checkColumn(nowList, create.codeList, "data() {", "methods: {");
-
-        // TODO: 新的代码, 放入到文件中
-        AutoUtil.listToFile(file, nowList);
-    }
-
 
 }

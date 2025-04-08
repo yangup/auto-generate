@@ -270,6 +270,10 @@ public class BaseCreator {
         return -1;
     }
 
+    public String getLeftWhitespace(String line, Order order) {
+        return getWhitespace(calcLeftNum(new StringBuilder(line), order));
+    }
+
     public String getLeftWhitespace(StringBuilder line, Order order) {
         return getWhitespace(calcLeftNum(line, order));
     }

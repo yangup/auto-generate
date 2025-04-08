@@ -59,6 +59,7 @@ public class ConnectionAuto extends CharUtil {
                     new DocTableCreator(baseCreator).create();
                     new PostManTableCreator(baseCreator).create();
                     new HttpCreator(baseCreator).create();
+                    new FrontCreate(baseCreator).create();
                     if (info.path != null && isNotBlank(info.path.path)) {
                         AutoUtil.newCodeToAppendFile(baseCreator.codeList, FileUtil.createFile(table, info));
                     } else {
