@@ -1,7 +1,7 @@
 drop table if exists t_system_user;
 create table t_system_user (
   id 			        varchar(32)          primary key,
-  login_name  	        varchar(64)          not null COMMENT '用户登录code',
+  login_name  	        varchar(64)          not null COMMENT '用户登录code.filter',
   full_name  	        varchar(64)          not null COMMENT '用户登录全名',
   password  	        varchar(256)         not null COMMENT '密码',
   type			        varchar(16)          not null COMMENT '类型;ADMIN:系统管理员,NORMAL:正常用户',

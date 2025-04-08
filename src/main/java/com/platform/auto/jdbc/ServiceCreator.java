@@ -74,7 +74,11 @@ public class ServiceCreator extends BaseCreator {
     private void serviceFindMethod(String line) {
         String wp = getLeftWhitespace(new StringBuilder(line), Order.serviceFindMethod);
         for (ColumnInfo c : table.columnInfos) {
-            codeList.add("//" + wp + String.format("wrapper.eq(isNotEmpty(queryMap.get(\"%s\")), %sEntity::get%s, queryMap.get(\"%s\"));",
+            String note = "//";
+            if (!c.isId && isNotEmpty(c.findData)) {
+                note = "";
+            }
+            codeList.add(note + wp + String.format("wrapper.eq(isNotEmpty(queryMap.get(\"%s\")), %sEntity::get%s, queryMap.get(\"%s\"));",
                     c.columnNameJava, table.tableNameJava, firstToUppercase(c.columnNameJava), c.columnNameJava));
         }
     }
