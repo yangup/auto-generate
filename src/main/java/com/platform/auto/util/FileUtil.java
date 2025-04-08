@@ -64,11 +64,15 @@ public class FileUtil extends StringUtils {
                 return createFile(Config.project_auto_path + "/" + info.path.file);
             } else if (isNotBlank(info.path.absolutePath)) {
                 // 绝对路径
-                return createFile(info.path.absolutePath + "/" + path + table.tableNameJava + info.fileNameSuffix);
+                return createFile(info.path.absolutePath + "/" + path + table.tableNameJavaParam + info.fileNameSuffix);
+            } else if (isNotBlank(info.path.path)) {
+                // 相对路径下的 . auto 下面
+                return createFile(Config.project_auto_path + "/" + info.path.path +
+                        "/" + path + table.tableNameJavaParam + info.fileNameSuffix);
             } else {
                 // 文件放在 .auto 下面 txt 文件夹中
                 return createFile(Config.project_auto_path + "/" + "txt" +
-                        "/" + path + table.tableNameJava + info.fileNameSuffix);
+                        "/" + path + table.tableNameJavaParam + info.fileNameSuffix);
             }
         } else {
             // todo : 新的文件创建文件夹, 文件

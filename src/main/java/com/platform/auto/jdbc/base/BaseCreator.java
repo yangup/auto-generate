@@ -87,6 +87,7 @@ public class BaseCreator {
             lineReplaceOrder(line, Order.tableNameJava, tableNameJava);
             lineReplaceOrder(line, Order.tableNameJavaParam, tableNameJavaParam);
             lineReplaceOrder(line, Order.tableNameJavaLower, tableNameJava.toLowerCase());
+            lineReplaceOrder(line, Order.frontFilePath, info.path == null || isEmpty(info.path.frontFilePath) ? "" : info.path.frontFilePath);
             lineReplaceOrder(line, Order.dateYMDHMSS, DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
             lineReplaceOrder(line, Order.dateYMDHM, DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm"));
             lineReplaceOrder(line, Order.dateYMDHMS, DateFormatUtils.format(new Date(), "yyyyMMdd_HHmmss"));

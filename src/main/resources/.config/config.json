@@ -87,9 +87,10 @@
       "template": "templateUseful.up",
       "remark": "generate useful",
       "file_name_suffix": "_useful.txt",
-      "store_by_table": true,
+      "store_by_table": false,
       "path": {
-        "local": true
+        "local": true,
+        "path": "useful"
       }
     },
     {
@@ -116,19 +117,21 @@
       "store_by_table": false,
       "path": {
         "local": true,
-        "absolute_path": "D:\\github\\auto-generate\\.auto\\front",
-        "absolute_api_file": "D:\\github\\auto-generate\\.auto\\.config\\front\\api.js",
-        "absolute_router_file": "D:\\github\\auto-generate\\.auto\\.config\\front\\router.js",
-        "absolute_constant_file": "D:\\github\\auto-generate\\.auto\\.config\\front\\constant.js"
+        "front_file_path": "system",
+        "path": "front",
+        "api_file": ".config\\front\\api.js",
+        "router_file": ".config\\front\\router.js",
+        "constant_file": ".config\\front\\constant.js"
       }
     },
     {
       "template": "templatePostManTable.up",
       "remark": "generate postman table",
       "file_name_suffix": "_postman.json",
-      "store_by_table": true,
+      "store_by_table": false,
       "path": {
-        "local": true
+        "local": true,
+        "path": "postman"
       }
     },
     {
