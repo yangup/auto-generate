@@ -105,9 +105,10 @@
       "template": "templateDocTable.up",
       "remark": "generate doc table",
       "file_name_suffix": "_doc.txt",
-      "store_by_table": true,
+      "store_by_table": false,
       "path": {
-        "local": true
+        "local": true,
+        "path": "doc"
       }
     },
     {
