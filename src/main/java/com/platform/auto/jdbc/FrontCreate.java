@@ -50,6 +50,7 @@ public class FrontCreate extends BaseCreator {
                     }
                 }
                 line = line.replace(Order.getOrder(Order.queryParam), String.join(": undefined,\n" + wp, sb) + ": undefined,");
+                this.codeList.add(line);
             } else {
                 this.codeList.add(line);
             }
