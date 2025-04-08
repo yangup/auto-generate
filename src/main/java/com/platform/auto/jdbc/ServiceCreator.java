@@ -127,9 +127,6 @@ public class ServiceCreator extends BaseCreator {
             }
             for (PageListParam param : table.relateTable) {
                 if (param.more) {
-                    codeList.add(t3 + String.format("a.%sList = %sPageList == null ? null : %sPageList.stream().filter(b -> equals(a.%s, b.%s)).collect(Collectors.toList());",
-                            param.otherTable.tableNameJavaParam, param.otherTable.tableNameJavaParam,
-                            param.otherTable.tableNameJavaParam, param.otherTable.tableNameJavaParam, param.otherTableColumn.columnNameJava));
                     codeList.add(t3 + "a.-a-List = -a-PageList == null ? null : -a-PageList.stream().filter(b -> equals(a.-a-, b.-b-)).collect(Collectors.toList());"
                             .replaceAll("-a-", param.otherTable.tableNameJavaParam)
                             .replaceAll("-b-", param.otherTableColumn.columnNameJava)
