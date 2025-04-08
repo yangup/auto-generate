@@ -104,8 +104,9 @@ public class ServiceCreator extends BaseCreator {
                         .replaceAll("-a-", columnInfo.otherTable.tableNameJavaParam)
                         .replaceAll("-b-", columnInfo.columnNameJava)
                 );
-                codeList.add(t2 + "PageList<-b-Data> -a-PageList = isNotEmpty(-a-Ids) ? -a-Service.find(QueryMap.ofIDS(-a-Ids).rawTrue()) : null;"
+                codeList.add(t2 + "PageList<-b-Data> -a1-PList = isNotEmpty(-a-Ids) ? -a-Service.find(QueryMap.ofIDS(-a-Ids).rawTrue()) : null;"
                         .replaceAll("-a-", columnInfo.otherTable.tableNameJavaParam)
+                        .replaceAll("-a1-", columnInfo.otherTable.tableNameSimple)
                         .replaceAll("-b-", columnInfo.otherTable.tableNameJava)
                 );
             }
@@ -113,9 +114,10 @@ public class ServiceCreator extends BaseCreator {
                 codeList.add(t2 + "Set<String> -a-s = page.stream().map(a -> a.-a-).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());"
                         .replaceAll("-a-", param.thisTableColumn.columnNameJava)
                 );
-                codeList.add(t2 + "PageList<-a-Data> -b-PageList = isNotEmpty(-c-s) ? -b-Service.find(QueryMap.of(\"-d-s\", -c-s).rawTrue()) : null;"
+                codeList.add(t2 + "PageList<-a-Data> -bb-PList = isNotEmpty(-c-s) ? -b-Service.find(QueryMap.of(\"-d-s\", -c-s).rawTrue()) : null;"
                         .replaceAll("-a-", param.otherTable.tableNameJava)
                         .replaceAll("-b-", param.otherTable.tableNameJavaParam)
+                        .replaceAll("-b1-", param.otherTable.tableNameSimple)
                         .replaceAll("-c-", param.thisTableColumn.columnNameJava)
                         .replaceAll("-d-", param.otherTableColumn.columnNameJava)
                 );
@@ -127,20 +129,23 @@ public class ServiceCreator extends BaseCreator {
                     continue;
                 }
                 // a.customer = customerPageList == null ? null : customerPageList.stream().filter(b -> equals(a.customerId, b.id)).findFirst().orElse(null);
-                codeList.add(t3 + "a.-a- = -a-PageList == null ? null ? -a-PageList.stream().filter(b -> equals(a.-a-, b.id)).findFirst().orElse(null);"
+                codeList.add(t3 + "a.-a- = -a1-PList == null ? null ? -a1-PList.stream().filter(b -> equals(a.-a-, b.id)).findFirst().orElse(null);"
                         .replaceAll("-a-", columnInfo.otherTable.tableNameJavaParam)
+                        .replaceAll("-a1-", columnInfo.otherTable.tableNameSimple)
                 );
             }
             for (PageListParam param : table.relateTable) {
                 if (param.more) {
-                    codeList.add(t3 + "a.-a-List = -a-PageList == null ? null : -a-PageList.stream().filter(b -> equals(a.-b-, b.-c-)).collect(Collectors.toList());"
+                    codeList.add(t3 + "a.-a-List = -a1-PList == null ? null : -a1-PList.stream().filter(b -> equals(a.-b-, b.-c-)).collect(Collectors.toList());"
                             .replaceAll("-a-", param.otherTable.tableNameJavaParam)
+                            .replaceAll("-a1-", param.otherTable.tableNameSimple)
                             .replaceAll("-b-", param.thisTableColumn.columnNameJava)
                             .replaceAll("-c-", param.otherTableColumn.columnNameJava)
                     );
                 } else {
-                    codeList.add(t3 + "a.-a- = -a-PageList == null ? null : -a-PageList.stream().filter(b -> equals(a.-b-, b.-c-)).findFirst().orElse(null);"
+                    codeList.add(t3 + "a.-a- = -a1-PList == null ? null : -a1-PList.stream().filter(b -> equals(a.-b-, b.-c-)).findFirst().orElse(null);"
                             .replaceAll("-a-", param.otherTable.tableNameJavaParam)
+                            .replaceAll("-a1-", param.otherTable.tableNameSimple)
                             .replaceAll("-b-", param.thisTableColumn.columnNameJava)
                             .replaceAll("-c-", param.otherTableColumn.columnNameJava)
                     );
