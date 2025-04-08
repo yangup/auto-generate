@@ -50,8 +50,6 @@ public class Table {
     // todo : 其他表的数据
     public List<PageListParam> relateTable;
 
-    public List<Table> otherTable;
-
     static {
         idFindParamStatic.add(QueryMapFindParam.of(
                 "id", "", "字符串", "id,例如: 1234", false, false
@@ -105,21 +103,6 @@ public class Table {
         allParamStatic.addAll(idFindParamStatic);
     }
 
-    /**
-     * 是否有其他表的信息
-     **/
-    public void obtainOtherTable() {
-        if (ObjectUtils.isEmpty(this.otherTable) && columnInfos != null) {
-            List<ColumnInfo> list = columnInfos.stream()
-                    .filter(c -> c.otherTable != null)
-                    .toList();
-            this.otherTable = list.stream().map(l -> l.otherTable).toList();
-        }
-        if (this.otherTable == null) {
-            this.otherTable = new ArrayList<>();
-        }
-    }
-
     public static boolean inParamStatic(String key) {
         return Table.allParamStatic.stream().anyMatch(q -> q.key.equals(key));
     }
@@ -133,7 +116,6 @@ public class Table {
         columnInfos.forEach(c -> {
             findData.addAll(c.findData);
         });
-        this.obtainOtherTable();
     }
 
     /**

@@ -49,17 +49,13 @@ public class ServiceCreator extends BaseCreator {
     }
 
     private void importServiceCollectors() {
-        if (isNotEmpty(table.otherTable) || isNotEmpty(table.relateTable)) {
+        if (isNotEmpty(table.relateTable)) {
             codeList.add("import java.util.Set;");
             codeList.add("import java.util.stream.Collectors;");
         }
     }
 
     private void importService() {
-        for (Table t : table.otherTable) {
-            // import com.platform.db.admin.customer.*;
-            codeList.add(String.format("import %s.*;", (Config.getPathByType(DB).packageName + "." + t.tableNameJavaParam.toLowerCase())));
-        }
         for (PageListParam param : table.relateTable) {
             // import com.platform.db.admin.customer.*;
             codeList.add(String.format("import %s.*;", (Config.getPathByType(DB).packageName + "." + param.otherTable.tableNameJavaParam.toLowerCase())));
@@ -68,11 +64,6 @@ public class ServiceCreator extends BaseCreator {
 
     //    private @Autowired CustomerService customerService;
     private void autowiredService() {
-        if (table.otherTable != null) {
-            for (Table ta : table.otherTable) {
-                codeList.add(t + String.format("private @Autowired %sService %sService;\n", ta.tableNameJava, ta.tableNameJavaParam));
-            }
-        }
         if (table.relateTable != null) {
             for (PageListParam param : table.relateTable) {
                 codeList.add(t + String.format("private @Autowired %sService %sService;\n", param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam));
@@ -89,7 +80,7 @@ public class ServiceCreator extends BaseCreator {
     }
 
     private void serviceFindMethodMore(String line) {
-        if (isNotEmpty(table.otherTable) || isNotEmpty(table.relateTable)) {
+        if (isNotEmpty(table.relateTable)) {
             for (ColumnInfo columnInfo : table.columnInfos) {
                 if (columnInfo.otherTable == null) {
                     continue;

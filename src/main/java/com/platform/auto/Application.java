@@ -45,14 +45,14 @@ public class Application {
 
     // for test
     public static void main(String[] args) throws Exception {
-//        File currentDir = new File(".");
-//        String absolutePath = currentDir.getAbsolutePath().replace("\\", "/");
-//        Config.project_base_path = absolutePath.substring(0, absolutePath.length() - 2);
-//        Config.project_auto_path = Config.project_base_path + "/" + Config.auto_name;
-        // 指定路径生成
-        Config.project_base_path = "D:/ksm/code/th/biz/th-pay-server";
+        File currentDir = new File(".");
+        String absolutePath = currentDir.getAbsolutePath().replace("\\", "/");
+        Config.project_base_path = absolutePath.substring(0, absolutePath.length() - 2);
         Config.project_auto_path = Config.project_base_path + "/" + Config.auto_name;
-        Application.start(List.of("tb_deposite_merchant"));
+//        // 指定路径生成
+//        Config.project_base_path = "D:/ksm/code/th/biz/th-pay-server";
+//        Config.project_auto_path = Config.project_base_path + "/" + Config.auto_name;
+        Application.start(List.of("t_system_user"));
     }
 
 }

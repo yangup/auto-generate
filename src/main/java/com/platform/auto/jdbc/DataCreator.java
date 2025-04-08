@@ -42,9 +42,6 @@ public class DataCreator extends BaseCreator {
 
     private void createField() {
         codeList.add("    // todo : field\n");
-        for (Table t : table.otherTable) {
-            codeList.add(String.format("    public %sData %s;\n", t.tableNameJava, t.tableNameJavaParam));
-        }
         for (PageListParam param : table.relateTable) {
             if (param.more) {
                 codeList.add(String.format("    public List<%sData> %sList;\n", param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam));
@@ -63,10 +60,6 @@ public class DataCreator extends BaseCreator {
     }
 
     private void importData() {
-        for (Table t : table.otherTable) {
-            // import com.platform.db.admin.customer.CustomerData;
-            codeList.add(String.format("import %sData;", (Config.getPathByType(DB).packageName + "." + t.tableNameJavaParam.toLowerCase() + "." + t.tableNameJava)));
-        }
         for (PageListParam p : table.relateTable) {
             // import com.platform.db.admin.customer.CustomerData;
             codeList.add(String.format("import %sData;", (Config.getPathByType(DB).packageName + "." + p.otherTable.tableNameJavaParam.toLowerCase() + "." + p.otherTable.tableNameJava)));

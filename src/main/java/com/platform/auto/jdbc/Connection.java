@@ -3,6 +3,7 @@ package com.platform.auto.jdbc;
 import com.platform.auto.entity.LocalEntity;
 import com.platform.auto.jdbc.base.TableFactory;
 import com.platform.auto.jdbc.model.Table;
+import com.platform.auto.jdbc.model.TypeToJavaData;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import com.platform.auto.util.CharUtil;
@@ -109,9 +110,6 @@ public class Connection extends CharUtil {
                 });
             }
         }
-        for (Table table : tables) {
-            table.obtainOtherTable();
-        }
         return tables;
     }
 
@@ -146,6 +144,7 @@ public class Connection extends CharUtil {
         // todo : 将返回的数据库的结果处理成 table
         TableFactory tableFactory = new TableFactory();
         List<Table> tables = tableFactory.obtainTable(rs);
+        logger.info(TypeToJavaData.objectMapper.writeValueAsString(tables));
         logger.info("analyze table data -end");
         rs.close();
         st.close();
