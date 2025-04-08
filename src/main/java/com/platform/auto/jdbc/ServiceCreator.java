@@ -113,7 +113,7 @@ public class ServiceCreator extends BaseCreator {
                 codeList.add(t2 + "Set<String> -a-s = page.stream().map(a -> a.-a-).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());"
                         .replaceAll("-a-", param.thisTableColumn.columnNameJava)
                 );
-                codeList.add(t2 + "PageList<-a-Data> -b-PageList = isNotEmpty(-c-s) ? -b-Service.find(QueryMap.of(\"-d-\", -c-s).rawTrue()) : null;"
+                codeList.add(t2 + "PageList<-a-Data> -b-PageList = isNotEmpty(-c-s) ? -b-Service.find(QueryMap.of(\"-d-s\", -c-s).rawTrue()) : null;"
                         .replaceAll("-a-", param.otherTable.tableNameJava)
                         .replaceAll("-b-", param.otherTable.tableNameJavaParam)
                         .replaceAll("-c-", param.thisTableColumn.columnNameJava)
