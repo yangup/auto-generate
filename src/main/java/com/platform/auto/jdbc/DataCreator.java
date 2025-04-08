@@ -2,8 +2,8 @@ package com.platform.auto.jdbc;
 
 import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.base.BaseCreator;
+import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.PageListParam;
-import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.sys.order.Order;
 
 import java.util.List;
@@ -54,8 +54,15 @@ public class DataCreator extends BaseCreator {
                 "     * static method\n" +
                 "     **/");
         codeList.add(t + "public static " + table.tableNameJava + "Data of() {");
-//        codeList.add(t + t + "return new " + table.tableNameJava + "Data();");
         codeList.add(t + t + "return " + table.tableNameJava + "Data.builder().build();");
+        codeList.add(t + "}");
+        codeList.add("");
+        codeList.add(t + "public static " + table.tableNameJava + "Data of(" + table.tableNameJava + "Entity entity) {");
+        codeList.add(t + t + "return " + table.tableNameJava + "Data.builder()");
+        for (ColumnInfo c : table.columnInfos) {
+            codeList.add(t + t + t + String.format(".%s(entity.%s)", c.columnNameJava, c.columnNameJava));
+        }
+        codeList.add(t + t + t + ".build();");
         codeList.add(t + "}");
     }
 

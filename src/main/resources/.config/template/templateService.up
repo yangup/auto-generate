@@ -54,13 +54,6 @@ public class -tableNameJava-Service extends BaseService {
         return -tableNameJavaParam-Mapper.updateById(entity);
     }
 
-    // TODO: 以下为查询
-    private -tableNameJava-Data convertToData(-tableNameJava-Entity entity) {
-        -tableNameJava-Data data = new -tableNameJava-Data();
-        copyProperties(entity, data);
-        return data;
-    }
-
     // TODO: ReturnData - findQuery
     public ReturnData<Object> findQuery(QueryMap queryMap, PageBounds pageBounds) {
         queryMap = QueryMap.of(queryMap);
@@ -91,10 +84,10 @@ public class -tableNameJava-Service extends BaseService {
         wrapper.orderByDesc(-tableNameJava-Entity::getId);
         PageList<-tableNameJava-Data> page = null;
         if (pageBounds.isNotPageFind()) {
-            page = new PageList<>(-tableNameJavaParam-Mapper.selectList(wrapper).stream().map(this::convertToData).collect(Collectors.toList()));
+            page = new PageList<>(-tableNameJavaParam-Mapper.selectList(wrapper).stream().map(-tableNameJava-Data::of).collect(Collectors.toList()));
         } else {
             Page<-tableNameJava-Entity> pageData = -tableNameJavaParam-Mapper.selectPage(Page.of(pageBounds.getPage(), pageBounds.getSize()), wrapper);
-            page = new PageList<>(pageData.getRecords().stream().map(this::convertToData).collect(Collectors.toList()), pageData.getTotal());
+            page = new PageList<>(pageData.getRecords().stream().map(-tableNameJava-Data::of).collect(Collectors.toList()), pageData.getTotal());
         }
         if (isEmpty(page) || queryMap.raw()) {
             return page;
