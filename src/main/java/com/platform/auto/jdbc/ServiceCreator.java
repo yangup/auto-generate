@@ -79,7 +79,7 @@ public class ServiceCreator extends BaseCreator {
             if (!c.isId && isNotEmpty(c.findData)) {
                 note = "";
                 codeList.add(note + wp +
-                        "wrapper.in(isNotEmpty(queryMap.get(\"-a-s\")), -b-Entity::get-c-, queryMap.get(\"-a-s\"));"
+                        "wrapper.in(isNotEmpty(queryMap.get(\"-a-List\")), -b-Entity::get-c-, queryMap.get(\"-a-List\"));"
                                 .replaceAll("-a-", c.columnNameJava)
                                 .replaceAll("-b-", table.tableNameJava)
                                 .replaceAll("-c-", firstToUppercase(c.columnNameJava))
@@ -111,10 +111,10 @@ public class ServiceCreator extends BaseCreator {
                 );
             }
             for (PageListParam param : table.relateTable) {
-                codeList.add(t2 + "Set<String> -a-s = page.stream().map(a -> a.-a-).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());"
+                codeList.add(t2 + "Set<String> -a-List = page.stream().map(a -> a.-a-).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());"
                         .replaceAll("-a-", param.thisTableColumn.columnNameJava)
                 );
-                codeList.add(t2 + "PageList<-a-Data> -bb-PList = isNotEmpty(-c-s) ? -b-Service.find(QueryMap.of(\"-d-s\", -c-s).rawTrue()) : null;"
+                codeList.add(t2 + "PageList<-a-Data> -b1-PList = isNotEmpty(-c-List) ? -b-Service.find(QueryMap.of(\"-d-List\", -c-List).rawTrue()) : null;"
                         .replaceAll("-a-", param.otherTable.tableNameJava)
                         .replaceAll("-b-", param.otherTable.tableNameJavaParam)
                         .replaceAll("-b1-", param.otherTable.tableNameSimple)
