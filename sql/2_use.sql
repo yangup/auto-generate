@@ -32,7 +32,7 @@ CREATE TABLE `tb_deposite_bank_card_setting`
     `update_time`    timestamp      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT = '收款银行卡信息;system_user_id:t_system_user.id';
+  DEFAULT CHARSET = utf8mb4 COMMENT = '收款银行卡信息;system_user_id:t_system_user.id,just_one';
 
 
 
