@@ -185,7 +185,11 @@ public class TableFactory {
         for (RelateTableInfo relateTableInfo : table.relateTable) {
             ColumnInfo columnInfo = table.columnInfos.stream()
                     .filter(c -> equalsIgnoreCase(c.columnName, relateTableInfo.thisTableColumnName))
-                    .findFirst().get();
+                    .findFirst().orElse(null);
+            if (columnInfo == null) {
+                logger.info("table : {} 中, 没有找到对应的字段 : {}", table.tableName, relateTableInfo.thisTableColumnName);
+                throw new RuntimeException("table : " + table.tableName + " 中, 没有找到对应的字段 : " + relateTableInfo.thisTableColumnName);
+            }
             columnInfo.isOtherId = true;
             columnInfo.otherTableName = relateTableInfo.otherTableName;
             columnInfo.otherTable = relateTableInfo.otherTable;
