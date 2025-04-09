@@ -42,8 +42,7 @@ public class -tableNameJava-Controller extends BaseController {
     @PostMapping("addUpdate")
     @Operation(summary = "addUpdate -tableComment-")
     public ReturnData<Object> addUpdate(@RequestBody @Valid -tableNameJava-Dto dto) throws Exception {
-        -tableNameJava-Entity entity = -tableNameJava-Entity.of();
-        copyProperties(dto, entity);
+        -tableNameJava-Entity entity = -tableNameJava-Entity.of(dto);
         if (isEmpty(entity.id)) {
             -tableNameJavaParam-Service.createEntity(entity);
         } else {
