@@ -86,7 +86,7 @@ public class -tableNameJava-Service extends BaseService {
         if (pageBounds.isNotPageFind()) {
             page = new PageList<>(-tableNameJavaParam-Mapper.selectList(wrapper).stream().map(-tableNameJava-Data::of).collect(Collectors.toList()));
         } else {
-            Page<-tableNameJava-Entity> pageData = -tableNameJavaParam-Mapper.selectPage(Page.of(pageBounds.getPage(), pageBounds.getSize()), wrapper);
+            Page<-tableNameJava-Entity> pageData = -tableNameJavaParam-Mapper.selectPage(PageBounds.toPage(pageBounds), wrapper);
             page = new PageList<>(pageData.getRecords().stream().map(-tableNameJava-Data::of).collect(Collectors.toList()), pageData.getTotal());
         }
         if (isEmpty(page) || queryMap.raw()) {
