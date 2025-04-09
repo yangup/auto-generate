@@ -29,30 +29,23 @@ public class ColumnInfo {
     public String columnNameJavaParamHump;
     // todo : CUSTOMER_ID
     public String columnNameJavaParamHumpUpper;
-
     // todo : 是文本吗, 前端判断, 如果使用文本的话, 那就要使用 富文本编辑器
     public boolean isText;
-
     // todo : 是否是本表的id
     public boolean isId;
-
     // todo : 是否是其他的id
     public boolean isOtherId;
     // todo : 其他表的表明
     public String otherTableName;
     // todo : 其他表的数据
     public Table otherTable;
-
     // todo : 数据库中的数据类型
     public String dataType;
-
     // todo : java中的数据类型
     public String dataTypeJava;
-
     // todo : 用在doc中的类型
     // todo : 例如 : 字符串型
     public String typeDoc;
-
     // todo : 用在doc中的说明
     // todo : 例如 : 格式 : yyyy </br> 例如 : 2013
     public String typeDocNote;
@@ -95,7 +88,6 @@ public class ColumnInfo {
 
     // todo : 是否是常量, 常量在查询的时候, 不使用模糊查询
     public boolean isConstant;
-
     // todo : 这个字段是状态类型的, 需要选择
     public List<SelectData> select;
     // todo : 是多选 , 还是单选
@@ -124,7 +116,6 @@ public class ColumnInfo {
             findData = new ArrayList<>();
         }
     }
-
 
     public static Set<String> FieldSet() {
         Set<String> keys = new HashSet<>();
