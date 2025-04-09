@@ -3,7 +3,7 @@ package com.platform.auto.jdbc;
 import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
-import com.platform.auto.jdbc.model.PageListParam;
+import com.platform.auto.jdbc.model.RelateTableInfo;
 import com.platform.auto.sys.order.Order;
 
 import java.util.List;
@@ -55,7 +55,7 @@ public class ServiceCreator extends BaseCreator {
     }
 
     private void importService() {
-        for (PageListParam param : table.relateTable) {
+        for (RelateTableInfo param : table.relateTable) {
             // import com.platform.db.admin.customer.*;
             codeList.add(String.format("import %s.*;", (Config.getPathByType(DB).packageName + "." + param.otherTable.tableNameJavaParam.toLowerCase())));
         }
@@ -64,7 +64,7 @@ public class ServiceCreator extends BaseCreator {
     //    private @Autowired CustomerService customerService;
     private void autowiredService() {
         if (table.relateTable != null) {
-            for (PageListParam param : table.relateTable) {
+            for (RelateTableInfo param : table.relateTable) {
                 codeList.add(t + "private @Autowired -a-Service -b-Service;\n"
                         .replaceAll("-a-", param.otherTable.tableNameJava)
                         .replaceAll("-b-", param.otherTable.tableNameJavaParam));
@@ -99,54 +99,31 @@ public class ServiceCreator extends BaseCreator {
 
     private void serviceFindMethodMore(String line) {
         if (isNotEmpty(table.relateTable)) {
-            for (ColumnInfo columnInfo : table.columnInfos) {
-                if (columnInfo.otherTable == null) {
-                    continue;
-                }
-                codeList.add(t2 + "Set<String> -a-Ids = page.stream().map(a -> a.-b-).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());"
-                        .replaceAll("-a-", columnInfo.otherTable.tableNameJavaParam)
-                        .replaceAll("-b-", columnInfo.columnNameJava)
-                );
-                codeList.add(t2 + "PageList<-b-Data> -a1-PList = isNotEmpty(-a-Ids) ? -a-Service.find(QueryMap.ofIDS(-a-Ids).rawTrue()) : null;"
-                        .replaceAll("-a-", columnInfo.otherTable.tableNameJavaParam)
-                        .replaceAll("-a1-", columnInfo.otherTable.tableNameSimple)
-                        .replaceAll("-b-", columnInfo.otherTable.tableNameJava)
-                );
-            }
-            for (PageListParam param : table.relateTable) {
+            for (RelateTableInfo param : table.relateTable) {
                 codeList.add(t2 + "Set<String> -a-List = page.stream().map(a -> a.-a-).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());"
                         .replaceAll("-a-", param.thisTableColumn.columnNameJava)
                 );
-                codeList.add(t2 + "PageList<-a-Data> -b1-PList = isNotEmpty(-c-List) ? -b-Service.find(QueryMap.of(\"-d-List\", -c-List).rawTrue()) : null;"
-                        .replaceAll("-a-", param.otherTable.tableNameJava)
-                        .replaceAll("-b-", param.otherTable.tableNameJavaParam)
-                        .replaceAll("-b1-", param.otherTable.tableNameSimple)
-                        .replaceAll("-c-", param.thisTableColumn.columnNameJava)
-                        .replaceAll("-d-", param.otherTableColumn.columnNameJava)
+                codeList.add(t2 + ("PageList<-tableNameJava-Data> -tableNameSimple-PList = isNotEmpty(-thisTableColumn-List) ?" +
+                        " -tableNameJavaParam-Service.find(QueryMap.of(\"-otherTableColumn-List\", -thisTableColumn-List).rawTrue()) : null;")
+                        .replaceAll("-tableNameJava-", param.otherTable.tableNameJava)
+                        .replaceAll("-tableNameJavaParam-", param.otherTable.tableNameJavaParam)
+                        .replaceAll("-tableNameSimple-", param.otherTable.tableNameSimple)
+                        .replaceAll("-thisTableColumn-", param.thisTableColumn.columnNameJava)
+                        .replaceAll("-otherTableColumn-", param.otherTableColumn.columnNameJava)
                 );
             }
             // 拼接查询
             codeList.add(t2 + String.format("for (%sData a : page) {", table.tableNameJava));
-            for (ColumnInfo columnInfo : table.columnInfos) {
-                if (columnInfo.otherTable == null) {
-                    continue;
-                }
-                // a.customer = customerPageList == null ? null : customerPageList.stream().filter(b -> equals(a.customerId, b.id)).findFirst().orElse(null);
-                codeList.add(t3 + "a.-a- = -a1-PList == null ? null ? -a1-PList.stream().filter(b -> equals(a.-a-, b.id)).findFirst().orElse(null);"
-                        .replaceAll("-a-", columnInfo.otherTable.tableNameJavaParam)
-                        .replaceAll("-a1-", columnInfo.otherTable.tableNameSimple)
-                );
-            }
-            for (PageListParam param : table.relateTable) {
+            for (RelateTableInfo param : table.relateTable) {
                 if (param.more) {
-                    codeList.add(t3 + "a.-a-List = -a1-PList == null ? null : -a1-PList.stream().filter(b -> equals(a.-b-, b.-c-)).collect(Collectors.toList());"
+                    codeList.add(t3 + "a.-a-List = -a1-PList != null ? -a1-PList.stream().filter(b -> equals(a.-b-, b.-c-)).collect(Collectors.toList()) : null;"
                             .replaceAll("-a-", param.otherTable.tableNameJavaParam)
                             .replaceAll("-a1-", param.otherTable.tableNameSimple)
                             .replaceAll("-b-", param.thisTableColumn.columnNameJava)
                             .replaceAll("-c-", param.otherTableColumn.columnNameJava)
                     );
                 } else {
-                    codeList.add(t3 + "a.-a- = -a1-PList == null ? null : -a1-PList.stream().filter(b -> equals(a.-b-, b.-c-)).findFirst().orElse(null);"
+                    codeList.add(t3 + "a.-a- = -a1-PList != null ? -a1-PList.stream().filter(b -> equals(a.-b-, b.-c-)).findFirst().orElse(null) : null;"
                             .replaceAll("-a-", param.otherTable.tableNameJavaParam)
                             .replaceAll("-a1-", param.otherTable.tableNameSimple)
                             .replaceAll("-b-", param.thisTableColumn.columnNameJava)

@@ -3,7 +3,7 @@ package com.platform.auto.jdbc;
 import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
-import com.platform.auto.jdbc.model.PageListParam;
+import com.platform.auto.jdbc.model.RelateTableInfo;
 import com.platform.auto.sys.order.Order;
 
 import java.util.List;
@@ -42,7 +42,7 @@ public class DataCreator extends BaseCreator {
 
     private void createField() {
         codeList.add("    // todo : field\n");
-        for (PageListParam param : table.relateTable) {
+        for (RelateTableInfo param : table.relateTable) {
             if (param.more) {
                 codeList.add(String.format("    public List<%sData> %sList;\n", param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam));
             } else {
@@ -67,7 +67,7 @@ public class DataCreator extends BaseCreator {
     }
 
     private void importData() {
-        for (PageListParam p : table.relateTable) {
+        for (RelateTableInfo p : table.relateTable) {
             // import com.platform.db.admin.customer.CustomerData;
             codeList.add(String.format("import %sData;", (Config.getPathByType(DB).packageName + "." + p.otherTable.tableNameJavaParam.toLowerCase() + "." + p.otherTable.tableNameJava)));
         }
@@ -76,8 +76,8 @@ public class DataCreator extends BaseCreator {
     private void importDataList() {
         if (isNotEmpty(table.relateTable)) {
             boolean more = false;
-            List<PageListParam> pageListParams = table.relateTable;
-            for (PageListParam param : pageListParams) {
+            List<RelateTableInfo> relateTableInfos = table.relateTable;
+            for (RelateTableInfo param : relateTableInfos) {
                 if (param.more) {
                     more = true;
                 }

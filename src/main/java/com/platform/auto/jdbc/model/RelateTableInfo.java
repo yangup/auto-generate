@@ -3,7 +3,7 @@ package com.platform.auto.jdbc.model;
 /**
  * 在 page 实体类中,需要导入的数据
  */
-public class PageListParam {
+public class RelateTableInfo {
 
     // todo : 这个表中的字段
     public String thisTableColumnName;
@@ -20,8 +20,8 @@ public class PageListParam {
     // todo : 是需要一个数据,还是多个
     public boolean more;
 
-    public static PageListParam of(String thisTableColumnName, String otherTableColumnName, String otherTableName, boolean more) {
-        PageListParam f = new PageListParam();
+    public static RelateTableInfo of(String thisTableColumnName, String otherTableColumnName, String otherTableName, boolean more) {
+        RelateTableInfo f = new RelateTableInfo();
         f.thisTableColumnName = thisTableColumnName;
         f.otherTableColumnName = otherTableColumnName;
         f.otherTableName = otherTableName;

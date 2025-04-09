@@ -1,6 +1,5 @@
 package com.platform.auto.jdbc.model;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ public class Table {
     public String javaFilePath;
 
     // todo : 其他表的数据
-    public List<PageListParam> relateTable;
+    public List<RelateTableInfo> relateTable;
 
     static {
         idFindParamStatic.add(QueryMapFindParam.of(

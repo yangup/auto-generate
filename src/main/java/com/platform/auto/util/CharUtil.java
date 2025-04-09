@@ -68,35 +68,29 @@ public class CharUtil extends ObjectUtils {
     }
 
     /**
-     * <p>
-     * description :  将下划线+小写转化为大写
-     * </p>
+     * 将下划线命名的字符串转换为 Java 驼峰命名（小驼峰）
+     * 例如：user_name -> userName
      *
-     * @param str
-     * @return<br>
-     * @author YangPu
-     * @createTime 2016年7月21日 上午10:50:19
+     * @param str 下划线格式字符串
+     * @return 驼峰格式字符串
      */
     public static String toJava(String str) {
-        StringBuilder result = new StringBuilder();
         if (StringUtils.isBlank(str)) {
-            return result.toString();
+            return "";
         }
-        str = str.toLowerCase();
-        int strLen = str.length();
-        for (int i = 0; i < strLen; ++i) {
-            char c = str.charAt(i);
+        StringBuilder result = new StringBuilder();
+        boolean upperCaseNext = false;
+        for (char c : str.toLowerCase().toCharArray()) {
             if (c == '_') {
-                i++;
-                if (i < strLen) {
-                    c = str.charAt(i);
-                    c = Character.toTitleCase(c);
-                }
+                upperCaseNext = true;
+            } else {
+                result.append(upperCaseNext ? Character.toUpperCase(c) : c);
+                upperCaseNext = false;
             }
-            result.append(c);
         }
         return result.toString();
     }
+
 
     public static boolean equalsIgnoreCase(CharSequence cs1, CharSequence cs2) {
         return StringUtils.equalsIgnoreCase(cs1, cs2);

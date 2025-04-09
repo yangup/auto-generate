@@ -124,23 +124,32 @@ public class TableFactory {
         Stream.of(table.tableCommentRaw.split(";"))
                 .filter(str -> str.contains(":"))
                 .forEach(str -> {
-                    PageListParam pageListParam = new PageListParam();
+                    RelateTableInfo relateTableInfo = new RelateTableInfo();
                     // todo : tb_video.id:video_id,just_one
                     Stream.of(str.split(":")).forEach(detailStr -> {
                         // todo : ["tb_video.id", "video_id,just_one"]
                         // todo : ["id", "t_system_user_setting.user_id,just_one"]
                         String detailDealStr = detailStr.contains(",") ? detailStr.split(",")[0] : detailStr;
-                        pageListParam.more = equalsAnyIgnoreCase(detailDealStr, detailStr);
+                        relateTableInfo.more = equalsAnyIgnoreCase(detailDealStr, detailStr);
                         if (detailDealStr.contains(".")) {
                             String[] temp = detailDealStr.split("\\.");
-                            pageListParam.otherTableName = temp[0];
-                            pageListParam.otherTableColumnName = temp[1];
+                            relateTableInfo.otherTableName = temp[0];
+                            relateTableInfo.otherTableColumnName = temp[1];
                         } else {
-                            pageListParam.thisTableColumnName = detailDealStr;
+                            relateTableInfo.thisTableColumnName = detailDealStr;
                         }
                     });
-                    table.relateTable.add(pageListParam);
+                    table.relateTable.add(relateTableInfo);
                 });
+        // 匹配到 columnInfo
+        for (RelateTableInfo relateTableInfo : table.relateTable) {
+            ColumnInfo columnInfo = table.columnInfos.stream()
+                    .filter(c -> equalsIgnoreCase(c.columnName, relateTableInfo.thisTableColumnName))
+                    .findFirst().get();
+            columnInfo.isOtherId = true;
+            columnInfo.otherTableName = relateTableInfo.otherTableName;
+            columnInfo.otherTable = relateTableInfo.otherTable;
+        }
     }
 
 
@@ -166,7 +175,6 @@ public class TableFactory {
             }
             // TODO : 确定 java 中 使用什么名字
             columninfo.columnNameJava = isEmpty(columninfo.columnNameJava) ? toJava(columninfo.columnName.toLowerCase()) : columninfo.columnNameJava;
-            columninfo.isOtherId = columninfo.columnName.toUpperCase().endsWith("_ID");
             columninfo.columnNameJavaParamHump = humpToLine(columninfo.columnNameJava);
             columninfo.columnNameJavaParamHumpUpper = columninfo.columnNameJavaParamHump.toUpperCase();
             columninfo.isId = columninfo == table.id;
@@ -192,7 +200,7 @@ public class TableFactory {
      * // todo : 有配置类的说明
      * // todo : 请求类型;多选;CREATED:新产生,DONE:完成,CLOSED:关闭,FAILED:失败,FAILED1:失败1,FAILED2:失败2
      * // todo : 请求类型;CREATED:新产生,DONE:完成,CLOSED:关闭,FAILED:失败,FAILED1:失败1,FAILED2:失败2
-     * // todo : user_id.filter:tb_user
+     * // todo : user_id.filter
      **/
     public void columnCommentDeal(ColumnInfo columninfo) {
         // TODO : 注释
@@ -229,11 +237,6 @@ public class TableFactory {
             // todo : 类型;常量
             if (!use) {
                 columninfo.isConstant = true;
-            }
-        } else if (columninfo.isOtherId) {
-            // todo : user_id:tb_user
-            if (columninfo.columnComment.contains(":")) {
-                columninfo.otherTableName = columninfo.columnComment.split(":")[1];
             }
         }
         // todo : columnComment 处理

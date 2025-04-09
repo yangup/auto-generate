@@ -17,7 +17,7 @@ create table t_system_user (
 drop table if exists t_system_user_setting;
 create table t_system_user_setting (
   id 			        varchar(32)          primary key,
-  user_id  	            varchar(32)          not null COMMENT '用户id',
+  user_id  	            varchar(32)          not null COMMENT '用户id.filter',
   set_data      	    text                 COMMENT '配置数据',
   create_time           timestamp            not null default CURRENT_TIMESTAMP,
   update_time           timestamp            not null default CURRENT_TIMESTAMP,
