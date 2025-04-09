@@ -78,8 +78,8 @@ public class -tableNameJava-Service extends BaseService {
         queryMap = QueryMap.of(queryMap);
         pageBounds = pageBounds == null ? PageBounds.of() : pageBounds;
         LambdaQueryWrapper<-tableNameJava-Entity> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(isNotEmpty(queryMap.id()), -tableNameJava-Entity::getId, queryMap.id());
-        wrapper.in(isNotEmpty(queryMap.idList()), -tableNameJava-Entity::getId, queryMap.idList());
+        wrapper.eq(queryMap.hasId(), -tableNameJava-Entity::getId, queryMap.id());
+        wrapper.in(queryMap.hasIdList(), -tableNameJava-Entity::getId, queryMap.idList());
         -serviceFindMethod-
         wrapper.orderByDesc(-tableNameJava-Entity::getId);
         PageList<-tableNameJava-Data> page = null;
