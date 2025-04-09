@@ -69,23 +69,18 @@ public class HttpCreator extends BaseCreator {
     }
 
     private void createJson2() {
-        for (int i = 0; i < this.table.columnInfos.size(); i++) {
-            ColumnInfo columninfo = this.table.columnInfos.get(i);
+        for (ColumnInfo columninfo : this.table.columnInfos) {
             String field = columninfo.columnNameJava;
-            String dd = "";
-            if (i != this.table.columnInfos.size() - 1) {
-                dd = d;
-            }
-            if (Stream.of("createTime", "updateTime").anyMatch(cc -> equalsIgnoreCase(columninfo.columnNameJava, cc))) {
+            if (isCreateTimeUpdateTime(columninfo.columnNameJava)) {
                 continue;
             }
-            String value = "\"" + (columninfo.typeToJavaData.jsonNeedColon ? columninfo.columnNameJava : 1234) + "\"";
+            String value = "\"" + columninfo.columnNameJava + "\"";
             if (!columninfo.typeToJavaData.jsonNeedColon) {
                 value = "" + 1234;
             }
-            codeList.add("    \"" + field + "\"" + ": " + value + dd);
+            codeList.add("    \"" + field + "\"" + ": " + value + ",");
         }
-
+        this.removeLastCountString(1);
     }
 
 }

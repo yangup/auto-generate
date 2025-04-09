@@ -192,6 +192,16 @@ public class AutoUtil extends CharUtil {
         return Collections.emptyList();
     }
 
+    public static void trimList(List<String> subList) {
+        // 去除开头空白行
+        while (!subList.isEmpty() && subList.get(0).trim().isEmpty()) {
+            subList.remove(0);
+        }
+        // 去除结尾空白行
+        while (!subList.isEmpty() && subList.get(subList.size() - 1).trim().isEmpty()) {
+            subList.remove(subList.size() - 1);
+        }
+    }
 
     /**
      * list 中 不包含 start , 也不包含 end, 删除
@@ -335,7 +345,31 @@ public class AutoUtil extends CharUtil {
         if (ObjectUtils.isEmpty(nowList)) {
             listToFile(file, codeList);
         } else {
-            nowList.addAll(codeList);
+            final String nowString = String.join("", nowList);
+            trimList(codeList);
+            nowList.add("");
+            nowList.add("");
+            int start = 0;
+            for (int i = 0; i < codeList.size(); i++) {
+                // 连着两个空行
+                if (isBlank(codeList.get(i)) && i < codeList.size() - 1 && isBlank(codeList.get(i + 1))) {
+                    List<String> tempApiList = codeList.subList(start, i);
+                    if (!nowString.contains(String.join("", tempApiList))) {
+                        trimList(tempApiList);
+                        nowList.addAll(tempApiList);
+                        nowList.add("");
+                        nowList.add("");
+                    }
+                    start = i + 1;
+                }
+            }
+            if (start < codeList.size()) {
+                List<String> tempApiList = codeList.subList(start, codeList.size());
+                trimList(tempApiList);
+                nowList.addAll(tempApiList);
+                nowList.add("");
+                nowList.add("");
+            }
             listToFile(file, nowList);
         }
     }

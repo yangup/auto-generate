@@ -53,6 +53,7 @@ public class Application {
 //        Config.project_base_path = "D:/ksm/code/th/biz/th-pay-server";
 //        Config.project_auto_path = Config.project_base_path + "/" + Config.auto_name;
         Application.start(List.of("t_system_user"));
+//        Application.start(List.of("t_system_user_setting"));
     }
 
 }

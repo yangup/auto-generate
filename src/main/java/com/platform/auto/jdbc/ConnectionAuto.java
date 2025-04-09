@@ -39,7 +39,7 @@ public class ConnectionAuto extends CharUtil {
         generate(Connection.getTable(tableName));
     }
 
-    public static void generate(List<Table> tables) throws Exception{
+    public static void generate(List<Table> tables) throws Exception {
         logger.info(TypeToJavaData.objectMapper.writeValueAsString(tables));
         tables.forEach(table -> {
             try {

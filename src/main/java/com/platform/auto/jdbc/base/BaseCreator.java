@@ -435,5 +435,29 @@ public class BaseCreator {
         sb.append(wp + "|" + String.join("|", fl));
     }
 
+    public void removeLastCountString(int removeLastCount) {
+        removeLastCountString(1, removeLastCount);
+    }
+
+    /**
+     * 去掉最后几行的字符串中末尾的若干字符
+     *
+     * @param removeLastRowCount 要处理的最后几行的数量
+     * @param removeLastCount    每行要去掉的字符数
+     */
+    public void removeLastCountString(int removeLastRowCount, int removeLastCount) {
+        int size = codeList.size();
+        int start = size - removeLastRowCount;
+        if (start < 0) return; // 安全检查，防止越界
+        for (int i = start; i < size; i++) {
+            String line = codeList.get(i);
+            if (line.length() >= removeLastCount) {
+                codeList.set(i, line.substring(0, line.length() - removeLastCount));
+            } else {
+                codeList.set(i, ""); // 如果要移除的字符数大于行长度，则置空
+            }
+        }
+    }
+
 
 }
