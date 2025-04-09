@@ -192,7 +192,7 @@ public class TableFactory {
      * // todo : 有配置类的说明
      * // todo : 请求类型;多选;CREATED:新产生,DONE:完成,CLOSED:关闭,FAILED:失败,FAILED1:失败1,FAILED2:失败2
      * // todo : 请求类型;CREATED:新产生,DONE:完成,CLOSED:关闭,FAILED:失败,FAILED1:失败1,FAILED2:失败2
-     * // todo : user_id.filter
+     * // todo : user_id.filter:tb_user
      **/
     public void columnCommentDeal(ColumnInfo columninfo) {
         // TODO : 注释
