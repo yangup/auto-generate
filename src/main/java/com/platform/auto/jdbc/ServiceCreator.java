@@ -102,7 +102,7 @@ public class ServiceCreator extends BaseCreator {
     private void serviceFindMethodMore(String line) {
         if (isNotEmpty(table.relateTable)) {
             for (RelateTableInfo param : table.relateTable) {
-                codeList.add(t2 + "Set<String> -a-List = page.stream().map(a -> a.-a-).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());"
+                codeList.add(t2 + "List<String> -a-List = page.stream().map(a -> a.-a-).filter(StringUtils::isNotEmpty).distinct().collect(Collectors.toList());"
                         .replaceAll("-a-", param.thisTableColumn.columnNameJava)
                 );
                 codeList.add(t2 + ("PageList<-tableNameJava-Data> -tableNameSimple-PList = isNotEmpty(-thisTableColumn-List) ?" +
