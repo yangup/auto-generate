@@ -75,7 +75,7 @@ public class ServiceCreator extends BaseCreator {
     private void serviceFindMethod(String line) {
         String wp = getLeftWhitespace(new StringBuilder(line), Order.serviceFindMethod);
         for (ColumnInfo c : table.columnInfos) {
-            if (c.isId) {
+            if (isIdCreateTimeUpdateTime(c.columnNameJava)) {
                 continue;
             }
             String note = "//";

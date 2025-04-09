@@ -62,6 +62,24 @@ public class EntityCreator extends BaseCreator {
             codeList.add(t + "public static " + table.tableNameJava + clazzNameSuffix + " of() {");
             codeList.add(t + t + "return " + table.tableNameJava + clazzNameSuffix + ".builder().build();");
             codeList.add(t + "}");
+            // convert dto to entity
+            codeList.add("");
+            codeList.add(t + "public static " + table.tableNameJava + clazzNameSuffix + " of(" + table.tableNameJava + "Dto dto) {");
+            codeList.add(t + t + "return " + table.tableNameJava + clazzNameSuffix + ".builder()");
+            for (ColumnInfo c : table.columnInfos) {
+                codeList.add(t + t + t + String.format(".%s(dto.%s)", c.columnNameJava, c.columnNameJava));
+            }
+            codeList.add(t + t + t + ".build();");
+            codeList.add(t + "}");
+            // convert data to entity
+            codeList.add("");
+            codeList.add(t + "public static " + table.tableNameJava + clazzNameSuffix + " of(" + table.tableNameJava + "Data data) {");
+            codeList.add(t + t + "return " + table.tableNameJava + clazzNameSuffix + ".builder()");
+            for (ColumnInfo c : table.columnInfos) {
+                codeList.add(t + t + t + String.format(".%s(data.%s)", c.columnNameJava, c.columnNameJava));
+            }
+            codeList.add(t + t + t + ".build();");
+            codeList.add(t + "}");
         }
     }
 
