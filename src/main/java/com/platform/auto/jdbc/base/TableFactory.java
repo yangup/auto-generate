@@ -1,6 +1,5 @@
 package com.platform.auto.jdbc.base;
 
-
 import com.platform.auto.config.Config;
 import com.platform.auto.entity.LocalEntity;
 import com.platform.auto.jdbc.model.*;
@@ -105,6 +104,47 @@ public class TableFactory {
     }
 
     /**
+     * 整理表数据, 将数据库的中的数据，确定好对应 java 中的什么数据
+     **/
+    public void initColumnList(Table table) {
+        if (table == null || table.columnInfos == null) {
+            return;
+        }
+        // todo : 确定每列的数据类型
+        for (ColumnInfo columninfo : table.columnInfos) {
+            // TODO : 确定 java 中 使用什么类型
+            columninfo.typeToJavaData = TypeToJavaData.getTypeToJavaData(columninfo.dataType, columninfo.columnName);
+            // todo : 确定主键
+            if (equalsIgnoreCase("pri", columninfo.columnKey)
+                    || (table.id == null && equalsIgnoreCase("id", columninfo.columnKey))) {
+                table.id = columninfo;
+                if (!equalsIgnoreCase(columninfo.typeToJavaData.typeJava, String.class.getSimpleName())) {
+                    columninfo.typeToJavaData = TypeToJavaData.obtainId() != null ? TypeToJavaData.obtainId() : columninfo.typeToJavaData;
+                }
+            }
+            // TODO : 确定 java 中 使用什么名字
+            columninfo.columnNameJava = isEmpty(columninfo.columnNameJava) ? toJava(columninfo.columnName.toLowerCase()) : columninfo.columnNameJava;
+            columninfo.columnNameJavaParamHump = humpToLine(columninfo.columnNameJava);
+            columninfo.columnNameJavaParamHumpUpper = columninfo.columnNameJavaParamHump.toUpperCase();
+            columninfo.isId = columninfo == table.id;
+            // TODO: 找到对应的 java 类型
+            columninfo.dataTypeJava = isEmpty(columninfo.dataTypeJava) ? columninfo.typeToJavaData.typeJava : columninfo.dataTypeJava;
+            // todo : 如果 没有, 那就使用 String
+            columninfo.dataTypeJava = isEmpty(columninfo.dataTypeJava) ? String.class.getSimpleName() : columninfo.dataTypeJava;
+
+            columninfo.typeDoc = TypeToJavaData.obtainTypeDoc(columninfo.dataTypeJava);
+            columninfo.typeDocNote = TypeToJavaData.obtainJavaDocNote(columninfo.dataTypeJava);
+            columninfo.isText = contains(columninfo.dataType, "text");
+            columnCommentDeal(columninfo);
+            if (isNotEmpty(columninfo.select)) {
+                columninfo.constantName = table.tableNameJavaParamHumpUpper + "_" + columninfo.columnNameJavaParamHumpUpper;
+            }
+            columninfo.canNULL = equalsIgnoreCase(columninfo.isNullable, "yes");
+            initColumnFindData(columninfo);
+        }
+    }
+
+    /**
      * 根据注释中带来的信息,来丰富自己的字段
      * // todo : 有配置类的说明
      * // todo : 视频资源信息,每一集的信息;tb_video.id=video_id;
@@ -149,48 +189,6 @@ public class TableFactory {
             columnInfo.isOtherId = true;
             columnInfo.otherTableName = relateTableInfo.otherTableName;
             columnInfo.otherTable = relateTableInfo.otherTable;
-        }
-    }
-
-    /**
-     * 整理表数据, 将数据库的中的数据，确定好对应 java 中的什么数据
-     **/
-    public void initColumnList(Table table) {
-        if (table == null || table.columnInfos == null) {
-            return;
-        }
-        // todo : 确定每列的数据类型
-        for (ColumnInfo columninfo : table.columnInfos) {
-            String type = columninfo.dataType;
-            // TODO : 确定 java 中 使用什么类型
-            columninfo.typeToJavaData = TypeToJavaData.getTypeToJavaData(type, columninfo.columnName);
-            // todo : 确定主键
-            if (equalsIgnoreCase("pri", columninfo.columnKey)
-                    || (table.id == null && equalsIgnoreCase("id", columninfo.columnKey))) {
-                table.id = columninfo;
-                if (!equalsIgnoreCase(columninfo.typeToJavaData.typeJava, String.class.getSimpleName())) {
-                    columninfo.typeToJavaData = TypeToJavaData.obtainId();
-                }
-            }
-            // TODO : 确定 java 中 使用什么名字
-            columninfo.columnNameJava = isEmpty(columninfo.columnNameJava) ? toJava(columninfo.columnName.toLowerCase()) : columninfo.columnNameJava;
-            columninfo.columnNameJavaParamHump = humpToLine(columninfo.columnNameJava);
-            columninfo.columnNameJavaParamHumpUpper = columninfo.columnNameJavaParamHump.toUpperCase();
-            columninfo.isId = columninfo == table.id;
-            // TODO: 找到对应的 java 类型
-            columninfo.dataTypeJava = isEmpty(columninfo.dataTypeJava) ? columninfo.typeToJavaData.typeJava : columninfo.dataTypeJava;
-            // todo : 如果 没有, 那就使用 String
-            columninfo.dataTypeJava = isEmpty(columninfo.dataTypeJava) ? String.class.getSimpleName() : columninfo.dataTypeJava;
-
-            columninfo.typeDoc = TypeToJavaData.obtainTypeDoc(columninfo.dataTypeJava);
-            columninfo.typeDocNote = TypeToJavaData.obtainJavaDocNote(columninfo.dataTypeJava);
-            columninfo.isText = contains(columninfo.dataType, "text");
-            columnCommentDeal(columninfo);
-            if (isNotEmpty(columninfo.select)) {
-                columninfo.constantName = table.tableNameJavaParamHumpUpper + "_" + columninfo.columnNameJavaParamHumpUpper;
-            }
-            columninfo.canNULL = equalsIgnoreCase(columninfo.isNullable, "yes");
-            initColumnFindData(columninfo);
         }
     }
 
@@ -311,6 +309,5 @@ public class TableFactory {
         }
         return select;
     }
-
 
 }
