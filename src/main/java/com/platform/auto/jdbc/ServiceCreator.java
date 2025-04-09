@@ -81,12 +81,6 @@ public class ServiceCreator extends BaseCreator {
             String note = "//";
             if (isNotEmpty(c.findData)) {
                 note = "";
-                codeList.add(note + wp +
-                        "wrapper.in(isNotEmpty(queryMap.getList(\"-a-List\")), -b-Entity::get-c-, queryMap.getList(\"-a-List\"));"
-                                .replaceAll("-a-", c.columnNameJava)
-                                .replaceAll("-b-", table.tableNameJava)
-                                .replaceAll("-c-", firstToUppercase(c.columnNameJava))
-                );
             }
             codeList.add(note + wp +
                     "wrapper.eq(isNotEmpty(queryMap.get(\"-a-\")), -b-Entity::get-c-, queryMap.get(\"-a-\"));"
@@ -94,6 +88,14 @@ public class ServiceCreator extends BaseCreator {
                             .replaceAll("-b-", table.tableNameJava)
                             .replaceAll("-c-", firstToUppercase(c.columnNameJava))
             );
+            if (isNotEmpty(c.findData)) {
+                codeList.add(note + wp +
+                        "wrapper.in(isNotEmpty(queryMap.getList(\"-a-List\")), -b-Entity::get-c-, queryMap.getList(\"-a-List\"));"
+                                .replaceAll("-a-", c.columnNameJava)
+                                .replaceAll("-b-", table.tableNameJava)
+                                .replaceAll("-c-", firstToUppercase(c.columnNameJava))
+                );
+            }
         }
     }
 
