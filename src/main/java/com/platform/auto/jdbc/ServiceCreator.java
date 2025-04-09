@@ -75,11 +75,14 @@ public class ServiceCreator extends BaseCreator {
     private void serviceFindMethod(String line) {
         String wp = getLeftWhitespace(new StringBuilder(line), Order.serviceFindMethod);
         for (ColumnInfo c : table.columnInfos) {
+            if (c.isId) {
+                continue;
+            }
             String note = "//";
-            if (!c.isId && isNotEmpty(c.findData)) {
+            if (isNotEmpty(c.findData)) {
                 note = "";
                 codeList.add(note + wp +
-                        "wrapper.in(isNotEmpty(queryMap.get(\"-a-List\")), -b-Entity::get-c-, queryMap.get(\"-a-List\"));"
+                        "wrapper.in(isNotEmpty(queryMap.getList(\"-a-List\")), -b-Entity::get-c-, queryMap.getList(\"-a-List\"));"
                                 .replaceAll("-a-", c.columnNameJava)
                                 .replaceAll("-b-", table.tableNameJava)
                                 .replaceAll("-c-", firstToUppercase(c.columnNameJava))
