@@ -122,7 +122,7 @@ public class TableFactory {
         table.relateTable = new ArrayList<>();
         // todo : 视频资源信息,每一集的信息;tb_video.id=video_id,just_one;
         Stream.of(table.tableCommentRaw.split(";"))
-                .filter(str -> str.contains(":"))
+                .filter(str -> str.contains("="))
                 .forEach(str -> {
                     RelateTableInfo relateTableInfo = new RelateTableInfo();
                     // todo : tb_video.id:video_id,just_one
