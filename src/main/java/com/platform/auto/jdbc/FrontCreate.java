@@ -193,9 +193,9 @@ public class FrontCreate extends BaseCreator {
             } else if (TypeToJavaData.isString(columninfo.dataTypeJava)) {
                 // String
                 max = Long.parseLong(columninfo.characterMaximumLength);
-                if (max >= 256) {
+                if (max > 256) {
                     input = "<el-input v-model=\"temp." + columnNameJava + "\" maxlength=\"" + max + "\" type=\"textarea\" :rows=\"3\" show-word-limit clearable/>\n";
-                } else if (max > 64) {
+                } else if (max > 128) {
                     input = "<el-input v-model=\"temp." + columnNameJava + "\" maxlength=\"" + max + "\" type=\"textarea\" :rows=\"2\" show-word-limit clearable/>\n";
                 } else {
                     input = "<el-input v-model=\"temp." + columnNameJava + "\" maxlength=\"" + max + "\" type=\"text\" show-word-limit clearable/>\n";
