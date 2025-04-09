@@ -144,7 +144,6 @@ public class Connection extends CharUtil {
         // todo : 将返回的数据库的结果处理成 table
         TableFactory tableFactory = new TableFactory();
         List<Table> tables = tableFactory.obtainTable(rs);
-        logger.info(TypeToJavaData.objectMapper.writeValueAsString(tables));
         logger.info("analyze table data -end");
         rs.close();
         st.close();

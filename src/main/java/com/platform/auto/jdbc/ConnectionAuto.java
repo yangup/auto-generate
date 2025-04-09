@@ -4,6 +4,7 @@ import com.platform.auto.config.Config;
 import com.platform.auto.entity.ConfigInfoEntity;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.Table;
+import com.platform.auto.jdbc.model.TypeToJavaData;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
 import com.platform.auto.util.AutoUtil;
@@ -38,7 +39,8 @@ public class ConnectionAuto extends CharUtil {
         generate(Connection.getTable(tableName));
     }
 
-    public static void generate(List<Table> tables) {
+    public static void generate(List<Table> tables) throws Exception{
+        logger.info(TypeToJavaData.objectMapper.writeValueAsString(tables));
         tables.forEach(table -> {
             try {
                 List<ConfigInfoEntity> infoList = Config.getConfig().info;
