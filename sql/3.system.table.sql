@@ -11,7 +11,7 @@ create table t_system_user (
   create_time           timestamp            not null default CURRENT_TIMESTAMP,
   update_time           timestamp            not null default CURRENT_TIMESTAMP,
   unique key unique_t_system_user_login_name(login_name)
-) comment='系统用户表;id=t_system_user_setting.user_id';
+) comment='系统用户表;id=t_system_user_setting.user_id,just_one';
 
 
 drop table if exists t_system_user_setting;
