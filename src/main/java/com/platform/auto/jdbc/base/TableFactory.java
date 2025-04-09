@@ -107,9 +107,9 @@ public class TableFactory {
     /**
      * 根据注释中带来的信息,来丰富自己的字段
      * // todo : 有配置类的说明
-     * // todo : 视频资源信息,每一集的信息;tb_video.id:video_id;
-     * // todo : 视频资源信息,每一集的信息;tb_video.id:video_id,just_one;
-     * // todo : 系统用户表;id:t_system_user_setting.user_id,just_one
+     * // todo : 视频资源信息,每一集的信息;tb_video.id=video_id;
+     * // todo : 视频资源信息,每一集的信息;tb_video.id=video_id,just_one;
+     * // todo : 系统用户表;id=t_system_user_setting.user_id,just_one
      **/
     public void tableCommentDeal(Table table, ColumnInfo columnFirst) {
         // TODO: 处理 table comment
@@ -120,13 +120,13 @@ public class TableFactory {
             table.tableComment = table.tableComment.substring(0, table.tableComment.length() - 1);
         }
         table.relateTable = new ArrayList<>();
-        // todo : 视频资源信息,每一集的信息;tb_video.id:video_id,just_one;
+        // todo : 视频资源信息,每一集的信息;tb_video.id=video_id,just_one;
         Stream.of(table.tableCommentRaw.split(";"))
                 .filter(str -> str.contains(":"))
                 .forEach(str -> {
                     RelateTableInfo relateTableInfo = new RelateTableInfo();
                     // todo : tb_video.id:video_id,just_one
-                    Stream.of(str.split(":")).forEach(detailStr -> {
+                    Stream.of(str.split("=")).forEach(detailStr -> {
                         // todo : ["tb_video.id", "video_id,just_one"]
                         // todo : ["id", "t_system_user_setting.user_id,just_one"]
                         String detailDealStr = detailStr.contains(",") ? detailStr.split(",")[0] : detailStr;
