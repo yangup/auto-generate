@@ -347,8 +347,6 @@ public class AutoUtil extends CharUtil {
         } else {
             final String nowString = String.join("", nowList);
             trimList(codeList);
-            nowList.add("");
-            nowList.add("");
             int start = 0;
             for (int i = 0; i < codeList.size(); i++) {
                 // 连着两个空行
@@ -356,19 +354,21 @@ public class AutoUtil extends CharUtil {
                     List<String> tempApiList = codeList.subList(start, i);
                     if (!nowString.contains(String.join("", tempApiList))) {
                         trimList(tempApiList);
+                        nowList.add("");
+                        nowList.add("");
                         nowList.addAll(tempApiList);
-                        nowList.add("");
-                        nowList.add("");
                     }
                     start = i + 1;
                 }
             }
             if (start < codeList.size()) {
                 List<String> tempApiList = codeList.subList(start, codeList.size());
-                trimList(tempApiList);
-                nowList.addAll(tempApiList);
-                nowList.add("");
-                nowList.add("");
+                if (!nowString.contains(String.join("", tempApiList))) {
+                    trimList(tempApiList);
+                    nowList.add("");
+                    nowList.add("");
+                    nowList.addAll(tempApiList);
+                }
             }
             listToFile(file, nowList);
         }
