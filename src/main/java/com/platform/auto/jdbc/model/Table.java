@@ -54,7 +54,7 @@ public class Table {
                 "id", "", "字符串", "id,例如: 1234", false, false
         ));
         idFindParamStatic.add(QueryMapFindParam.of(
-                "ids", "", "字符串", "多个id以逗号分隔,例如: 1234,2345", false, false
+                "idList", "", "字符串", "多个id以逗号分隔,例如: 1234,2345", false, false
         ));
         pageBoundsFindParamStatic.add(QueryMapFindParam.of(
                 "page", "1", "整数", "页码,第几页,编号从 1 开始, 默认第1页", false, true

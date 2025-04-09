@@ -152,7 +152,6 @@ public class TableFactory {
         }
     }
 
-
     /**
      * 整理表数据, 将数据库的中的数据，确定好对应 java 中的什么数据
      **/
@@ -255,6 +254,14 @@ public class TableFactory {
                     columninfo.columnNameJavaParamHumpUpper,
                     columninfo.columnNameJava,
                     null,
+                    columninfo.columnComment,
+                    false,
+                    true
+            ));
+            columninfo.findData.add(FindData.of(
+                    columninfo.columnNameJavaParamHumpUpper + "_LIST",
+                    columninfo.columnNameJava + "List",
+                    null,
                     columninfo.columnComment + "-多个以逗号分割",
                     false,
                     true
@@ -269,8 +276,8 @@ public class TableFactory {
                     true
             ));
             columninfo.findData.add(FindData.of(
-                    columninfo.columnNameJavaParamHumpUpper + "S",
-                    columninfo.columnNameJava + "s",
+                    columninfo.columnNameJavaParamHumpUpper + "_LIST",
+                    columninfo.columnNameJava + "List",
                     null,
                     columninfo.columnComment + "-多个以逗号分割",
                     false,
@@ -282,6 +289,12 @@ public class TableFactory {
                     columninfo.columnNameJava,
                     null,
                     columninfo.columnComment
+            ));
+            columninfo.findData.add(FindData.of(
+                    columninfo.columnNameJavaParamHumpUpper + "_LIST",
+                    columninfo.columnNameJava + "List",
+                    null,
+                    columninfo.columnComment + "-多个以逗号分割"
             ));
         }
     }
