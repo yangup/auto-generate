@@ -89,8 +89,7 @@ public class ServiceCreator extends BaseCreator {
             );
             if (isNotEmpty(c.findData)) {
                 codeList.add(note + wp +
-                        "wrapper.in(queryMap.has(\"-a-List\"), -b-Entity::get-c-, queryMap.getList(\"-a-List\"));"
-                                .replaceAll("-a-", c.columnNameJava)
+                        "wrapper.in(queryMap.hasList(-b-Entity::get-c-), -b-Entity::get-c-, queryMap.getList(-b-Entity::get-c-));"
                                 .replaceAll("-b-", table.tableNameJava)
                                 .replaceAll("-c-", c.columnNameJavaFirstToUppercase)
                 );
@@ -104,13 +103,15 @@ public class ServiceCreator extends BaseCreator {
                 codeList.add(t2 + "List<String> -a-List = page.stream().map(a -> a.-a-).filter(StringUtils::isNotEmpty).distinct().collect(Collectors.toList());"
                         .replaceAll("-a-", param.thisTableColumn.columnNameJava)
                 );
+                // PageList<SystemUserSettingData> susPList = isNotEmpty(idList) ? systemUserSettingService.find(QueryMap.ofList(SystemUserSettingEntity::getUserId, idList).rawTrue()) : null;
                 codeList.add(t2 + ("PageList<-tableNameJava-Data> -tableNameSimple-PList = isNotEmpty(-thisTableColumn-List) ?" +
-                        " -tableNameJavaParam-Service.find(QueryMap.of(\"-otherTableColumn-List\", -thisTableColumn-List).rawTrue()) : null;")
+                        " -tableNameJavaParam-Service.find(QueryMap.ofList(-tableNameJava-Entity::get-otherTableColumnUpper-, -thisTableColumn-List).rawTrue()) : null;")
                         .replaceAll("-tableNameJava-", param.otherTable.tableNameJava)
                         .replaceAll("-tableNameJavaParam-", param.otherTable.tableNameJavaParam)
                         .replaceAll("-tableNameSimple-", param.otherTable.tableNameSimple)
                         .replaceAll("-thisTableColumn-", param.thisTableColumn.columnNameJava)
                         .replaceAll("-otherTableColumn-", param.otherTableColumn.columnNameJava)
+                        .replaceAll("-otherTableColumnUpper-", param.otherTableColumn.columnNameJavaFirstToUppercase)
                 );
             }
             // 拼接查询
