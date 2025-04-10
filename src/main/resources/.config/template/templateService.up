@@ -76,7 +76,7 @@ public class -tableNameJava-Service extends BaseService {
 
     public PageList<-tableNameJava-Data> find(QueryMap queryMap, PageBounds pageBounds) {
         queryMap = QueryMap.of(queryMap);
-        pageBounds = pageBounds == null ? PageBounds.of() : pageBounds;
+        pageBounds = PageBounds.of(pageBounds);
         LambdaQueryWrapper<-tableNameJava-Entity> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(queryMap.hasId(), -tableNameJava-Entity::getId, queryMap.id());
         wrapper.in(queryMap.hasIdList(), -tableNameJava-Entity::getId, queryMap.idList());
