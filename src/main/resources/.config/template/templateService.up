@@ -33,7 +33,6 @@ import java.util.stream.Collectors;
 @Service
 public class -tableNameJava-Service extends BaseService {
 
-    private @Autowired -tableNameJava-Mapper thisMapper;
     private @Autowired -tableNameJava-Mapper -tableNameJavaParam-Mapper;
     private @Autowired RedissonUtil redissonUtil;
 
@@ -41,18 +40,18 @@ public class -tableNameJava-Service extends BaseService {
     @Transactional
     public String createEntity(-tableNameJava-Entity entity) {
         entity.id = redissonUtil.generateId(-tableNameJava-Entity.class, "-tableNameSimpleUpperCase-");
-        thisMapper.insert(entity);
+        -tableNameJavaParam-Mapper.insert(entity);
         return entity.id;
     }
 
     @Transactional
     public int deleteById(String id) {
-        return thisMapper.deleteById(id);
+        return -tableNameJavaParam-Mapper.deleteById(id);
     }
 
     @Transactional
     public int updateEntity(-tableNameJava-Entity entity) {
-        return thisMapper.updateById(entity);
+        return -tableNameJavaParam-Mapper.updateById(entity);
     }
 
     // TODO: ReturnData - findQuery
@@ -83,10 +82,9 @@ public class -tableNameJava-Service extends BaseService {
         wrapper.in(queryMap.hasIdList(), -tableNameJava-Entity::getId, queryMap.idList());
         -serviceFindMethod-
         wrapper.orderByDesc(-tableNameJava-Entity::getId);
-        PageList<-tableNameJava-Data> page = null;
-        PageList<SystemUserData> page = pageBounds.isPaginated() ?
-                PageList.of(thisMapper.selectPage(PageBounds.toPage(pageBounds), wrapper), -tableNameJava-Data::of) :
-                PageList.of(thisMapper.selectList(wrapper), -tableNameJava-Data::of);
+        PageList<-tableNameJava-Data> page = pageBounds.isPaginated() ?
+                PageList.of(-tableNameJavaParam-Mapper.selectPage(PageBounds.toPage(pageBounds), wrapper), -tableNameJava-Data::of) :
+                PageList.of(-tableNameJavaParam-Mapper.selectList(wrapper), -tableNameJava-Data::of);
         if (isEmpty(page) || queryMap.raw()) {
             return page;
         }
