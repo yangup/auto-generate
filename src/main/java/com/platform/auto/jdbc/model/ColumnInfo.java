@@ -25,6 +25,8 @@ public class ColumnInfo {
     public String columnName;
     // todo : java 中的驼峰命名 customerId
     public String columnNameJava;
+    // todo : java 中的驼峰命名 CustomerId
+    public String columnNameJavaFirstToUppercase;
     // todo : customer_id
     public String columnNameJavaParamHump;
     // todo : CUSTOMER_ID

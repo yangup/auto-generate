@@ -124,6 +124,7 @@ public class TableFactory {
             }
             // TODO : 确定 java 中 使用什么名字
             columninfo.columnNameJava = isEmpty(columninfo.columnNameJava) ? toJava(columninfo.columnName.toLowerCase()) : columninfo.columnNameJava;
+            columninfo.columnNameJavaFirstToUppercase = firstToUppercase(columninfo.columnNameJava);
             columninfo.columnNameJavaParamHump = humpToLine(columninfo.columnNameJava);
             columninfo.columnNameJavaParamHumpUpper = columninfo.columnNameJavaParamHump.toUpperCase();
             columninfo.isId = columninfo == table.id;

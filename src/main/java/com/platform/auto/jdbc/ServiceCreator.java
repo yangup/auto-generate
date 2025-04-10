@@ -83,17 +83,16 @@ public class ServiceCreator extends BaseCreator {
                 note = "";
             }
             codeList.add(note + wp +
-                    "wrapper.eq(queryMap.has(\"-a-\"), -b-Entity::get-c-, queryMap.get(\"-a-\"));"
-                            .replaceAll("-a-", c.columnNameJava)
+                    "wrapper.eq(queryMap.has(-b-Entity::get-c-), -b-Entity::get-c-, queryMap.get(-b-Entity::get-c-));"
                             .replaceAll("-b-", table.tableNameJava)
-                            .replaceAll("-c-", firstToUppercase(c.columnNameJava))
+                            .replaceAll("-c-", c.columnNameJavaFirstToUppercase)
             );
             if (isNotEmpty(c.findData)) {
                 codeList.add(note + wp +
                         "wrapper.in(queryMap.has(\"-a-List\"), -b-Entity::get-c-, queryMap.getList(\"-a-List\"));"
                                 .replaceAll("-a-", c.columnNameJava)
                                 .replaceAll("-b-", table.tableNameJava)
-                                .replaceAll("-c-", firstToUppercase(c.columnNameJava))
+                                .replaceAll("-c-", c.columnNameJavaFirstToUppercase)
                 );
             }
         }
