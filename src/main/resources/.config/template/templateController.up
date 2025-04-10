@@ -36,7 +36,7 @@ public class -tableNameJava-Controller extends BaseController {
             return failNeedParameter("id");
         }
         -tableNameJavaParam-Service.deleteById(entity.id);
-        return ok();
+        return OK;
     }
 
     @PostMapping("addUpdate")
@@ -48,7 +48,7 @@ public class -tableNameJava-Controller extends BaseController {
         } else {
             -tableNameJavaParam-Service.updateEntity(entity);
         }
-        return ok();
+        return OK;
     }
 
     // TODO: 以下为查询

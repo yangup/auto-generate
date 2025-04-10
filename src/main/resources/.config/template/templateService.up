@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
 @Service
 public class -tableNameJava-Service extends BaseService {
 
+    private @Autowired -tableNameJava-Mapper thisMapper;
     private @Autowired -tableNameJava-Mapper -tableNameJavaParam-Mapper;
     private @Autowired RedissonUtil redissonUtil;
 
@@ -40,18 +41,18 @@ public class -tableNameJava-Service extends BaseService {
     @Transactional
     public String createEntity(-tableNameJava-Entity entity) {
         entity.id = redissonUtil.generateId(-tableNameJava-Entity.class, "-tableNameSimpleUpperCase-");
-        -tableNameJavaParam-Mapper.insert(entity);
+        thisMapper.insert(entity);
         return entity.id;
     }
 
     @Transactional
     public int deleteById(String id) {
-        return -tableNameJavaParam-Mapper.deleteById(id);
+        return thisMapper.deleteById(id);
     }
 
     @Transactional
     public int updateEntity(-tableNameJava-Entity entity) {
-        return -tableNameJavaParam-Mapper.updateById(entity);
+        return thisMapper.updateById(entity);
     }
 
     // TODO: ReturnData - findQuery
@@ -83,12 +84,9 @@ public class -tableNameJava-Service extends BaseService {
         -serviceFindMethod-
         wrapper.orderByDesc(-tableNameJava-Entity::getId);
         PageList<-tableNameJava-Data> page = null;
-        if (pageBounds.isNotPageFind()) {
-            page = new PageList<>(-tableNameJavaParam-Mapper.selectList(wrapper).stream().map(-tableNameJava-Data::of).collect(Collectors.toList()));
-        } else {
-            Page<-tableNameJava-Entity> pageData = -tableNameJavaParam-Mapper.selectPage(PageBounds.toPage(pageBounds), wrapper);
-            page = new PageList<>(pageData.getRecords().stream().map(-tableNameJava-Data::of).collect(Collectors.toList()), pageData.getTotal());
-        }
+        PageList<SystemUserData> page = pageBounds.isPaginated() ?
+                PageList.of(thisMapper.selectPage(PageBounds.toPage(pageBounds), wrapper), -tableNameJava-Data::of) :
+                PageList.of(thisMapper.selectList(wrapper), -tableNameJava-Data::of);
         if (isEmpty(page) || queryMap.raw()) {
             return page;
         }
