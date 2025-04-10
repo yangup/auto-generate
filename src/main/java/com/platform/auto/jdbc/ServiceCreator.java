@@ -104,8 +104,9 @@ public class ServiceCreator extends BaseCreator {
                         .replaceAll("-a-", param.thisTableColumn.columnNameJava)
                 );
                 // PageList<SystemUserSettingData> susPList = isNotEmpty(idList) ? systemUserSettingService.find(QueryMap.ofList(SystemUserSettingEntity::getUserId, idList).rawTrue()) : null;
+                // PageList<SystemUserSettingData> susPList = isNotEmpty(idList) ? systemUserSettingService.find(QueryMap.ofList(SystemUserSettingEntity::getUserId, idList).raw(queryMap.raw())) : null;
                 codeList.add(t2 + ("PageList<-tableNameJava-Data> -tableNameSimple-PList = isNotEmpty(-thisTableColumn-List) ?" +
-                        " -tableNameJavaParam-Service.find(QueryMap.ofList(-tableNameJava-Entity::get-otherTableColumnUpper-, -thisTableColumn-List).rawTrue()) : null;")
+                        " -tableNameJavaParam-Service.find(QueryMap.ofList(-tableNameJava-Entity::get-otherTableColumnUpper-, -thisTableColumn-List).raw(queryMap.raw())) : null;")
                         .replaceAll("-tableNameJava-", param.otherTable.tableNameJava)
                         .replaceAll("-tableNameJavaParam-", param.otherTable.tableNameJavaParam)
                         .replaceAll("-tableNameSimple-", param.otherTable.tableNameSimple)
