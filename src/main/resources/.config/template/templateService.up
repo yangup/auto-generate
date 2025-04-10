@@ -68,11 +68,11 @@ public class -tableNameJava-Service extends BaseService {
     }
 
     public <T> -tableNameJava-Data findOne(SFunction<T, ?> getter, Object value) {
-        return find(QueryMap.of(getter, value), null).first();
+        return find(QueryMap.of(getter, value).oneTrue(), null).first();
     }
 
     public -tableNameJava-Data findOne(QueryMap queryMap) {
-        return find(queryMap, null).first();
+        return find(QueryMap.of(queryMap).oneTrue(), null).first();
     }
 
     public <T> PageList<-tableNameJava-Data> find(SFunction<T, ?> getter, Object value) {
