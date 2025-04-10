@@ -51,12 +51,12 @@ public class SqlProviderCreator extends BaseCreator {
             if (isIdCreateTimeUpdateTime(c.columnNameJava)) {
                 continue;
             }
-            for (FindData findData : c.findData) {
-                String line = String.format("    public static final String %s = \"%s\";", findData.staticName, findData.name);
-                if (AutoUtil.listIndex(addCoodeList, line) == -1) {
-                    addCoodeList.add(line);
-                }
-            }
+//            for (FindData findData : c.findData) {
+//                String line = String.format("    public static final String %s = \"%s\";", findData.staticName, findData.name);
+//                if (AutoUtil.listIndex(addCoodeList, line) == -1) {
+//                    addCoodeList.add(line);
+//                }
+//            }
             if (isEmpty(c.select)) {
                 continue;
             }
