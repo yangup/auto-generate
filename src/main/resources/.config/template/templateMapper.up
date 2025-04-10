@@ -12,5 +12,14 @@ import static com.pay.common.constant.Constant.*;
  * @author -author-
  */
 public interface -tableNameJava-Mapper extends BaseMapper<-tableNameJava-Entity> {
+
+    @Update(" update -tableName- set" +
+            "-sqlFieldNameValue-" +
+            " where id = #{id}")
+    int updateEntity(-tableNameJava-Entity entity);
+
+    @Select("SELECT a.* FROM -tableName- a WHERE a.id = #{id} order by a.id desc LIMIT 1")
+    -tableNameJava-Entity findById(String id);
+
 }
 
