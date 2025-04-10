@@ -1,5 +1,6 @@
 package -packagePackage-;
 
+import com.pay.common.common.BaseController;
 import com.pay.common.common.QueryMap;
 import com.pay.common.common.ReturnData;
 import com.pay.common.common.paginator.PageBounds;

@@ -1,6 +1,8 @@
 package -packagePackage-;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.Select;
 
 import static org.springframework.beans.BeanUtils.*;
 import static com.pay.common.constant.Constant.*;
