@@ -91,6 +91,7 @@ public class -tableNameJava-Service extends BaseService {
         wrapper.in(queryMap.hasIdList(), -tableNameJava-Entity::getId, queryMap.idList());
         -serviceFindMethod-
         wrapper.orderByDesc(-tableNameJava-Entity::getId);
+        wrapper.last("limit 10000");
         PageList<-tableNameJava-Data> page = pageBounds.isPaginated() ?
                 PageList.of(-tableNameJavaParam-Mapper.selectPage(PageBounds.toPage(pageBounds), wrapper), -tableNameJava-Data::of) :
                 PageList.of(-tableNameJavaParam-Mapper.selectList(wrapper), -tableNameJava-Data::of);
