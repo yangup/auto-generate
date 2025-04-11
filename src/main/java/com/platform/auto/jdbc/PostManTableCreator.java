@@ -54,11 +54,11 @@ public class PostManTableCreator extends BaseCreator {
         for (int i = 0; i < this.table.columnInfos.size(); i++) {
             ColumnInfo c = this.table.columnInfos.get(i);
             for (FindData f : c.findData) {
-                if (!Table.inParamStatic(f.name)) {
+                if (Table.noneMatchParamStatic(f.name)) {
                     String des = f.comment;
                     if (isNotEmpty(c.select)) {
                         StringBuilder sbTemp = new StringBuilder();
-                        c.select.stream().forEach(one -> {
+                        c.select.forEach(one -> {
                             sbTemp.append(String.format("%s:%s;", one.key, one.value));
                         });
                         des += ";" + sbTemp.toString();

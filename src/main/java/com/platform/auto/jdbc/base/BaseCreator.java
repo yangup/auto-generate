@@ -1,7 +1,6 @@
 package com.platform.auto.jdbc.base;
 
 import com.platform.auto.config.Config;
-import com.platform.auto.entity.ConfigEntity;
 import com.platform.auto.entity.ConfigInfoEntity;
 import com.platform.auto.jdbc.model.*;
 import com.platform.auto.sys.log.AutoLogger;
@@ -369,11 +368,11 @@ public class BaseCreator {
         for (int i = 0; i < table.columnInfos.size(); i++) {
             ColumnInfo c = table.columnInfos.get(i);
             for (FindData f : c.findData) {
-                if (!Table.inParamStatic(f.name)) {
+                if (Table.noneMatchParamStatic(f.name)) {
                     String des = f.comment;
                     if (isNotEmpty(c.select)) {
                         StringBuilder sbTemp = new StringBuilder();
-                        c.select.stream().forEach(one -> {
+                        c.select.forEach(one -> {
                             sbTemp.append(String.format("%s : %s</br>", one.key, one.value));
                         });
                         des += "</br>" + sbTemp.toString();

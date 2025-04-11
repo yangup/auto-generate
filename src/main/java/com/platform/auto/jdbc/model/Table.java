@@ -84,8 +84,8 @@ public class Table {
         allParamStatic.addAll(idFindParamStatic);
     }
 
-    public static boolean inParamStatic(String key) {
-        return Table.allParamStatic.stream().anyMatch(q -> q.key.equals(key));
+    public static boolean noneMatchParamStatic(String key) {
+        return Table.allParamStatic.stream().noneMatch(q -> q.key.equals(key));
     }
 
     public static boolean inQueryMap(String key) {
