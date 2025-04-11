@@ -62,9 +62,6 @@ public class Table {
         pageBoundsFindParamStatic.add(QueryMapFindParam.of(
                 "size", "10", "整数", "每页多少条数据,默认值:1 , 最大1000", false, true
         ));
-        pageBoundsFindParamStatic.add(QueryMapFindParam.of(
-                "limit", "10", "整数", "每页多少条数据,默认值:1 , 最大1000,与size 一样", false, false
-        ));
         queryMapFindParamStatic.add(QueryMapFindParam.of(
                 "startTime", "", "日期时间", "开始时间,例如 : 2017-01-01 12:13:14 </br> 或者 例如 : 2017-01-01", false, false
         ));
@@ -79,12 +76,6 @@ public class Table {
         ));
         queryMapFindParamStatic.add(QueryMapFindParam.of(
                 "_more", "true", "字符串", "传值:true或者1 </br> 原始数据查询,查询原始表数据,不附带其他,数据结构与表对应起来", false, false
-        ));
-        createUpdateTimeFindParamStatic.add(QueryMapFindParam.of(
-                "startTime", "", "日期时间", "开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
-        ));
-        createUpdateTimeFindParamStatic.add(QueryMapFindParam.of(
-                "endTime", "", "日期时间", "结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-03", false, false
         ));
 
         allParamStatic.addAll(queryMapFindParamStatic);
