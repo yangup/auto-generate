@@ -58,10 +58,10 @@ public class -tableNameJava-Service extends BaseService {
     public ReturnData<Object> findQuery(QueryMap queryMap, PageBounds pageBounds) {
         queryMap = QueryMap.of(queryMap);
         if (queryMap.all()) {
-            return ReturnData.ok(this.find(QueryMap.of().rawTrue()));
+            return ReturnData.ok(this.find(QueryMap.of()));
         }
         if (queryMap.justOne()) {
-            return ReturnData.ok(this.findOne(queryMap));
+            return ReturnData.ok(this.findOne(queryMap.moreTrue()));
         }
         return ReturnData.ok(this.find(queryMap, PageBounds.of(pageBounds, queryMap)));
     }
@@ -94,7 +94,7 @@ public class -tableNameJava-Service extends BaseService {
         PageList<-tableNameJava-Data> page = pageBounds.isPaginated() ?
                 PageList.of(-tableNameJavaParam-Mapper.selectPage(PageBounds.toPage(pageBounds), wrapper), -tableNameJava-Data::of) :
                 PageList.of(-tableNameJavaParam-Mapper.selectList(wrapper), -tableNameJava-Data::of);
-        if (isEmpty(page) || queryMap.raw()) {
+        if (isEmpty(page) || queryMap.moreNot()) {
             return page;
         }
         -serviceFindMethodMore-

@@ -72,28 +72,19 @@ public class Table {
                 "endTime", "", "日期时间", "结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
         ));
         queryMapFindParamStatic.add(QueryMapFindParam.of(
-                "all", "all", "字符串", "分页状态下,查询出全部数据,相当于page=1,size=2000", false, false
+                "_all", "true", "字符串", "传值:true或者1 </br> 查询全部的原始数据,小心使用,相当于page=1,size=10000,_more=false", false, false
         ));
         queryMapFindParamStatic.add(QueryMapFindParam.of(
-                "_all", "_all", "字符串", "查询全部的原始数据,小心使用,相当于page=1,size=20000,_raw=_raw", false, false
+                "_one", "true", "字符串", "传值:true或者1 </br> 查询出一条数据,相当于page=1,size=1,返回对象,不是数组", false, false
         ));
         queryMapFindParamStatic.add(QueryMapFindParam.of(
-                "_one", "_one", "字符串", "查询出一条数据,相当于page=1,size=1,返回对象,不是数组", false, false
-        ));
-        queryMapFindParamStatic.add(QueryMapFindParam.of(
-                "_raw", "_raw", "字符串", "原始数据查询,查询原始表数据,不附带其他,数据结构与表对应起来", false, false
+                "_more", "true", "字符串", "传值:true或者1 </br> 原始数据查询,查询原始表数据,不附带其他,数据结构与表对应起来", false, false
         ));
         createUpdateTimeFindParamStatic.add(QueryMapFindParam.of(
-                "createTimeFrom", "", "日期时间", "产生时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
+                "startTime", "", "日期时间", "开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
         ));
         createUpdateTimeFindParamStatic.add(QueryMapFindParam.of(
-                "createTimeTo", "", "日期时间", "产生时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
-        ));
-        createUpdateTimeFindParamStatic.add(QueryMapFindParam.of(
-                "updateTimeFrom", "", "日期时间", "更新时间的开始时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
-        ));
-        createUpdateTimeFindParamStatic.add(QueryMapFindParam.of(
-                "updateTimeTo", "", "日期时间", "更新时间的结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-02", false, false
+                "endTime", "", "日期时间", "结束时间,例如 : 2023-01-02 12:13:14 </br> 或者 例如 : 2023-01-03", false, false
         ));
 
         allParamStatic.addAll(queryMapFindParamStatic);
