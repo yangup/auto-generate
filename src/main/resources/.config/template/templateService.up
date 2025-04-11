@@ -1,8 +1,6 @@
 package -packagePackage-;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pay.common.common.BaseService;
 import com.pay.common.common.QueryMap;
 import com.pay.common.common.ReturnData;
@@ -22,6 +20,7 @@ import static org.apache.commons.lang3.StringUtils.*;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -67,7 +66,7 @@ public class -tableNameJava-Service extends BaseService {
         return ReturnData.ok(this.find(queryMap, PageBounds.of(pageBounds, queryMap)));
     }
 
-    public <T> -tableNameJava-Data findOne(SFunction<T, ?> getter, Object value) {
+    public <T> -tableNameJava-Data findOne(Function<T, ?> getter, Object value) {
         return find(QueryMap.of(getter, value).oneTrue(), null).first();
     }
 
@@ -75,7 +74,7 @@ public class -tableNameJava-Service extends BaseService {
         return find(QueryMap.of(queryMap).oneTrue(), null).first();
     }
 
-    public <T> PageList<-tableNameJava-Data> find(SFunction<T, ?> getter, Object value) {
+    public <T> PageList<-tableNameJava-Data> find(Function<T, ?> getter, Object value) {
         return find(QueryMap.of(getter, value), null);
     }
 
