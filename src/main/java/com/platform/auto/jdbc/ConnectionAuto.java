@@ -59,7 +59,6 @@ public class ConnectionAuto extends CharUtil {
                     new DtoCreator(baseCreator).create();
                     new UsefulCreator(baseCreator).create();
                     new DocTableCreator(baseCreator).create();
-                    new PostManTableCreator(baseCreator).create();
                     new HttpCreator(baseCreator).create();
                     new FrontCreate(baseCreator).create();
                     if (info.path != null && isNotBlank(info.path.file)) {

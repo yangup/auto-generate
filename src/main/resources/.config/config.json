@@ -113,16 +113,6 @@
       }
     },
     {
-      "template": "templatePostManTable.up",
-      "remark": "generate postman table",
-      "file_name_suffix": "_postman.json",
-      "store_by_table": false,
-      "path": {
-        "local": true,
-        "path": "postman"
-      }
-    },
-    {
       "template": "templateFront.up",
       "remark": "generate front file",
       "file_name_suffix": ".vue",
