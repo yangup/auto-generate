@@ -86,10 +86,6 @@ public class Table {
         return Table.allParamStatic.stream().noneMatch(q -> q.key.equals(key));
     }
 
-    public static boolean inQueryMap(String key) {
-        return Table.queryMapFindParamStatic.stream().anyMatch(q -> q.key.equals(key));
-    }
-
     public void initLast() {
         findData = new ArrayList<>();
         columnInfos.forEach(c -> {

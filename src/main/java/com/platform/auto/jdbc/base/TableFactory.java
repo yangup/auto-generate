@@ -25,7 +25,7 @@ public class TableFactory {
      * 根据数据库返回的 rs 处理成 table
      **/
     public List<Table> obtainTable(final ResultSet rs) throws Exception {
-        Set<String> keys = ColumnInfo.FieldSet();
+        Set<String> keys = ColumnInfo.fieldSet();
         List<Table> tables = new ArrayList<>();
         List<ColumnInfo> list = new ArrayList<>();
         logger.info("analyze table data -start");

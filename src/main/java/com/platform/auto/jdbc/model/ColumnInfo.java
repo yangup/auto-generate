@@ -119,7 +119,7 @@ public class ColumnInfo {
         }
     }
 
-    public static Set<String> FieldSet() {
+    public static Set<String> fieldSet() {
         Set<String> keys = new HashSet<>();
         Field[] fields = ColumnInfo.class.getDeclaredFields();
         for (Field field : fields) {
