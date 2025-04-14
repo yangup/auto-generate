@@ -84,14 +84,14 @@ public class ServiceCreator extends BaseCreator {
             }
             codeList.add(note + wp +
                     "wrapper.eq(queryMap.has(-b-Entity::get-c-), -b-Entity::get-c-, queryMap.get(-b-Entity::get-c-));"
-                            .replaceAll("-b-", table.tableNameJava)
-                            .replaceAll("-c-", c.columnNameJavaFirstToUppercase)
+                            .replace("-b-", table.tableNameJava)
+                            .replace("-c-", c.columnNameJavaFirstToUppercase)
             );
             if (isNotEmpty(c.findData)) {
                 codeList.add(note + wp +
                         "wrapper.in(queryMap.hasList(-b-Entity::get-c-), -b-Entity::get-c-, queryMap.getList(-b-Entity::get-c-));"
-                                .replaceAll("-b-", table.tableNameJava)
-                                .replaceAll("-c-", c.columnNameJavaFirstToUppercase)
+                                .replace("-b-", table.tableNameJava)
+                                .replace("-c-", c.columnNameJavaFirstToUppercase)
                 );
             }
         }
@@ -103,38 +103,38 @@ public class ServiceCreator extends BaseCreator {
                 codeList.add(t2 + "List<String> -a-List = page.stream().map(a -> a.-a-).filter(StringUtils::isNotEmpty).distinct().collect(Collectors.toList());"
                         .replaceAll("-a-", param.thisTableColumn.columnNameJava)
                 );
-                codeList.add("        PageList<-tableNameJava-Data> -tableNameJavaParam-DataList = isEmpty(-thisTableColumn-List) ? null : -tableNameJavaParam-Service.find(\n" +
+                String template = "        PageList<-tableNameJava-Data> -tableNameJavaParam-DataList = isEmpty(-thisTableColumn-List) ? null : -tableNameJavaParam-Service.find(\n" +
                         "                QueryMap.builder()\n" +
                         "                        .list(-tableNameJava-Entity::get-otherTableColumnUpper-, -thisTableColumn-List)\n" +
                         "                        .more(queryMap.more())\n" +
-                        "                        .build());"
-                                .replaceAll("-tableNameJava-", param.otherTable.tableNameJava)
-                                .replaceAll("-tableNameJavaParam-", param.otherTable.tableNameJavaParam)
-                                .replaceAll("-thisTableColumn-", param.thisTableColumn.columnNameJava)
-                                .replaceAll("-otherTableColumn-", param.otherTableColumn.columnNameJava)
-                                .replaceAll("-otherTableColumnUpper-", param.otherTableColumn.columnNameJavaFirstToUppercase)
+                        "                        .build());";
+                codeList.add(template.replace("-tableNameJava-", param.otherTable.tableNameJava)
+                        .replace("-tableNameJavaParam-", param.otherTable.tableNameJavaParam)
+                        .replace("-thisTableColumn-", param.thisTableColumn.columnNameJava)
+                        .replace("-otherTableColumn-", param.otherTableColumn.columnNameJava)
+                        .replace("-otherTableColumnUpper-", param.otherTableColumn.columnNameJavaFirstToUppercase)
                 );
             }
             // 拼接查询
             codeList.add(t2 + String.format("for (%sData a : page) {", table.tableNameJava));
             for (RelateTableInfo param : table.relateTable) {
                 if (param.more) {
-                    codeList.add("            a.-tableNameJavaParam-List = -tableNameJavaParam-DataList == null ? null : -tableNameJavaParam-DataList.stream()\n" +
+                    String template = "            a.-tableNameJavaParam-List = -tableNameJavaParam-DataList == null ? null : -tableNameJavaParam-DataList.stream()\n" +
                             "                    .filter(b -> equals(a.-thisTableColumn-, b.-otherTableColumn-))\n" +
                             "                    .collect(Collectors.toList())\n" +
-                            "                    .orElse(null);"
-                                    .replaceAll("-tableNameJavaParam-", param.otherTable.tableNameJavaParam)
-                                    .replaceAll("-thisTableColumn-", param.thisTableColumn.columnNameJava)
-                                    .replaceAll("-otherTableColumn-", param.otherTableColumn.columnNameJava)
+                            "                    .orElse(null);";
+                    codeList.add(template.replace("-tableNameJavaParam-", param.otherTable.tableNameJavaParam)
+                            .replace("-thisTableColumn-", param.thisTableColumn.columnNameJava)
+                            .replace("-otherTableColumn-", param.otherTableColumn.columnNameJava)
                     );
                 } else {
-                    codeList.add("            a.-tableNameJavaParam- = -tableNameJavaParam-DataList == null ? null : -tableNameJavaParam-DataList.stream()\n" +
+                    String template = "            a.-tableNameJavaParam- = -tableNameJavaParam-DataList == null ? null : -tableNameJavaParam-DataList.stream()\n" +
                             "                    .filter(b -> equals(a.-thisTableColumn-, b.-otherTableColumn-))\n" +
                             "                    .findFirst()\n" +
-                            "                    .orElse(null);"
-                                    .replaceAll("-tableNameJavaParam-", param.otherTable.tableNameJavaParam)
-                                    .replaceAll("-thisTableColumn-", param.thisTableColumn.columnNameJava)
-                                    .replaceAll("-otherTableColumn-", param.otherTableColumn.columnNameJava)
+                            "                    .orElse(null);";
+                    codeList.add(template.replace("-tableNameJavaParam-", param.otherTable.tableNameJavaParam)
+                            .replace("-thisTableColumn-", param.thisTableColumn.columnNameJava)
+                            .replace("-otherTableColumn-", param.otherTableColumn.columnNameJava)
                     );
                 }
             }
