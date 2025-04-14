@@ -103,33 +103,38 @@ public class ServiceCreator extends BaseCreator {
                 codeList.add(t2 + "List<String> -a-List = page.stream().map(a -> a.-a-).filter(StringUtils::isNotEmpty).distinct().collect(Collectors.toList());"
                         .replaceAll("-a-", param.thisTableColumn.columnNameJava)
                 );
-                // PageList<SystemUserSettingData> susPList = isNotEmpty(idList) ? systemUserSettingService.find(QueryMap.ofList(SystemUserSettingEntity::getUserId, idList).more(queryMap.more())) : null;
-                codeList.add(t2 + ("PageList<-tableNameJava-Data> -tableNameSimple-PList = isNotEmpty(-thisTableColumn-List) ?" +
-                        " -tableNameJavaParam-Service.find(QueryMap.ofList(-tableNameJava-Entity::get-otherTableColumnUpper-, -thisTableColumn-List).more(queryMap.more())) : null;")
-                        .replaceAll("-tableNameJava-", param.otherTable.tableNameJava)
-                        .replaceAll("-tableNameJavaParam-", param.otherTable.tableNameJavaParam)
-                        .replaceAll("-tableNameSimple-", param.otherTable.tableNameSimple)
-                        .replaceAll("-thisTableColumn-", param.thisTableColumn.columnNameJava)
-                        .replaceAll("-otherTableColumn-", param.otherTableColumn.columnNameJava)
-                        .replaceAll("-otherTableColumnUpper-", param.otherTableColumn.columnNameJavaFirstToUppercase)
+                codeList.add("        PageList<-tableNameJava-Data> -tableNameJavaParam-DataList = isEmpty(-thisTableColumn-List) ? null : -tableNameJavaParam-Service.find(\n" +
+                        "                QueryMap.builder()\n" +
+                        "                        .list(-tableNameJava-Entity::get-otherTableColumnUpper-, -thisTableColumn-List)\n" +
+                        "                        .more(queryMap.more())\n" +
+                        "                        .build());"
+                                .replaceAll("-tableNameJava-", param.otherTable.tableNameJava)
+                                .replaceAll("-tableNameJavaParam-", param.otherTable.tableNameJavaParam)
+                                .replaceAll("-thisTableColumn-", param.thisTableColumn.columnNameJava)
+                                .replaceAll("-otherTableColumn-", param.otherTableColumn.columnNameJava)
+                                .replaceAll("-otherTableColumnUpper-", param.otherTableColumn.columnNameJavaFirstToUppercase)
                 );
             }
             // 拼接查询
             codeList.add(t2 + String.format("for (%sData a : page) {", table.tableNameJava));
             for (RelateTableInfo param : table.relateTable) {
                 if (param.more) {
-                    codeList.add(t3 + "a.-a-List = -a1-PList != null ? -a1-PList.stream().filter(b -> equals(a.-b-, b.-c-)).collect(Collectors.toList()) : null;"
-                            .replaceAll("-a-", param.otherTable.tableNameJavaParam)
-                            .replaceAll("-a1-", param.otherTable.tableNameSimple)
-                            .replaceAll("-b-", param.thisTableColumn.columnNameJava)
-                            .replaceAll("-c-", param.otherTableColumn.columnNameJava)
+                    codeList.add("            a.-tableNameJavaParam-List = -tableNameJavaParam-DataList == null ? null : -tableNameJavaParam-DataList.stream()\n" +
+                            "                    .filter(b -> equals(a.-thisTableColumn-, b.-otherTableColumn-))\n" +
+                            "                    .collect(Collectors.toList())\n" +
+                            "                    .orElse(null);"
+                                    .replaceAll("-tableNameJavaParam-", param.otherTable.tableNameJavaParam)
+                                    .replaceAll("-thisTableColumn-", param.thisTableColumn.columnNameJava)
+                                    .replaceAll("-otherTableColumn-", param.otherTableColumn.columnNameJava)
                     );
                 } else {
-                    codeList.add(t3 + "a.-a- = -a1-PList != null ? -a1-PList.stream().filter(b -> equals(a.-b-, b.-c-)).findFirst().orElse(null) : null;"
-                            .replaceAll("-a-", param.otherTable.tableNameJavaParam)
-                            .replaceAll("-a1-", param.otherTable.tableNameSimple)
-                            .replaceAll("-b-", param.thisTableColumn.columnNameJava)
-                            .replaceAll("-c-", param.otherTableColumn.columnNameJava)
+                    codeList.add("            a.-tableNameJavaParam- = -tableNameJavaParam-DataList == null ? null : -tableNameJavaParam-DataList.stream()\n" +
+                            "                    .filter(b -> equals(a.-thisTableColumn-, b.-otherTableColumn-))\n" +
+                            "                    .findFirst()\n" +
+                            "                    .orElse(null);"
+                                    .replaceAll("-tableNameJavaParam-", param.otherTable.tableNameJavaParam)
+                                    .replaceAll("-thisTableColumn-", param.thisTableColumn.columnNameJava)
+                                    .replaceAll("-otherTableColumn-", param.otherTableColumn.columnNameJava)
                     );
                 }
             }
