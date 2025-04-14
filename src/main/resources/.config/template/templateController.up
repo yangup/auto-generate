@@ -5,7 +5,6 @@ import com.pay.common.common.QueryMap;
 import com.pay.common.common.ReturnData;
 import com.pay.common.common.paginator.PageBounds;
 import com.pay.common.db.-tableNameJavaLower-.*;
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,6 @@ public class -tableNameJava-Controller extends BaseController {
     private @Autowired -tableNameJava-Service -tableNameJavaParam-Service;
 
     @PostMapping("delete")
-    @Operation(summary = "delete -tableComment-")
     public ReturnData<Object> delete(@RequestBody -tableNameJava-Entity entity) throws Exception {
         if (isEmpty(entity.id)) {
             return failNeedParameter("id");
@@ -41,7 +39,6 @@ public class -tableNameJava-Controller extends BaseController {
     }
 
     @PostMapping("addUpdate")
-    @Operation(summary = "addUpdate -tableComment-")
     public ReturnData<Object> addUpdate(@RequestBody @Valid -tableNameJava-Dto dto) throws Exception {
         -tableNameJava-Entity entity = -tableNameJava-Entity.of(dto);
         if (isEmpty(entity.id)) {
@@ -54,7 +51,6 @@ public class -tableNameJava-Controller extends BaseController {
 
     // TODO: 以下为查询
     @GetMapping("find")
-    @Operation(summary = "find 查询 -tableComment-")
     public ReturnData<Object> find(QueryMap queryMap, PageBounds pageBounds) throws Exception {
         return -tableNameJavaParam-Service.findQuery(queryMap, pageBounds);
     }
