@@ -29,14 +29,14 @@ public class -tableNameJava-Controller extends BaseController {
 
     private @Autowired -tableNameJava-Service -tableNameJavaParam-Service;
 
-    @PostMapping("delete")
-    public ReturnData<Object> delete(@RequestBody -tableNameJava-Entity entity) throws Exception {
-        if (isEmpty(entity.id)) {
-            return failNeedParameter("id");
-        }
-        -tableNameJavaParam-Service.deleteById(entity.id);
-        return OK;
-    }
+//    @PostMapping("delete")
+//    public ReturnData<Object> delete(@RequestBody -tableNameJava-Entity entity) throws Exception {
+//        if (isEmpty(entity.id)) {
+//            return failNeedParameter("id");
+//        }
+//        -tableNameJavaParam-Service.deleteById(entity.id);
+//        return OK;
+//    }
 
     @PostMapping("addUpdate")
     public ReturnData<Object> addUpdate(@RequestBody @Valid -tableNameJava-Dto dto) throws Exception {
