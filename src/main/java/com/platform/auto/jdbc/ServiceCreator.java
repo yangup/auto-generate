@@ -103,10 +103,9 @@ public class ServiceCreator extends BaseCreator {
                 codeList.add(t2 + "List<String> -a-List = page.stream().map(a -> a.-a-).filter(StringUtils::isNotEmpty).distinct().collect(Collectors.toList());"
                         .replaceAll("-a-", param.thisTableColumn.columnNameJava)
                 );
-                // PageList<SystemUserSettingData> susPList = isNotEmpty(idList) ? systemUserSettingService.find(QueryMap.ofList(SystemUserSettingEntity::getUserId, idList).rawTrue()) : null;
-                // PageList<SystemUserSettingData> susPList = isNotEmpty(idList) ? systemUserSettingService.find(QueryMap.ofList(SystemUserSettingEntity::getUserId, idList).raw(queryMap.raw())) : null;
+                // PageList<SystemUserSettingData> susPList = isNotEmpty(idList) ? systemUserSettingService.find(QueryMap.ofList(SystemUserSettingEntity::getUserId, idList).more(queryMap.more())) : null;
                 codeList.add(t2 + ("PageList<-tableNameJava-Data> -tableNameSimple-PList = isNotEmpty(-thisTableColumn-List) ?" +
-                        " -tableNameJavaParam-Service.find(QueryMap.ofList(-tableNameJava-Entity::get-otherTableColumnUpper-, -thisTableColumn-List).raw(queryMap.raw())) : null;")
+                        " -tableNameJavaParam-Service.find(QueryMap.ofList(-tableNameJava-Entity::get-otherTableColumnUpper-, -thisTableColumn-List).more(queryMap.more())) : null;")
                         .replaceAll("-tableNameJava-", param.otherTable.tableNameJava)
                         .replaceAll("-tableNameJavaParam-", param.otherTable.tableNameJavaParam)
                         .replaceAll("-tableNameSimple-", param.otherTable.tableNameSimple)

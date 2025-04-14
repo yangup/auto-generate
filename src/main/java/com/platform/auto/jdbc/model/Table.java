@@ -109,7 +109,7 @@ public class Table {
                 result.append(c);
             }
         }
-        this.tableNameSimple = result.toString();
+        this.tableNameSimple = result.toString().toLowerCase();
     }
 
 }
