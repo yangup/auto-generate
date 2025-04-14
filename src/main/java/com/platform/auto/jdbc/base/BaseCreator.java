@@ -389,9 +389,6 @@ public class BaseCreator {
         for (QueryMapFindParam f : Table.queryMapFindParamStatic) {
             queryFindParamDocOneLine(sb, wp, f.key, f.des, f.type);
         }
-        for (QueryMapFindParam f : Table.createUpdateTimeFindParamStatic) {
-            queryFindParamDocOneLine(sb, wp, f.key, f.des, f.type);
-        }
         return sb.toString();
     }
 

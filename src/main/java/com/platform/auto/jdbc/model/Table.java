@@ -36,7 +36,6 @@ public class Table {
 
     public static List<QueryMapFindParam> queryMapFindParamStatic = new ArrayList<>();
     public static List<QueryMapFindParam> pageBoundsFindParamStatic = new ArrayList<>();
-    public static List<QueryMapFindParam> createUpdateTimeFindParamStatic = new ArrayList<>();
     public static List<QueryMapFindParam> idFindParamStatic = new ArrayList<>();
     public static List<QueryMapFindParam> allParamStatic = new ArrayList<>();
     // todo : 主键列,有或无--没有联合主键的情况--多个主键,现在不支持
@@ -80,7 +79,6 @@ public class Table {
 
         allParamStatic.addAll(queryMapFindParamStatic);
         allParamStatic.addAll(pageBoundsFindParamStatic);
-        allParamStatic.addAll(createUpdateTimeFindParamStatic);
         allParamStatic.addAll(idFindParamStatic);
     }
 
