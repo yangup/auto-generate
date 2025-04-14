@@ -103,34 +103,16 @@ public class Table {
      * 初始化 table name simple
      **/
     public void init() {
-        if (StringUtils.isEmpty(this.tableName)) {
+        if (StringUtils.isEmpty(this.tableNameJava)) {
             return;
         }
         if (StringUtils.isNotEmpty(this.tableNameSimple)) {
             return;
         }
         StringBuilder result = new StringBuilder();
-        String n = this.tableName;
-        n = n.toLowerCase();
-        int strLen = n.length();
-        for (int i = 0; i < strLen; i++) {
-            char c = n.charAt(i);
-            // TODO: 2021/12/10 第一位是字母, 第二位不是 _
-            if (i == 0 && Character.isLetter(c)) {
-                i++;
-                if (i < strLen) {
-                    if (n.charAt(i) != '_') {
-                        result.append(Character.toLowerCase(c));
-                    }
-                }
-            }
-            c = n.charAt(i);
-            if (c == '_') {
-                i++;
-                if (i < strLen) {
-                    c = n.charAt(i);
-                    result.append(Character.toLowerCase(c));
-                }
+        for (char c : this.tableNameJava.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                result.append(c);
             }
         }
         this.tableNameSimple = result.toString();
