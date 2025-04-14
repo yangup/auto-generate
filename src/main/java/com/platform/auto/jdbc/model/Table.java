@@ -75,7 +75,7 @@ public class Table {
                 "_one", "true", "字符串", "传值:true或者1 </br> 查询出一条数据,相当于page=1,size=1,返回对象,不是数组", false, false
         ));
         queryMapFindParamStatic.add(QueryMapFindParam.of(
-                "_more", "true", "字符串", "传值:true或者1 </br> 原始数据查询,查询原始表数据,不附带其他,数据结构与表对应起来", false, false
+                "_more", "true", "字符串", "传值:true或者1 </br> 更多的数据数据, 就是表中的外键数据也会查询出来", false, false
         ));
 
         allParamStatic.addAll(queryMapFindParamStatic);
