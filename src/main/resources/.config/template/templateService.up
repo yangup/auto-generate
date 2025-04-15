@@ -60,7 +60,7 @@ public class -tableNameJava-Service extends BaseService {
         if (queryMap.all()) {
             return ReturnData.ok(this.find(QueryMap.of()));
         }
-        if (queryMap.justOne()) {
+        if (queryMap.one()) {
             return ReturnData.ok(this.findOne(queryMap.moreTrue()));
         }
         return ReturnData.ok(this.find(queryMap, PageBounds.of(pageBounds, queryMap)));
@@ -90,7 +90,7 @@ public class -tableNameJava-Service extends BaseService {
         wrapper.in(queryMap.hasIdList(), -tableNameJava-Entity::getId, queryMap.idList());
         -serviceFindMethod-
         wrapper.orderByDesc(-tableNameJava-Entity::getId);
-        wrapper.last(pageBounds.notPaginated(), "limit " + (queryMap.justOne() || pageBounds.one() ? 1 : 10000));
+        wrapper.last(pageBounds.notPaginated(), "limit " + (queryMap.one() || pageBounds.one() ? 1 : 10000));
         PageList<-tableNameJava-Data> page = pageBounds.isPaginated() ?
                 PageList.of(-tableNameJavaParam-Mapper.selectPage(PageBounds.toPage(pageBounds), wrapper), -tableNameJava-Data::of) :
                 PageList.of(-tableNameJavaParam-Mapper.selectList(wrapper), -tableNameJava-Data::of);
