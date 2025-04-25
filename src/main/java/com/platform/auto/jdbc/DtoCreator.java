@@ -102,31 +102,34 @@ public class DtoCreator extends BaseCreator {
             codeList.add(t + "public " + columninfo.dataTypeJava + " " + columninfo.columnNameJava + ";\n");
         }
 
-        codeList.add("    /**\n" +
-                "     * static method\n" +
-                "     **/");
-        String dto = getClazzNameSuffix();
-        codeList.add(t + "public static " + table.tableNameJava + dto + " of() {");
-        codeList.add(t + t + "return " + table.tableNameJava + dto + ".builder().build();");
-        codeList.add(t + "}");
-        // convert entity to dto
-        codeList.add("");
-        codeList.add(t + "public static " + table.tableNameJava + "Dto of(" + table.tableNameJava + "Entity entity) {");
-        codeList.add(t + t + "return " + table.tableNameJava + "Dto.builder()");
-        for (ColumnInfo c : table.columnInfos) {
-            codeList.add(t + t + t + String.format(".%s(entity.%s)", c.columnNameJava, c.columnNameJava));
+
+        if (isTrue(info.generateStaticMethod)) {
+            codeList.add("    /**\n" +
+                    "     * static method\n" +
+                    "     **/");
+            String dto = getClazzNameSuffix();
+            codeList.add(t + "public static " + table.tableNameJava + dto + " of() {");
+            codeList.add(t + t + "return " + table.tableNameJava + dto + ".builder().build();");
+            codeList.add(t + "}");
+            // convert entity to dto
+            codeList.add("");
+            codeList.add(t + "public static " + table.tableNameJava + "Dto of(" + table.tableNameJava + "Entity entity) {");
+            codeList.add(t + t + "return " + table.tableNameJava + "Dto.builder()");
+            for (ColumnInfo c : table.columnInfos) {
+                codeList.add(t + t + t + String.format(".%s(entity.%s)", c.columnNameJava, c.columnNameJava));
+            }
+            codeList.add(t + t + t + ".build();");
+            codeList.add(t + "}");
+            // convert data to dto
+            codeList.add("");
+            codeList.add(t + "public static " + table.tableNameJava + "Dto of(" + table.tableNameJava + "Data data) {");
+            codeList.add(t + t + "return " + table.tableNameJava + "Dto.builder()");
+            for (ColumnInfo c : table.columnInfos) {
+                codeList.add(t + t + t + String.format(".%s(data.%s)", c.columnNameJava, c.columnNameJava));
+            }
+            codeList.add(t + t + t + ".build();");
+            codeList.add(t + "}");
         }
-        codeList.add(t + t + t + ".build();");
-        codeList.add(t + "}");
-        // convert data to dto
-        codeList.add("");
-        codeList.add(t + "public static " + table.tableNameJava + "Dto of(" + table.tableNameJava + "Data data) {");
-        codeList.add(t + t + "return " + table.tableNameJava + "Dto.builder()");
-        for (ColumnInfo c : table.columnInfos) {
-            codeList.add(t + t + t + String.format(".%s(data.%s)", c.columnNameJava, c.columnNameJava));
-        }
-        codeList.add(t + t + t + ".build();");
-        codeList.add(t + "}");
     }
 
 }

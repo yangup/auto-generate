@@ -50,30 +50,33 @@ public class DataCreator extends BaseCreator {
             }
         }
 
-        codeList.add("\n" + "    /**\n" +
-                "     * static method\n" +
-                "     **/");
-        codeList.add(t + "public static " + table.tableNameJava + "Data of() {");
-        codeList.add(t + t + "return " + table.tableNameJava + "Data.builder().build();");
-        codeList.add(t + "}");
-        // convert entity to data
-        codeList.add("");
-        codeList.add(t + "public static " + table.tableNameJava + "Data of(" + table.tableNameJava + "Entity entity) {");
-        codeList.add(t + t + "return " + table.tableNameJava + "Data.builder()");
-        for (ColumnInfo c : table.columnInfos) {
-            codeList.add(t + t + t + String.format(".%s(entity.%s)", c.columnNameJava, c.columnNameJava));
+
+        if (isTrue(info.generateStaticMethod)) {
+            codeList.add("\n" + "    /**\n" +
+                    "     * static method\n" +
+                    "     **/");
+            codeList.add(t + "public static " + table.tableNameJava + "Data of() {");
+            codeList.add(t + t + "return " + table.tableNameJava + "Data.builder().build();");
+            codeList.add(t + "}");
+            // convert entity to data
+            codeList.add("");
+            codeList.add(t + "public static " + table.tableNameJava + "Data of(" + table.tableNameJava + "Entity entity) {");
+            codeList.add(t + t + "return " + table.tableNameJava + "Data.builder()");
+            for (ColumnInfo c : table.columnInfos) {
+                codeList.add(t + t + t + String.format(".%s(entity.%s)", c.columnNameJava, c.columnNameJava));
+            }
+            codeList.add(t + t + t + ".build();");
+            codeList.add(t + "}");
+            // convert dto to data
+            codeList.add("");
+            codeList.add(t + "public static " + table.tableNameJava + "Data of(" + table.tableNameJava + "Dto dto) {");
+            codeList.add(t + t + "return " + table.tableNameJava + "Data.builder()");
+            for (ColumnInfo c : table.columnInfos) {
+                codeList.add(t + t + t + String.format(".%s(dto.%s)", c.columnNameJava, c.columnNameJava));
+            }
+            codeList.add(t + t + t + ".build();");
+            codeList.add(t + "}");
         }
-        codeList.add(t + t + t + ".build();");
-        codeList.add(t + "}");
-        // convert dto to data
-        codeList.add("");
-        codeList.add(t + "public static " + table.tableNameJava + "Data of(" + table.tableNameJava + "Dto dto) {");
-        codeList.add(t + t + "return " + table.tableNameJava + "Data.builder()");
-        for (ColumnInfo c : table.columnInfos) {
-            codeList.add(t + t + t + String.format(".%s(dto.%s)", c.columnNameJava, c.columnNameJava));
-        }
-        codeList.add(t + t + t + ".build();");
-        codeList.add(t + "}");
     }
 
     private void importData() {

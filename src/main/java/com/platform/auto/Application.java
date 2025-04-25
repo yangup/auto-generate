@@ -51,9 +51,15 @@ public class Application {
 //        Config.project_auto_path = Config.project_base_path + "/" + Config.auto_name;
         // 指定路径生成
 //        Config.project_base_path = "D:/ksm/code/th/biz/th-pay-server";
-        Config.project_base_path = "D:\\code\\unify\\demo-java-mybatis-plus";
+        Config.project_base_path = "D:\\ksm\\code\\ph\\business\\ph-ovsloan-loan";
         Config.project_auto_path = Config.project_base_path + "/" + Config.auto_name;
-        Application.start(List.of("t_system_user"));
+        Application.start(List.of(
+
+
+                "user_device_info_oss"
+
+
+        ));
 //        Application.start(List.of("t_system_user_setting"));
     }
 

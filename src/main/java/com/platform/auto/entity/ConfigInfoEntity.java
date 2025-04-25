@@ -33,8 +33,8 @@ public class ConfigInfoEntity {
     /**
      * 实体类是否使用 生成 static 方法
      **/
-    @JsonProperty("entity_generate_static_method")
-    public String entityGenerateStaticMethod;
+    @JsonProperty("generate_static_method")
+    public String generateStaticMethod;
 
     /**
      * 生成的文件是否按照 table 存储
