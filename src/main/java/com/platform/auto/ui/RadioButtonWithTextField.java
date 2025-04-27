@@ -42,14 +42,12 @@ public class RadioButtonWithTextField {
     }
 
     public void addRadioButtonWithTextField(Map<String, String> defaultText) {
-        defaultText.forEach((key, value) -> {
-            System.out.println("Key: " + key + ", Value: " + value);
-            addRadioButtonWithTextField(key, value);
-        });
+        defaultText.forEach(this::addRadioButtonWithTextField);
     }
 
     public void addRadioButtonWithTextField(String key, String value) {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));  // 使用 BoxLayout 来设置横向布局
         JBRadioButton radioButton = new JBRadioButton();
         JBTextField textField = new JBTextField(value);
         textField.setColumns(35); // 设置输入框宽度
@@ -93,6 +91,7 @@ public class RadioButtonWithTextField {
 
         buttonGroup.add(radioButton);
         panel.add(radioButton);
+        panel.add(Box.createHorizontalStrut(1));  // 添加小的间隔
         panel.add(textField);
         addComponentToContent(panel, true);
         panelList.add(panel);
