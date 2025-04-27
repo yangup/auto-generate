@@ -13,18 +13,23 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.platform.auto.util.UiUtil.addComponentToPanel;
+import static com.platform.auto.util.UiUtil.setParentVisible;
 
 
 public class RadioButtonWithTextField {
 
-    List<String> configJsonNameList = List.of("config.json", "config_add_column.json", "config_front.json");
+    List<String> configJsonNameList = List.of(
+            "config.json",
+            "config_add_column.json",
+            "config_front.json"
+    );
     JPanel contentPanel;
     ButtonGroup buttonGroup = new ButtonGroup();
-    List<Pair> pairs = new ArrayList<>(); // 保存每一组按钮和输入框
+    List<Pair> pairs = new ArrayList<>();
+    List<JPanel> panelList = new ArrayList<>();
 
     public void init(JPanel contentPanel) {
         this.contentPanel = contentPanel;
@@ -86,6 +91,7 @@ public class RadioButtonWithTextField {
         panel.add(radioButton);
         panel.add(textField);
         addComponentToContent(panel, true);
+        panelList.add(panel);
         pairs.add(new Pair(radioButton, textField));
         if (StringUtils.isBlank(Config.getLocal().selectedJsonName)) {
             if (pairs.size() == 1) {
@@ -122,6 +128,12 @@ public class RadioButtonWithTextField {
 
     public JPanel addComponentToContent(JComponent component, boolean needCursor) {
         return addComponentToPanel(component, contentPanel, needCursor);
+    }
+
+    public void setVisible(boolean visible) {
+        for (JPanel panel : panelList) {
+            setParentVisible(panel, visible);
+        }
     }
 
 }

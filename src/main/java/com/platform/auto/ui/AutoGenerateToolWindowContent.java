@@ -107,6 +107,7 @@ public class AutoGenerateToolWindowContent {
         addComponentToContent(refresh, true);
 
         radioButtonWithTextField.init(contentPanel);
+        radioButtonWithTextField.setVisible(false);
 
         // 下拉选择框
         addComponentToContent(dbNameComboBox, true);
@@ -348,10 +349,6 @@ public class AutoGenerateToolWindowContent {
         }).start();
     }
 
-    public void initTableList() {
-        initTableList(false);
-    }
-
     public void initTableList(boolean init) {
         try {
             logger.info("initTableList");
@@ -359,6 +356,7 @@ public class AutoGenerateToolWindowContent {
             setParentVisible(generateAll, true);
             setParentVisible(dbNameComboBox, true);
             setParentVisible(tableNameFilter, true);
+            radioButtonWithTextField.setVisible(true);
             Config.initProject(this.project);
             Config.initFile();
             Config.initLocalData(init);
