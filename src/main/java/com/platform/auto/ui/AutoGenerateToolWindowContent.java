@@ -10,7 +10,6 @@ import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.ui.components.JBLabel;
-import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBTextField;
 import com.platform.auto.Application;
 import com.platform.auto.AutoGenerateToolWindowFactory;
@@ -51,10 +50,7 @@ public class AutoGenerateToolWindowContent {
     private final JPanel contentPanel = new JPanel();
     private final JPanel buttonPanel = new JPanel();
 
-    private final JBRadioButton configJson = new JBRadioButton("config.json");
-    private final JBRadioButton configAddColumnJson = new JBRadioButton("config_add_column.json");
-    private final JBRadioButton configSimpleJson = new JBRadioButton("config_front.json");
-    private final List<JBRadioButton> configList = List.of(configJson, configAddColumnJson, configSimpleJson);
+    RadioButtonWithTextField radioButtonWithTextField = new RadioButtonWithTextField();
 
     // 刷新框
     private final JBLabel refresh = new JBLabel("REFRESH", AllIcons.General.InlineRefresh, JLabel.LEFT);
@@ -110,14 +106,7 @@ public class AutoGenerateToolWindowContent {
         });
         addComponentToContent(refresh, true);
 
-        configJson.setSelected(true);
-        ButtonGroup group = new ButtonGroup();
-        group.add(configJson);
-        group.add(configAddColumnJson);
-        group.add(configSimpleJson);
-        addComponentToContent(configJson, true);
-        addComponentToContent(configAddColumnJson, true);
-        addComponentToContent(configSimpleJson, true);
+        radioButtonWithTextField.init(contentPanel);
 
         // 下拉选择框
         addComponentToContent(dbNameComboBox, true);
@@ -306,11 +295,7 @@ public class AutoGenerateToolWindowContent {
         new Thread(() -> {
             try {
                 runFlag.set(true);
-                for (JBRadioButton jbRadioButton : configList) {
-                    if (jbRadioButton.isSelected()) {
-                        Config.getLocal().configJsonName = jbRadioButton.getText();
-                    }
-                }
+                Config.getLocal().configJsonName = radioButtonWithTextField.getSelectedText();
                 Config.refreshLocal();
                 Application.start(tableNameList);
             } catch (Exception ex) {
