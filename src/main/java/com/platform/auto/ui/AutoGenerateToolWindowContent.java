@@ -52,12 +52,13 @@ public class AutoGenerateToolWindowContent {
 
     RadioButtonWithTextField radioButtonWithTextField = new RadioButtonWithTextField();
 
+    // 选择数据库
+    RadioButtonDataBase radioButtonDataBase = new RadioButtonDataBase();
+
     // 刷新框
     private final JBLabel refresh = new JBLabel("REFRESH", AllIcons.General.InlineRefresh, JLabel.LEFT);
     // 生成所有的按钮
     private final JBLabel generateAll = new JBLabel("Generate after filter", AllIcons.Actions.Execute, JLabel.LEFT);
-    // 数据库名称显示框
-    private final ComboBox<ComboBoxItem> dbNameComboBox = new ComboBox<>();
 
     // 表名称输入框
     private final JBTextField tableNameFilter = new JBTextField(40); // 设置列数限制
@@ -110,8 +111,8 @@ public class AutoGenerateToolWindowContent {
         radioButtonWithTextField.setVisible(false);
 
         // 下拉选择框
-        addComponentToContent(dbNameComboBox, true);
-        setParentVisible(dbNameComboBox, false);
+        radioButtonDataBase.init(contentPanel);
+        radioButtonDataBase.setVisible(false);
 
         // table name filter
         JPanel tableNameFilterPanel = new JPanel(new BorderLayout());
@@ -187,25 +188,22 @@ public class AutoGenerateToolWindowContent {
      **/
     private void addDbName() {
         logger.info("addDbName");
-        dbNameComboBox.removeAllItems();
-        dbNameComboBox.setModel(new DefaultComboBoxModel<>(
-                new Vector<>(
-                        Config.getLocal().dbInfoList.stream().map(dbEntity -> new ComboBoxItem(dbEntity.dbName, AllIcons.Nodes.DataSchema)).toList()
-                )
-        ));
-        dbNameComboBox.setRenderer(new ComboBoxRenderer());
-
-        dbNameComboBox.setSelectedItem(new ComboBoxItem(Config.getLocal().selectedDbName));
-        dbNameComboBox.addActionListener(e -> {
-            if (dbNameComboBox.getSelectedItem() != null) {
-                dbNameComboBox.setEnabled(false);
-                Config.getLocal().selectedDbName = ((ComboBoxItem) dbNameComboBox.getSelectedItem()).text;
-                logger.info("db_name_selected: " + Config.getLocal().selectedDbName);
-                Config.refreshLocal();
-                addTableName();
-                dbNameComboBox.setEnabled(true);
-            }
-        });
+//        dbNameComboBox.removeAllItems();
+//        dbNameComboBox.setModel(new DefaultComboBoxModel<>(new Vector<>(Config.getLocal().dbInfoList.stream().map(dbEntity ->
+//                new ComboBoxItem(dbEntity.dbName, AllIcons.Nodes.DataSchema)).toList())));
+//        dbNameComboBox.setRenderer(new ComboBoxRenderer());
+//
+//        dbNameComboBox.setSelectedItem(new ComboBoxItem(Config.getLocal().selectedDbName));
+//        dbNameComboBox.addActionListener(e -> {
+//            if (dbNameComboBox.getSelectedItem() != null) {
+//                dbNameComboBox.setEnabled(false);
+//                Config.getLocal().selectedDbName = ((ComboBoxItem) dbNameComboBox.getSelectedItem()).text;
+//                logger.info("db_name_selected: " + Config.getLocal().selectedDbName);
+//                Config.refreshLocal();
+//                addTableName();
+//                dbNameComboBox.setEnabled(true);
+//            }
+//        });
 
         addTableName();
     }
@@ -216,10 +214,10 @@ public class AutoGenerateToolWindowContent {
     private void addTableName() {
         // 1.5 秒以内
         if (System.currentTimeMillis() - lastTime.get() < 15 * 100L) {
-            if (dbNameComboBox.getSelectedItem() != null && StringUtils.equals(Config.getLocal().selectedDbName, ((ComboBoxItem) dbNameComboBox.getSelectedItem()).text)) {
-                logger.info("repeat_db_name: {}", Config.getLocal().selectedDbName);
-                return;
-            }
+//            if (dbNameComboBox.getSelectedItem() != null && StringUtils.equals(Config.getLocal().selectedDbName, ((ComboBoxItem) dbNameComboBox.getSelectedItem()).text)) {
+//                logger.info("repeat_db_name: {}", Config.getLocal().selectedDbName);
+//                return;
+//            }
         }
 
         lastTime.set(System.currentTimeMillis());
@@ -257,8 +255,7 @@ public class AutoGenerateToolWindowContent {
 
     private void showTableName() {
         for (Component button : buttonPanel.getComponents()) {
-            if (StringUtils.isBlank(Config.getLocal().getFilterTableNameText())
-                    || StringUtils.containsIgnoreCase(button.getName(), Config.getLocal().getFilterTableNameText())) {
+            if (StringUtils.isBlank(Config.getLocal().getFilterTableNameText()) || StringUtils.containsIgnoreCase(button.getName(), Config.getLocal().getFilterTableNameText())) {
                 button.setVisible(true);
             } else {
                 button.setVisible(false);
@@ -292,7 +289,7 @@ public class AutoGenerateToolWindowContent {
                 ((JBLabel) ((JPanel) button).getComponent(0)).setIcon(loadingIcon);
             }
         }
-        dbNameComboBox.setEnabled(false);
+//        dbNameComboBox.setEnabled(false);
         new Thread(() -> {
             try {
                 runFlag.set(true);
@@ -302,7 +299,7 @@ public class AutoGenerateToolWindowContent {
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             } finally {
-                dbNameComboBox.setEnabled(true);
+//                dbNameComboBox.setEnabled(true);
                 runFlag.set(false);
                 for (Component button : buttonPanel.getComponents()) {
                     ((JBLabel) ((JPanel) button).getComponent(0)).setIcon(AllIcons.Nodes.DataTables);
@@ -310,8 +307,7 @@ public class AutoGenerateToolWindowContent {
                 generateAll.setIcon(AllIcons.Actions.Execute);
                 // 使用异步刷新机制
                 ApplicationManager.getApplication().invokeLater(() -> {
-                    VirtualFile root = requireNonNull(ProjectFileIndex.getInstance(ProjectUtil.currentOrDefaultProject(project))
-                            .getContentRootForFile(requireNonNull(ProjectUtil.currentOrDefaultProject(project).getProjectFile())));
+                    VirtualFile root = requireNonNull(ProjectFileIndex.getInstance(ProjectUtil.currentOrDefaultProject(project)).getContentRootForFile(requireNonNull(ProjectUtil.currentOrDefaultProject(project).getProjectFile())));
                     // 异步刷新
                     root.refresh(false, true);
                 }, ModalityState.nonModal());
@@ -332,17 +328,16 @@ public class AutoGenerateToolWindowContent {
         }
         runFlag.set(true);
         refresh.setIcon(loadingIcon);
-        dbNameComboBox.setEnabled(false);
+//        dbNameComboBox.setEnabled(false);
         logger.info("initStartAsync");
         new Thread(() -> {
             initTableList(init);
             runFlag.set(false);
             refresh.setIcon(AllIcons.General.InlineRefresh);
-            dbNameComboBox.setEnabled(true);
+//            dbNameComboBox.setEnabled(true);
             // 使用异步刷新机制
             ApplicationManager.getApplication().invokeLater(() -> {
-                VirtualFile root = requireNonNull(ProjectFileIndex.getInstance(ProjectUtil.currentOrDefaultProject(project))
-                        .getContentRootForFile(requireNonNull(ProjectUtil.currentOrDefaultProject(project).getProjectFile())));
+                VirtualFile root = requireNonNull(ProjectFileIndex.getInstance(ProjectUtil.currentOrDefaultProject(project)).getContentRootForFile(requireNonNull(ProjectUtil.currentOrDefaultProject(project).getProjectFile())));
                 // 异步刷新
                 root.refresh(false, true);
             }, ModalityState.nonModal());
@@ -354,8 +349,9 @@ public class AutoGenerateToolWindowContent {
             logger.info("initTableList");
             generateAll.getParent().setVisible(true);
             setParentVisible(generateAll, true);
-            setParentVisible(dbNameComboBox, true);
+//            setParentVisible(dbNameComboBox, true);
             setParentVisible(tableNameFilter, true);
+            radioButtonDataBase.setVisible(true);
             radioButtonWithTextField.setVisible(true);
             Config.initProject(this.project);
             Config.initFile();
