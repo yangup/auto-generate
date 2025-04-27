@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.platform.auto.util.UiUtil.addComponentToPanel;
@@ -21,11 +22,7 @@ import static com.platform.auto.util.UiUtil.setParentVisible;
 
 public class RadioButtonWithTextField {
 
-    List<String> configJsonNameList = List.of(
-            "config.json",
-            "config_add_column.json",
-            "config_front.json"
-    );
+    List<String> configJsonNameList = List.of("config.json", "config_add_column.json", "config_front.json");
     JPanel contentPanel;
     ButtonGroup buttonGroup = new ButtonGroup();
     List<Pair> pairs = new ArrayList<>();
@@ -33,28 +30,30 @@ public class RadioButtonWithTextField {
 
     public void init(JPanel contentPanel) {
         this.contentPanel = contentPanel;
+        Map<String, String> configMap = null;
         if (Config.getLocal().configMap == null) {
-            Config.getLocal().configMap = configJsonNameList.stream()
-                    .collect(Collectors.toMap(name -> name, name -> name));
+            configMap = configJsonNameList.stream().collect(Collectors.toMap(name -> name, name -> name));
+            Config.getLocal().configMap = configMap;
             Config.refreshLocal();
+        } else {
+            configMap = Config.getLocal().configMap;
         }
-        this.addRadioButtonWithTextField(configJsonNameList);
+        this.addRadioButtonWithTextField(configMap);
     }
 
-    public void addRadioButtonWithTextField(List<String> defaultText) {
-        // 添加单选框, 确定单元框文本
-        for (String configJsonName : defaultText) {
-            addRadioButtonWithTextField(configJsonName);
-        }
-
+    public void addRadioButtonWithTextField(Map<String, String> defaultText) {
+        defaultText.forEach((key, value) -> {
+            System.out.println("Key: " + key + ", Value: " + value);
+            addRadioButtonWithTextField(key, value);
+        });
     }
 
-    public void addRadioButtonWithTextField(String defaultText) {
+    public void addRadioButtonWithTextField(String key, String value) {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
         JBRadioButton radioButton = new JBRadioButton();
-        JBTextField textField = new JBTextField(defaultText);
+        JBTextField textField = new JBTextField(value);
         textField.setColumns(35); // 设置输入框宽度
-        textField.setName(defaultText);
+        textField.setName(key);
         // 点击文本框时，自动选中对应的单选按钮
         textField.addMouseListener(new MouseAdapter() {
             @Override
