@@ -50,7 +50,7 @@ public class RadioButtonWithTextField {
     }
 
     public void addRadioButtonWithTextField(String defaultText) {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
         JBRadioButton radioButton = new JBRadioButton();
         JBTextField textField = new JBTextField(defaultText);
         textField.setColumns(35); // 设置输入框宽度
@@ -64,7 +64,12 @@ public class RadioButtonWithTextField {
                 Config.refreshLocal();
             }
         });
-
+        radioButton.addActionListener(e -> {
+            if (radioButton.isSelected()) {
+                Config.getLocal().selectedJsonName = textField.getName();
+                Config.refreshLocal();
+            }
+        });
         textField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
