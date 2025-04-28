@@ -29,9 +29,13 @@ public class RadioButtonWithTextField {
     ButtonGroup buttonGroup = new ButtonGroup();
     List<Pair> pairs = new ArrayList<>();
     List<JPanel> panelList = new ArrayList<>();
+    private final JPanel thisPanel = new JPanel();
 
     public void init(JPanel contentPanel) {
         this.contentPanel = contentPanel;
+        thisPanel.setLayout(new BoxLayout(thisPanel, BoxLayout.Y_AXIS)); // 垂直排列
+        thisPanel.setBorder(null);
+        this.contentPanel.add(thisPanel);
         this.refresh();
     }
 
@@ -41,6 +45,7 @@ public class RadioButtonWithTextField {
         for (AbstractButton button : buttonList) {
             buttonGroup.remove(button);
         }
+        this.thisPanel.removeAll();
         this.pairs = new ArrayList<>();
         this.panelList = new ArrayList<>();
         Map<String, String> configMap = null;

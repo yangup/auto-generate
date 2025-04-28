@@ -29,10 +29,14 @@ public class RadioButtonDataBase {
     ButtonGroup buttonGroup = new ButtonGroup();
     List<Pair> pairs = new ArrayList<>();
     List<JPanel> panelList = new ArrayList<>();
+    private final JPanel thisPanel = new JPanel();
 
     public void init(JPanel contentPanel, AutoGenerateToolWindowContent autoGenerateToolWindowContent) {
         this.contentPanel = contentPanel;
         this.autoGenerateToolWindowContent = autoGenerateToolWindowContent;
+        thisPanel.setLayout(new BoxLayout(thisPanel, BoxLayout.Y_AXIS)); // 垂直排列
+        thisPanel.setBorder(null);
+        this.contentPanel.add(thisPanel);
         this.refresh();
     }
 
@@ -42,6 +46,7 @@ public class RadioButtonDataBase {
         for (AbstractButton button : buttonList) {
             buttonGroup.remove(button);
         }
+        this.thisPanel.removeAll();
         this.pairs = new ArrayList<>();
         this.panelList = new ArrayList<>();
 
