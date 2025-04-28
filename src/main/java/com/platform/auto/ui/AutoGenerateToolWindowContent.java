@@ -62,6 +62,7 @@ public class AutoGenerateToolWindowContent {
     private final JBTextField tableNameFilter = new JBTextField(40); // 设置列数限制
 
     private Icon loadingIcon = null;
+    private String selectedDbNameLast = null;
 
     private ToolWindow toolWindow = null;
     private Project project = null;
@@ -193,8 +194,12 @@ public class AutoGenerateToolWindowContent {
      * 将 table name 加入到列表中
      **/
     public void addTableName() {
-        lastTime.set(System.currentTimeMillis());
         logger.info("addTableName-start");
+        if (StringUtils.equalsAnyIgnoreCase(selectedDbNameLast, Config.getLocal().selectedDbName)
+                && System.currentTimeMillis() - lastTime.get() < 1000) {
+            return;
+        }
+        lastTime.set(System.currentTimeMillis());
         buttonPanel.removeAll();
         logger.info("addTableName-selectedDbName: {}", Config.getLocal().selectedDbName);
         for (DbEntity dbEntity : Config.getLocal().dbInfoList) {
