@@ -297,6 +297,8 @@ public class AutoGenerateToolWindowContent {
         }
         runFlag.set(true);
         refresh.setIcon(loadingIcon);
+        radioButtonDataBase.refresh();
+        radioButtonWithTextField.refresh();
         logger.info("initStartAsync");
         new Thread(() -> {
             initTableList(init);

@@ -13,6 +13,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,6 +32,17 @@ public class RadioButtonWithTextField {
 
     public void init(JPanel contentPanel) {
         this.contentPanel = contentPanel;
+        this.refresh();
+    }
+
+    public void refresh() {
+        // 清理所有的按钮
+        List<AbstractButton> buttonList = Collections.list(buttonGroup.getElements());
+        for (AbstractButton button : buttonList) {
+            buttonGroup.remove(button);
+        }
+        this.pairs = new ArrayList<>();
+        this.panelList = new ArrayList<>();
         Map<String, String> configMap = null;
         if (Config.getLocal().configMap == null) {
             configMap = configJsonNameList.stream().collect(Collectors.toMap(name -> name, name -> name));

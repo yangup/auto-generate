@@ -12,6 +12,7 @@ import javax.swing.event.DocumentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,6 +33,18 @@ public class RadioButtonDataBase {
     public void init(JPanel contentPanel, AutoGenerateToolWindowContent autoGenerateToolWindowContent) {
         this.contentPanel = contentPanel;
         this.autoGenerateToolWindowContent = autoGenerateToolWindowContent;
+        this.refresh();
+    }
+
+    public void refresh() {
+        // 清理所有的按钮
+        List<AbstractButton> buttonList = Collections.list(buttonGroup.getElements());
+        for (AbstractButton button : buttonList) {
+            buttonGroup.remove(button);
+        }
+        this.pairs = new ArrayList<>();
+        this.panelList = new ArrayList<>();
+
         Map<String, String> dbMap = null;
         if (Config.getLocal().dbMap == null) {
             dbMap = configList.stream().collect(Collectors.toMap(name -> name, name -> name));
