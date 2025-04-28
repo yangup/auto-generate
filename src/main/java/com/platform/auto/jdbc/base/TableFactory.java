@@ -269,6 +269,7 @@ public class TableFactory {
                     false,
                     true
             ));
+            columninfo.findDataUseList = true;
         } else if (isID(columninfo.columnName)) {
             columninfo.findData.add(FindData.of(
                     columninfo.columnNameJavaParamHumpUpper,
@@ -286,19 +287,45 @@ public class TableFactory {
                     false,
                     true
             ));
+            columninfo.findDataUseList = true;
         } else if (columninfo.columnCommentRaw.contains(_FILTER)) {
-            columninfo.findData.add(FindData.of(
-                    columninfo.columnNameJavaParamHumpUpper,
-                    columninfo.columnNameJava,
-                    null,
-                    columninfo.columnComment
-            ));
-            columninfo.findData.add(FindData.of(
-                    columninfo.columnNameJavaParamHumpUpper + "_LIST",
-                    columninfo.columnNameJava + "List",
-                    null,
-                    columninfo.columnComment + "-多个以逗号分割"
-            ));
+            // 字符串类型的
+            if (TypeToJavaData.isString(columninfo.dataTypeJava)) {
+                columninfo.findData.add(FindData.of(
+                        columninfo.columnNameJavaParamHumpUpper,
+                        columninfo.columnNameJava,
+                        null,
+                        columninfo.columnComment
+                ));
+                columninfo.findData.add(FindData.of(
+                        columninfo.columnNameJavaParamHumpUpper + "_LIST",
+                        columninfo.columnNameJava + "List",
+                        null,
+                        columninfo.columnComment + "-多个以逗号分割"
+                ));
+                columninfo.findDataUseList = true;
+            } else {
+                columninfo.findData.add(FindData.of(
+                        columninfo.columnNameJavaParamHumpUpper,
+                        columninfo.columnNameJava,
+                        null,
+                        columninfo.columnComment
+                ));
+                columninfo.findData.add(FindData.of(
+                        columninfo.columnNameJavaParamHumpUpper + "_MIN",
+                        columninfo.columnNameJava + "Min",
+                        null,
+                        columninfo.columnComment + "-最小值,包含最小值"
+                ));
+                columninfo.findData.add(FindData.of(
+                        columninfo.columnNameJavaParamHumpUpper + "_MAX",
+                        columninfo.columnNameJava + "Max",
+                        null,
+                        columninfo.columnComment + "-最大值,不包含最大值"
+                ));
+                columninfo.findDataUseMin = true;
+                columninfo.findDataUseMax = true;
+            }
         }
     }
 

@@ -64,6 +64,12 @@ public class ColumnInfo {
      * FindData = {staticName=AMOUNT_MAX, name=amountMax, operator='>'}
      **/
     public List<FindData> findData;
+    // findData 参数, 是否使用 List 后缀的参数
+    public boolean findDataUseList;
+    // findData 参数, 是否使用 Min 后缀的参数
+    public boolean findDataUseMin;
+    // findData 参数, 是否使用 max 后缀的参数
+    public boolean findDataUseMax;
 
     // todo : 这个字段是否, 可以为空
     public boolean canNULL;

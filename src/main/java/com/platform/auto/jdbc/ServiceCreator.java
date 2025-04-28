@@ -4,6 +4,7 @@ import com.platform.auto.config.Config;
 import com.platform.auto.jdbc.base.BaseCreator;
 import com.platform.auto.jdbc.model.ColumnInfo;
 import com.platform.auto.jdbc.model.RelateTableInfo;
+import com.platform.auto.jdbc.model.TypeToJavaData;
 import com.platform.auto.sys.order.Order;
 
 import java.util.List;
@@ -74,6 +75,7 @@ public class ServiceCreator extends BaseCreator {
 
     private void serviceFindMethod(String line) {
         String wp = getLeftWhitespace(new StringBuilder(line), Order.serviceFindMethod);
+        boolean useStartEndTime = false;
         for (ColumnInfo c : table.columnInfos) {
             if (isIdCreateTimeUpdateTime(c.columnNameJava)) {
                 continue;
@@ -88,11 +90,41 @@ public class ServiceCreator extends BaseCreator {
                             .replace("-c-", c.columnNameJavaFirstToUppercase)
             );
             if (isNotEmpty(c.findData)) {
-                codeList.add(note + wp +
-                        "wrapper.in(queryMap.hasList(-b-Entity::get-c-), -b-Entity::get-c-, queryMap.getList(-b-Entity::get-c-));"
-                                .replace("-b-", table.tableNameJava)
-                                .replace("-c-", c.columnNameJavaFirstToUppercase)
-                );
+                if (c.findDataUseList) {
+                    codeList.add(note + wp +
+                            "wrapper.in(queryMap.hasList(-b-Entity::get-c-), -b-Entity::get-c-, queryMap.getList(-b-Entity::get-c-));"
+                                    .replace("-b-", table.tableNameJava)
+                                    .replace("-c-", c.columnNameJavaFirstToUppercase)
+                    );
+                }
+                if (c.findDataUseMin) {
+                    codeList.add(note + wp +
+                            "wrapper.ge(queryMap.hasMin(-b-Entity::get-c-), -b-Entity::get-c-, queryMap.getMin(-b-Entity::get-c-));"
+                                    .replace("-b-", table.tableNameJava)
+                                    .replace("-c-", c.columnNameJavaFirstToUppercase)
+                    );
+                }
+                if (c.findDataUseMax) {
+                    codeList.add(note + wp +
+                            "wrapper.lt(queryMap.hasMax(-b-Entity::get-c-), -b-Entity::get-c-, queryMap.getMax(-b-Entity::get-c-));"
+                                    .replace("-b-", table.tableNameJava)
+                                    .replace("-c-", c.columnNameJavaFirstToUppercase)
+                    );
+                }
+                // 找到第一个 LocalDateTime 的字段, 然后使用 startEndTime
+                if (TypeToJavaData.isDateTime(c.dataTypeJava) && !useStartEndTime) {
+                    useStartEndTime = true;
+                    codeList.add(note + wp +
+                            "wrapper.ge(queryMap.hasStartTime(), -b-Entity::get-c-, queryMap.startTime());"
+                                    .replace("-b-", table.tableNameJava)
+                                    .replace("-c-", c.columnNameJavaFirstToUppercase)
+                    );
+                    codeList.add(note + wp +
+                            "wrapper.lt(queryMap.hasEndTime(), -b-Entity::get-c-, queryMap.endTime());"
+                                    .replace("-b-", table.tableNameJava)
+                                    .replace("-c-", c.columnNameJavaFirstToUppercase)
+                    );
+                }
             }
         }
     }
