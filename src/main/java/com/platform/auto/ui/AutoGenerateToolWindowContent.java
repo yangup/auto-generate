@@ -200,6 +200,7 @@ public class AutoGenerateToolWindowContent {
             return;
         }
         lastTime.set(System.currentTimeMillis());
+        selectedDbNameLast = Config.getLocal().selectedDbName;
         buttonPanel.removeAll();
         logger.info("addTableName-selectedDbName: {}", Config.getLocal().selectedDbName);
         for (DbEntity dbEntity : Config.getLocal().dbInfoList) {
