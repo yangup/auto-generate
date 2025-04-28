@@ -1,5 +1,6 @@
 package com.platform.auto.ui;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBTextField;
 import com.platform.auto.config.Config;
@@ -21,23 +22,25 @@ import static com.platform.auto.util.UiUtil.setParentVisible;
 
 public class RadioButtonDataBase {
 
-    List<String> configJsonNameList = List.of("config.json", "config_add_column.json", "config_front.json");
+    List<String> configList = List.of("test1", "test2");
     JPanel contentPanel;
+    AutoGenerateToolWindowContent autoGenerateToolWindowContent;
     ButtonGroup buttonGroup = new ButtonGroup();
     List<Pair> pairs = new ArrayList<>();
     List<JPanel> panelList = new ArrayList<>();
 
-    public void init(JPanel contentPanel) {
+    public void init(JPanel contentPanel, AutoGenerateToolWindowContent autoGenerateToolWindowContent) {
         this.contentPanel = contentPanel;
-        Map<String, String> configMap = null;
-        if (Config.getLocal().configMap == null) {
-            configMap = configJsonNameList.stream().collect(Collectors.toMap(name -> name, name -> name));
-            Config.getLocal().configMap = configMap;
+        this.autoGenerateToolWindowContent = autoGenerateToolWindowContent;
+        Map<String, String> dbMap = null;
+        if (Config.getLocal().dbMap == null) {
+            dbMap = configList.stream().collect(Collectors.toMap(name -> name, name -> name));
+            Config.getLocal().dbMap = dbMap;
             Config.refreshLocal();
         } else {
-            configMap = Config.getLocal().configMap;
+            dbMap = Config.getLocal().dbMap;
         }
-        this.addRadioButtonWithTextField(configMap);
+        this.addRadioButtonWithTextField(dbMap);
     }
 
     public void addRadioButtonWithTextField(Map<String, String> defaultText) {
@@ -56,14 +59,18 @@ public class RadioButtonDataBase {
             @Override
             public void mousePressed(MouseEvent e) {
                 radioButton.setSelected(true);
-                Config.getLocal().selectedJsonName = textField.getName();
+                Config.getLocal().selectedDbKey = textField.getName();
+                Config.getLocal().selectedDbName = Config.getLocal().dbMap.get(Config.getLocal().selectedDbKey);
                 Config.refreshLocal();
+                autoGenerateToolWindowContent.addTableName();
             }
         });
         radioButton.addActionListener(e -> {
             if (radioButton.isSelected()) {
-                Config.getLocal().selectedJsonName = textField.getName();
+                Config.getLocal().selectedDbKey = textField.getName();
+                Config.getLocal().selectedDbName = Config.getLocal().dbMap.get(Config.getLocal().selectedDbKey);
                 Config.refreshLocal();
+                autoGenerateToolWindowContent.addTableName();
             }
         });
         textField.getDocument().addDocumentListener(new DocumentListener() {
@@ -83,7 +90,7 @@ public class RadioButtonDataBase {
             }
 
             private void textChanged() {
-                Config.getLocal().configMap.put(textField.getName(), textField.getText());
+                Config.getLocal().dbMap.put(textField.getName(), textField.getText());
                 Config.refreshLocal();
             }
         });
@@ -91,16 +98,24 @@ public class RadioButtonDataBase {
         buttonGroup.add(radioButton);
         panel.add(radioButton);
         panel.add(Box.createHorizontalStrut(1));  // 添加小的间隔
+        panel.add(new JLabel(AllIcons.Nodes.DataSchema));
+        panel.add(Box.createHorizontalStrut(1));  // 添加小的间隔
         panel.add(textField);
         addComponentToContent(panel, true);
         panelList.add(panel);
         pairs.add(new Pair(radioButton, textField));
-        if (StringUtils.isBlank(Config.getLocal().selectedJsonName)) {
+        if (StringUtils.isBlank(Config.getLocal().selectedDbKey)) {
             if (pairs.size() == 1) {
                 radioButton.setSelected(true);
+                textField.setText(Config.getConfig().jdbc.database);
+                Config.getLocal().dbMap.put(textField.getName(), textField.getText());
+                Config.getLocal().selectedDbKey = textField.getName();
+                Config.getLocal().selectedDbName = textField.getText();
+                Config.refreshLocal();
+                autoGenerateToolWindowContent.addTableName();
             }
         } else {
-            if (Config.getLocal().selectedJsonName.equals(textField.getName())) {
+            if (Config.getLocal().selectedDbKey.equals(textField.getName())) {
                 radioButton.setSelected(true);
             }
         }
@@ -116,16 +131,6 @@ public class RadioButtonDataBase {
             this.radioButton = radioButton;
             this.textField = textField;
         }
-    }
-
-    // 获取当前选中的文本
-    public String getSelectedText() {
-        for (Pair pair : pairs) {
-            if (pair.radioButton.isSelected()) {
-                return Config.getLocal().configMap.get(pair.textField.getName());
-            }
-        }
-        return null;
     }
 
     public JPanel addComponentToContent(JComponent component, boolean needCursor) {

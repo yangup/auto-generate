@@ -6,7 +6,6 @@ import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectUtil;
 import com.intellij.openapi.roots.ProjectFileIndex;
-import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.ui.components.JBLabel;
@@ -29,7 +28,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -111,7 +109,7 @@ public class AutoGenerateToolWindowContent {
         radioButtonWithTextField.setVisible(false);
 
         // 下拉选择框
-        radioButtonDataBase.init(contentPanel);
+        radioButtonDataBase.init(contentPanel, this);
         radioButtonDataBase.setVisible(false);
 
         // table name filter
@@ -188,44 +186,17 @@ public class AutoGenerateToolWindowContent {
      **/
     private void addDbName() {
         logger.info("addDbName");
-//        dbNameComboBox.removeAllItems();
-//        dbNameComboBox.setModel(new DefaultComboBoxModel<>(new Vector<>(Config.getLocal().dbInfoList.stream().map(dbEntity ->
-//                new ComboBoxItem(dbEntity.dbName, AllIcons.Nodes.DataSchema)).toList())));
-//        dbNameComboBox.setRenderer(new ComboBoxRenderer());
-//
-//        dbNameComboBox.setSelectedItem(new ComboBoxItem(Config.getLocal().selectedDbName));
-//        dbNameComboBox.addActionListener(e -> {
-//            if (dbNameComboBox.getSelectedItem() != null) {
-//                dbNameComboBox.setEnabled(false);
-//                Config.getLocal().selectedDbName = ((ComboBoxItem) dbNameComboBox.getSelectedItem()).text;
-//                logger.info("db_name_selected: " + Config.getLocal().selectedDbName);
-//                Config.refreshLocal();
-//                addTableName();
-//                dbNameComboBox.setEnabled(true);
-//            }
-//        });
-
         addTableName();
     }
 
     /**
      * 将 table name 加入到列表中
      **/
-    private void addTableName() {
-        // 1.5 秒以内
-        if (System.currentTimeMillis() - lastTime.get() < 15 * 100L) {
-//            if (dbNameComboBox.getSelectedItem() != null && StringUtils.equals(Config.getLocal().selectedDbName, ((ComboBoxItem) dbNameComboBox.getSelectedItem()).text)) {
-//                logger.info("repeat_db_name: {}", Config.getLocal().selectedDbName);
-//                return;
-//            }
-        }
-
+    public void addTableName() {
         lastTime.set(System.currentTimeMillis());
         logger.info("addTableName-start");
         buttonPanel.removeAll();
-
         logger.info("addTableName-selectedDbName: {}", Config.getLocal().selectedDbName);
-
         for (DbEntity dbEntity : Config.getLocal().dbInfoList) {
             if (!StringUtils.equalsAnyIgnoreCase(Config.getLocal().selectedDbName, dbEntity.dbName)) {
                 continue;
@@ -289,7 +260,6 @@ public class AutoGenerateToolWindowContent {
                 ((JBLabel) ((JPanel) button).getComponent(0)).setIcon(loadingIcon);
             }
         }
-//        dbNameComboBox.setEnabled(false);
         new Thread(() -> {
             try {
                 runFlag.set(true);
@@ -299,7 +269,6 @@ public class AutoGenerateToolWindowContent {
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             } finally {
-//                dbNameComboBox.setEnabled(true);
                 runFlag.set(false);
                 for (Component button : buttonPanel.getComponents()) {
                     ((JBLabel) ((JPanel) button).getComponent(0)).setIcon(AllIcons.Nodes.DataTables);
@@ -328,13 +297,11 @@ public class AutoGenerateToolWindowContent {
         }
         runFlag.set(true);
         refresh.setIcon(loadingIcon);
-//        dbNameComboBox.setEnabled(false);
         logger.info("initStartAsync");
         new Thread(() -> {
             initTableList(init);
             runFlag.set(false);
             refresh.setIcon(AllIcons.General.InlineRefresh);
-//            dbNameComboBox.setEnabled(true);
             // 使用异步刷新机制
             ApplicationManager.getApplication().invokeLater(() -> {
                 VirtualFile root = requireNonNull(ProjectFileIndex.getInstance(ProjectUtil.currentOrDefaultProject(project)).getContentRootForFile(requireNonNull(ProjectUtil.currentOrDefaultProject(project).getProjectFile())));
@@ -349,7 +316,6 @@ public class AutoGenerateToolWindowContent {
             logger.info("initTableList");
             generateAll.getParent().setVisible(true);
             setParentVisible(generateAll, true);
-//            setParentVisible(dbNameComboBox, true);
             setParentVisible(tableNameFilter, true);
             radioButtonDataBase.setVisible(true);
             radioButtonWithTextField.setVisible(true);

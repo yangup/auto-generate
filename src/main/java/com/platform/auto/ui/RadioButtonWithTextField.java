@@ -1,5 +1,6 @@
 package com.platform.auto.ui;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBTextField;
 import com.platform.auto.config.Config;
@@ -91,6 +92,8 @@ public class RadioButtonWithTextField {
 
         buttonGroup.add(radioButton);
         panel.add(radioButton);
+        panel.add(Box.createHorizontalStrut(1));  // 添加小的间隔
+        panel.add(new JLabel(AllIcons.FileTypes.Config));
         panel.add(Box.createHorizontalStrut(1));  // 添加小的间隔
         panel.add(textField);
         addComponentToContent(panel, true);
