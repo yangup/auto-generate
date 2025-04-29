@@ -89,7 +89,7 @@ public class RadioButtonWithText {
         panel.add(radioButton);
 //        panel.add(Box.createHorizontalStrut(1));  // 添加小的间隔
         panel.add(jLabel);
-        panel.add(Box.createHorizontalStrut(1));  // 添加小的间隔
+        panel.add(Box.createHorizontalStrut(5));  // 添加小的间隔
         panel.add(label);
         addComponentToContent(panel, true);
         panelList.add(panel);
