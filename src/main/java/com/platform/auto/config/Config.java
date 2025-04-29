@@ -115,7 +115,7 @@ public class Config {
             objectToLocalFile(local_path_file_name, local);
             local = null;
             getLocal();
-//            logger.info("refreshLocal, selectedDbName: {}, selectedDbKey: {}, dbMap: {}", local.selectedDbName, local.selectedDbKey, local.dbMap);
+            logger.info("refreshLocal, selectedDbName: {}, selectedDbKey: {}, dbMap: {}", local.selectedDbName, local.selectedDbKey, local.dbMap);
         } catch (Exception e) {
             logger.info(e);
         }
