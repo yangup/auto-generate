@@ -62,13 +62,22 @@ public class Config {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
-    public static ConfigEntity getConfig(String... configJsonName) {
+    public static ConfigEntity setConfig(String... configJsonName) {
         try {
             String configJsonNameUse = "config.json";
             if (configJsonName != null && configJsonName.length > 0 && StringUtils.isNotBlank(configJsonName[configJsonName.length - 1])) {
                 configJsonNameUse = configJsonName[configJsonName.length - 1];
             }
-            config = config == null ? objectMapper.readValue(readFromLocalJson(auto_config_name + "/" + configJsonNameUse), ConfigEntity.class) : config;
+            config = objectMapper.readValue(readFromLocalJson(auto_config_name + "/" + configJsonNameUse), ConfigEntity.class);
+        } catch (Exception e) {
+            logger.info(e);
+        }
+        return config;
+    }
+
+    public static ConfigEntity getConfig() {
+        try {
+            config = config == null ? setConfig() : config;
         } catch (Exception e) {
             logger.info(e);
         }

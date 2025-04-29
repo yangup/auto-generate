@@ -196,7 +196,7 @@ public class AutoGenerateToolWindowContent {
         selectedDbNameLast = Config.getLocal().selectedJsonName;
         buttonPanel.removeAll();
         logger.info("addTableName-selectedJsonName: {}", Config.getLocal().selectedJsonName);
-        Config.getConfig(Config.getLocal().selectedJsonName);
+        Config.setConfig(Config.getLocal().selectedJsonName);
         logger.info("Config.getConfig().jdbc.database: {}", Config.getConfig().jdbc.database);
         for (DbEntity dbEntity : Config.getLocal().dbInfoList) {
             if (!StringUtils.equalsAnyIgnoreCase(Config.getConfig().jdbc.database, dbEntity.dbName)) {

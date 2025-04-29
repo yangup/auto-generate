@@ -19,7 +19,7 @@ public class Application {
     public static void start(List<String> tableNameList) throws Exception {
         Config.config = null;
         Config.local = null;
-        Config.getConfig(Config.getLocal().selectedJsonName);
+        Config.setConfig(Config.getLocal().selectedJsonName);
         TypeToJavaData.init();
         ConnectionAuto.prepare(Config.getConfig().jdbc.clazz,
                 Config.getConfig().jdbc.url,
