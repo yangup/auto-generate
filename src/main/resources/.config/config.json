@@ -12,7 +12,8 @@
     "url": "jdbc:mysql://dev-db.test:3306",
     "username": "root",
     "password": "123456",
-    "database": "yp3"
+    "database": "yp3",
+    "databaseUseGenerate": "yp3"
   },
   "info": [
     {

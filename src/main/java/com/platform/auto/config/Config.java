@@ -115,7 +115,7 @@ public class Config {
             objectToLocalFile(local_path_file_name, local);
             local = null;
             getLocal();
-            logger.info("refreshLocal, selectedDbName: {}, selectedDbKey: {}, dbMap: {}", local.selectedDbName, local.selectedDbKey, local.dbMap);
+            logger.info("refreshLocal, selectedJsonName: {}", local.selectedJsonName);
         } catch (Exception e) {
             logger.info(e);
         }
@@ -174,8 +174,8 @@ public class Config {
             getLocal().dbInfoList.add(dbEntity);
         }
 
-        if (StringUtils.isEmpty(getLocal().selectedDbName)) {
-            getLocal().selectedDbName = getConfig().jdbc.database;
+        if (StringUtils.isEmpty(getLocal().selectedJsonName)) {
+            getLocal().selectedJsonName = "config.json";
         }
 
         refreshLocal();
@@ -205,7 +205,7 @@ public class Config {
             LocalEntity localEntity = new LocalEntity();
             localEntity.time = getNowTime();
             // 默认 config 中的 db name
-            localEntity.selectedDbName = getConfigFromResources().jdbc.database;
+            localEntity.selectedJsonName = "config.json";
             objectToLocalFile(local_path_file_name, localEntity);
             logger.info("init_local.json");
         }

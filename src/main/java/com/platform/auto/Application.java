@@ -19,13 +19,13 @@ public class Application {
     public static void start(List<String> tableNameList) throws Exception {
         Config.config = null;
         Config.local = null;
-        Config.getConfig(Config.getLocal().configJsonName);
+        Config.getConfig(Config.getLocal().selectedJsonName);
         TypeToJavaData.init();
         ConnectionAuto.prepare(Config.getConfig().jdbc.clazz,
                 Config.getConfig().jdbc.url,
                 Config.getConfig().jdbc.username,
                 Config.getConfig().jdbc.password,
-                StringUtils.isEmpty(Config.getLocal().selectedDbName) ? Config.getConfig().jdbc.database : Config.getLocal().selectedDbName);
+                Config.getConfig().jdbc.database);
         // TODO: 通用代码生成
         // TODO: 通用代码生成
         // TODO: 通用代码生成

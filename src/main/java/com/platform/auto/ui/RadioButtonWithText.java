@@ -1,28 +1,23 @@
 package com.platform.auto.ui;
 
 import com.intellij.icons.AllIcons;
+import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBRadioButton;
-import com.intellij.ui.components.JBTextField;
 import com.platform.auto.config.Config;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static com.platform.auto.util.UiUtil.addComponentToPanel;
 import static com.platform.auto.util.UiUtil.setParentVisible;
 
 
-public class RadioButtonWithTextField {
+public class RadioButtonWithText {
 
     List<String> configJsonNameList = List.of("config.json", "config_add_column.json", "config_front.json");
     JPanel contentPanel;
@@ -48,88 +43,73 @@ public class RadioButtonWithTextField {
         this.thisPanel.removeAll();
         this.pairs = new ArrayList<>();
         this.panelList = new ArrayList<>();
-        Map<String, String> configMap = null;
-        if (Config.getLocal().configMap == null) {
-            configMap = configJsonNameList.stream().collect(Collectors.toMap(name -> name, name -> name));
-            Config.getLocal().configMap = configMap;
+        List<String> configList = null;
+        if (Config.getLocal().configList == null) {
+            configList = configJsonNameList;
+            Config.getLocal().configList = configList;
             Config.refreshLocal();
         } else {
-            configMap = Config.getLocal().configMap;
+            configList = Config.getLocal().configList;
         }
-        this.addRadioButtonWithTextField(configMap);
+        this.addRadioButtonWithTextField(configList);
     }
 
-    public void addRadioButtonWithTextField(Map<String, String> defaultText) {
+    public void addRadioButtonWithTextField(List<String> defaultText) {
         defaultText.forEach(this::addRadioButtonWithTextField);
     }
 
-    public void addRadioButtonWithTextField(String key, String value) {
+    public void addRadioButtonWithTextField(String name) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));  // 使用 BoxLayout 来设置横向布局
         JBRadioButton radioButton = new JBRadioButton();
-        JBTextField textField = new JBTextField(value);
-        textField.setColumns(35); // 设置输入框宽度
-        textField.setName(key);
+        JLabel jLabel = new JLabel(AllIcons.FileTypes.Config);
+        JBLabel label = new JBLabel(name);
+        label.setName(name);
         // 点击文本框时，自动选中对应的单选按钮
-        textField.addMouseListener(new MouseAdapter() {
+        label.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 radioButton.setSelected(true);
-                Config.getLocal().selectedJsonName = textField.getName();
+                Config.getLocal().selectedJsonName = label.getName();
                 Config.refreshLocal();
             }
         });
         radioButton.addActionListener(e -> {
             if (radioButton.isSelected()) {
-                Config.getLocal().selectedJsonName = textField.getName();
+                Config.getLocal().selectedJsonName = label.getName();
                 Config.refreshLocal();
             }
-        });
-        textField.addActionListener(e -> {
-            Config.getLocal().configMap.put(textField.getName(), textField.getText());
-            Config.refreshLocal();
         });
 
         buttonGroup.add(radioButton);
         panel.add(radioButton);
-        panel.add(Box.createHorizontalStrut(1));  // 添加小的间隔
-        panel.add(new JLabel(AllIcons.FileTypes.Config));
-        panel.add(Box.createHorizontalStrut(1));  // 添加小的间隔
-        panel.add(textField);
+//        panel.add(Box.createHorizontalStrut(1));  // 添加小的间隔
+        panel.add(jLabel);
+//        panel.add(Box.createHorizontalStrut(1));  // 添加小的间隔
+        panel.add(label);
         addComponentToContent(panel, true);
         panelList.add(panel);
-        pairs.add(new Pair(radioButton, textField));
+        pairs.add(new Pair(radioButton, label));
         if (StringUtils.isBlank(Config.getLocal().selectedJsonName)) {
             if (pairs.size() == 1) {
                 radioButton.setSelected(true);
             }
         } else {
-            if (Config.getLocal().selectedJsonName.equals(textField.getName())) {
+            if (Config.getLocal().selectedJsonName.equals(label.getName())) {
                 radioButton.setSelected(true);
             }
         }
-
     }
 
     // 一个简单的内部类，用来配对 RadioButton 和 TextField
     private static class Pair {
         JBRadioButton radioButton;
-        JBTextField textField;
+        JBLabel label;
 
-        Pair(JBRadioButton radioButton, JBTextField textField) {
+        Pair(JBRadioButton radioButton, JBLabel label) {
             this.radioButton = radioButton;
-            this.textField = textField;
+            this.label = label;
         }
-    }
-
-    // 获取当前选中的文本
-    public String getSelectedText() {
-        for (Pair pair : pairs) {
-            if (pair.radioButton.isSelected()) {
-                return Config.getLocal().configMap.get(pair.textField.getName());
-            }
-        }
-        return null;
     }
 
     public JPanel addComponentToContent(JComponent component, boolean needCursor) {

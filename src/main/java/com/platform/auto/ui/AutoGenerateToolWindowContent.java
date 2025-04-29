@@ -13,6 +13,7 @@ import com.intellij.ui.components.JBTextField;
 import com.platform.auto.Application;
 import com.platform.auto.AutoGenerateToolWindowFactory;
 import com.platform.auto.config.Config;
+import com.platform.auto.entity.ConfigEntity;
 import com.platform.auto.entity.DbEntity;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
@@ -48,10 +49,7 @@ public class AutoGenerateToolWindowContent {
     private final JPanel contentPanel = new JPanel();
     private final JPanel buttonPanel = new JPanel();
 
-    RadioButtonWithTextField radioButtonWithTextField = new RadioButtonWithTextField();
-
-    // 选择数据库
-    RadioButtonDataBase radioButtonDataBase = new RadioButtonDataBase();
+    RadioButtonWithText radioButtonWithText = new RadioButtonWithText();
 
     // 刷新框
     private final JBLabel refresh = new JBLabel("REFRESH", AllIcons.General.InlineRefresh, JLabel.LEFT);
@@ -105,17 +103,8 @@ public class AutoGenerateToolWindowContent {
         });
         addComponentToContent(refresh, true);
 
-        addComponentToContent(new JBLabel("SELECT A CONFIG", AllIcons.FileTypes.Config, JLabel.LEFT), false);
-
-        radioButtonWithTextField.init(contentPanel);
-        radioButtonWithTextField.setVisible(false);
-
-        // SELECT_A_DATABASE
-        addComponentToContent(new JBLabel("SELECT A DATABASE", AllIcons.Nodes.DataSchema, JLabel.LEFT), false);
-
-        // 下拉选择框
-        radioButtonDataBase.init(contentPanel, this);
-        radioButtonDataBase.setVisible(false);
+        radioButtonWithText.init(contentPanel);
+        radioButtonWithText.setVisible(false);
 
         // table name filter
         JPanel tableNameFilterPanel = new JPanel(new BorderLayout());
@@ -199,16 +188,18 @@ public class AutoGenerateToolWindowContent {
      **/
     public void addTableName() {
         logger.info("addTableName-start");
-        if (StringUtils.equalsAnyIgnoreCase(selectedDbNameLast, Config.getLocal().selectedDbName)
+        if (StringUtils.equalsAnyIgnoreCase(selectedDbNameLast, Config.getLocal().selectedJsonName)
                 && System.currentTimeMillis() - lastTime.get() < 1000) {
             return;
         }
         lastTime.set(System.currentTimeMillis());
-        selectedDbNameLast = Config.getLocal().selectedDbName;
+        selectedDbNameLast = Config.getLocal().selectedJsonName;
         buttonPanel.removeAll();
-        logger.info("addTableName-selectedDbName: {}", Config.getLocal().selectedDbName);
+        logger.info("addTableName-selectedJsonName: {}", Config.getLocal().selectedJsonName);
+        Config.getConfig(Config.getLocal().selectedJsonName);
+        logger.info("Config.getConfig().jdbc.database: {}", Config.getConfig().jdbc.database);
         for (DbEntity dbEntity : Config.getLocal().dbInfoList) {
-            if (!StringUtils.equalsAnyIgnoreCase(Config.getLocal().selectedDbName, dbEntity.dbName)) {
+            if (!StringUtils.equalsAnyIgnoreCase(Config.getConfig().jdbc.database, dbEntity.dbName)) {
                 continue;
             }
             for (String tableName : dbEntity.tableNameList) {
@@ -273,7 +264,6 @@ public class AutoGenerateToolWindowContent {
         new Thread(() -> {
             try {
                 runFlag.set(true);
-                Config.getLocal().configJsonName = radioButtonWithTextField.getSelectedText();
                 Config.refreshLocal();
                 Application.start(tableNameList);
             } catch (Exception ex) {
@@ -310,8 +300,7 @@ public class AutoGenerateToolWindowContent {
         logger.info("initStartAsync");
         new Thread(() -> {
             initTableList(init);
-            radioButtonDataBase.refresh();
-            radioButtonWithTextField.refresh();
+            radioButtonWithText.refresh();
             runFlag.set(false);
             refresh.setIcon(AllIcons.General.InlineRefresh);
             // 使用异步刷新机制
@@ -329,8 +318,7 @@ public class AutoGenerateToolWindowContent {
             generateAll.getParent().setVisible(true);
             setParentVisible(generateAll, true);
             setParentVisible(tableNameFilter, true);
-            radioButtonDataBase.setVisible(true);
-            radioButtonWithTextField.setVisible(true);
+            radioButtonWithText.setVisible(true);
             Config.initProject(this.project);
             Config.initFile();
             Config.initLocalData(init);
