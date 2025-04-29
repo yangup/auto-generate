@@ -1,6 +1,7 @@
 package com.platform.auto.ui;
 
 import com.intellij.icons.AllIcons;
+import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBTextField;
 import com.platform.auto.config.Config;
@@ -30,6 +31,7 @@ public class RadioButtonDataBase {
     List<Pair> pairs = new ArrayList<>();
     List<JPanel> panelList = new ArrayList<>();
     private final JPanel thisPanel = new JPanel();
+    private final JBLabel SELECT_A_DATABASE = new JBLabel("Select a database", AllIcons.Nodes.DataSchema, JLabel.LEFT);
 
     public void init(JPanel contentPanel, AutoGenerateToolWindowContent autoGenerateToolWindowContent) {
         this.contentPanel = contentPanel;
@@ -37,6 +39,7 @@ public class RadioButtonDataBase {
         thisPanel.setLayout(new BoxLayout(thisPanel, BoxLayout.Y_AXIS)); // 垂直排列
         thisPanel.setBorder(null);
         this.contentPanel.add(thisPanel);
+        addComponentToContent(SELECT_A_DATABASE, false);
         this.refresh();
     }
 
@@ -152,7 +155,7 @@ public class RadioButtonDataBase {
     }
 
     public JPanel addComponentToContent(JComponent component, boolean needCursor) {
-        return addComponentToPanel(component, contentPanel, needCursor);
+        return addComponentToPanel(component, this.thisPanel, needCursor);
     }
 
     public void setVisible(boolean visible) {

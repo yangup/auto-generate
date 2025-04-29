@@ -150,7 +150,7 @@ public class RadioButtonWithTextField {
     }
 
     public JPanel addComponentToContent(JComponent component, boolean needCursor) {
-        return addComponentToPanel(component, contentPanel, needCursor);
+        return addComponentToPanel(component, this.thisPanel, needCursor);
     }
 
     public void setVisible(boolean visible) {
