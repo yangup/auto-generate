@@ -96,7 +96,11 @@ public class RadioButtonDataBase {
         });
         textField.addActionListener(e -> {
             Config.getLocal().dbMap.put(textField.getName(), textField.getText());
+            radioButton.setSelected(true);
+            Config.getLocal().selectedDbKey = textField.getName();
+            Config.getLocal().selectedDbName = Config.getLocal().dbMap.get(Config.getLocal().selectedDbKey);
             Config.refreshLocal();
+            autoGenerateToolWindowContent.addTableName();
         });
 
         buttonGroup.add(radioButton);
