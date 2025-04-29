@@ -1,15 +1,14 @@
 package com.platform.auto.ui;
 
 import com.intellij.icons.AllIcons;
-import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBTextField;
 import com.platform.auto.config.Config;
+import com.platform.auto.sys.log.AutoLogger;
+import com.platform.auto.sys.log.Logger;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -23,6 +22,8 @@ import static com.platform.auto.util.UiUtil.setParentVisible;
 
 
 public class RadioButtonDataBase {
+
+    private static final Logger logger = AutoLogger.getLogger(RadioButtonDataBase.class);
 
     List<String> configList = List.of("test1", "test2");
     JPanel contentPanel;
@@ -42,6 +43,7 @@ public class RadioButtonDataBase {
     }
 
     public void refresh() {
+        logger.info("refreshRadioButtonDataBase");
         // 清理所有的按钮
         List<AbstractButton> buttonList = Collections.list(buttonGroup.getElements());
         for (AbstractButton button : buttonList) {
@@ -59,6 +61,7 @@ public class RadioButtonDataBase {
         } else {
             dbMap = Config.getLocal().dbMap;
         }
+        logger.info(dbMap.toString());
         this.addRadioButtonWithTextField(dbMap);
     }
 
@@ -71,6 +74,7 @@ public class RadioButtonDataBase {
         JBTextField textField = new JBTextField(value);
         textField.setColumns(35); // 设置输入框宽度
         textField.setName(key);
+        textField.setText(value);
         // 点击文本框时，自动选中对应的单选按钮
         textField.addMouseListener(new MouseAdapter() {
             @Override
@@ -90,26 +94,9 @@ public class RadioButtonDataBase {
                 autoGenerateToolWindowContent.addTableName();
             }
         });
-        textField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                textChanged();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                textChanged();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                textChanged();
-            }
-
-            private void textChanged() {
-                Config.getLocal().dbMap.put(textField.getName(), textField.getText());
-                Config.refreshLocal();
-            }
+        textField.addActionListener(e -> {
+            Config.getLocal().dbMap.put(textField.getName(), textField.getText());
+            Config.refreshLocal();
         });
 
         buttonGroup.add(radioButton);

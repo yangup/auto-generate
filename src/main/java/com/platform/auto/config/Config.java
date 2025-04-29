@@ -6,7 +6,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectUtil;
 import com.platform.auto.entity.*;
 import com.platform.auto.jdbc.Connection;
-import com.platform.auto.jdbc.ControllerCreator;
 import com.platform.auto.jdbc.HttpCreator;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
@@ -92,6 +91,7 @@ public class Config {
             logger.info(e);
             return new LocalEntity();
         }
+//        logger.info("getLocal, selectedDbName: {}, selectedDbKey: {}, dbMap: {}", local.selectedDbName, local.selectedDbKey, local.dbMap);
         return local;
     }
 
@@ -115,6 +115,7 @@ public class Config {
             objectToLocalFile(local_path_file_name, local);
             local = null;
             getLocal();
+//            logger.info("refreshLocal, selectedDbName: {}, selectedDbKey: {}, dbMap: {}", local.selectedDbName, local.selectedDbKey, local.dbMap);
         } catch (Exception e) {
             logger.info(e);
         }

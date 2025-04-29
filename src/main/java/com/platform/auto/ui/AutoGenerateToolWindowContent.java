@@ -307,11 +307,11 @@ public class AutoGenerateToolWindowContent {
         }
         runFlag.set(true);
         refresh.setIcon(loadingIcon);
-        radioButtonDataBase.refresh();
-        radioButtonWithTextField.refresh();
         logger.info("initStartAsync");
         new Thread(() -> {
             initTableList(init);
+            radioButtonDataBase.refresh();
+            radioButtonWithTextField.refresh();
             runFlag.set(false);
             refresh.setIcon(AllIcons.General.InlineRefresh);
             // 使用异步刷新机制

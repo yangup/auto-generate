@@ -85,26 +85,9 @@ public class RadioButtonWithTextField {
                 Config.refreshLocal();
             }
         });
-        textField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                textChanged();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                textChanged();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                textChanged();
-            }
-
-            private void textChanged() {
-                Config.getLocal().configMap.put(textField.getName(), textField.getText());
-                Config.refreshLocal();
-            }
+        textField.addActionListener(e -> {
+            Config.getLocal().configMap.put(textField.getName(), textField.getText());
+            Config.refreshLocal();
         });
 
         buttonGroup.add(radioButton);
