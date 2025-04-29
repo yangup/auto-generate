@@ -202,11 +202,11 @@ public class AutoGenerateToolWindowContent {
             if (!StringUtils.equalsAnyIgnoreCase(Config.getConfig().jdbc.database, dbEntity.dbName)) {
                 continue;
             }
+            logger.info("tableName_create: {}", dbEntity.tableNameList);
             for (String tableName : dbEntity.tableNameList) {
                 JBLabel tableNameLabel = new JBLabel(tableName, AllIcons.Nodes.DataTables, JLabel.LEFT);
                 tableNameLabel.setName(tableName);
                 addComponentToButton(tableNameLabel);
-                logger.info("tableName_create: {}", tableName);
                 tableNameLabel.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
