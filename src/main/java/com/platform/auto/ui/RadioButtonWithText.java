@@ -21,13 +21,15 @@ public class RadioButtonWithText {
 
     List<String> configJsonNameList = List.of("config.json", "config_add_column.json", "config_front.json");
     JPanel contentPanel;
+    AutoGenerateToolWindowContent autoGenerateToolWindowContent;
     ButtonGroup buttonGroup = new ButtonGroup();
     List<Pair> pairs = new ArrayList<>();
     List<JPanel> panelList = new ArrayList<>();
     private final JPanel thisPanel = new JPanel();
 
-    public void init(JPanel contentPanel) {
+    public void init(JPanel contentPanel, AutoGenerateToolWindowContent autoGenerateToolWindowContent) {
         this.contentPanel = contentPanel;
+        this.autoGenerateToolWindowContent = autoGenerateToolWindowContent;
         thisPanel.setLayout(new BoxLayout(thisPanel, BoxLayout.Y_AXIS)); // 垂直排列
         thisPanel.setBorder(null);
         this.contentPanel.add(thisPanel);
@@ -72,12 +74,14 @@ public class RadioButtonWithText {
                 radioButton.setSelected(true);
                 Config.getLocal().selectedJsonName = label.getName();
                 Config.refreshLocal();
+                autoGenerateToolWindowContent.addTableName();
             }
         });
         radioButton.addActionListener(e -> {
             if (radioButton.isSelected()) {
                 Config.getLocal().selectedJsonName = label.getName();
                 Config.refreshLocal();
+                autoGenerateToolWindowContent.addTableName();
             }
         });
 

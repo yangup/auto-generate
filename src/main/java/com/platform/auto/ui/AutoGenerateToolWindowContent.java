@@ -103,7 +103,7 @@ public class AutoGenerateToolWindowContent {
         });
         addComponentToContent(refresh, true);
 
-        radioButtonWithText.init(contentPanel);
+        radioButtonWithText.init(contentPanel, this);
         radioButtonWithText.setVisible(false);
 
         // table name filter
