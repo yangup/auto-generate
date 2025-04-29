@@ -31,7 +31,6 @@ public class RadioButtonDataBase {
     List<Pair> pairs = new ArrayList<>();
     List<JPanel> panelList = new ArrayList<>();
     private final JPanel thisPanel = new JPanel();
-    private final JBLabel SELECT_A_DATABASE = new JBLabel("Select a database", AllIcons.Nodes.DataSchema, JLabel.LEFT);
 
     public void init(JPanel contentPanel, AutoGenerateToolWindowContent autoGenerateToolWindowContent) {
         this.contentPanel = contentPanel;
@@ -39,7 +38,6 @@ public class RadioButtonDataBase {
         thisPanel.setLayout(new BoxLayout(thisPanel, BoxLayout.Y_AXIS)); // 垂直排列
         thisPanel.setBorder(null);
         this.contentPanel.add(thisPanel);
-        addComponentToContent(SELECT_A_DATABASE, false);
         this.refresh();
     }
 
@@ -69,8 +67,6 @@ public class RadioButtonDataBase {
     }
 
     public void addRadioButtonWithTextField(String key, String value) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));  // 使用 BoxLayout 来设置横向布局
         JBRadioButton radioButton = new JBRadioButton();
         JBTextField textField = new JBTextField(value);
         textField.setColumns(35); // 设置输入框宽度
@@ -117,13 +113,7 @@ public class RadioButtonDataBase {
         });
 
         buttonGroup.add(radioButton);
-        panel.add(radioButton);
-        panel.add(Box.createHorizontalStrut(1));  // 添加小的间隔
-        panel.add(new JLabel(AllIcons.Nodes.DataSchema));
-        panel.add(Box.createHorizontalStrut(1));  // 添加小的间隔
-        panel.add(textField);
-        addComponentToContent(panel, true);
-        panelList.add(panel);
+        addOne(radioButton, textField);
         pairs.add(new Pair(radioButton, textField));
         if (StringUtils.isBlank(Config.getLocal().selectedDbKey)) {
             if (pairs.size() == 1) {
@@ -140,7 +130,18 @@ public class RadioButtonDataBase {
                 radioButton.setSelected(true);
             }
         }
+    }
 
+    public void addOne(JBRadioButton radioButton, JBTextField textField) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));  // 使用 BoxLayout 来设置横向布局
+        panel.add(radioButton);
+        panel.add(Box.createHorizontalStrut(1));  // 添加小的间隔
+        panel.add(new JLabel(AllIcons.Nodes.DataSchema));
+        panel.add(Box.createHorizontalStrut(1));  // 添加小的间隔
+        panel.add(textField);
+        addComponentToContent(panel, true);
+        panelList.add(panel);
     }
 
     // 一个简单的内部类，用来配对 RadioButton 和 TextField

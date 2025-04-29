@@ -57,7 +57,6 @@ public class AutoGenerateToolWindowContent {
     private final JBLabel refresh = new JBLabel("REFRESH", AllIcons.General.InlineRefresh, JLabel.LEFT);
     // 生成所有的按钮
     private final JBLabel generateAll = new JBLabel("Generate after filter", AllIcons.Actions.Execute, JLabel.LEFT);
-
     // 表名称输入框
     private final JBTextField tableNameFilter = new JBTextField(40); // 设置列数限制
 
@@ -106,8 +105,13 @@ public class AutoGenerateToolWindowContent {
         });
         addComponentToContent(refresh, true);
 
+        addComponentToContent(new JBLabel("SELECT A CONFIG", AllIcons.FileTypes.Config, JLabel.LEFT), false);
+
         radioButtonWithTextField.init(contentPanel);
         radioButtonWithTextField.setVisible(false);
+
+        // SELECT_A_DATABASE
+        addComponentToContent(new JBLabel("SELECT A DATABASE", AllIcons.Nodes.DataSchema, JLabel.LEFT), false);
 
         // 下拉选择框
         radioButtonDataBase.init(contentPanel, this);
