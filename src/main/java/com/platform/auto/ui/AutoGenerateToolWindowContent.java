@@ -13,7 +13,6 @@ import com.intellij.ui.components.JBTextField;
 import com.platform.auto.Application;
 import com.platform.auto.AutoGenerateToolWindowFactory;
 import com.platform.auto.config.Config;
-import com.platform.auto.entity.ConfigEntity;
 import com.platform.auto.entity.DbEntity;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
@@ -206,6 +205,8 @@ public class AutoGenerateToolWindowContent {
             for (String tableName : dbEntity.tableNameList) {
                 JBLabel tableNameLabel = new JBLabel(tableName, AllIcons.Nodes.DataTables, JLabel.LEFT);
                 tableNameLabel.setName(tableName);
+                // 设置最小尺寸
+                tableNameLabel.setMinimumSize(new Dimension(200, 30));
                 addComponentToButton(tableNameLabel);
                 tableNameLabel.addMouseListener(new MouseAdapter() {
                     @Override
@@ -238,6 +239,11 @@ public class AutoGenerateToolWindowContent {
             // 刷新表格显示
             buttonPanel.revalidate();
             buttonPanel.repaint();
+            // 确保父容器也重新布局
+            contentPanel.revalidate();
+            contentPanel.repaint();
+            parentPanel.revalidate();
+            parentPanel.repaint();
         });
         logger.info("showTableName");
     }
@@ -324,6 +330,13 @@ public class AutoGenerateToolWindowContent {
             Config.initLocalData(init);
             addDbName();
             tableNameFilter.setText(Config.getLocal() == null ? "" : Config.getLocal().getFilterTableNameText());
+            // 确保在 EDT 中更新布局
+            SwingUtilities.invokeLater(() -> {
+                contentPanel.revalidate();
+                contentPanel.repaint();
+                parentPanel.revalidate();
+                parentPanel.repaint();
+            });
         } catch (Exception ex) {
             logger.info(ex);
         }
