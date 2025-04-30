@@ -165,7 +165,7 @@ public class Connection extends CharUtil {
                 "WHERE table_schema NOT IN ('information_schema', 'performance_schema', 'mysql', 'sys')\n" +
                 "order by 1 asc, 2 asc;";
         Statement st = conn.createStatement();
-        logger.info(sql);
+        logger.info("\n" + sql);
         // todo : 根据 sql 获得表结构的数据
         ResultSet rs = st.executeQuery(sql);
         // todo : 将返回的数据库的结果处理成 table
