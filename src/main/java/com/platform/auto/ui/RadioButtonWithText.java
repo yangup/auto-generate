@@ -1,6 +1,11 @@
 package com.platform.auto.ui;
 
 import com.intellij.icons.AllIcons;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.ModalityState;
+import com.intellij.openapi.project.ProjectUtil;
+import com.intellij.openapi.roots.ProjectFileIndex;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBRadioButton;
 import com.platform.auto.config.Config;
@@ -16,6 +21,7 @@ import java.util.List;
 
 import static com.platform.auto.util.UiUtil.addComponentToPanel;
 import static com.platform.auto.util.UiUtil.setParentVisible;
+import static java.util.Objects.requireNonNull;
 
 
 public class RadioButtonWithText {
@@ -70,14 +76,18 @@ public class RadioButtonWithText {
         JBLabel label = new JBLabel(name);
         label.setName(name);
 
-// 统一处理选中逻辑
+        // 统一处理选中逻辑
         Runnable selectAction = () -> {
             radioButton.setSelected(true);
             Config.getLocal().selectedJsonName = label.getName();
             Config.refreshLocal();
             Config.refreshConfig();
-            Config.refreshConfigDataBaseData(true);
-            autoGenerateToolWindowContent.addTableName();
+
+            new Thread(() -> {
+                Config.refreshConfigDataBaseData(true);
+                autoGenerateToolWindowContent.addTableName();
+            }).start();
+
         };
 
 // 公共 MouseListener（对所有组件统一行为）
