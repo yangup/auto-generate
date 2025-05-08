@@ -64,10 +64,21 @@ public class Config {
 
     public static void refreshConfig() {
         try {
-            objectToLocalFile(auto_config_name + "/" + getLocal().selectedJsonName, config);
             config = null;
             getConfig();
             logger.info("refreshConfig, selectedJsonName: {}", getLocal().selectedJsonName);
+        } catch (Exception e) {
+            logger.info(e);
+        }
+        setConfig(getLocal().selectedJsonName);
+    }
+
+    public static void refreshWrite() {
+        try {
+            objectToLocalFile(auto_config_name + "/" + getLocal().selectedJsonName, config);
+            config = null;
+            getConfig();
+            logger.info("refreshWrite, selectedJsonName: {}", getLocal().selectedJsonName);
         } catch (Exception e) {
             logger.info(e);
         }
@@ -199,7 +210,7 @@ public class Config {
             getLocal().selectedJsonName = "config.json";
         }
 
-        refreshConfig();
+        refreshWrite();
         refreshLocal();
         logger.info("refreshLocal");
     }
