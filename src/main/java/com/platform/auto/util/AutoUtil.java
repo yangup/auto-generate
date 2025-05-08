@@ -1,5 +1,8 @@
 package com.platform.auto.util;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.util.DefaultIndenter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -13,6 +16,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -29,8 +33,19 @@ public class AutoUtil extends CharUtil {
 
     static {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        // 主要用于 格式化 JSON 输出，让 JSON 变得更易读（带有换行和缩进）。
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL); // 忽略 null 字段
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")); // 格式化时间输出
+
+        // 创建自定义缩进的 PrettyPrinter
+        DefaultPrettyPrinter prettyPrinter = new DefaultPrettyPrinter();
+        DefaultIndenter indenter = new DefaultIndenter("    ", DefaultIndenter.SYS_LF); // 4 空格缩进
+        prettyPrinter.indentObjectsWith(indenter);
+        prettyPrinter.indentArraysWith(indenter);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setDefaultPrettyPrinter(prettyPrinter);
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     /**
