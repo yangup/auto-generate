@@ -70,7 +70,6 @@ public class Config {
         } catch (Exception e) {
             logger.info(e);
         }
-        setConfig(getLocal().selectedJsonName);
     }
 
     public static void refreshWrite() {
@@ -82,7 +81,6 @@ public class Config {
         } catch (Exception e) {
             logger.info(e);
         }
-        setConfig(getLocal().selectedJsonName);
     }
 
     public static ConfigEntity setConfig(String... configJsonName) {
