@@ -28,25 +28,25 @@ public class ConfigInfoEntity {
     public String fileNameSuffix;
 
     @JsonProperty("need_json_property")
-    public boolean needJsonProperty;
+    public Boolean needJsonProperty;
 
     /**
      * 实体类是否使用 生成 static 方法
      **/
     @JsonProperty("generate_static_method")
-    public String generateStaticMethod;
+    public Boolean generateStaticMethod;
 
     /**
      * 生成的文件是否按照 table 存储
      **/
     @JsonProperty("store_by_table")
-    public boolean storeByTable;
+    public Boolean storeByTable;
 
     @JsonProperty("is_useful")
-    public boolean isUseful;
+    public Boolean isUseful;
 
     @JsonProperty("is_front")
-    public boolean isFront;
+    public Boolean isFront;
 
     public PathEntity path;
 

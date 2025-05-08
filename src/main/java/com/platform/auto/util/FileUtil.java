@@ -50,7 +50,7 @@ public class FileUtil extends StringUtils {
      **/
     public static File createFile(Table table, ConfigInfoEntity info) {
         String path = StringUtils.isNotEmpty(table.javaFilePath) ? table.javaFilePath + "/" : "";
-        if (isNotBlank(info.storeByTable)) {
+        if (isNotNull(info.storeByTable)) {
             if (isTrue(info.storeByTable)) {
                 path = table.tableNameJava.toLowerCase() + "/";
             } else {

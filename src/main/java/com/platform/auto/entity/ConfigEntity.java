@@ -17,7 +17,7 @@ public class ConfigEntity {
      * 是否按照 table 存储
      **/
     @JsonProperty("store_by_table")
-    public boolean storeByTable;
+    public Boolean storeByTable;
 
     /**
      * 表明称前缀, 需要去掉

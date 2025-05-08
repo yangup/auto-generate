@@ -104,8 +104,12 @@ public class CharUtil extends ObjectUtils {
         return !StringUtils.isBlank(cs);
     }
 
-    public static boolean isTrue(CharSequence cs) {
-        return StringUtils.equalsIgnoreCase("true", cs);
+    public static boolean isNotNull(Object o) {
+        return o != null;
+    }
+
+    public static boolean isTrue(Boolean bool) {
+        return bool != null && bool;
     }
 
     public static boolean isBlank(CharSequence cs) {

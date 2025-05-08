@@ -56,5 +56,5 @@ public class PathEntity {
     public String constantFile;
 
     // todo : 生成的文件是否放在 .auto 目录下
-    public String local;
+    public Boolean local;
 }

@@ -90,7 +90,7 @@ public class BaseCreator {
             lineReplaceOrder(line, Order.dateYMDHM, DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm"));
             lineReplaceOrder(line, Order.dateYMDHMS, DateFormatUtils.format(new Date(), "yyyyMMdd_HHmmss"));
             String path = isTrue(Config.getConfig().getStoreByTable()) ? "." + table.tableNameJava.toLowerCase() : "";
-            if (isNotBlank(info.storeByTable)) {
+            if (isNotNull(info.storeByTable)) {
                 if (isTrue(info.storeByTable)) {
                     path = "." + table.tableNameJava.toLowerCase();
                 } else {
