@@ -75,6 +75,8 @@ public class RadioButtonWithText {
             radioButton.setSelected(true);
             Config.getLocal().selectedJsonName = label.getName();
             Config.refreshLocal();
+            Config.refreshConfig();
+            Config.refreshConfigDataBaseData(true);
             autoGenerateToolWindowContent.addTableName();
         };
 

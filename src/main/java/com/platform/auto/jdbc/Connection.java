@@ -152,30 +152,35 @@ public class Connection extends CharUtil {
         return tables;
     }
 
-    public static List<TableEntity> getAllTableInfo() throws Exception {
-        Class.forName(clazz);
-        if (!url.endsWith("/")) {
-            url = url + "/";
+    public static List<TableEntity> getAllTableInfo() {
+        try {
+            Class.forName(clazz);
+            if (!url.endsWith("/")) {
+                url = url + "/";
+            }
+            java.sql.Connection conn = DriverManager.getConnection(
+                    url + database + "?useSSL=false&serverTimezone=GMT&autoReconnect=true",
+                    username,
+                    password);
+            String sql = "SELECT table_schema, table_name\n" +
+                    "FROM `information_schema`.`tables`\n" +
+                    "WHERE table_schema NOT IN ('information_schema', 'performance_schema', 'mysql', 'sys')\n" +
+                    "order by 1 asc, 2 asc;";
+            Statement st = conn.createStatement();
+            logger.info("\n" + sql);
+            // todo : 根据 sql 获得表结构的数据
+            ResultSet rs = st.executeQuery(sql);
+            // todo : 将返回的数据库的结果处理成 table
+            TableFactory tableFactory = new TableFactory();
+            List<TableEntity> dataList = tableFactory.obtainAllTable(rs);
+            rs.close();
+            st.close();
+            conn.close();
+            return dataList;
+        } catch (Exception e) {
+            logger.info("getAllTableInfo error", e);
         }
-        java.sql.Connection conn = DriverManager.getConnection(
-                url + database + "?useSSL=false&serverTimezone=GMT&autoReconnect=true",
-                username,
-                password);
-        String sql = "SELECT table_schema, table_name\n" +
-                "FROM `information_schema`.`tables`\n" +
-                "WHERE table_schema NOT IN ('information_schema', 'performance_schema', 'mysql', 'sys')\n" +
-                "order by 1 asc, 2 asc;";
-        Statement st = conn.createStatement();
-        logger.info("\n" + sql);
-        // todo : 根据 sql 获得表结构的数据
-        ResultSet rs = st.executeQuery(sql);
-        // todo : 将返回的数据库的结果处理成 table
-        TableFactory tableFactory = new TableFactory();
-        List<TableEntity> dataList = tableFactory.obtainAllTable(rs);
-        rs.close();
-        st.close();
-        conn.close();
-        return dataList;
+        return null;
     }
 
     /**

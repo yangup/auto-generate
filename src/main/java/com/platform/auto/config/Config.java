@@ -175,7 +175,7 @@ public class Config {
     /**
      * 本地数据的初始化
      **/
-    public static void initLocalData(boolean init) throws Exception {
+    public static void refreshConfigDataBaseData(boolean init) {
         if (isNotEmpty(getConfig().dbInfoList) && init) {
             return;
         }

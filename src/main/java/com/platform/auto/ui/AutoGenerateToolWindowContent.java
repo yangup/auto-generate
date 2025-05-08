@@ -195,7 +195,6 @@ public class AutoGenerateToolWindowContent {
         selectedDbNameLast = Config.getLocal().selectedJsonName;
         buttonPanel.removeAll();
         logger.info("addTableName-selectedJsonName: {}", Config.getLocal().selectedJsonName);
-        Config.refreshConfig();
         logger.info("Config.getConfig().jdbc.database: {}", Config.getConfig().jdbc.database);
         for (DbEntity dbEntity : Config.getConfig().dbInfoList) {
             if (!StringUtils.equalsAnyIgnoreCase(Config.getConfig().jdbc.database, dbEntity.dbName)) {
@@ -327,7 +326,7 @@ public class AutoGenerateToolWindowContent {
             radioButtonWithText.setVisible(true);
             Config.initProject(this.project);
             Config.initFile();
-            Config.initLocalData(init);
+            Config.refreshConfigDataBaseData(init);
             Config.refreshConfig();
             addDbName();
             tableNameFilter.setText(Config.getLocal() == null ? "" : Config.getLocal().getFilterTableNameText());
