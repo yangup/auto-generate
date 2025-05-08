@@ -63,6 +63,14 @@ public class Config {
     }
 
     public static void refreshConfig() {
+        try {
+            objectToLocalFile(auto_config_name + "/" + getLocal().selectedJsonName, config);
+            config = null;
+            getConfig();
+            logger.info("refreshConfig, selectedJsonName: {}", getLocal().selectedJsonName);
+        } catch (Exception e) {
+            logger.info(e);
+        }
         setConfig(getLocal().selectedJsonName);
     }
 
@@ -191,6 +199,7 @@ public class Config {
             getLocal().selectedJsonName = "config.json";
         }
 
+        refreshConfig();
         refreshLocal();
         logger.info("refreshLocal");
     }
@@ -223,13 +232,13 @@ public class Config {
             logger.info("init_local.json");
         }
 
-        if (StringUtils.isBlank(readFromLocalJson(config_path_type_to_java_data_file_name))) {
-            listToLocalFile(config_path_type_to_java_data_file_name, readFromResources(config_path_type_to_java_data_file_name));
-        }
-
         // 当 config 存在的时候,就不需要
         if (existLocal(config_path_type_to_java_data_file_name)) {
             return;
+        }
+
+        if (StringUtils.isBlank(readFromLocalJson(config_path_type_to_java_data_file_name))) {
+            listToLocalFile(config_path_type_to_java_data_file_name, readFromResources(config_path_type_to_java_data_file_name));
         }
 
         HttpCreator.createRequestInit();
