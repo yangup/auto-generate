@@ -2,6 +2,7 @@ package com.platform.auto.jdbc.base;
 
 import com.platform.auto.config.Config;
 import com.platform.auto.entity.LocalEntity;
+import com.platform.auto.entity.TableEntity;
 import com.platform.auto.jdbc.model.*;
 import com.platform.auto.sys.log.AutoLogger;
 import com.platform.auto.sys.log.Logger;
@@ -46,10 +47,10 @@ public class TableFactory {
         return tables;
     }
 
-    public List<LocalEntity.TableEntity> obtainAllTable(final ResultSet rs) throws Exception {
-        List<LocalEntity.TableEntity> dataList = new ArrayList<>();
+    public List<TableEntity> obtainAllTable(final ResultSet rs) throws Exception {
+        List<TableEntity> dataList = new ArrayList<>();
         while (rs.next()) {
-            LocalEntity.TableEntity tableEntity = new LocalEntity.TableEntity();
+            TableEntity tableEntity = new TableEntity();
             tableEntity.setTableSchema(rs.getString("TABLE_SCHEMA"));
             tableEntity.setTableName(rs.getString("TABLE_NAME"));
             dataList.add(tableEntity);

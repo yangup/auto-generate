@@ -14,7 +14,6 @@ public class LocalEntity {
     public String time;
 
     public String filterTableNameText;
-
     /**
      *
      **/
@@ -22,16 +21,4 @@ public class LocalEntity {
     public String selectedJsonName;
     // 配置文件
     public List<String> configList;
-
-    // 数据处理好了
-    public List<DbEntity> dbInfoList;
-
-    @Data
-    public static class TableEntity {
-
-        public String tableSchema;
-        public String tableName;
-    }
-
-
 }

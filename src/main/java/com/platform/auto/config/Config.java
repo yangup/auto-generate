@@ -62,6 +62,10 @@ public class Config {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
+    public static void refreshConfig() {
+        setConfig(getLocal().selectedJsonName);
+    }
+
     public static ConfigEntity setConfig(String... configJsonName) {
         try {
             String configJsonNameUse = "config.json";
@@ -77,7 +81,7 @@ public class Config {
 
     public static ConfigEntity getConfig() {
         try {
-            config = config == null ? setConfig() : config;
+            config = config == null ? setConfig(getLocal().selectedJsonName) : config;
         } catch (Exception e) {
             logger.info(e);
         }
@@ -153,23 +157,23 @@ public class Config {
      * 本地数据的初始化
      **/
     public static void initLocalData(boolean init) throws Exception {
-        if (isNotEmpty(getLocal().dbInfoList) && init) {
+        if (isNotEmpty(getConfig().dbInfoList) && init) {
             return;
         }
         config = null;
         Connection.prepare(getConfig().jdbc.clazz, getConfig().jdbc.url, getConfig().jdbc.username, getConfig().jdbc.password, getConfig().jdbc.database);
-        List<LocalEntity.TableEntity> tableList = Connection.getAllTableInfo();
+        List<TableEntity> tableList = Connection.getAllTableInfo();
         logger.info("initLocalData");
 
-        getLocal().dbInfoList = new ArrayList<>();
+        getConfig().dbInfoList = new ArrayList<>();
         DbEntity dbEntity = null; // 初始设置为 null
 
-        for (LocalEntity.TableEntity table : tableList) {
+        for (TableEntity table : tableList) {
             // 当 dbEntity 为空或 tableSchema 改变时，创建一个新的 dbEntity
             if (dbEntity == null || !StringUtils.equals(dbEntity.dbName, table.tableSchema)) {
                 // 如果不是第一次循环，将前一个 dbEntity 添加到 dbInfoList 中
                 if (dbEntity != null) {
-                    getLocal().dbInfoList.add(dbEntity);
+                    getConfig().dbInfoList.add(dbEntity);
                 }
                 dbEntity = new DbEntity();
                 dbEntity.dbName = table.tableSchema;
@@ -180,7 +184,7 @@ public class Config {
 
         // 循环结束后，将最后一个 dbEntity 添加到 dbInfoList 中
         if (dbEntity != null) {
-            getLocal().dbInfoList.add(dbEntity);
+            getConfig().dbInfoList.add(dbEntity);
         }
 
         if (StringUtils.isEmpty(getLocal().selectedJsonName)) {
@@ -224,7 +228,7 @@ public class Config {
         }
 
         // 当 config 存在的时候,就不需要
-        if (existLocal(config_path_file_name)) {
+        if (existLocal(config_path_type_to_java_data_file_name)) {
             return;
         }
 

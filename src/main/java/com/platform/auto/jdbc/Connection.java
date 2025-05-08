@@ -1,6 +1,7 @@
 package com.platform.auto.jdbc;
 
 import com.platform.auto.entity.LocalEntity;
+import com.platform.auto.entity.TableEntity;
 import com.platform.auto.jdbc.base.TableFactory;
 import com.platform.auto.jdbc.model.Table;
 import com.platform.auto.jdbc.model.TypeToJavaData;
@@ -151,7 +152,7 @@ public class Connection extends CharUtil {
         return tables;
     }
 
-    public static List<LocalEntity.TableEntity> getAllTableInfo() throws Exception {
+    public static List<TableEntity> getAllTableInfo() throws Exception {
         Class.forName(clazz);
         if (!url.endsWith("/")) {
             url = url + "/";
@@ -170,7 +171,7 @@ public class Connection extends CharUtil {
         ResultSet rs = st.executeQuery(sql);
         // todo : 将返回的数据库的结果处理成 table
         TableFactory tableFactory = new TableFactory();
-        List<LocalEntity.TableEntity> dataList = tableFactory.obtainAllTable(rs);
+        List<TableEntity> dataList = tableFactory.obtainAllTable(rs);
         rs.close();
         st.close();
         conn.close();

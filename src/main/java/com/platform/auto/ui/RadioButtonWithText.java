@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -62,47 +63,53 @@ public class RadioButtonWithText {
 
     public void addRadioButtonWithTextField(String name) {
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));  // 使用 BoxLayout 来设置横向布局
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));  // 横向布局
+
         JBRadioButton radioButton = new JBRadioButton();
         JLabel jLabel = new JLabel(AllIcons.FileTypes.Config);
         JBLabel label = new JBLabel(name);
         label.setName(name);
-        // 点击文本框时，自动选中对应的单选按钮
-        label.addMouseListener(new MouseAdapter() {
+
+// 统一处理选中逻辑
+        Runnable selectAction = () -> {
+            radioButton.setSelected(true);
+            Config.getLocal().selectedJsonName = label.getName();
+            Config.refreshLocal();
+            autoGenerateToolWindowContent.addTableName();
+        };
+
+// 公共 MouseListener（对所有组件统一行为）
+        MouseListener mouseListener = new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                radioButton.setSelected(true);
-                Config.getLocal().selectedJsonName = label.getName();
-                Config.refreshLocal();
-                autoGenerateToolWindowContent.addTableName();
+                selectAction.run();
             }
-        });
-        radioButton.addActionListener(e -> {
-            if (radioButton.isSelected()) {
-                Config.getLocal().selectedJsonName = label.getName();
-                Config.refreshLocal();
-                autoGenerateToolWindowContent.addTableName();
-            }
-        });
+        };
+
+// 绑定监听器
+        label.addMouseListener(mouseListener);
+        panel.addMouseListener(mouseListener);
+        radioButton.addActionListener(e -> selectAction.run());
+        jLabel.addMouseListener(mouseListener);
 
         buttonGroup.add(radioButton);
         panel.add(radioButton);
-//        panel.add(Box.createHorizontalStrut(1));  // 添加小的间隔
         panel.add(jLabel);
-        panel.add(Box.createHorizontalStrut(5));  // 添加小的间隔
+        panel.add(Box.createHorizontalStrut(5));
         panel.add(label);
+
+// 添加到 UI
         addComponentToContent(panel, true);
         panelList.add(panel);
         pairs.add(new Pair(radioButton, label));
-        if (StringUtils.isBlank(Config.getLocal().selectedJsonName)) {
-            if (pairs.size() == 1) {
-                radioButton.setSelected(true);
-            }
-        } else {
-            if (Config.getLocal().selectedJsonName.equals(label.getName())) {
-                radioButton.setSelected(true);
-            }
+
+// 初始化选中逻辑
+        String selected = Config.getLocal().selectedJsonName;
+        if ((StringUtils.isBlank(selected) && pairs.size() == 1) ||
+                (selected != null && selected.equals(label.getName()))) {
+            radioButton.setSelected(true);
         }
+
     }
 
     // 一个简单的内部类，用来配对 RadioButton 和 TextField

@@ -29,5 +29,8 @@ public class ConfigEntity {
 
     public List<ConfigInfoEntity> info;
 
+    // 数据处理好了
+    public List<DbEntity> dbInfoList;
+
 
 }
