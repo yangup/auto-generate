@@ -16,7 +16,7 @@ public class ConfigInfoEntity {
      * 实体类是否使用 public 修饰
      **/
     @JsonProperty("entity_field_is_public")
-    public String entityFieldIsPublic;
+    public boolean entityFieldIsPublic;
 
     @JsonProperty("add_one_row_for_id")
     public String addOneRowForId;
@@ -28,7 +28,7 @@ public class ConfigInfoEntity {
     public String fileNameSuffix;
 
     @JsonProperty("need_json_property")
-    public String needJsonProperty;
+    public boolean needJsonProperty;
 
     /**
      * 实体类是否使用 生成 static 方法
@@ -40,13 +40,13 @@ public class ConfigInfoEntity {
      * 生成的文件是否按照 table 存储
      **/
     @JsonProperty("store_by_table")
-    public String storeByTable;
+    public boolean storeByTable;
 
     @JsonProperty("is_useful")
-    public String isUseful;
+    public boolean isUseful;
 
     @JsonProperty("is_front")
-    public String isFront;
+    public boolean isFront;
 
     public PathEntity path;
 
