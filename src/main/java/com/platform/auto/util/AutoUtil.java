@@ -32,20 +32,20 @@ public class AutoUtil extends CharUtil {
     public static final ObjectMapper objectMapper = new ObjectMapper();
 
     static {
+        // 忽略未知字段
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL); // 忽略 null 字段
-        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")); // 格式化时间输出
-
-        // 创建自定义缩进的 PrettyPrinter
+        // 忽略 null 字段
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        // 设置日期格式
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+        // 启用格式化输出
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        // 设置 4 空格缩进
         DefaultPrettyPrinter prettyPrinter = new DefaultPrettyPrinter();
-        DefaultIndenter indenter = new DefaultIndenter("    ", DefaultIndenter.SYS_LF); // 4 空格缩进
+        DefaultIndenter indenter = new DefaultIndenter("    ", DefaultIndenter.SYS_LF);
         prettyPrinter.indentObjectsWith(indenter);
         prettyPrinter.indentArraysWith(indenter);
-
-        ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setDefaultPrettyPrinter(prettyPrinter);
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     /**
