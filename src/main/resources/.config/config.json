@@ -68,6 +68,7 @@
       "template": "templateData.up",
       "remark": "generate data",
       "file_name_suffix": "Data.java",
+      "generate_static_method": true,
       "path": {
         "project_name": "common",
         "package_name": "com.playlet.common.db"
@@ -78,6 +79,7 @@
       "remark": "generate dto",
       "file_name_suffix": "Dto.java",
       "need_json_property": false,
+      "generate_static_method": true,
       "path": {
         "project_name": "common",
         "package_name": "com.playlet.common.db"
