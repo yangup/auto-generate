@@ -19,6 +19,9 @@ public class ConfigEntity {
     @JsonProperty("store_by_table")
     public Boolean storeByTable;
 
+    @JsonProperty("type_to_java_data")
+    public String typeToJavaData;
+
     /**
      * 表明称前缀, 需要去掉
      **/

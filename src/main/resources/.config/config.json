@@ -1,6 +1,7 @@
 {
   "author": "yangpu",
   "store_by_table": true,
+  "type_to_java_data": "/typeToJavaData.json",
   "remove_prefix": [
     "T_",
     "X_",
