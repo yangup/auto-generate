@@ -48,6 +48,7 @@ public class FileUtil extends StringUtils {
      * 生成文件 , 统一生成 在 db 文件夹下面的文件
      **/
     public static File createFile(Table table, ConfigInfoEntity info) {
+        // 如果外围有配置,则使用外围的配置
         String path = StringUtils.isNotEmpty(table.javaFilePath) ? table.javaFilePath + "/" : "";
         if (isNotNull(info.storeByTable)) {
             if (isTrue(info.storeByTable)) {
