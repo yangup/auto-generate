@@ -12,8 +12,7 @@
     "url": "jdbc:mysql://dev-db.test:3306",
     "username": "root",
     "password": "123456",
-    "database": "yp3",
-    "databaseUseGenerate": "yp3"
+    "database": "yp3"
   },
   "info": [
     {
@@ -55,7 +54,7 @@
     },
     {
       "template": "templateEntity.up",
-      "entity_field_is_public": true,
+      "field_is_public": true,
       "add_one_row_for_id": "@TableId(value = \"{id}\", type = IdType.AUTO)",
       "generate_static_method": true,
       "file_name_suffix": "Entity.java",

@@ -8,7 +8,7 @@ public class PathEntity {
 
     /**
      * {
-     * "local": true,
+     * "is_local": true,
      * "front_file_path": "system",
      * "path": "front",
      * "absolute_path": "D:\\github\\auto-generate\\.auto\\front",
@@ -56,5 +56,6 @@ public class PathEntity {
     public String constantFile;
 
     // todo : 生成的文件是否放在 .auto 目录下
-    public Boolean local;
+    @JsonProperty("is_local")
+    public Boolean isLocal;
 }

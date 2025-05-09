@@ -1,7 +1,6 @@
 package com.platform.auto.util;
 
 import com.platform.auto.config.Config;
-import com.platform.auto.entity.ConfigEntity;
 import com.platform.auto.entity.ConfigInfoEntity;
 import com.platform.auto.jdbc.model.Table;
 import org.apache.commons.lang3.StringUtils;
@@ -58,7 +57,7 @@ public class FileUtil extends StringUtils {
             }
         }
         // 文件放在本地
-        if (isTrue(info.path.local)) {
+        if (isTrue(info.path.isLocal)) {
             if (isNotBlank(info.path.file)) {
                 // 文件放在 .auto 下面 的某一个文件中
                 return createFile(Config.project_auto_path + "/" + info.path.file);
