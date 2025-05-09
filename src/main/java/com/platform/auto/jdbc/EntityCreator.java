@@ -49,11 +49,10 @@ public class EntityCreator extends BaseCreator {
             if (isUpdateTime(field)) {
 //                codeList.add(t + "@JsonIgnore");
             }
-            String publicMethod = isTrue(info.entityFieldIsPublic) ? "public" : "private";
             if (columninfo.isId && isNotBlank(info.addOneRowForId)) {
                 codeList.add(t + info.addOneRowForId.replace("{id}", field));
             }
-            codeList.add(t + publicMethod + w + type + w + field + ";");
+            codeList.add(t + (isTrue(info.fieldIsPublic) ? "public" : "private") + w + type + w + field + ";");
         }
 
         if (isTrue(info.generateStaticMethod)) {

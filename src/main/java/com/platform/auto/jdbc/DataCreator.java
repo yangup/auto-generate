@@ -44,9 +44,9 @@ public class DataCreator extends BaseCreator {
         codeList.add("    // todo : field\n");
         for (RelateTableInfo param : table.relateTable) {
             if (param.more) {
-                codeList.add(String.format("    public List<%sData> %sList;\n", param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam));
+                codeList.add(String.format("    " + (isTrue(info.fieldIsPublic) ? "public" : "private") + " List<%sData> %sList;\n", param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam));
             } else {
-                codeList.add(String.format("    public %sData %s;\n", param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam));
+                codeList.add(String.format("    " + (isTrue(info.fieldIsPublic) ? "public" : "private") + " %sData %s;\n", param.otherTable.tableNameJava, param.otherTable.tableNameJavaParam));
             }
         }
 

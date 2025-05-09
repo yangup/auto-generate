@@ -15,8 +15,8 @@ public class ConfigInfoEntity {
     /**
      * 实体类是否使用 public 修饰
      **/
-    @JsonProperty("entity_field_is_public")
-    public boolean entityFieldIsPublic;
+    @JsonProperty("field_is_public")
+    public Boolean fieldIsPublic;
 
     @JsonProperty("add_one_row_for_id")
     public String addOneRowForId;
@@ -27,8 +27,11 @@ public class ConfigInfoEntity {
     @JsonProperty("file_name_suffix")
     public String fileNameSuffix;
 
-    @JsonProperty("need_json_property")
-    public Boolean needJsonProperty;
+    /**
+     * 是否需要展示, @JsonProperty
+     * **/
+    @JsonProperty("show_json_property")
+    public Boolean showJsonProperty;
 
     /**
      * 实体类是否使用 生成 static 方法

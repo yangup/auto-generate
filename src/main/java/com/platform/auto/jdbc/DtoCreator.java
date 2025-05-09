@@ -95,11 +95,11 @@ public class DtoCreator extends BaseCreator {
                 codeList.add(prefix + ParamValidationAnnotation.NOT_NULL.replaceInfo(msg));
             }
 
-            String needJsonProperty = isTrue(info.needJsonProperty) ? "" : "//";
+            String needJsonProperty = isTrue(info.showJsonProperty) ? "" : "//";
             codeList.add(needJsonProperty + t + "@JsonProperty(\"" + columninfo.columnName + "\")");
 
             // 代码部分
-            codeList.add(t + "public " + columninfo.dataTypeJava + " " + columninfo.columnNameJava + ";\n");
+            codeList.add(t + (isTrue(info.fieldIsPublic) ? "public" : "private") + " " + columninfo.dataTypeJava + " " + columninfo.columnNameJava + ";\n");
         }
 
 
