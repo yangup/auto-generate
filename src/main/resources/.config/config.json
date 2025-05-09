@@ -1,147 +1,148 @@
+
 {
-  "author": "yangpu",
-  "store_by_table": true,
-  "type_to_java_data": "/typeToJavaData.json",
-  "remove_prefix": [
-    "T_",
-    "X_",
-    "S_",
-    "TB_"
-  ],
-  "jdbc": {
-    "clazz": "com.mysql.cj.jdbc.Driver",
-    "url": "jdbc:mysql://dev-db.test:3306",
-    "username": "root",
-    "password": "123456",
-    "database": "yp3"
-  },
-  "info": [
-    {
-      "template": "templateController.up",
-      "store_by_table": false,
-      "remark": "generate controller",
-      "file_name_suffix": "Controller.java",
-      "path": {
-        "project_name": "api",
-        "package_name": "com.playlet.api.controller"
-      }
+    "author": "yangpu",
+    "store_by_table": true,
+    "type_to_java_data": "/typeToJavaData.json",
+    "remove_prefix": [
+        "T_",
+        "X_",
+        "S_",
+        "TB_"
+    ],
+    "jdbc": {
+        "clazz": "com.mysql.cj.jdbc.Driver",
+        "url": "jdbc:mysql://dev-db.test:3306",
+        "username": "root",
+        "password": "123456",
+        "database": "yp3"
     },
-    {
-      "template": "templateService.up",
-      "remark": "generate service",
-      "file_name_suffix": "Service.java",
-      "path": {
-        "project_name": "common",
-        "package_name": "com.playlet.common.db"
-      }
-    },
-    {
-      "template": "templateMapper.up",
-      "remark": "generate mapper",
-      "file_name_suffix": "Mapper.java",
-      "path": {
-        "project_name": "common",
-        "package_name": "com.playlet.common.db"
-      }
-    },
-    {
-      "template": "templateSqlProvider.up",
-      "remark": "generate sql provider",
-      "file_name_suffix": "SqlProvider.java",
-      "path": {
-        "project_name": "common",
-        "package_name": "com.playlet.common.db"
-      }
-    },
-    {
-      "template": "templateEntity.up",
-      "field_is_public": true,
-      "add_one_row_for_id": "@TableId(value = \"{id}\", type = IdType.AUTO)",
-      "generate_static_method": true,
-      "file_name_suffix": "Entity.java",
-      "remark": "generate entity",
-      "path": {
-        "project_name": "common",
-        "package_name": "com.playlet.common.db"
-      }
-    },
-    {
-      "template": "templateData.up",
-      "remark": "generate data",
-      "file_name_suffix": "Data.java",
-      "generate_static_method": true,
-      "path": {
-        "project_name": "common",
-        "package_name": "com.playlet.common.db"
-      }
-    },
-    {
-      "template": "templateDto.up",
-      "remark": "generate dto",
-      "file_name_suffix": "Dto.java",
-      "need_json_property": false,
-      "generate_static_method": true,
-      "path": {
-        "project_name": "common",
-        "package_name": "com.playlet.common.db"
-      }
-    },
-    {
-      "template": "templateUseful.up",
-      "remark": "generate useful",
-      "file_name_suffix": "_useful.txt",
-      "store_by_table": false,
-      "is_useful": true,
-      "path": {
-        "local": true,
-        "path": "useful"
-      }
-    },
-    {
-      "template": "templateHttp.up",
-      "remark": "generate http",
-      "path": {
-        "local": true,
-        "file": "http/http.http"
-      }
-    },
-    {
-      "template": "templateDocTable.up",
-      "remark": "generate doc table",
-      "file_name_suffix": "_doc.txt",
-      "store_by_table": false,
-      "path": {
-        "local": true,
-        "path": "doc"
-      }
-    },
-    {
-      "template": "templateFront.up",
-      "remark": "generate front file",
-      "file_name_suffix": ".vue",
-      "store_by_table": false,
-      "is_front": true,
-      "path": {
-        "local": true,
-        "path": "table",
-        "api_file": ".config\\front\\api.js",
-        "router_file": ".config\\front\\router.js",
-        "constant_file": ".config\\front\\constant.js"
-      }
-    },
-    {
-      "type": "constant",
-      "path": {
-        "project_name": "common",
-        "package_name": "com.playlet.common.constant"
-      }
-    },
-    {
-      "type": "db",
-      "path": {
-        "project_name": "common",
-        "package_name": "com.playlet.common.db"
-      }
-    }
-  ]
+    "info": [
+        {
+            "template": "templateController.up",
+            "store_by_table": false,
+            "remark": "generate controller",
+            "file_name_suffix": "Controller.java",
+            "path": {
+                "project_name": "api",
+                "package_name": "com.playlet.api.controller"
+            }
+        },
+        {
+            "template": "templateService.up",
+            "remark": "generate service",
+            "file_name_suffix": "Service.java",
+            "path": {
+                "project_name": "common",
+                "package_name": "com.playlet.common.db"
+            }
+        },
+        {
+            "template": "templateMapper.up",
+            "remark": "generate mapper",
+            "file_name_suffix": "Mapper.java",
+            "path": {
+                "project_name": "common",
+                "package_name": "com.playlet.common.db"
+            }
+        },
+        {
+            "template": "templateSqlProvider.up",
+            "remark": "generate sql provider",
+            "file_name_suffix": "SqlProvider.java",
+            "path": {
+                "project_name": "common",
+                "package_name": "com.playlet.common.db"
+            }
+        },
+        {
+            "template": "templateEntity.up",
+            "field_is_public": true,
+            "add_one_row_for_id": "@TableId(value = \"{id}\", type = IdType.AUTO)",
+            "generate_static_method": true,
+            "file_name_suffix": "Entity.java",
+            "remark": "generate entity",
+            "path": {
+                "project_name": "common",
+                "package_name": "com.playlet.common.db"
+            }
+        },
+        {
+            "template": "templateData.up",
+            "remark": "generate data",
+            "file_name_suffix": "Data.java",
+            "generate_static_method": true,
+            "path": {
+                "project_name": "common",
+                "package_name": "com.playlet.common.db"
+            }
+        },
+        {
+            "template": "templateDto.up",
+            "remark": "generate dto",
+            "file_name_suffix": "Dto.java",
+            "need_json_property": false,
+            "generate_static_method": true,
+            "path": {
+                "project_name": "common",
+                "package_name": "com.playlet.common.db"
+            }
+        },
+        {
+            "template": "templateUseful.up",
+            "remark": "generate useful",
+            "file_name_suffix": "_useful.txt",
+            "store_by_table": false,
+            "is_useful": true,
+            "path": {
+                "is_local": true,
+                "path": "useful"
+            }
+        },
+        {
+            "template": "templateHttp.up",
+            "remark": "generate http",
+            "path": {
+                "is_local": true,
+                "file": "http/http.http"
+            }
+        },
+        {
+            "template": "templateDocTable.up",
+            "remark": "generate doc table",
+            "file_name_suffix": "_doc.txt",
+            "store_by_table": false,
+            "path": {
+                "is_local": true,
+                "path": "doc"
+            }
+        },
+        {
+            "template": "templateFront.up",
+            "remark": "generate front file",
+            "file_name_suffix": ".vue",
+            "store_by_table": false,
+            "is_front": true,
+            "path": {
+                "is_local": true,
+                "path": "table",
+                "api_file": ".config\\front\\api.js",
+                "router_file": ".config\\front\\router.js",
+                "constant_file": ".config\\front\\constant.js"
+            }
+        },
+        {
+            "type": "constant",
+            "path": {
+                "project_name": "common",
+                "package_name": "com.playlet.common.constant"
+            }
+        },
+        {
+            "type": "db",
+            "path": {
+                "project_name": "common",
+                "package_name": "com.playlet.common.db"
+            }
+        }
+    ]
 }
