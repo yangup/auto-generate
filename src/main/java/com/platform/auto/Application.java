@@ -8,7 +8,6 @@ import com.platform.auto.sys.log.Logger;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,9 +16,8 @@ public class Application {
     private static final Logger logger = AutoLogger.getLogger(Application.class);
 
     public static void start(List<String> tableNameList) throws Exception {
-        Config.config = null;
-        Config.local = null;
-        Config.setConfig(Config.getLocal().selectedJsonName);
+        Config.refreshConfig();
+        Config.refreshLocal();
         TypeToJavaData.init();
         ConnectionAuto.prepare(Config.getConfig().jdbc.clazz,
                 Config.getConfig().jdbc.url,

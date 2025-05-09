@@ -83,22 +83,11 @@ public class Config {
         }
     }
 
-    public static ConfigEntity setConfig(String... configJsonName) {
-        try {
-            String configJsonNameUse = "config.json";
-            if (configJsonName != null && configJsonName.length > 0 && StringUtils.isNotBlank(configJsonName[configJsonName.length - 1])) {
-                configJsonNameUse = configJsonName[configJsonName.length - 1];
-            }
-            config = objectMapper.readValue(readFromLocalJson(auto_config_name + "/" + configJsonNameUse), ConfigEntity.class);
-        } catch (Exception e) {
-            logger.info(e);
-        }
-        return config;
-    }
-
     public static ConfigEntity getConfig() {
         try {
-            config = config == null ? setConfig(getLocal().selectedJsonName) : config;
+            config = config == null ?
+                    objectMapper.readValue(readFromLocalJson(auto_config_name + "/" + getLocal().selectedJsonName), ConfigEntity.class)
+                    : config;
         } catch (Exception e) {
             logger.info(e);
         }
@@ -121,7 +110,6 @@ public class Config {
             logger.info(e);
             return new LocalEntity();
         }
-//        logger.info("getLocal, selectedDbName: {}, selectedDbKey: {}, dbMap: {}", local.selectedDbName, local.selectedDbKey, local.dbMap);
         return local;
     }
 
@@ -152,7 +140,11 @@ public class Config {
     }
 
     public static PathEntity getPathByType(String type) {
-        return getConfig().info.stream().filter(info -> equalsAnyIgnoreCase(info.type, type)).findFirst().orElse(new ConfigInfoEntity()).getPath();
+        return getConfig().info.stream()
+                .filter(info -> equalsAnyIgnoreCase(info.type, type))
+                .findFirst()
+                .orElse(new ConfigInfoEntity())
+                .getPath();
     }
 
     /**
@@ -163,7 +155,11 @@ public class Config {
     }
 
     public static String getJavaFilePath(String projectName, String packageName) {
-        return project_base_path + "/" + projectName.replace(".", "/") + Config.base_java_path + packageName.replace(".", "/") + "/";
+        return project_base_path
+                + "/" + projectName.replace(".", "/")
+                + Config.base_java_path
+                + packageName.replace(".", "/")
+                + "/";
     }
 
     public static String getTemplatePath(String templateFileName) {
@@ -229,6 +225,10 @@ public class Config {
     public static void initFile() throws Exception {
         config = null;
         local = null;
+        // 当 log.txt 存在的时候,就不需要
+        if (existLocal(log_path_file_name)) {
+            return;
+        }
         if (!existLocal(log_path_file_name)) {
             FileUtil.createLocalFile(log_path_file_name);
         }
@@ -240,12 +240,6 @@ public class Config {
             objectToLocalFile(local_path_file_name, localEntity);
             logger.info("init_local.json");
         }
-
-        // 当 config 存在的时候,就不需要
-        if (existLocal(config_path_type_to_java_data_file_name)) {
-            return;
-        }
-
         if (StringUtils.isBlank(readFromLocalJson(config_path_type_to_java_data_file_name))) {
             listToLocalFile(config_path_type_to_java_data_file_name, readFromResources(config_path_type_to_java_data_file_name));
         }
