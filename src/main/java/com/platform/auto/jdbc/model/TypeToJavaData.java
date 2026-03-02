@@ -192,6 +192,9 @@ public class TypeToJavaData {
                 }
             }
         }
+        if(result == null){
+            logger.info(dataType, columnName);
+        }
         return result;
     }
 
