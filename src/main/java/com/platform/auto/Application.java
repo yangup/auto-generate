@@ -8,6 +8,7 @@ import com.platform.auto.sys.log.Logger;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,22 +44,23 @@ public class Application {
 
     // for test
     public static void main(String[] args) throws Exception {
-//        File currentDir = new File(".");
-//        String absolutePath = currentDir.getAbsolutePath().replace("\\", "/");
-//        Config.project_base_path = absolutePath.substring(0, absolutePath.length() - 2);
-//        Config.project_auto_path = Config.project_base_path + "/" + Config.auto_name;
-        // 指定路径生成
+        File currentDir = new File(".");
+        String absolutePath = currentDir.getAbsolutePath().replace("\\", "/");
+        Config.project_base_path = absolutePath.substring(0, absolutePath.length() - 2);
+        Config.project_auto_path = Config.project_base_path + "/" + Config.auto_name;
+//         指定路径生成
 //        Config.project_base_path = "D:/ksm/code/th/biz/th-pay-server";
-        Config.project_base_path = "D:\\ksm\\code\\ph\\business\\ph-ovsloan-loan";
+//        Config.project_base_path = "D:\\ksm\\code\\ph\\business\\ph-ovsloan-loan";
         Config.project_auto_path = Config.project_base_path + "/" + Config.auto_name;
         Application.start(List.of(
 
 
-                "user_device_info_oss"
+                "delay_task"
 
 
         ));
-//        Application.start(List.of("t_system_user_setting"));
+
+        System.out.println("OK");
     }
 
 }
