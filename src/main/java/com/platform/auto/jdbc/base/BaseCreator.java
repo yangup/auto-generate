@@ -243,6 +243,7 @@ public class BaseCreator {
                         sb.append(String.format("['%s', %s]", c.columnNameJava, c.constantName));
                     } else {
                         sb.append(String.format("'%s'", c.columnNameJava));
+
                     }
                 }
                 lineReplaceOrder(line, Order.columnNameJavaList, sb);
